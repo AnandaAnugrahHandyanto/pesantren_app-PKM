@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Santri;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class SantriController extends Controller
 {
@@ -29,10 +30,18 @@ class SantriController extends Controller
      */
     public function store(Request $request)
     {
-         Santri::create($request->all());
-         
-         return redirect()->route('santri.index')
-         ->with('success', 'Data santri berhasil ditambahkan');
+        $validated = $request->validate([
+            'nis' => ['required', 'string', 'max:255', 'unique:santris,nis'],
+            'nama' => ['required', 'string', 'max:255'],
+            'kelas' => ['required', 'string', 'max:255'],
+            'kamar' => ['required', 'string', 'max:255'],
+            'jenis_kelamin' => ['required', Rule::in(['L', 'P'])],
+        ]);
+
+        Santri::create($validated);
+
+        return redirect()->route('santri.index')
+            ->with('success', 'Data santri berhasil ditambahkan');
     }
 
     /**
@@ -48,7 +57,7 @@ class SantriController extends Controller
      */
     public function edit(Santri $santri)
     {
-        //
+        return view('santri.edit', compact('santri'));
     }
 
     /**
@@ -56,7 +65,18 @@ class SantriController extends Controller
      */
     public function update(Request $request, Santri $santri)
     {
-        //
+        $validated = $request->validate([
+            'nis' => ['required', 'string', 'max:255', Rule::unique('santris', 'nis')->ignore($santri->id)],
+            'nama' => ['required', 'string', 'max:255'],
+            'kelas' => ['required', 'string', 'max:255'],
+            'kamar' => ['required', 'string', 'max:255'],
+            'jenis_kelamin' => ['required', Rule::in(['L', 'P'])],
+        ]);
+
+        $santri->update($validated);
+
+        return redirect()->route('santri.index')
+            ->with('success', 'Data santri berhasil diperbarui');
     }
 
     /**
@@ -64,6 +84,9 @@ class SantriController extends Controller
      */
     public function destroy(Santri $santri)
     {
-        //
+        $santri->delete();
+
+        return redirect()->route('santri.index')
+            ->with('success', 'Data santri berhasil dihapus');
     }
 }
