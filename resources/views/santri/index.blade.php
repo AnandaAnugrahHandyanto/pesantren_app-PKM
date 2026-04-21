@@ -34,7 +34,7 @@
                             <td class="px-4 py-3 text-sm text-gray-800">{{ $santri->kelas }}</td>
                             <td class="px-4 py-3 text-sm text-gray-800">{{ $santri->kamar }}</td>
                             <td class="px-4 py-3 text-sm text-gray-800">
-                                {{ $santri->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan' }}
+                                {{ $santri->jenis_kelamin === 'L' ? 'Laki-laki' : ($santri->jenis_kelamin === 'P' ? 'Perempuan' : '-') }}
                             </td>
                             <td class="px-4 py-3 text-sm">
                                 <div class="flex gap-2">
