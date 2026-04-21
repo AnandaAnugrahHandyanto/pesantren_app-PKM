@@ -7,28 +7,28 @@
             @method('PUT')
 
             <div class="mb-4">
-                <label>NIS</label>
-                <input type="text" name="nis" value="{{ old('nis', $santri->nis) }}" class="border rounded w-full p-2">
+                <label for="nis">NIS</label>
+                <input type="text" id="nis" name="nis" value="{{ old('nis', $santri->nis) }}" class="border rounded w-full p-2">
             </div>
 
             <div class="mb-4">
-                <label>Nama</label>
-                <input type="text" name="nama" value="{{ old('nama', $santri->nama) }}" class="border rounded w-full p-2">
+                <label for="nama">Nama</label>
+                <input type="text" id="nama" name="nama" value="{{ old('nama', $santri->nama) }}" class="border rounded w-full p-2">
             </div>
 
             <div class="mb-4">
-                <label>Kelas</label>
-                <input type="text" name="kelas" value="{{ old('kelas', $santri->kelas) }}" class="border rounded w-full p-2">
+                <label for="kelas">Kelas</label>
+                <input type="text" id="kelas" name="kelas" value="{{ old('kelas', $santri->kelas) }}" class="border rounded w-full p-2">
             </div>
 
             <div class="mb-4">
-                <label>Kamar</label>
-                <input type="text" name="kamar" value="{{ old('kamar', $santri->kamar) }}" class="border rounded w-full p-2">
+                <label for="kamar">Kamar</label>
+                <input type="text" id="kamar" name="kamar" value="{{ old('kamar', $santri->kamar) }}" class="border rounded w-full p-2">
             </div>
 
             <div class="mb-4">
-                <label>Jenis Kelamin</label>
-                <select name="jenis_kelamin" class="border rounded w-full p-2">
+                <label for="jenis_kelamin">Jenis Kelamin</label>
+                <select id="jenis_kelamin" name="jenis_kelamin" class="border rounded w-full p-2">
                     <option value="L" {{ old('jenis_kelamin', $santri->jenis_kelamin) === 'L' ? 'selected' : '' }}>Laki-laki</option>
                     <option value="P" {{ old('jenis_kelamin', $santri->jenis_kelamin) === 'P' ? 'selected' : '' }}>Perempuan</option>
                 </select>
