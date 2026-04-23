@@ -21,12 +21,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::middleware('role:admin')->group(function () {
-        Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+        Route::get('/admin/dashboard', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
         Route::resource('santri', SantriController::class);
     });
 
     Route::middleware('role:guru')->group(function () {
-        Route::get('/guru/dashboard', [DashboardController::class, 'index'])->name('guru.dashboard');
+        Route::get('/guru/dashboard', [DashboardController::class, 'guruDashboard'])->name('guru.dashboard');
         Route::resource('absensi', AbsensiController::class)->except(['show']);
         Route::get('/laporan/absensi', [LaporanController::class, 'absensi'])->name('laporan.absensi');
     });
