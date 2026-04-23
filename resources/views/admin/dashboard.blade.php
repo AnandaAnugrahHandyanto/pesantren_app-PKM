@@ -6,21 +6,68 @@
     <div class="space-y-6">
         {{-- Stats --}}
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {{-- Total Santri --}}
             <div class="rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md">
-                <p class="text-sm text-white/60">Total Santri</p>
-                <p class="mt-2 text-3xl font-bold text-white">{{ $totalSantri }}</p>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-white/60">Total Santri</p>
+                        <p class="mt-2 text-4xl font-bold text-white">{{ $totalSantri }}</p>
+                    </div>
+                    <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-500/30 text-blue-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M17 20h5v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2h5M12 12a4 4 0 100-8 4 4 0 000 8z"/>
+                        </svg>
+                    </div>
+                </div>
             </div>
+
+            {{-- Hadir --}}
             <div class="rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md">
-                <p class="text-sm text-white/60">Hadir Hari Ini</p>
-                <p class="mt-2 text-3xl font-bold text-green-300">{{ $hadir }}</p>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-white/60">Hadir Hari Ini</p>
+                        <p class="mt-2 text-4xl font-bold text-green-300">{{ $hadir }}</p>
+                    </div>
+                    <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-green-500/30 text-green-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                </div>
             </div>
+
+            {{-- Izin --}}
             <div class="rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md">
-                <p class="text-sm text-white/60">Izin Hari Ini</p>
-                <p class="mt-2 text-3xl font-bold text-yellow-300">{{ $izin }}</p>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-white/60">Izin Hari Ini</p>
+                        <p class="mt-2 text-4xl font-bold text-yellow-300">{{ $izin }}</p>
+                    </div>
+                    <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-yellow-500/30 text-yellow-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                </div>
             </div>
+
+            {{-- Alfa --}}
             <div class="rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md">
-                <p class="text-sm text-white/60">Alfa Hari Ini</p>
-                <p class="mt-2 text-3xl font-bold text-red-300">{{ $alfa }}</p>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-white/60">Alfa Hari Ini</p>
+                        <p class="mt-2 text-4xl font-bold text-red-300">{{ $alfa }}</p>
+                    </div>
+                    <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-red-500/30 text-red-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                </div>
             </div>
         </div>
 
