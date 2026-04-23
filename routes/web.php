@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SantriController;
@@ -21,6 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['auth'])->group(function () {
         Route::resource('santri', SantriController::class);
         Route::resource('absensi', AbsensiController::class)->except(['show']);
+        Route::get('/laporan/absensi', [LaporanController::class, 'absensi'])->name('laporan.absensi');
     });
 });
 
