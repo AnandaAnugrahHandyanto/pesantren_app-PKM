@@ -26,7 +26,7 @@
         <div class="rounded-xl border border-slate-200 bg-white shadow-sm">
             <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4">
                 <h2 class="text-base font-semibold text-slate-800">Data Santri Terbaru</h2>
-                @if (Auth::user()?->role === 'admin')
+                @if (Auth::user()->role === 'admin')
                     <a href="{{ route('santri.index') }}" class="text-sm font-medium text-blue-600 hover:text-blue-700">
                         Lihat semua
                     </a>
