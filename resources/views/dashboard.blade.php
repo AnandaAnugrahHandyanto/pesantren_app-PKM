@@ -1,66 +1,67 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
+        <h1 class="text-lg font-semibold">Dashboard Admin</h1>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="space-y-6">
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                <p class="text-sm text-slate-500">Total Santri</p>
+                <p class="mt-2 text-3xl font-bold text-slate-800">{{ $totalSantri }}</p>
+            </div>
+            <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                <p class="text-sm text-slate-500">Hadir Hari Ini</p>
+                <p class="mt-2 text-3xl font-bold text-green-600">{{ $hadir }}</p>
+            </div>
+            <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                <p class="text-sm text-slate-500">Izin Hari Ini</p>
+                <p class="mt-2 text-3xl font-bold text-yellow-600">{{ $izin }}</p>
+            </div>
+            <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                <p class="text-sm text-slate-500">Alfa Hari Ini</p>
+                <p class="mt-2 text-3xl font-bold text-red-600">{{ $alfa }}</p>
+            </div>
+        </div>
 
-                {{-- Total Santri --}}
-                <div class="bg-white rounded-lg shadow p-6 flex items-center gap-4">
-                    <div class="bg-blue-100 text-blue-600 rounded-full p-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-4-4h-1M9 20H4v-2a4 4 0 014-4h1m4-4a4 4 0 100-8 4 4 0 000 8z" />
-                        </svg>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">Total Santri</p>
-                        <p class="text-2xl font-bold text-gray-800">{{ $totalSantri }}</p>
-                    </div>
-                </div>
+        <div class="rounded-xl border border-slate-200 bg-white shadow-sm">
+            <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4">
+                <h2 class="text-base font-semibold text-slate-800">Data Santri Terbaru</h2>
+                @if (Auth::user()?->role === 'admin')
+                    <a href="{{ route('santri.index') }}" class="text-sm font-medium text-blue-600 hover:text-blue-700">
+                        Lihat semua
+                    </a>
+                @endif
+            </div>
 
-                {{-- Hadir Hari Ini --}}
-                <div class="bg-white rounded-lg shadow p-6 flex items-center gap-4">
-                    <div class="bg-green-100 text-green-600 rounded-full p-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">Hadir Hari Ini</p>
-                        <p class="text-2xl font-bold text-green-600">{{ $hadir }}</p>
-                    </div>
-                </div>
-
-                {{-- Izin Hari Ini --}}
-                <div class="bg-white rounded-lg shadow p-6 flex items-center gap-4">
-                    <div class="bg-yellow-100 text-yellow-600 rounded-full p-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">Izin Hari Ini</p>
-                        <p class="text-2xl font-bold text-yellow-600">{{ $izin }}</p>
-                    </div>
-                </div>
-
-                {{-- Alfa Hari Ini --}}
-                <div class="bg-white rounded-lg shadow p-6 flex items-center gap-4">
-                    <div class="bg-red-100 text-red-600 rounded-full p-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">Alfa Hari Ini</p>
-                        <p class="text-2xl font-bold text-red-600">{{ $alfa }}</p>
-                    </div>
-                </div>
-
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-slate-200">
+                    <thead class="bg-slate-50">
+                        <tr>
+                            <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">NIS</th>
+                            <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Nama</th>
+                            <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Kelas</th>
+                            <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Kamar</th>
+                            <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Jenis Kelamin</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        @forelse ($latestSantri as $santri)
+                            <tr class="hover:bg-slate-50">
+                                <td class="px-5 py-3 text-sm text-slate-700">{{ $santri->nis }}</td>
+                                <td class="px-5 py-3 text-sm font-medium text-slate-800">{{ $santri->nama }}</td>
+                                <td class="px-5 py-3 text-sm text-slate-700">{{ $santri->kelas }}</td>
+                                <td class="px-5 py-3 text-sm text-slate-700">{{ $santri->kamar }}</td>
+                                <td class="px-5 py-3 text-sm text-slate-700">
+                                    {{ $santri->jenis_kelamin === 'L' ? 'Laki-laki' : ($santri->jenis_kelamin === 'P' ? 'Perempuan' : '-') }}
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="px-5 py-8 text-center text-sm text-slate-500">Belum ada data santri.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

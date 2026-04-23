@@ -15,6 +15,8 @@ class DashboardController extends Controller
         $izin  = Absensi::whereDate('tanggal', today())->where('status', 'izin')->count();
         $alfa  = Absensi::whereDate('tanggal', today())->where('status', 'alfa')->count();
 
-        return view('dashboard', compact('totalSantri', 'hadir', 'izin', 'alfa'));
+        $latestSantri = Santri::latest()->take(5)->get();
+
+        return view('dashboard', compact('totalSantri', 'hadir', 'izin', 'alfa', 'latestSantri'));
     }
 }
