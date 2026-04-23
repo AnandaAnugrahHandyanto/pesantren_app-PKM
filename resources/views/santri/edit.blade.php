@@ -47,9 +47,9 @@
 
                 <div>
                     <label for="jenis_kelamin" class="mb-1 block text-sm font-medium text-white/80">Jenis Kelamin <span aria-hidden="true">*</span></label>
-                    <select id="jenis_kelamin" name="jenis_kelamin" required aria-required="true"
+                    <select id="jenis_kelamin" name="jenis_kelamin" required aria-required="true" aria-label="Pilih jenis kelamin"
                         class="w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
-                        <option value="" disabled {{ old('jenis_kelamin', $santri->jenis_kelamin) ? '' : 'selected' }} class="bg-indigo-950 text-white">Pilih jenis kelamin</option>
+                        <option value="" disabled aria-hidden="true" {{ old('jenis_kelamin', $santri->jenis_kelamin) ? '' : 'selected' }} class="bg-indigo-950 text-white">Pilih jenis kelamin</option>
                         <option value="L" {{ old('jenis_kelamin', $santri->jenis_kelamin) === 'L' ? 'selected' : '' }} class="bg-indigo-950 text-white">Laki-laki</option>
                         <option value="P" {{ old('jenis_kelamin', $santri->jenis_kelamin) === 'P' ? 'selected' : '' }} class="bg-indigo-950 text-white">Perempuan</option>
                     </select>

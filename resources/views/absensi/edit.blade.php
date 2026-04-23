@@ -21,7 +21,7 @@
 
                 <div>
                     <label for="santri_id" class="mb-1 block text-sm font-medium text-white/80">Santri</label>
-                    <select id="santri_id" name="santri_id" required
+                    <select id="santri_id" name="santri_id" required aria-label="Pilih santri"
                         class="w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
                         <option value="" disabled class="bg-indigo-950 text-white">Pilih santri</option>
                         @foreach ($santris as $santri)
