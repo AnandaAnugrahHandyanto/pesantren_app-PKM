@@ -1,58 +1,74 @@
 <x-app-layout>
-    <div class="p-6">
-        <h1 class="text-2xl font-bold mb-4">Edit Santri</h1>
+    <x-slot name="header">
+        <h1 class="text-lg font-semibold">Edit Santri</h1>
+    </x-slot>
 
-        <form action="{{ route('santri.update', $santri) }}" method="POST">
-            @csrf
-            @method('PUT')
+    <div class="mx-auto max-w-xl">
+        <div class="rounded-2xl border border-white/20 bg-white/10 p-6 shadow-lg backdrop-blur-md">
+            <form action="{{ route('santri.update', $santri) }}" method="POST" class="space-y-4">
+                @csrf
+                @method('PUT')
 
-            <div class="mb-4">
-                <label for="nis">NIS <span aria-hidden="true">*</span></label>
-                <input type="text" id="nis" name="nis" value="{{ old('nis', $santri->nis) }}" class="border rounded w-full p-2" maxlength="255" required aria-required="true">
-                @error('nis')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
+                <div>
+                    <label for="nis" class="mb-1 block text-sm font-medium text-white/80">NIS <span aria-hidden="true">*</span></label>
+                    <input type="text" id="nis" name="nis" value="{{ old('nis', $santri->nis) }}" maxlength="255" required aria-required="true"
+                        class="w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white placeholder-white/40 backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
+                    @error('nis')
+                        <p class="mt-1 text-xs text-red-300">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <div class="mb-4">
-                <label for="nama">Nama <span aria-hidden="true">*</span></label>
-                <input type="text" id="nama" name="nama" value="{{ old('nama', $santri->nama) }}" class="border rounded w-full p-2" maxlength="255" required aria-required="true">
-                @error('nama')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
+                <div>
+                    <label for="nama" class="mb-1 block text-sm font-medium text-white/80">Nama <span aria-hidden="true">*</span></label>
+                    <input type="text" id="nama" name="nama" value="{{ old('nama', $santri->nama) }}" maxlength="255" required aria-required="true"
+                        class="w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white placeholder-white/40 backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
+                    @error('nama')
+                        <p class="mt-1 text-xs text-red-300">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <div class="mb-4">
-                <label for="kelas">Kelas <span aria-hidden="true">*</span></label>
-                <input type="text" id="kelas" name="kelas" value="{{ old('kelas', $santri->kelas) }}" class="border rounded w-full p-2" maxlength="255" required aria-required="true">
-                @error('kelas')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
+                <div>
+                    <label for="kelas" class="mb-1 block text-sm font-medium text-white/80">Kelas <span aria-hidden="true">*</span></label>
+                    <input type="text" id="kelas" name="kelas" value="{{ old('kelas', $santri->kelas) }}" maxlength="255" required aria-required="true"
+                        class="w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white placeholder-white/40 backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
+                    @error('kelas')
+                        <p class="mt-1 text-xs text-red-300">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <div class="mb-4">
-                <label for="kamar">Kamar <span aria-hidden="true">*</span></label>
-                <input type="text" id="kamar" name="kamar" value="{{ old('kamar', $santri->kamar) }}" class="border rounded w-full p-2" maxlength="255" required aria-required="true">
-                @error('kamar')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
+                <div>
+                    <label for="kamar" class="mb-1 block text-sm font-medium text-white/80">Kamar <span aria-hidden="true">*</span></label>
+                    <input type="text" id="kamar" name="kamar" value="{{ old('kamar', $santri->kamar) }}" maxlength="255" required aria-required="true"
+                        class="w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white placeholder-white/40 backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
+                    @error('kamar')
+                        <p class="mt-1 text-xs text-red-300">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <div class="mb-4">
-                <label for="jenis_kelamin">Jenis Kelamin <span aria-hidden="true">*</span></label>
-                <select id="jenis_kelamin" name="jenis_kelamin" class="border rounded w-full p-2" required aria-required="true">
-                    <option value="" disabled {{ old('jenis_kelamin', $santri->jenis_kelamin) ? '' : 'selected' }}>Pilih jenis kelamin</option>
-                    <option value="L" {{ old('jenis_kelamin', $santri->jenis_kelamin) === 'L' ? 'selected' : '' }}>Laki-laki</option>
-                    <option value="P" {{ old('jenis_kelamin', $santri->jenis_kelamin) === 'P' ? 'selected' : '' }}>Perempuan</option>
-                </select>
-                @error('jenis_kelamin')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
+                <div>
+                    <label for="jenis_kelamin" class="mb-1 block text-sm font-medium text-white/80">Jenis Kelamin <span aria-hidden="true">*</span></label>
+                    <select id="jenis_kelamin" name="jenis_kelamin" required aria-required="true"
+                        class="w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
+                        <option value="" disabled {{ old('jenis_kelamin', $santri->jenis_kelamin) ? '' : 'selected' }} class="bg-indigo-950 text-white">Pilih jenis kelamin</option>
+                        <option value="L" {{ old('jenis_kelamin', $santri->jenis_kelamin) === 'L' ? 'selected' : '' }} class="bg-indigo-950 text-white">Laki-laki</option>
+                        <option value="P" {{ old('jenis_kelamin', $santri->jenis_kelamin) === 'P' ? 'selected' : '' }} class="bg-indigo-950 text-white">Perempuan</option>
+                    </select>
+                    @error('jenis_kelamin')
+                        <p class="mt-1 text-xs text-red-300">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded">
-                Update
-            </button>
-        </form>
+                <div class="flex gap-2 pt-2">
+                    <button type="submit"
+                        class="rounded-xl bg-yellow-500/80 px-5 py-2 text-sm font-medium text-white backdrop-blur-sm transition hover:bg-yellow-400/80">
+                        Update
+                    </button>
+                    <a href="{{ route('santri.index') }}"
+                        class="rounded-xl border border-white/20 bg-white/10 px-5 py-2 text-sm font-medium text-white/80 backdrop-blur-sm transition hover:bg-white/20">
+                        Batal
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
 </x-app-layout>

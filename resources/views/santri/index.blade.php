@@ -5,45 +5,45 @@
 
     <div class="space-y-4">
         <div class="flex items-center justify-between">
-            <p class="text-sm text-slate-500">Kelola data santri pesantren.</p>
+            <p class="text-sm text-white/60">Kelola data santri pesantren.</p>
             <a href="{{ route('santri.create') }}"
-                class="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">
+                class="rounded-xl bg-indigo-500/80 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition hover:bg-indigo-400/80">
                 Tambah Santri
             </a>
         </div>
 
         @if (session('success'))
-            <div class="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+            <div class="rounded-xl border border-green-400/30 bg-green-500/20 px-4 py-3 text-sm text-green-200 backdrop-blur-sm">
                 {{ session('success') }}
             </div>
         @endif
 
-        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
-            <table class="min-w-full divide-y divide-slate-200">
-                <thead class="bg-slate-50">
-                    <tr>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">NIS</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Nama</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Kelas</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Kamar</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Jenis Kelamin</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Aksi</th>
+        <div class="overflow-x-auto rounded-2xl border border-white/20 bg-white/10 shadow-lg backdrop-blur-md">
+            <table class="min-w-full">
+                <thead>
+                    <tr class="border-b border-white/10 bg-white/5">
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">NIS</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Nama</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Kelas</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Kamar</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Jenis Kelamin</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100">
+                <tbody class="divide-y divide-white/10">
                     @forelse ($santris as $santri)
-                        <tr class="hover:bg-slate-50">
-                            <td class="px-4 py-3 text-sm text-slate-700">{{ $santri->nis }}</td>
-                            <td class="px-4 py-3 text-sm font-medium text-slate-800">{{ $santri->nama }}</td>
-                            <td class="px-4 py-3 text-sm text-slate-700">{{ $santri->kelas }}</td>
-                            <td class="px-4 py-3 text-sm text-slate-700">{{ $santri->kamar }}</td>
-                            <td class="px-4 py-3 text-sm text-slate-700">
+                        <tr class="transition hover:bg-white/10">
+                            <td class="px-4 py-3 text-sm text-white/70">{{ $santri->nis }}</td>
+                            <td class="px-4 py-3 text-sm font-medium text-white">{{ $santri->nama }}</td>
+                            <td class="px-4 py-3 text-sm text-white/70">{{ $santri->kelas }}</td>
+                            <td class="px-4 py-3 text-sm text-white/70">{{ $santri->kamar }}</td>
+                            <td class="px-4 py-3 text-sm text-white/70">
                                 {{ $santri->jenis_kelamin === 'L' ? 'Laki-laki' : ($santri->jenis_kelamin === 'P' ? 'Perempuan' : '-') }}
                             </td>
                             <td class="px-4 py-3 text-sm">
                                 <div class="flex gap-2">
                                     <a href="{{ route('santri.edit', $santri) }}"
-                                        class="rounded-md bg-yellow-500 px-3 py-1 text-xs font-medium text-white hover:bg-yellow-600">
+                                        class="rounded-lg bg-yellow-500/80 px-3 py-1 text-xs font-medium text-white transition hover:bg-yellow-400/80">
                                         Edit
                                     </a>
                                     <form action="{{ route('santri.destroy', $santri) }}" method="POST"
@@ -51,7 +51,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
-                                            class="rounded-md bg-red-500 px-3 py-1 text-xs font-medium text-white hover:bg-red-600">
+                                            class="rounded-lg bg-red-500/80 px-3 py-1 text-xs font-medium text-white transition hover:bg-red-400/80">
                                             Hapus
                                         </button>
                                     </form>
@@ -60,7 +60,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="px-4 py-6 text-center text-sm text-slate-500">
+                            <td colspan="6" class="px-4 py-6 text-center text-sm text-white/40">
                                 Belum ada data santri.
                             </td>
                         </tr>

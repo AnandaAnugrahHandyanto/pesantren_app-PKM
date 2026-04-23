@@ -1,96 +1,92 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Laporan Absensi
-        </h2>
+        <h1 class="text-lg font-semibold">Laporan Absensi</h1>
     </x-slot>
 
-    <div class="py-10">
-        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
-
-            {{-- Filter Tanggal --}}
+    <div class="space-y-6">
+        {{-- Filter Tanggal --}}
+        <div class="rounded-2xl border border-white/20 bg-white/10 p-4 shadow-lg backdrop-blur-md">
             <form method="GET" action="{{ route('laporan.absensi') }}"
-                  class="bg-white rounded-lg shadow p-4 mb-6 flex flex-wrap items-center gap-3">
-                <label class="text-sm font-medium text-gray-700">Pilih Tanggal:</label>
+                  class="flex flex-wrap items-center gap-3">
+                <label class="text-sm font-medium text-white/80">Pilih Tanggal:</label>
                 <input type="date" name="tanggal" value="{{ $tanggal }}"
-                       class="border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-300">
+                       class="rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
                 <button type="submit"
-                        class="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700">
+                        class="rounded-xl bg-indigo-500/80 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition hover:bg-indigo-400/80">
                     Tampilkan
                 </button>
-                <span class="ml-auto text-sm text-gray-500">
-                    Tanggal: <span class="font-semibold text-gray-700">
+                <span class="ml-auto text-sm text-white/60">
+                    Tanggal: <span class="font-semibold text-white">
                         {{ \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y') }}
                     </span>
                 </span>
             </form>
+        </div>
 
-            {{-- Ringkasan --}}
-            <div class="grid grid-cols-3 gap-4 mb-6">
-                <div class="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
-                    <p class="text-xs font-semibold text-green-600 uppercase tracking-wide">Hadir</p>
-                    <p class="text-3xl font-bold text-green-700 mt-1">{{ $ringkasan['hadir'] }}</p>
-                </div>
-                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-center">
-                    <p class="text-xs font-semibold text-yellow-600 uppercase tracking-wide">Izin</p>
-                    <p class="text-3xl font-bold text-yellow-700 mt-1">{{ $ringkasan['izin'] }}</p>
-                </div>
-                <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-center">
-                    <p class="text-xs font-semibold text-red-600 uppercase tracking-wide">Alfa</p>
-                    <p class="text-3xl font-bold text-red-700 mt-1">{{ $ringkasan['alfa'] }}</p>
-                </div>
+        {{-- Ringkasan --}}
+        <div class="grid grid-cols-3 gap-4">
+            <div class="rounded-2xl border border-green-400/30 bg-green-500/20 p-4 text-center shadow-lg backdrop-blur-md">
+                <p class="text-xs font-semibold uppercase tracking-wide text-green-300">Hadir</p>
+                <p class="mt-1 text-3xl font-bold text-green-200">{{ $ringkasan['hadir'] }}</p>
             </div>
+            <div class="rounded-2xl border border-yellow-400/30 bg-yellow-500/20 p-4 text-center shadow-lg backdrop-blur-md">
+                <p class="text-xs font-semibold uppercase tracking-wide text-yellow-300">Izin</p>
+                <p class="mt-1 text-3xl font-bold text-yellow-200">{{ $ringkasan['izin'] }}</p>
+            </div>
+            <div class="rounded-2xl border border-red-400/30 bg-red-500/20 p-4 text-center shadow-lg backdrop-blur-md">
+                <p class="text-xs font-semibold uppercase tracking-wide text-red-300">Alfa</p>
+                <p class="mt-1 text-3xl font-bold text-red-200">{{ $ringkasan['alfa'] }}</p>
+            </div>
+        </div>
 
-            {{-- Tabel Laporan --}}
-            <div class="bg-white rounded-lg shadow overflow-hidden">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">No</th>
-                            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">NIS</th>
-                            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Nama Santri</th>
-                            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Tanggal</th>
-                            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
+        {{-- Tabel Laporan --}}
+        <div class="overflow-x-auto rounded-2xl border border-white/20 bg-white/10 shadow-lg backdrop-blur-md">
+            <table class="min-w-full">
+                <thead>
+                    <tr class="border-b border-white/10 bg-white/5">
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">No</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">NIS</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Nama Santri</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Tanggal</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-white/10">
+                    @forelse ($absensis as $i => $absensi)
+                        @php
+                            $badge = [
+                                'hadir' => 'bg-green-500/30 text-green-200',
+                                'izin'  => 'bg-yellow-500/30 text-yellow-200',
+                                'alfa'  => 'bg-red-500/30 text-red-200',
+                            ][$absensi->status] ?? 'bg-white/10 text-white/70';
+                        @endphp
+                        <tr class="transition hover:bg-white/10">
+                            <td class="px-4 py-3 text-sm text-white/70">{{ $i + 1 }}</td>
+                            <td class="px-4 py-3 text-sm text-white/70">{{ $absensi->santri->nis }}</td>
+                            <td class="px-4 py-3 text-sm font-medium text-white">{{ $absensi->santri->nama }}</td>
+                            <td class="px-4 py-3 text-sm text-white/70">{{ $absensi->tanggal->format('d/m/Y') }}</td>
+                            <td class="px-4 py-3 text-sm">
+                                <span class="rounded-lg px-2 py-1 text-xs font-semibold {{ $badge }}">
+                                    {{ ucfirst($absensi->status) }}
+                                </span>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-100">
-                        @forelse ($absensis as $i => $absensi)
-                            @php
-                                $badge = [
-                                    'hadir' => 'bg-green-100 text-green-700',
-                                    'izin'  => 'bg-yellow-100 text-yellow-700',
-                                    'alfa'  => 'bg-red-100 text-red-700',
-                                ][$absensi->status] ?? 'bg-gray-100 text-gray-700';
-                            @endphp
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-3 text-sm text-gray-700">{{ $i + 1 }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-700">{{ $absensi->santri->nis }}</td>
-                                <td class="px-4 py-3 text-sm font-medium text-gray-800">{{ $absensi->santri->nama }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-700">{{ $absensi->tanggal->format('d/m/Y') }}</td>
-                                <td class="px-4 py-3 text-sm">
-                                    <span class="px-2 py-1 rounded text-xs font-semibold {{ $badge }}">
-                                        {{ ucfirst($absensi->status) }}
-                                    </span>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5" class="px-4 py-8 text-center text-sm text-gray-400">
-                                    Tidak ada data absensi untuk tanggal ini.
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="px-4 py-8 text-center text-sm text-white/40">
+                                Tidak ada data absensi untuk tanggal ini.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
 
-            {{-- Link kembali --}}
-            <div class="mt-4">
-                <a href="{{ route('dashboard') }}" class="text-sm text-blue-600 hover:underline">
-                    &larr; Kembali ke Dashboard
-                </a>
-            </div>
-
+        {{-- Link kembali --}}
+        <div>
+            <a href="{{ route('dashboard') }}" class="text-sm text-indigo-300 hover:text-indigo-200">
+                &larr; Kembali ke Dashboard
+            </a>
         </div>
     </div>
 </x-app-layout>
