@@ -3,14 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Santri extends Model
 {
     protected $fillable = [
-    'nis',
-    'nama',
-    'kelas',
-    'kamar',
-    'jenis_kelamin'
-];
+        'nis',
+        'nama',
+        'kelas',
+        'kamar',
+        'jenis_kelamin',
+    ];
+
+    public function absensis(): HasMany
+    {
+        return $this->hasMany(Absensi::class);
+    }
 }
