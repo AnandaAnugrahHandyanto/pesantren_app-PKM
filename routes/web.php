@@ -20,12 +20,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::middleware('role.admin')->group(function () {
+    Route::middleware('role:admin')->group(function () {
         Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
         Route::resource('santri', SantriController::class);
     });
 
-    Route::middleware('role.guru')->group(function () {
+    Route::middleware('role:guru')->group(function () {
         Route::get('/guru/dashboard', [DashboardController::class, 'index'])->name('guru.dashboard');
         Route::resource('absensi', AbsensiController::class)->except(['show']);
         Route::get('/laporan/absensi', [LaporanController::class, 'absensi'])->name('laporan.absensi');
