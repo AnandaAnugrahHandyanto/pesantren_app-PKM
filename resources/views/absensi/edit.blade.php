@@ -22,7 +22,7 @@
                 <div>
                     <label for="santri_id" class="mb-1 block text-sm font-medium text-white/80">Santri</label>
                     <select id="santri_id" name="santri_id" required aria-label="Pilih santri"
-                        class="w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
+                        class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
                         <option value="" disabled class="bg-indigo-950 text-white">Pilih santri</option>
                         @foreach ($santris as $santri)
                             <option value="{{ $santri->id }}"
@@ -39,13 +39,13 @@
                     <input type="date" id="tanggal" name="tanggal"
                         value="{{ old('tanggal', $absensi->tanggal->toDateString()) }}"
                         required
-                        class="w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
+                        class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
                 </div>
 
                 <div>
                     <label for="status" class="mb-1 block text-sm font-medium text-white/80">Status</label>
                     <select id="status" name="status" required
-                        class="w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
+                        class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
                         <option value="" disabled class="bg-indigo-950 text-white">Pilih status</option>
                         <option value="hadir" {{ old('status', $absensi->status) === 'hadir' ? 'selected' : '' }} class="bg-indigo-950 text-white">Hadir</option>
                         <option value="izin"  {{ old('status', $absensi->status) === 'izin'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Izin</option>
@@ -55,11 +55,11 @@
 
                 <div class="flex gap-2 pt-2">
                     <button type="submit"
-                        class="rounded-xl bg-yellow-500/80 px-5 py-2 text-sm font-medium text-white backdrop-blur-sm transition hover:bg-yellow-400/80">
+                        class="rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 px-5 py-2 text-sm font-medium text-white shadow-md transition hover:from-blue-400 hover:to-indigo-500 hover:shadow-lg">
                         Update
                     </button>
                     <a href="{{ route('absensi.index', ['tanggal' => $absensi->tanggal->toDateString()]) }}"
-                        class="rounded-xl border border-white/20 bg-white/10 px-5 py-2 text-sm font-medium text-white/80 backdrop-blur-sm transition hover:bg-white/20">
+                        class="rounded-lg border border-white/20 bg-white/10 px-5 py-2 text-sm font-medium text-white/80 backdrop-blur-sm transition hover:bg-white/20">
                         Batal
                     </a>
                 </div>
