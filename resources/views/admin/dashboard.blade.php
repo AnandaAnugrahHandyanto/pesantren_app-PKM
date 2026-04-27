@@ -4,105 +4,198 @@
     </x-slot>
 
     <div class="space-y-6">
-        {{-- Stats --}}
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {{-- Total Santri --}}
-            <div class="rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-white/60">Total Santri</p>
-                        <p class="mt-2 text-4xl font-bold text-white">{{ $totalSantri }}</p>
+
+        {{-- ===== Statistik Pesantren ===== --}}
+        <div>
+            <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-white/40">Statistik Pesantren</p>
+            <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                {{-- Total Santri --}}
+                <div class="rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-white/60">Total Santri</p>
+                            <p class="mt-2 text-4xl font-bold text-white">{{ $totalSantri }}</p>
+                        </div>
+                        <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-500/30 text-blue-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M17 20h5v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2h5M12 12a4 4 0 100-8 4 4 0 000 8z"/>
+                            </svg>
+                        </div>
                     </div>
-                    <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-500/30 text-blue-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                </div>
+
+                {{-- Santri Laki-laki --}}
+                <div class="rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-white/60">Santri Laki-laki</p>
+                            <p class="mt-2 text-4xl font-bold text-cyan-300">{{ $santriLaki }}</p>
+                        </div>
+                        <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-500/30 text-cyan-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Santri Perempuan --}}
+                <div class="rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-white/60">Santri Perempuan</p>
+                            <p class="mt-2 text-4xl font-bold text-pink-300">{{ $santriPerempuan }}</p>
+                        </div>
+                        <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-pink-500/30 text-pink-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Total Guru --}}
+                <div class="rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-white/60">Total Guru</p>
+                            <p class="mt-2 text-4xl font-bold text-purple-300">{{ $totalGuru }}</p>
+                        </div>
+                        <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-purple-500/30 text-purple-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- ===== Rekap Absensi Hari Ini ===== --}}
+        <div>
+            <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-white/40">Rekap Absensi Hari Ini</p>
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                {{-- Hadir --}}
+                <div class="rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-white/60">Hadir</p>
+                            <p class="mt-2 text-4xl font-bold text-green-300">{{ $hadir }}</p>
+                        </div>
+                        <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-green-500/30 text-green-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Izin --}}
+                <div class="rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-white/60">Izin</p>
+                            <p class="mt-2 text-4xl font-bold text-yellow-300">{{ $izin }}</p>
+                        </div>
+                        <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-yellow-500/30 text-yellow-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Alfa --}}
+                <div class="rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-white/60">Alfa</p>
+                            <p class="mt-2 text-4xl font-bold text-red-300">{{ $alfa }}</p>
+                        </div>
+                        <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-red-500/30 text-red-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- ===== Menu Navigasi ===== --}}
+        <div>
+            <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-white/40">Menu</p>
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                {{-- Data Santri --}}
+                <a href="{{ route('santri.index') }}"
+                   class="flex items-center gap-4 rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md transition hover:bg-white/20">
+                    <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-blue-500/30 text-blue-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                   d="M17 20h5v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2h5M12 12a4 4 0 100-8 4 4 0 000 8z"/>
                         </svg>
                     </div>
-                </div>
-            </div>
-
-            {{-- Hadir --}}
-            <div class="rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md">
-                <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-white/60">Hadir Hari Ini</p>
-                        <p class="mt-2 text-4xl font-bold text-green-300">{{ $hadir }}</p>
+                        <p class="text-base font-semibold text-white">Data Santri</p>
+                        <p class="text-sm text-white/60">Kelola data santri</p>
                     </div>
-                    <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-green-500/30 text-green-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                </a>
+
+                {{-- Tambah Santri --}}
+                <a href="{{ route('santri.create') }}"
+                   class="flex items-center gap-4 rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md transition hover:bg-white/20">
+                    <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-cyan-500/30 text-cyan-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                  d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
                         </svg>
                     </div>
-                </div>
-            </div>
-
-            {{-- Izin --}}
-            <div class="rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md">
-                <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-white/60">Izin Hari Ini</p>
-                        <p class="mt-2 text-4xl font-bold text-yellow-300">{{ $izin }}</p>
+                        <p class="text-base font-semibold text-white">Tambah Santri</p>
+                        <p class="text-sm text-white/60">Daftarkan santri baru</p>
                     </div>
-                    <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-yellow-500/30 text-yellow-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                </a>
+
+                {{-- Absensi --}}
+                <a href="{{ route('absensi.index') }}"
+                   class="flex items-center gap-4 rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md transition hover:bg-white/20">
+                    <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-green-500/30 text-green-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
                         </svg>
                     </div>
-                </div>
-            </div>
-
-            {{-- Alfa --}}
-            <div class="rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md">
-                <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-white/60">Alfa Hari Ini</p>
-                        <p class="mt-2 text-4xl font-bold text-red-300">{{ $alfa }}</p>
+                        <p class="text-base font-semibold text-white">Absensi</p>
+                        <p class="text-sm text-white/60">Lihat data absensi</p>
                     </div>
-                    <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-red-500/30 text-red-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                </a>
+
+                {{-- Laporan Absensi --}}
+                <a href="{{ route('laporan.absensi') }}"
+                   class="flex items-center gap-4 rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md transition hover:bg-white/20">
+                    <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-indigo-500/30 text-indigo-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                  d="M9 17v-6a2 2 0 012-2h2a2 2 0 012 2v6m-6 0h6M3 17h18"/>
                         </svg>
                     </div>
-                </div>
+                    <div>
+                        <p class="text-base font-semibold text-white">Laporan Absensi</p>
+                        <p class="text-sm text-white/60">Rekapitulasi absensi</p>
+                    </div>
+                </a>
             </div>
         </div>
 
-        {{-- Menu --}}
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <a href="{{ route('santri.index') }}"
-               class="flex items-center gap-4 rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md transition hover:bg-white/20">
-                <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/30 text-blue-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M17 20h5v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2h5M12 12a4 4 0 100-8 4 4 0 000 8z"/>
-                    </svg>
-                </div>
-                <div>
-                    <p class="text-base font-semibold text-white">Data Santri</p>
-                    <p class="text-sm text-white/60">Kelola data santri pesantren</p>
-                </div>
-            </a>
-
-            <a href="{{ route('absensi.index') }}"
-               class="flex items-center gap-4 rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md transition hover:bg-white/20">
-                <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-green-500/30 text-green-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
-                    </svg>
-                </div>
-                <div>
-                    <p class="text-base font-semibold text-white">Absensi</p>
-                    <p class="text-sm text-white/60">Kelola absensi santri</p>
-                </div>
-            </a>
-        </div>
-
-        {{-- Latest Santri --}}
+        {{-- ===== Data Santri Terbaru ===== --}}
         <div class="rounded-2xl border border-white/20 bg-white/10 shadow-lg backdrop-blur-md">
             <div class="flex items-center justify-between border-b border-white/20 px-5 py-4">
                 <h2 class="text-base font-semibold text-white">Data Santri Terbaru</h2>
@@ -141,5 +234,6 @@
                 </table>
             </div>
         </div>
+
     </div>
 </x-app-layout>

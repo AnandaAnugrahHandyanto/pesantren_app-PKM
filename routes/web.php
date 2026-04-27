@@ -27,9 +27,11 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('role:guru')->group(function () {
         Route::get('/guru/dashboard', [DashboardController::class, 'guruDashboard'])->name('guru.dashboard');
-        Route::resource('absensi', AbsensiController::class)->except(['show']);
-        Route::get('/laporan/absensi', [LaporanController::class, 'absensi'])->name('laporan.absensi');
     });
+
+    // Accessible to both admin and guru
+    Route::resource('absensi', AbsensiController::class)->except(['show']);
+    Route::get('/laporan/absensi', [LaporanController::class, 'absensi'])->name('laporan.absensi');
 });
 
 require __DIR__.'/auth.php';
