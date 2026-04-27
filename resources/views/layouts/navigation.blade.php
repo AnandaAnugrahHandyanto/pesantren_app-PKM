@@ -7,7 +7,13 @@
     {{-- Logo / Brand --}}
     <div class="flex h-16 items-center border-b border-white/20 px-5">
         @php
-            $homeRoute = Auth::user()->role === 'admin' ? route('admin.dashboard') : (Auth::user()->role === 'guru' ? route('guru.dashboard') : route('dashboard'));
+            if (Auth::user()->role === 'admin') {
+                $homeRoute = route('admin.dashboard');
+            } elseif (Auth::user()->role === 'guru') {
+                $homeRoute = route('guru.dashboard');
+            } else {
+                $homeRoute = route('dashboard');
+            }
         @endphp
         <a href="{{ $homeRoute }}" class="flex items-center gap-2">
             <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/20">
