@@ -24,6 +24,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/dashboard', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
         Route::get('/santri/import', [SantriController::class, 'importForm'])->name('santri.import.form');
         Route::post('/santri/import', [SantriController::class, 'importExcel'])->name('santri.import');
+        Route::get('/santri/template', [SantriController::class, 'downloadTemplate'])->name('santri.template');
         Route::resource('santri', SantriController::class);
     });
 

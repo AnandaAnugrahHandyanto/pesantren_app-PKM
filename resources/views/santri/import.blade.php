@@ -55,6 +55,17 @@
                     <span>Format file yang didukung: <span class="font-medium text-white/80">.xlsx</span> dan <span class="font-medium text-white/80">.csv</span>.</span>
                 </li>
             </ul>
+
+            {{-- Download Template Button --}}
+            <div class="mt-4">
+                <a href="{{ route('santri.template') }}"
+                    class="inline-flex items-center gap-2 rounded-lg border border-emerald-400/40 bg-emerald-500/20 px-4 py-2 text-sm font-medium text-emerald-200 backdrop-blur-sm transition hover:bg-emerald-500/30 hover:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4" />
+                    </svg>
+                    Download Template Excel
+                </a>
+            </div>
         </div>
 
         {{-- Upload Form Card --}}

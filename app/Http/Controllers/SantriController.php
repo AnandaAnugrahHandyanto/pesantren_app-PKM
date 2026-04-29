@@ -93,6 +93,25 @@ class SantriController extends Controller
     }
 
     /**
+     * Download a blank CSV template for the santri import.
+     */
+    public function downloadTemplate()
+    {
+        $headers = [
+            'Content-Type'        => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="template_santri.csv"',
+        ];
+
+        $callback = function () {
+            $handle = fopen('php://output', 'w');
+            fputcsv($handle, ['nama', 'nis', 'kelas', 'alamat']);
+            fclose($handle);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+    /**
      * Show the form for importing santri data.
      */
     public function importForm()
