@@ -22,6 +22,8 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('role:admin')->group(function () {
         Route::get('/admin/dashboard', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
+        Route::get('/santri/import', [SantriController::class, 'importForm'])->name('santri.import.form');
+        Route::post('/santri/import', [SantriController::class, 'importExcel'])->name('santri.import');
         Route::resource('santri', SantriController::class);
     });
 

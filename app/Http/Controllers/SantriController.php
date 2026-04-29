@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\SantriImport;
 use App\Models\Santri;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SantriController extends Controller
 {
@@ -88,5 +90,28 @@ class SantriController extends Controller
 
         return redirect()->route('santri.index')
             ->with('success', 'Data santri berhasil dihapus');
+    }
+
+    /**
+     * Show the form for importing santri data.
+     */
+    public function importForm()
+    {
+        return view('santri.import');
+    }
+
+    /**
+     * Process the Excel import.
+     */
+    public function importExcel(Request $request)
+    {
+        $request->validate([
+            'file' => ['required', 'file', 'mimes:xlsx,csv'],
+        ]);
+
+        Excel::import(new SantriImport, $request->file('file'));
+
+        return redirect()->route('santri.index')
+            ->with('success', 'Data santri berhasil diimport');
     }
 }
