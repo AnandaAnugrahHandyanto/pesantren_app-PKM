@@ -35,6 +35,8 @@ Route::middleware('auth')->group(function () {
     // Accessible to both admin and guru
     Route::resource('absensi', AbsensiController::class)->except(['show']);
     Route::get('/laporan/absensi', [LaporanController::class, 'absensi'])->name('laporan.absensi');
+    Route::get('/rekap-absensi', [LaporanController::class, 'rekapSemester'])->name('rekap.absensi');
+    Route::get('/rekap-absensi/cetak', [LaporanController::class, 'rekapSemesterPrint'])->name('rekap.absensi.cetak');
 });
 
 require __DIR__.'/auth.php';

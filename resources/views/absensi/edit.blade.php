@@ -49,6 +49,7 @@
                         <option value="" disabled class="bg-indigo-950 text-white">Pilih status</option>
                         <option value="hadir" {{ old('status', $absensi->status) === 'hadir' ? 'selected' : '' }} class="bg-indigo-950 text-white">Hadir</option>
                         <option value="izin"  {{ old('status', $absensi->status) === 'izin'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Izin</option>
+                        <option value="sakit" {{ old('status', $absensi->status) === 'sakit' ? 'selected' : '' }} class="bg-indigo-950 text-white">Sakit</option>
                         <option value="alfa"  {{ old('status', $absensi->status) === 'alfa'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Alfa</option>
                     </select>
                 </div>

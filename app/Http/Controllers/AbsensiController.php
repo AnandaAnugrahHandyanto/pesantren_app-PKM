@@ -42,7 +42,7 @@ class AbsensiController extends Controller
         $validated = $request->validate([
             'santri_id' => ['required', 'exists:santris,id'],
             'tanggal'   => ['required', 'date'],
-            'status'    => ['required', Rule::in(['hadir', 'izin', 'alfa'])],
+            'status'    => ['required', Rule::in(['hadir', 'izin', 'sakit', 'alfa'])],
         ]);
 
         Absensi::updateOrCreate(
@@ -78,7 +78,7 @@ class AbsensiController extends Controller
                     ->where(fn ($q) => $q->where('santri_id', $request->santri_id))
                     ->ignore($absensi->id),
             ],
-            'status' => ['required', Rule::in(['hadir', 'izin', 'alfa'])],
+            'status' => ['required', Rule::in(['hadir', 'izin', 'sakit', 'alfa'])],
         ]);
 
         $absensi->update($validated);

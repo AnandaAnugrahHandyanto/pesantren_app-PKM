@@ -46,6 +46,7 @@
                         <option value="" disabled {{ old('status') ? '' : 'selected' }} class="bg-indigo-950 text-white">Pilih status</option>
                         <option value="hadir" {{ old('status') === 'hadir' ? 'selected' : '' }} class="bg-indigo-950 text-white">Hadir</option>
                         <option value="izin"  {{ old('status') === 'izin'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Izin</option>
+                        <option value="sakit" {{ old('status') === 'sakit' ? 'selected' : '' }} class="bg-indigo-950 text-white">Sakit</option>
                         <option value="alfa"  {{ old('status') === 'alfa'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Alfa</option>
                     </select>
                 </div>
