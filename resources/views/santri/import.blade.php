@@ -18,23 +18,17 @@
                     <thead>
                         <tr class="border-b border-white/10 bg-white/5">
                             <th class="px-4 py-2 text-left text-xs font-semibold uppercase tracking-wider text-white/70">nama</th>
-                            <th class="px-4 py-2 text-left text-xs font-semibold uppercase tracking-wider text-white/70">nis</th>
                             <th class="px-4 py-2 text-left text-xs font-semibold uppercase tracking-wider text-white/70">kelas</th>
-                            <th class="px-4 py-2 text-left text-xs font-semibold uppercase tracking-wider text-white/70">alamat</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-white/10">
                         <tr class="hover:bg-white/[0.04]">
                             <td class="px-4 py-2 text-white/70">Ahmad</td>
-                            <td class="px-4 py-2 text-white/70">1001</td>
                             <td class="px-4 py-2 text-white/70">7A</td>
-                            <td class="px-4 py-2 text-white/70">Bandung</td>
                         </tr>
                         <tr class="hover:bg-white/[0.04]">
                             <td class="px-4 py-2 text-white/70">Ali</td>
-                            <td class="px-4 py-2 text-white/70">1002</td>
                             <td class="px-4 py-2 text-white/70">7B</td>
-                            <td class="px-4 py-2 text-white/70">Garut</td>
                         </tr>
                     </tbody>
                 </table>
@@ -44,11 +38,11 @@
             <ul class="space-y-1 text-sm text-white/60">
                 <li class="flex items-start gap-2">
                     <span class="mt-0.5 text-yellow-400">•</span>
-                    <span>Header kolom harus sesuai persis: <span class="font-medium text-white/80">nama, nis, kelas, alamat</span>.</span>
+                    <span>Header kolom harus sesuai persis: <span class="font-medium text-white/80">nama, kelas</span>.</span>
                 </li>
                 <li class="flex items-start gap-2">
                     <span class="mt-0.5 text-yellow-400">•</span>
-                    <span>NIS tidak boleh duplikat — data dengan NIS yang sudah ada akan dilewati.</span>
+                    <span>Baris dengan kolom <span class="font-medium text-white/80">nama</span> yang kosong akan dilewati.</span>
                 </li>
                 <li class="flex items-start gap-2">
                     <span class="mt-0.5 text-yellow-400">•</span>

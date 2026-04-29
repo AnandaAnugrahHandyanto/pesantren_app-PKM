@@ -10,17 +10,15 @@ class SantriImport implements ToModel, WithHeadingRow
 {
     public function model(array $row): ?Santri
     {
-        $nis = isset($row['nis']) ? trim((string) $row['nis']) : null;
+        $nama = isset($row['nama']) ? trim((string) $row['nama']) : null;
 
-        if (empty($nis) || Santri::where('nis', $nis)->exists()) {
+        if (empty($nama)) {
             return null;
         }
 
         return new Santri([
-            'nis'   => $nis,
-            'nama'  => isset($row['nama']) ? trim((string) $row['nama']) : '',
+            'nama'  => $nama,
             'kelas' => isset($row['kelas']) ? trim((string) $row['kelas']) : '',
-            'kamar' => isset($row['alamat']) ? trim((string) $row['alamat']) : '', // 'alamat' in Excel maps to 'kamar' (room/location) in the database
         ]);
     }
 }

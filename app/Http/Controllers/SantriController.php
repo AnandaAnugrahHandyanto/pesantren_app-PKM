@@ -104,7 +104,7 @@ class SantriController extends Controller
 
         $callback = function () {
             $handle = fopen('php://output', 'w');
-            fputcsv($handle, ['nama', 'nis', 'kelas', 'alamat']);
+            fputcsv($handle, ['nama', 'kelas']);
             fclose($handle);
         };
 
