@@ -20,7 +20,7 @@ class SantriImport implements ToModel, WithHeadingRow
             'nis'   => $nis,
             'nama'  => isset($row['nama']) ? trim((string) $row['nama']) : '',
             'kelas' => isset($row['kelas']) ? trim((string) $row['kelas']) : '',
-            'kamar' => isset($row['alamat']) ? trim((string) $row['alamat']) : '',
+            'kamar' => isset($row['alamat']) ? trim((string) $row['alamat']) : '', // 'alamat' in Excel maps to 'kamar' (room/location) in the database
         ]);
     }
 }
