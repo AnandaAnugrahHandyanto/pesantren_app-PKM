@@ -40,10 +40,8 @@
                 <table class="min-w-full">
                     <thead>
                         <tr class="border-b border-white/10 bg-white/5">
-                            <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/70">NIS</th>
-                            <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/70">Nama</th>
+                            <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/70">Nama Lengkap</th>
                             <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/70">Kelas</th>
-                            <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/70">Kamar</th>
                             <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/70">Jenis Kelamin</th>
                             <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/70">Aksi</th>
                         </tr>
@@ -51,10 +49,8 @@
                     <tbody class="divide-y divide-white/10">
                         @forelse ($santris as $santri)
                             <tr class="transition hover:bg-white/[0.07]">
-                                <td class="px-5 py-3 text-sm text-white/70">{{ $santri->nis }}</td>
-                                <td class="px-5 py-3 text-sm font-medium text-white">{{ $santri->nama }}</td>
+                                <td class="px-5 py-3 text-sm font-medium text-white">{{ $santri->nama_lengkap }}</td>
                                 <td class="px-5 py-3 text-sm text-white/70">{{ $santri->kelas }}</td>
-                                <td class="px-5 py-3 text-sm text-white/70">{{ $santri->kamar }}</td>
                                 <td class="px-5 py-3 text-sm text-white/70">
                                     {{ $santri->jenis_kelamin === 'L' ? 'Laki-laki' : ($santri->jenis_kelamin === 'P' ? 'Perempuan' : '-') }}
                                 </td>
@@ -78,7 +74,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="px-5 py-8 text-center text-sm text-white/40">
+                                <td colspan="4" class="px-5 py-8 text-center text-sm text-white/40">
                                     Belum ada data santri.
                                 </td>
                             </tr>

@@ -33,10 +33,8 @@ class SantriController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nis' => ['required', 'string', 'max:255', 'unique:santris,nis'],
-            'nama' => ['required', 'string', 'max:255'],
+            'nama_lengkap' => ['required', 'string', 'max:255'],
             'kelas' => ['required', 'string', 'max:255'],
-            'kamar' => ['required', 'string', 'max:255'],
             'jenis_kelamin' => ['required', Rule::in(['L', 'P'])],
         ]);
 
@@ -68,10 +66,8 @@ class SantriController extends Controller
     public function update(Request $request, Santri $santri)
     {
         $validated = $request->validate([
-            'nis' => ['required', 'string', 'max:255', Rule::unique('santris', 'nis')->ignore($santri->id)],
-            'nama' => ['required', 'string', 'max:255'],
+            'nama_lengkap' => ['required', 'string', 'max:255'],
             'kelas' => ['required', 'string', 'max:255'],
-            'kamar' => ['required', 'string', 'max:255'],
             'jenis_kelamin' => ['required', Rule::in(['L', 'P'])],
         ]);
 
@@ -104,7 +100,7 @@ class SantriController extends Controller
 
         $callback = function () {
             $handle = fopen('php://output', 'w');
-            fputcsv($handle, ['nama', 'kelas']);
+            fputcsv($handle, ['nama_lengkap', 'kelas', 'jenis_kelamin']);
             fclose($handle);
         };
 

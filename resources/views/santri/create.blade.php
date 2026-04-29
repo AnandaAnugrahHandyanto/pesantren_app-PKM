@@ -9,19 +9,10 @@
                 @csrf
 
                 <div>
-                    <label for="nis" class="mb-1 block text-sm font-medium text-white/80">NIS <span aria-hidden="true">*</span></label>
-                    <input type="text" id="nis" name="nis" value="{{ old('nis') }}" maxlength="255" required aria-required="true"
+                    <label for="nama_lengkap" class="mb-1 block text-sm font-medium text-white/80">Nama Lengkap <span aria-hidden="true">*</span></label>
+                    <input type="text" id="nama_lengkap" name="nama_lengkap" value="{{ old('nama_lengkap') }}" maxlength="255" required aria-required="true"
                         class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white placeholder-white/40 backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
-                    @error('nis')
-                        <p class="mt-1 text-xs text-red-300">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div>
-                    <label for="nama" class="mb-1 block text-sm font-medium text-white/80">Nama <span aria-hidden="true">*</span></label>
-                    <input type="text" id="nama" name="nama" value="{{ old('nama') }}" maxlength="255" required aria-required="true"
-                        class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white placeholder-white/40 backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
-                    @error('nama')
+                    @error('nama_lengkap')
                         <p class="mt-1 text-xs text-red-300">{{ $message }}</p>
                     @enderror
                 </div>
@@ -31,15 +22,6 @@
                     <input type="text" id="kelas" name="kelas" value="{{ old('kelas') }}" maxlength="255" required aria-required="true"
                         class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white placeholder-white/40 backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
                     @error('kelas')
-                        <p class="mt-1 text-xs text-red-300">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div>
-                    <label for="kamar" class="mb-1 block text-sm font-medium text-white/80">Kamar <span aria-hidden="true">*</span></label>
-                    <input type="text" id="kamar" name="kamar" value="{{ old('kamar') }}" maxlength="255" required aria-required="true"
-                        class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white placeholder-white/40 backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
-                    @error('kamar')
                         <p class="mt-1 text-xs text-red-300">{{ $message }}</p>
                     @enderror
                 </div>

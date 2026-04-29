@@ -8,10 +8,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Santri extends Model
 {
     protected $fillable = [
-        'nis',
-        'nama',
+        'nama_lengkap',
         'kelas',
-        'kamar',
         'jenis_kelamin',
     ];
 

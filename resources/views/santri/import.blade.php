@@ -17,18 +17,21 @@
                 <table class="min-w-full text-sm">
                     <thead>
                         <tr class="border-b border-white/10 bg-white/5">
-                            <th class="px-4 py-2 text-left text-xs font-semibold uppercase tracking-wider text-white/70">nama</th>
+                            <th class="px-4 py-2 text-left text-xs font-semibold uppercase tracking-wider text-white/70">nama_lengkap</th>
                             <th class="px-4 py-2 text-left text-xs font-semibold uppercase tracking-wider text-white/70">kelas</th>
+                            <th class="px-4 py-2 text-left text-xs font-semibold uppercase tracking-wider text-white/70">jenis_kelamin</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-white/10">
                         <tr class="hover:bg-white/[0.04]">
                             <td class="px-4 py-2 text-white/70">Ahmad</td>
                             <td class="px-4 py-2 text-white/70">7A</td>
+                            <td class="px-4 py-2 text-white/70">Laki-laki</td>
                         </tr>
                         <tr class="hover:bg-white/[0.04]">
                             <td class="px-4 py-2 text-white/70">Ali</td>
                             <td class="px-4 py-2 text-white/70">7B</td>
+                            <td class="px-4 py-2 text-white/70">Perempuan</td>
                         </tr>
                     </tbody>
                 </table>
@@ -38,11 +41,15 @@
             <ul class="space-y-1 text-sm text-white/60">
                 <li class="flex items-start gap-2">
                     <span class="mt-0.5 text-yellow-400">•</span>
-                    <span>Header kolom harus sesuai persis: <span class="font-medium text-white/80">nama, kelas</span>.</span>
+                    <span>Header kolom harus sesuai persis: <span class="font-medium text-white/80">nama_lengkap, kelas, jenis_kelamin</span>.</span>
                 </li>
                 <li class="flex items-start gap-2">
                     <span class="mt-0.5 text-yellow-400">•</span>
-                    <span>Baris dengan kolom <span class="font-medium text-white/80">nama</span> yang kosong akan dilewati.</span>
+                    <span>Kolom <span class="font-medium text-white/80">nama_lengkap</span> wajib diisi; baris dengan nilai kosong akan dilewati.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="mt-0.5 text-yellow-400">•</span>
+                    <span>Kolom <span class="font-medium text-white/80">jenis_kelamin</span> harus berisi <span class="font-medium text-white/80">Laki-laki</span> atau <span class="font-medium text-white/80">Perempuan</span>.</span>
                 </li>
                 <li class="flex items-start gap-2">
                     <span class="mt-0.5 text-yellow-400">•</span>
