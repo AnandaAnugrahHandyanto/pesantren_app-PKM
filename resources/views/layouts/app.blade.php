@@ -11,6 +11,9 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        {{-- SweetAlert2 --}}
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
     <body class="font-sans antialiased">
         <div x-data="{ sidebarOpen: false }" class="relative min-h-screen overflow-hidden bg-gradient-to-br from-blue-950 via-indigo-950 to-cyan-950">
@@ -97,5 +100,41 @@
                 </main>
             </div>
         </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Global delete confirmation with SweetAlert2
+        document.querySelectorAll('.btn-delete').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                var form = btn.closest('form');
+                Swal.fire({
+                    title: 'Yakin ingin menghapus?',
+                    text: 'Data yang dihapus tidak dapat dikembalikan.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#ef4444',
+                    cancelButtonColor: '#6b7280',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal',
+                }).then(function (result) {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+
+        // Show SweetAlert2 success after a delete redirect
+        @if (session('deleted'))
+        Swal.fire({
+            title: 'Berhasil!',
+            text: '{{ session('deleted') }}',
+            icon: 'success',
+            timer: 2500,
+            showConfirmButton: false,
+        });
+        @endif
+    });
+    </script>
     </body>
 </html>
