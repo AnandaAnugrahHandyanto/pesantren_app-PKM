@@ -10,10 +10,12 @@ class LaporanController extends Controller
 {
     public function absensi(Request $request)
     {
-        $tanggal = $request->query('tanggal', today()->toDateString());
+        $tanggal  = $request->query('tanggal', today()->toDateString());
+        $kategori = $request->query('kategori', '');
 
         $absensis = Absensi::with('santri')
             ->whereDate('tanggal', $tanggal)
+            ->when($kategori, fn ($q) => $q->where('kategori', $kategori))
             ->orderBy('id')
             ->get();
 
@@ -23,7 +25,7 @@ class LaporanController extends Controller
             'alfa'  => $absensis->where('status', 'alfa')->count(),
         ];
 
-        return view('laporan.absensi', compact('absensis', 'tanggal', 'ringkasan'));
+        return view('laporan.absensi', compact('absensis', 'tanggal', 'ringkasan', 'kategori'));
     }
 
     public function rekapSemester(Request $request)
@@ -33,6 +35,7 @@ class LaporanController extends Controller
 
         $tahunAjaran = (int) $request->query('tahun_ajaran', $currentMonth >= 7 ? $currentYear : $currentYear - 1);
         $semester    = (int) $request->query('semester', $currentMonth >= 7 ? 1 : 2);
+        $kategori    = $request->query('kategori', '');
 
         // Semester 1: July–December of tahunAjaran
         // Semester 2: January–June of tahunAjaran + 1
@@ -47,19 +50,19 @@ class LaporanController extends Controller
 
         $rekap = Santri::orderBy('kelas')->orderBy('nama_lengkap')
             ->withCount([
-                'absensis as hadir' => fn ($q) => $q->where('status', 'hadir')->whereBetween('tanggal', [$from, $to]),
-                'absensis as izin'  => fn ($q) => $q->where('status', 'izin')->whereBetween('tanggal', [$from, $to]),
-                'absensis as sakit' => fn ($q) => $q->where('status', 'sakit')->whereBetween('tanggal', [$from, $to]),
-                'absensis as alfa'  => fn ($q) => $q->where('status', 'alfa')->whereBetween('tanggal', [$from, $to]),
+                'absensis as hadir' => fn ($q) => $q->where('status', 'hadir')->whereBetween('tanggal', [$from, $to])->when($kategori, fn ($q) => $q->where('kategori', $kategori)),
+                'absensis as izin'  => fn ($q) => $q->where('status', 'izin')->whereBetween('tanggal', [$from, $to])->when($kategori, fn ($q) => $q->where('kategori', $kategori)),
+                'absensis as sakit' => fn ($q) => $q->where('status', 'sakit')->whereBetween('tanggal', [$from, $to])->when($kategori, fn ($q) => $q->where('kategori', $kategori)),
+                'absensis as alfa'  => fn ($q) => $q->where('status', 'alfa')->whereBetween('tanggal', [$from, $to])->when($kategori, fn ($q) => $q->where('kategori', $kategori)),
             ])
             ->get();
 
         // Build a reasonable list of school years (last 5 years up to current)
-        $startYear   = 2020;
+        $startYear       = 2020;
         $tahunAjaranList = range($currentYear, $startYear, -1);
 
         return view('laporan.rekap-semester', compact(
-            'rekap', 'semester', 'tahunAjaran', 'tahunAjaranList', 'from', 'to'
+            'rekap', 'semester', 'tahunAjaran', 'tahunAjaranList', 'from', 'to', 'kategori'
         ));
     }
 
@@ -70,6 +73,7 @@ class LaporanController extends Controller
 
         $tahunAjaran = (int) $request->query('tahun_ajaran', $currentMonth >= 7 ? $currentYear : $currentYear - 1);
         $semester    = (int) $request->query('semester', $currentMonth >= 7 ? 1 : 2);
+        $kategori    = $request->query('kategori', '');
 
         if ($semester === 1) {
             $from = "{$tahunAjaran}-07-01";
@@ -82,15 +86,15 @@ class LaporanController extends Controller
 
         $rekap = Santri::orderBy('kelas')->orderBy('nama_lengkap')
             ->withCount([
-                'absensis as hadir' => fn ($q) => $q->where('status', 'hadir')->whereBetween('tanggal', [$from, $to]),
-                'absensis as izin'  => fn ($q) => $q->where('status', 'izin')->whereBetween('tanggal', [$from, $to]),
-                'absensis as sakit' => fn ($q) => $q->where('status', 'sakit')->whereBetween('tanggal', [$from, $to]),
-                'absensis as alfa'  => fn ($q) => $q->where('status', 'alfa')->whereBetween('tanggal', [$from, $to]),
+                'absensis as hadir' => fn ($q) => $q->where('status', 'hadir')->whereBetween('tanggal', [$from, $to])->when($kategori, fn ($q) => $q->where('kategori', $kategori)),
+                'absensis as izin'  => fn ($q) => $q->where('status', 'izin')->whereBetween('tanggal', [$from, $to])->when($kategori, fn ($q) => $q->where('kategori', $kategori)),
+                'absensis as sakit' => fn ($q) => $q->where('status', 'sakit')->whereBetween('tanggal', [$from, $to])->when($kategori, fn ($q) => $q->where('kategori', $kategori)),
+                'absensis as alfa'  => fn ($q) => $q->where('status', 'alfa')->whereBetween('tanggal', [$from, $to])->when($kategori, fn ($q) => $q->where('kategori', $kategori)),
             ])
             ->get();
 
         return view('laporan.rekap-semester-print', compact(
-            'rekap', 'semester', 'tahunAjaran', 'from', 'to'
+            'rekap', 'semester', 'tahunAjaran', 'from', 'to', 'kategori'
         ));
     }
 }

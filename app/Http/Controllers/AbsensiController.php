@@ -14,24 +14,27 @@ class AbsensiController extends Controller
      */
     public function index(Request $request)
     {
-        $tanggal = $request->query('tanggal', today()->toDateString());
+        $tanggal  = $request->query('tanggal', today()->toDateString());
+        $kategori = $request->query('kategori', '');
 
         $absensis = Absensi::with('santri')
             ->whereDate('tanggal', $tanggal)
+            ->when($kategori, fn ($q) => $q->where('kategori', $kategori))
             ->orderBy('id')
             ->get();
 
-        return view('absensi.index', compact('absensis', 'tanggal'));
+        return view('absensi.index', compact('absensis', 'tanggal', 'kategori'));
     }
 
     /**
      * Show the form for creating a new attendance record.
      */
-    public function create()
+    public function create(Request $request)
     {
-        $santris = Santri::orderBy('nama_lengkap')->get();
+        $santris  = Santri::orderBy('nama_lengkap')->get();
+        $kategori = $request->query('kategori', '');
 
-        return view('absensi.create', compact('santris'));
+        return view('absensi.create', compact('santris', 'kategori'));
     }
 
     /**
@@ -43,14 +46,19 @@ class AbsensiController extends Controller
             'santri_id' => ['required', 'exists:santris,id'],
             'tanggal'   => ['required', 'date'],
             'status'    => ['required', Rule::in(['hadir', 'izin', 'sakit', 'alfa'])],
+            'kategori'  => ['required', Rule::in(['sekolah', 'halaqoh', 'berkebun', 'dirosah'])],
         ]);
 
         Absensi::updateOrCreate(
-            ['santri_id' => $validated['santri_id'], 'tanggal' => $validated['tanggal']],
+            [
+                'santri_id' => $validated['santri_id'],
+                'tanggal'   => $validated['tanggal'],
+                'kategori'  => $validated['kategori'],
+            ],
             ['status' => $validated['status']]
         );
 
-        return redirect()->route('absensi.index', ['tanggal' => $validated['tanggal']])
+        return redirect()->route('absensi.index', ['tanggal' => $validated['tanggal'], 'kategori' => $validated['kategori']])
             ->with('success', 'Data absensi berhasil disimpan');
     }
 
@@ -75,15 +83,16 @@ class AbsensiController extends Controller
                 'required',
                 'date',
                 Rule::unique('absensis', 'tanggal')
-                    ->where(fn ($q) => $q->where('santri_id', $request->santri_id))
+                    ->where(fn ($q) => $q->where('santri_id', $request->santri_id)->where('kategori', $request->kategori))
                     ->ignore($absensi->id),
             ],
-            'status' => ['required', Rule::in(['hadir', 'izin', 'sakit', 'alfa'])],
+            'status'   => ['required', Rule::in(['hadir', 'izin', 'sakit', 'alfa'])],
+            'kategori' => ['required', Rule::in(['sekolah', 'halaqoh', 'berkebun', 'dirosah'])],
         ]);
 
         $absensi->update($validated);
 
-        return redirect()->route('absensi.index', ['tanggal' => $validated['tanggal']])
+        return redirect()->route('absensi.index', ['tanggal' => $validated['tanggal'], 'kategori' => $validated['kategori']])
             ->with('success', 'Data absensi berhasil diperbarui');
     }
 
@@ -92,10 +101,11 @@ class AbsensiController extends Controller
      */
     public function destroy(Absensi $absensi)
     {
-        $tanggal = $absensi->tanggal->toDateString();
+        $tanggal  = $absensi->tanggal->toDateString();
+        $kategori = $absensi->kategori;
         $absensi->delete();
 
-        return redirect()->route('absensi.index', ['tanggal' => $tanggal])
+        return redirect()->route('absensi.index', ['tanggal' => $tanggal, 'kategori' => $kategori])
             ->with('success', 'Data absensi berhasil dihapus');
     }
 }

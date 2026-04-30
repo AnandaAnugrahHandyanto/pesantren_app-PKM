@@ -19,6 +19,18 @@
                 @csrf
 
                 <div>
+                    <label for="kategori" class="mb-1 block text-sm font-medium text-white/80">Kategori</label>
+                    <select id="kategori" name="kategori" required
+                        class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
+                        <option value="" disabled {{ old('kategori', $kategori) === '' ? 'selected' : '' }} class="bg-indigo-950 text-white">Pilih kategori</option>
+                        <option value="sekolah"  {{ old('kategori', $kategori) === 'sekolah'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Sekolah</option>
+                        <option value="halaqoh"  {{ old('kategori', $kategori) === 'halaqoh'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Halaqoh</option>
+                        <option value="berkebun" {{ old('kategori', $kategori) === 'berkebun' ? 'selected' : '' }} class="bg-indigo-950 text-white">Berkebun</option>
+                        <option value="dirosah"  {{ old('kategori', $kategori) === 'dirosah'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Dirosah</option>
+                    </select>
+                </div>
+
+                <div>
                     <label for="santri_id" class="mb-1 block text-sm font-medium text-white/80">Santri</label>
                     <select id="santri_id" name="santri_id" required aria-label="Pilih santri"
                         class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
@@ -56,7 +68,7 @@
                         class="rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 px-5 py-2 text-sm font-medium text-white shadow-md transition hover:from-blue-400 hover:to-indigo-500 hover:shadow-lg">
                         Simpan
                     </button>
-                    <a href="{{ route('absensi.index') }}"
+                    <a href="{{ route('absensi.index', ['kategori' => $kategori]) }}"
                         class="rounded-lg border border-white/20 bg-white/10 px-5 py-2 text-sm font-medium text-white/80 backdrop-blur-sm transition hover:bg-white/20">
                         Batal
                     </a>

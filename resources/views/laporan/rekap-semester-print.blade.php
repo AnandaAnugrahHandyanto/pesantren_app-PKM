@@ -34,6 +34,7 @@
         Tahun Ajaran {{ $tahunAjaran }}/{{ $tahunAjaran + 1 }} &mdash;
         Periode {{ \Carbon\Carbon::parse($from)->translatedFormat('d F Y') }}
         s.d. {{ \Carbon\Carbon::parse($to)->translatedFormat('d F Y') }}
+        @if ($kategori) &mdash; Kategori: {{ ucfirst($kategori) }} @endif
     </p>
 
     <table>
@@ -80,7 +81,7 @@
 
     <div class="no-print">
         <button onclick="window.print()">🖨 Cetak</button>
-        <a href="{{ route('rekap.absensi', ['semester' => $semester, 'tahun_ajaran' => $tahunAjaran]) }}">
+        <a href="{{ route('rekap.absensi', ['semester' => $semester, 'tahun_ajaran' => $tahunAjaran, 'kategori' => $kategori]) }}">
             ← Kembali
         </a>
     </div>

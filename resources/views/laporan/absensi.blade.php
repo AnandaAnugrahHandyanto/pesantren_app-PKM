@@ -11,6 +11,16 @@
                 <label class="text-sm font-medium text-white/80">Pilih Tanggal:</label>
                 <input type="date" name="tanggal" value="{{ $tanggal }}"
                        class="rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
+
+                <select name="kategori"
+                        class="rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
+                    <option value="" {{ $kategori === '' ? 'selected' : '' }} class="bg-indigo-950 text-white">Semua Kategori</option>
+                    <option value="sekolah"  {{ $kategori === 'sekolah'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Sekolah</option>
+                    <option value="halaqoh"  {{ $kategori === 'halaqoh'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Halaqoh</option>
+                    <option value="berkebun" {{ $kategori === 'berkebun' ? 'selected' : '' }} class="bg-indigo-950 text-white">Berkebun</option>
+                    <option value="dirosah"  {{ $kategori === 'dirosah'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Dirosah</option>
+                </select>
+
                 <button type="submit"
                         class="rounded-xl bg-indigo-500/80 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition hover:bg-indigo-400/80">
                     Tampilkan
@@ -48,6 +58,7 @@
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">NIS</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Nama Santri</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Tanggal</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Kategori</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Status</th>
                     </tr>
                 </thead>
@@ -57,6 +68,7 @@
                             $badge = [
                                 'hadir' => 'bg-green-500/30 text-green-200',
                                 'izin'  => 'bg-yellow-500/30 text-yellow-200',
+                                'sakit' => 'bg-blue-500/30 text-blue-200',
                                 'alfa'  => 'bg-red-500/30 text-red-200',
                             ][$absensi->status] ?? 'bg-white/10 text-white/70';
                         @endphp
@@ -65,6 +77,7 @@
                             <td class="px-4 py-3 text-sm text-white/70">{{ $absensi->santri->nis }}</td>
                             <td class="px-4 py-3 text-sm font-medium text-white">{{ $absensi->santri->nama_lengkap }}</td>
                             <td class="px-4 py-3 text-sm text-white/70">{{ $absensi->tanggal->format('d/m/Y') }}</td>
+                            <td class="px-4 py-3 text-sm text-white/70">{{ ucfirst($absensi->kategori) }}</td>
                             <td class="px-4 py-3 text-sm">
                                 <span class="rounded-lg px-2 py-1 text-xs font-semibold {{ $badge }}">
                                     {{ ucfirst($absensi->status) }}
@@ -73,7 +86,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-4 py-8 text-center text-sm text-white/40">
+                            <td colspan="6" class="px-4 py-8 text-center text-sm text-white/40">
                                 Tidak ada data absensi untuk tanggal ini.
                             </td>
                         </tr>

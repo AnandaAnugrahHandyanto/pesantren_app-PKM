@@ -11,6 +11,7 @@ class Absensi extends Model
         'santri_id',
         'tanggal',
         'status',
+        'kategori',
     ];
 
     protected $casts = [
