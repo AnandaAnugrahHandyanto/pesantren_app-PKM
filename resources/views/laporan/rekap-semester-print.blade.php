@@ -52,7 +52,7 @@
             @forelse ($rekap as $i => $santri)
                 <tr>
                     <td class="num">{{ $i + 1 }}</td>
-                    <td>{{ $santri->nama }}</td>
+                    <td>{{ $santri->nama_lengkap }}</td>
                     <td>{{ $santri->kelas }}</td>
                     <td class="num">{{ $santri->hadir }}</td>
                     <td class="num">{{ $santri->izin }}</td>

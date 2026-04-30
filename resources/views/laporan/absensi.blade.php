@@ -63,7 +63,7 @@
                         <tr class="transition hover:bg-white/10">
                             <td class="px-4 py-3 text-sm text-white/70">{{ $i + 1 }}</td>
                             <td class="px-4 py-3 text-sm text-white/70">{{ $absensi->santri->nis }}</td>
-                            <td class="px-4 py-3 text-sm font-medium text-white">{{ $absensi->santri->nama }}</td>
+                            <td class="px-4 py-3 text-sm font-medium text-white">{{ $absensi->santri->nama_lengkap }}</td>
                             <td class="px-4 py-3 text-sm text-white/70">{{ $absensi->tanggal->format('d/m/Y') }}</td>
                             <td class="px-4 py-3 text-sm">
                                 <span class="rounded-lg px-2 py-1 text-xs font-semibold {{ $badge }}">

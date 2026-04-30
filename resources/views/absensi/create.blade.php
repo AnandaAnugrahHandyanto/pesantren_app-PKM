@@ -25,7 +25,7 @@
                         <option value="" disabled selected aria-hidden="true" class="bg-indigo-950 text-white">Pilih santri</option>
                         @foreach ($santris as $santri)
                             <option value="{{ $santri->id }}" {{ old('santri_id') == $santri->id ? 'selected' : '' }} class="bg-indigo-950 text-white">
-                                {{ $santri->nis }} – {{ $santri->nama }}
+                                {{ $santri->nis }} – {{ $santri->nama_lengkap }}
                             </option>
                         @endforeach
                     </select>

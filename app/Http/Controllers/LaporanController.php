@@ -45,7 +45,7 @@ class LaporanController extends Controller
             $to       = "{$yearSem2}-06-30";
         }
 
-        $rekap = Santri::orderBy('kelas')->orderBy('nama')
+        $rekap = Santri::orderBy('kelas')->orderBy('nama_lengkap')
             ->withCount([
                 'absensis as hadir' => fn ($q) => $q->where('status', 'hadir')->whereBetween('tanggal', [$from, $to]),
                 'absensis as izin'  => fn ($q) => $q->where('status', 'izin')->whereBetween('tanggal', [$from, $to]),
@@ -80,7 +80,7 @@ class LaporanController extends Controller
             $to       = "{$yearSem2}-06-30";
         }
 
-        $rekap = Santri::orderBy('kelas')->orderBy('nama')
+        $rekap = Santri::orderBy('kelas')->orderBy('nama_lengkap')
             ->withCount([
                 'absensis as hadir' => fn ($q) => $q->where('status', 'hadir')->whereBetween('tanggal', [$from, $to]),
                 'absensis as izin'  => fn ($q) => $q->where('status', 'izin')->whereBetween('tanggal', [$from, $to]),

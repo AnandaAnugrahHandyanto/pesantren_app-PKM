@@ -83,7 +83,7 @@
                     @forelse ($rekap as $i => $santri)
                         <tr class="transition hover:bg-white/[0.04]">
                             <td class="px-4 py-3 text-sm text-white/50">{{ $i + 1 }}</td>
-                            <td class="px-4 py-3 text-sm font-medium text-white">{{ $santri->nama }}</td>
+                            <td class="px-4 py-3 text-sm font-medium text-white">{{ $santri->nama_lengkap }}</td>
                             <td class="px-4 py-3 text-sm text-white/70">{{ $santri->kelas }}</td>
                             <td class="px-4 py-3 text-center">
                                 <span class="inline-block min-w-[2rem] rounded-lg bg-green-500/20 px-2 py-0.5 text-sm font-semibold text-green-200">

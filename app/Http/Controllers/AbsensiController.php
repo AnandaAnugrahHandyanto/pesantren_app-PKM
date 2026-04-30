@@ -29,7 +29,7 @@ class AbsensiController extends Controller
      */
     public function create()
     {
-        $santris = Santri::orderBy('nama')->get();
+        $santris = Santri::orderBy('nama_lengkap')->get();
 
         return view('absensi.create', compact('santris'));
     }
@@ -59,7 +59,7 @@ class AbsensiController extends Controller
      */
     public function edit(Absensi $absensi)
     {
-        $santris = Santri::orderBy('nama')->get();
+        $santris = Santri::orderBy('nama_lengkap')->get();
 
         return view('absensi.edit', compact('absensi', 'santris'));
     }

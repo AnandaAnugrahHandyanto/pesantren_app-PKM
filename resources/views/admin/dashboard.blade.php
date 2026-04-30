@@ -218,7 +218,7 @@
                         @forelse ($latestSantri as $santri)
                             <tr class="transition hover:bg-white/10">
                                 <td class="px-5 py-3 text-sm text-white/70">{{ $santri->nis }}</td>
-                                <td class="px-5 py-3 text-sm font-medium text-white">{{ $santri->nama }}</td>
+                                <td class="px-5 py-3 text-sm font-medium text-white">{{ $santri->nama_lengkap }}</td>
                                 <td class="px-5 py-3 text-sm text-white/70">{{ $santri->kelas }}</td>
                                 <td class="px-5 py-3 text-sm text-white/70">{{ $santri->kamar }}</td>
                                 <td class="px-5 py-3 text-sm text-white/70">
