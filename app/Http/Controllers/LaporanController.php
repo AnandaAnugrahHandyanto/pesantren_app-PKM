@@ -22,6 +22,7 @@ class LaporanController extends Controller
         $ringkasan = [
             'hadir' => $absensis->where('status', 'hadir')->count(),
             'izin'  => $absensis->where('status', 'izin')->count(),
+            'sakit' => $absensis->where('status', 'sakit')->count(),
             'alfa'  => $absensis->where('status', 'alfa')->count(),
         ];
 

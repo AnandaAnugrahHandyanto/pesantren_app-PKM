@@ -50,6 +50,7 @@ class DashboardController extends Controller
         return [
             'hadir' => $counts->get('hadir', 0),
             'izin'  => $counts->get('izin', 0),
+            'sakit' => $counts->get('sakit', 0),
             'alfa'  => $counts->get('alfa', 0),
         ];
     }

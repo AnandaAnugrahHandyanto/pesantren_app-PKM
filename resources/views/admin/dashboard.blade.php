@@ -78,7 +78,7 @@
         {{-- ===== Rekap Absensi Hari Ini ===== --}}
         <div>
             <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-white/40">Rekap Absensi Hari Ini</p>
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
                 {{-- Hadir --}}
                 <div class="rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md">
                     <div class="flex items-center justify-between">
@@ -106,6 +106,22 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                       d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Sakit --}}
+                <div class="rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-white/60">Sakit</p>
+                            <p class="mt-2 text-4xl font-bold text-blue-300">{{ $sakit }}</p>
+                        </div>
+                        <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-500/30 text-blue-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                             </svg>
                         </div>
                     </div>
@@ -207,27 +223,23 @@
                 <table class="min-w-full">
                     <thead>
                         <tr class="border-b border-white/10 bg-white/5">
-                            <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">NIS</th>
                             <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Nama</th>
                             <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Kelas</th>
-                            <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Kamar</th>
                             <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Jenis Kelamin</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-white/10">
                         @forelse ($latestSantri as $santri)
                             <tr class="transition hover:bg-white/10">
-                                <td class="px-5 py-3 text-sm text-white/70">{{ $santri->nis }}</td>
                                 <td class="px-5 py-3 text-sm font-medium text-white">{{ $santri->nama_lengkap }}</td>
                                 <td class="px-5 py-3 text-sm text-white/70">{{ $santri->kelas }}</td>
-                                <td class="px-5 py-3 text-sm text-white/70">{{ $santri->kamar }}</td>
                                 <td class="px-5 py-3 text-sm text-white/70">
                                     {{ $santri->jenis_kelamin === 'L' ? 'Laki-laki' : ($santri->jenis_kelamin === 'P' ? 'Perempuan' : '-') }}
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="px-5 py-8 text-center text-sm text-white/40">Belum ada data santri.</td>
+                                <td colspan="3" class="px-5 py-8 text-center text-sm text-white/40">Belum ada data santri.</td>
                             </tr>
                         @endforelse
                     </tbody>

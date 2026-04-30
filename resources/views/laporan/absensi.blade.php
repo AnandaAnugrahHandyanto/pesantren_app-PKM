@@ -34,7 +34,7 @@
         </div>
 
         {{-- Ringkasan --}}
-        <div class="grid grid-cols-3 gap-4">
+        <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
             <div class="rounded-2xl border border-green-400/30 bg-green-500/20 p-4 text-center shadow-lg backdrop-blur-md">
                 <p class="text-xs font-semibold uppercase tracking-wide text-green-300">Hadir</p>
                 <p class="mt-1 text-3xl font-bold text-green-200">{{ $ringkasan['hadir'] }}</p>
@@ -42,6 +42,10 @@
             <div class="rounded-2xl border border-yellow-400/30 bg-yellow-500/20 p-4 text-center shadow-lg backdrop-blur-md">
                 <p class="text-xs font-semibold uppercase tracking-wide text-yellow-300">Izin</p>
                 <p class="mt-1 text-3xl font-bold text-yellow-200">{{ $ringkasan['izin'] }}</p>
+            </div>
+            <div class="rounded-2xl border border-blue-400/30 bg-blue-500/20 p-4 text-center shadow-lg backdrop-blur-md">
+                <p class="text-xs font-semibold uppercase tracking-wide text-blue-300">Sakit</p>
+                <p class="mt-1 text-3xl font-bold text-blue-200">{{ $ringkasan['sakit'] }}</p>
             </div>
             <div class="rounded-2xl border border-red-400/30 bg-red-500/20 p-4 text-center shadow-lg backdrop-blur-md">
                 <p class="text-xs font-semibold uppercase tracking-wide text-red-300">Alfa</p>
@@ -55,7 +59,6 @@
                 <thead>
                     <tr class="border-b border-white/10 bg-white/5">
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">No</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">NIS</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Nama Santri</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Tanggal</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Kategori</th>
@@ -74,7 +77,6 @@
                         @endphp
                         <tr class="transition hover:bg-white/10">
                             <td class="px-4 py-3 text-sm text-white/70">{{ $i + 1 }}</td>
-                            <td class="px-4 py-3 text-sm text-white/70">{{ $absensi->santri->nis }}</td>
                             <td class="px-4 py-3 text-sm font-medium text-white">{{ $absensi->santri->nama_lengkap }}</td>
                             <td class="px-4 py-3 text-sm text-white/70">{{ $absensi->tanggal->format('d/m/Y') }}</td>
                             <td class="px-4 py-3 text-sm text-white/70">{{ ucfirst($absensi->kategori) }}</td>
@@ -86,7 +88,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="px-4 py-8 text-center text-sm text-white/40">
+                            <td colspan="5" class="px-4 py-8 text-center text-sm text-white/40">
                                 Tidak ada data absensi untuk tanggal ini.
                             </td>
                         </tr>

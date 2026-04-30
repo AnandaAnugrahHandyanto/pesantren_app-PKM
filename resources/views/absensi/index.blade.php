@@ -48,7 +48,6 @@
                     <thead>
                         <tr class="border-b border-white/10 bg-white/5">
                             <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/70">No</th>
-                            <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/70">NIS</th>
                             <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/70">Nama</th>
                             <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/70">Tanggal</th>
                             <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/70">Kategori</th>
@@ -60,7 +59,6 @@
                         @forelse ($absensis as $i => $absensi)
                             <tr class="transition hover:bg-white/[0.07]">
                                 <td class="px-5 py-3 text-sm text-white/70">{{ $i + 1 }}</td>
-                                <td class="px-5 py-3 text-sm text-white/70">{{ $absensi->santri->nis }}</td>
                                 <td class="px-5 py-3 text-sm font-medium text-white">{{ $absensi->santri->nama_lengkap }}</td>
                                 <td class="px-5 py-3 text-sm text-white/70">{{ $absensi->tanggal->format('d/m/Y') }}</td>
                                 <td class="px-5 py-3 text-sm text-white/70">{{ ucfirst($absensi->kategori) }}</td>
@@ -97,7 +95,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="px-5 py-8 text-center text-sm text-white/40">
+                                <td colspan="6" class="px-5 py-8 text-center text-sm text-white/40">
                                     Belum ada data absensi untuk tanggal ini.
                                 </td>
                             </tr>
