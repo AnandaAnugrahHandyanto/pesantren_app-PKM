@@ -67,6 +67,14 @@
                     class="rounded-lg border border-emerald-300/50 bg-emerald-500/20 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-500/30">
                     Hadir Semua
                 </button>
+                <button type="button" id="btn-isi-alfa"
+                    class="rounded-lg border border-rose-300/40 bg-rose-500/20 px-4 py-2 text-sm font-semibold text-rose-100 transition hover:bg-rose-500/30">
+                    Isi Belum Absen Menjadi Alfa
+                </button>
+                <button type="button" id="btn-reset-absensi"
+                    class="rounded-lg border border-white/30 bg-white/10 px-4 py-2 text-sm font-semibold text-white/90 transition hover:bg-white/20">
+                    Reset Absensi
+                </button>
                 <span id="visible-counter" class="ms-auto text-xs font-medium text-white/70">
                     0 / {{ $santris->count() }} santri tampil
                 </span>
@@ -79,10 +87,15 @@
             <input type="hidden" name="kategori" value="{{ $kategori }}">
 
             <div class="flex items-center justify-between border-b border-white/15 px-4 py-3 sm:px-5">
-                <div class="text-sm text-white/75">
-                    Isi status lalu klik <span class="font-semibold text-white">Simpan Absensi</span>
+                <div class="flex flex-wrap items-center gap-2 text-sm text-white/75">
+                    <span>Isi status lalu klik <span class="font-semibold text-white">Simpan Absensi</span></span>
+                    <span id="draft-state-badge"
+                        class="rounded-full border px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide">
+                    </span>
+                    <span id="filled-counter" class="text-xs font-semibold text-white/70"></span>
                 </div>
                 <button type="submit"
+                    id="btn-simpan-absensi"
                     class="rounded-lg bg-gradient-to-r from-cyan-500/90 to-blue-600/90 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition hover:from-cyan-400 hover:to-blue-500">
                     Simpan Absensi
                 </button>
@@ -101,31 +114,19 @@
                     </thead>
                     <tbody id="absensi-tbody" class="divide-y divide-white/10">
                         @forelse ($santris as $index => $santri)
-                            @php
-                                $existingStatus = old("absensi.{$santri->id}", $statusBySantri[$santri->id] ?? '');
-                            @endphp
                             <tr class="attendance-row transition duration-150 hover:bg-white/10"
                                 data-santri-row
                                 data-name="{{ strtolower($santri->nama_lengkap) }}"
                                 data-kelas="{{ strtolower($santri->kelas ?? '-') }}"
-                                data-row-id="{{ $santri->id }}"
-                                data-existing-status="{{ $statusBySantri[$santri->id] ?? '' }}"
-                                data-status="{{ $existingStatus }}">
+                                data-row-id="{{ $santri->id }}">
                                 <td class="px-3 py-2.5 text-sm text-white/70">{{ $index + 1 }}</td>
                                 <td class="px-3 py-2.5 text-sm font-medium text-white">
-                                    <div class="flex items-center gap-2">
-                                        <span>{{ $santri->nama_lengkap }}</span>
-                                        @if (isset($statusBySantri[$santri->id]))
-                                            <span class="rounded-full border border-cyan-300/40 bg-cyan-500/20 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-cyan-100">
-                                                Tersimpan
-                                            </span>
-                                        @endif
-                                    </div>
+                                    <span>{{ $santri->nama_lengkap }}</span>
                                 </td>
                                 <td class="px-3 py-2.5 text-sm text-white/80">{{ $santri->kelas ?? '-' }}</td>
                                 <td class="px-3 py-2.5 text-sm text-white/80">{{ $santri->jenis_kelamin ?? '-' }}</td>
                                 <td class="px-3 py-2.5">
-                                    <input type="hidden" name="absensi[{{ $santri->id }}]" value="{{ $existingStatus }}" data-status-input>
+                                    <input type="hidden" name="absensi[{{ $santri->id }}]" value="{{ old("absensi.{$santri->id}", '') }}" data-status-input>
                                     <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
                                         @foreach ($statusOptions as $statusOption)
                                             <button type="button"
@@ -179,11 +180,19 @@
             const kelasFilter = document.getElementById('kelas_filter');
             const searchInput = document.getElementById('search_santri');
             const visibleCounter = document.getElementById('visible-counter');
+            const filledCounter = document.getElementById('filled-counter');
+            const draftStateBadge = document.getElementById('draft-state-badge');
             const hadirSemuaBtn = document.getElementById('btn-hadir-semua');
+            const isiAlfaBtn = document.getElementById('btn-isi-alfa');
+            const resetAbsensiBtn = document.getElementById('btn-reset-absensi');
+            const submitBtn = document.getElementById('btn-simpan-absensi');
             const form = document.getElementById('mass-absensi-form');
+            const totalRows = rows.length;
             const tanggal = form.querySelector('input[name="tanggal"]').value;
             const kategori = form.querySelector('input[name="kategori"]').value;
             const storageKey = `absensi-draft:${tanggal}:${kategori}`;
+            const hasSaveSuccess = @js((bool) session('success'));
+            const defaultButtonClass = 'status-badge rounded-lg border border-white/20 px-2 py-1.5 text-xs font-semibold text-white/90 transition duration-150 hover:-translate-y-[1px]';
 
             const rowStatusClasses = {
                 hadir: ['bg-emerald-500/20', 'hover:bg-emerald-500/25'],
@@ -200,6 +209,39 @@
             };
 
             const normalize = (value) => (value || '').toLowerCase().trim();
+            const isAllHadir = () => rows.every((row) => row.querySelector('[data-status-input]').value === 'hadir');
+            const getFilledCount = () => rows.filter((row) => row.querySelector('[data-status-input]').value).length;
+
+            const clearDraft = () => localStorage.removeItem(storageKey);
+
+            const setDraftBadgeState = (state) => {
+                draftStateBadge.className = 'rounded-full border px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide';
+                if (state === 'saved') {
+                    draftStateBadge.classList.add('border-emerald-300/40', 'bg-emerald-500/20', 'text-emerald-100');
+                    draftStateBadge.textContent = 'Tersimpan';
+                    return;
+                }
+
+                draftStateBadge.classList.add('border-orange-300/40', 'bg-orange-500/20', 'text-orange-100');
+                draftStateBadge.textContent = 'Belum disimpan';
+            };
+
+            const updateSubmitState = () => {
+                const filledCount = getFilledCount();
+                const allFilled = totalRows > 0 && filledCount === totalRows;
+                submitBtn.disabled = !allFilled;
+                submitBtn.classList.toggle('opacity-50', !allFilled);
+                submitBtn.classList.toggle('cursor-not-allowed', !allFilled);
+                filledCounter.textContent = `${filledCount} / ${totalRows} santri sudah diabsen`;
+            };
+
+            const syncMassButtonText = () => {
+                const allHadir = isAllHadir() && getFilledCount() === totalRows && totalRows > 0;
+                hadirSemuaBtn.textContent = allHadir ? 'Batalkan Hadir Semua' : 'Hadir Semua';
+                hadirSemuaBtn.className = allHadir
+                    ? 'rounded-lg border border-slate-300/50 bg-slate-500/20 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:bg-slate-500/30'
+                    : 'rounded-lg border border-emerald-300/50 bg-emerald-500/20 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-500/30';
+            };
 
             const saveDraft = () => {
                 const payload = {};
@@ -209,10 +251,10 @@
                     payload[id] = input.value || '';
                 });
                 localStorage.setItem(storageKey, JSON.stringify(payload));
+                setDraftBadgeState('draft');
             };
 
             const updateRowVisual = (row, status) => {
-                row.dataset.status = status;
                 row.classList.remove(
                     'bg-emerald-500/20', 'hover:bg-emerald-500/25',
                     'bg-yellow-500/20', 'hover:bg-yellow-500/25',
@@ -226,11 +268,31 @@
 
                 const buttons = row.querySelectorAll('[data-status-btn]');
                 buttons.forEach((button) => {
-                    button.className = 'status-badge rounded-lg border border-white/20 px-2 py-1.5 text-xs font-semibold text-white/90 transition hover:-translate-y-[1px]';
+                    button.className = defaultButtonClass;
                     if (button.dataset.statusBtn === status) {
                         button.className = `${button.className} ${badgeClasses[status]}`;
                     }
                 });
+            };
+
+            const setStatus = (row, status, options = {
+                persistDraft: true,
+                markDraft: true
+            }) => {
+                const input = row.querySelector('[data-status-input]');
+                input.value = status;
+                updateRowVisual(row, status);
+
+                updateSubmitState();
+                syncMassButtonText();
+
+                if (options.markDraft) {
+                    setDraftBadgeState('draft');
+                }
+
+                if (options.persistDraft) {
+                    saveDraft();
+                }
             };
 
             const applyFilter = () => {
@@ -251,6 +313,20 @@
                 visibleCounter.textContent = `${visible} / ${rows.length} santri tampil`;
             };
 
+            const resetAllStatuses = (markDraft = true) => {
+                rows.forEach((row) => {
+                    setStatus(row, '', { persistDraft: false, markDraft: false });
+                });
+                clearDraft();
+                syncMassButtonText();
+                updateSubmitState();
+                if (markDraft) {
+                    setDraftBadgeState('draft');
+                } else {
+                    setDraftBadgeState('saved');
+                }
+            };
+
             const restoreDraft = () => {
                 const raw = localStorage.getItem(storageKey);
                 if (!raw) {
@@ -261,51 +337,76 @@
                     const draft = JSON.parse(raw);
                     rows.forEach((row) => {
                         const rowId = row.dataset.rowId;
-                        const existing = row.dataset.existingStatus;
-                        const input = row.querySelector('[data-status-input]');
-                        const statusFromDraft = draft[rowId];
-                        const statusFromInput = input.value;
-                        const status = statusFromDraft || statusFromInput || existing || '';
-                        input.value = status;
-                        updateRowVisual(row, status);
+                        const status = draft[rowId] || '';
+                        setStatus(row, status, { persistDraft: false, markDraft: false });
                     });
+                    setDraftBadgeState('draft');
                 } catch (error) {
                     console.warn('Draft absensi rusak dan telah dibersihkan.', error);
-                    localStorage.removeItem(storageKey);
+                    clearDraft();
                 }
             };
 
             rows.forEach((row) => {
                 const input = row.querySelector('[data-status-input]');
-                updateRowVisual(row, input.value || row.dataset.existingStatus || '');
+                updateRowVisual(row, input.value || '');
                 row.querySelectorAll('[data-status-btn]').forEach((button) => {
                     button.addEventListener('click', () => {
                         const status = button.dataset.statusBtn;
-                        input.value = status;
-                        updateRowVisual(row, status);
-                        saveDraft();
+                        setStatus(row, status);
                     });
                 });
             });
 
             hadirSemuaBtn?.addEventListener('click', () => {
+                const currentlyAllHadir = isAllHadir() && getFilledCount() === totalRows && totalRows > 0;
+                if (currentlyAllHadir) {
+                    resetAllStatuses(true);
+                    return;
+                }
+
                 rows.forEach((row) => {
-                    const input = row.querySelector('[data-status-input]');
-                    input.value = 'hadir';
-                    updateRowVisual(row, 'hadir');
+                    setStatus(row, 'hadir', { persistDraft: false, markDraft: false });
                 });
                 saveDraft();
+                syncMassButtonText();
+                updateSubmitState();
+                setDraftBadgeState('draft');
+            });
+
+            isiAlfaBtn?.addEventListener('click', () => {
+                rows.forEach((row) => {
+                    const input = row.querySelector('[data-status-input]');
+                    if (!input.value) {
+                        setStatus(row, 'alfa', { persistDraft: false, markDraft: false });
+                    }
+                });
+                saveDraft();
+                syncMassButtonText();
+                updateSubmitState();
+                setDraftBadgeState('draft');
+            });
+
+            resetAbsensiBtn?.addEventListener('click', () => {
+                resetAllStatuses(true);
             });
 
             kelasFilter?.addEventListener('change', applyFilter);
             searchInput?.addEventListener('input', applyFilter);
-
-            form.addEventListener('submit', () => {
-                localStorage.removeItem(storageKey);
-            });
-
-            restoreDraft();
+            syncMassButtonText();
             applyFilter();
+
+            if (hasSaveSuccess) {
+                clearDraft();
+                setDraftBadgeState('saved');
+                updateSubmitState();
+            } else {
+                setDraftBadgeState('draft');
+                updateSubmitState();
+                restoreDraft();
+                updateSubmitState();
+                syncMassButtonText();
+            }
         });
     </script>
 </x-app-layout>

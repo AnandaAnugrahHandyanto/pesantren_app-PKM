@@ -32,14 +32,6 @@ class AbsensiController extends Controller
             ->orderBy('nama_lengkap')
             ->get();
 
-        $existingAbsensi = Absensi::query()
-            ->select(['santri_id', 'status'])
-            ->whereDate('tanggal', $tanggal)
-            ->where('kategori', $kategori)
-            ->whereIn('santri_id', $santris->pluck('id'))
-            ->get();
-
-        $statusBySantri = $existingAbsensi->pluck('status', 'santri_id');
         $kelasOptions = $santris->pluck('kelas')->filter()->unique()->sort()->values();
 
         return view('absensi.index', [
@@ -48,7 +40,6 @@ class AbsensiController extends Controller
             'kategori' => $kategori,
             'kategoriOptions' => self::KATEGORI_OPTIONS,
             'statusOptions' => self::STATUS_OPTIONS,
-            'statusBySantri' => $statusBySantri,
             'kelasOptions' => $kelasOptions,
         ]);
     }
