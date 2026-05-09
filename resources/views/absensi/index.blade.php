@@ -258,7 +258,9 @@
                         const rowId = row.dataset.rowId;
                         const existing = row.dataset.existingStatus;
                         const input = row.querySelector('[data-status-input]');
-                        const status = draft[rowId] ?? input.value ?? existing ?? '';
+                        const statusFromDraft = draft[rowId];
+                        const statusFromInput = input.value;
+                        const status = statusFromDraft || statusFromInput || existing || '';
                         input.value = status;
                         updateRowVisual(row, status);
                     });
