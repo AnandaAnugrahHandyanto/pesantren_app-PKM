@@ -85,10 +85,38 @@
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">No</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Nama Santri</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Kelas</th>
-                        <th class="px-4 py-3 text-center text-xs font-semibold uppercase tracking-wider text-green-400/80">Hadir</th>
-                        <th class="px-4 py-3 text-center text-xs font-semibold uppercase tracking-wider text-yellow-400/80">Izin</th>
-                        <th class="px-4 py-3 text-center text-xs font-semibold uppercase tracking-wider text-blue-400/80">Sakit</th>
-                        <th class="px-4 py-3 text-center text-xs font-semibold uppercase tracking-wider text-red-400/80">Alfa</th>
+                        <th class="px-4 py-3 text-center text-xs font-semibold uppercase tracking-wider text-green-300">
+                            <span title="Hadir - Sukses/Valid" class="inline-flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Hadir
+                            </span>
+                        </th>
+                        <th class="px-4 py-3 text-center text-xs font-semibold uppercase tracking-wider text-amber-300">
+                            <span title="Izin - Menunggu/Persetujuan" class="inline-flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                Izin
+                            </span>
+                        </th>
+                        <th class="px-4 py-3 text-center text-xs font-semibold uppercase tracking-wider text-rose-300">
+                            <span title="Sakit - Kondisi Kesehatan" class="inline-flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                </svg>
+                                Sakit
+                            </span>
+                        </th>
+                        <th class="px-4 py-3 text-center text-xs font-semibold uppercase tracking-wider text-red-300">
+                            <span title="Alfa - Tidak Hadir Tanpa Keterangan" class="inline-flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Alfa
+                            </span>
+                        </th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-white/10">
@@ -98,22 +126,34 @@
                             <td class="px-4 py-3 text-sm font-medium text-white">{{ $santri->nama_lengkap }}</td>
                             <td class="px-4 py-3 text-sm text-white/70">{{ $santri->kelas }}</td>
                             <td class="px-4 py-3 text-center">
-                                <span class="inline-block min-w-[2rem] rounded-lg bg-green-500/20 px-2 py-0.5 text-sm font-semibold text-green-200">
+                                <span title="Total Hadir" class="inline-flex min-w-[2.8rem] items-center justify-center gap-1 rounded-lg border border-emerald-300/30 bg-emerald-500/20 px-2 py-0.5 text-sm font-semibold text-emerald-100 transition duration-200 hover:shadow-[0_0_16px_rgba(16,185,129,0.28)]">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
                                     {{ $santri->hadir }}
                                 </span>
                             </td>
                             <td class="px-4 py-3 text-center">
-                                <span class="inline-block min-w-[2rem] rounded-lg bg-yellow-500/20 px-2 py-0.5 text-sm font-semibold text-yellow-200">
+                                <span title="Total Izin" class="inline-flex min-w-[2.8rem] items-center justify-center gap-1 rounded-lg border border-amber-300/30 bg-amber-500/20 px-2 py-0.5 text-sm font-semibold text-amber-100 transition duration-200 hover:shadow-[0_0_16px_rgba(245,158,11,0.28)]">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    </svg>
                                     {{ $santri->izin }}
                                 </span>
                             </td>
                             <td class="px-4 py-3 text-center">
-                                <span class="inline-block min-w-[2rem] rounded-lg bg-blue-500/20 px-2 py-0.5 text-sm font-semibold text-blue-200">
+                                <span title="Total Sakit" class="inline-flex min-w-[2.8rem] items-center justify-center gap-1 rounded-lg border border-rose-300/30 bg-rose-500/20 px-2 py-0.5 text-sm font-semibold text-rose-100 transition duration-200 hover:shadow-[0_0_16px_rgba(244,63,94,0.28)]">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                    </svg>
                                     {{ $santri->sakit }}
                                 </span>
                             </td>
                             <td class="px-4 py-3 text-center">
-                                <span class="inline-block min-w-[2rem] rounded-lg bg-red-500/20 px-2 py-0.5 text-sm font-semibold text-red-200">
+                                <span title="Total Alfa" class="inline-flex min-w-[2.8rem] items-center justify-center gap-1 rounded-lg border border-red-400/30 bg-red-700/25 px-2 py-0.5 text-sm font-semibold text-red-100 transition duration-200 hover:shadow-[0_0_16px_rgba(185,28,28,0.28)]">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
                                     {{ $santri->alfa }}
                                 </span>
                             </td>
