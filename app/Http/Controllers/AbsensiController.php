@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Absensi;
 use App\Models\Santri;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class AbsensiController extends Controller
 {
     private const KATEGORI_OPTIONS = ['sekolah', 'halaqoh', 'berkebun', 'dirosah'];
+
     private const STATUS_OPTIONS = ['hadir', 'izin', 'sakit', 'alfa'];
 
     /**
@@ -21,7 +22,7 @@ class AbsensiController extends Controller
         $tanggal = $request->query('tanggal', today()->toDateString());
         $kategori = $request->query('kategori', self::KATEGORI_OPTIONS[0]);
 
-        if (!in_array($kategori, self::KATEGORI_OPTIONS, true)) {
+        if (! in_array($kategori, self::KATEGORI_OPTIONS, true)) {
             $kategori = self::KATEGORI_OPTIONS[0];
         }
 
@@ -57,7 +58,7 @@ class AbsensiController extends Controller
      */
     public function create(Request $request)
     {
-        $santris  = Santri::orderBy('nama_lengkap')->get();
+        $santris = Santri::orderBy('nama_lengkap')->get();
         $kategori = $request->query('kategori', '');
 
         return view('absensi.create', compact('santris', 'kategori'));
@@ -70,16 +71,16 @@ class AbsensiController extends Controller
     {
         $validated = $request->validate([
             'santri_id' => ['required', 'exists:santris,id'],
-            'tanggal'   => ['required', 'date'],
-            'status'    => ['required', Rule::in(['hadir', 'izin', 'sakit', 'alfa'])],
-            'kategori'  => ['required', Rule::in(['sekolah', 'halaqoh', 'berkebun', 'dirosah'])],
+            'tanggal' => ['required', 'date'],
+            'status' => ['required', Rule::in(['hadir', 'izin', 'sakit', 'alfa'])],
+            'kategori' => ['required', Rule::in(['sekolah', 'halaqoh', 'berkebun', 'dirosah'])],
         ]);
 
         Absensi::updateOrCreate(
             [
                 'santri_id' => $validated['santri_id'],
-                'tanggal'   => $validated['tanggal'],
-                'kategori'  => $validated['kategori'],
+                'tanggal' => $validated['tanggal'],
+                'kategori' => $validated['kategori'],
             ],
             ['status' => $validated['status']]
         );
@@ -104,9 +105,18 @@ class AbsensiController extends Controller
             'absensi.*.in' => 'Status absensi tidak valid.',
         ]);
 
-        $santriIds = collect(array_keys($validated['absensi']))
+        $santriKeys = array_keys($validated['absensi']);
+        $invalidSantriKey = collect($santriKeys)
+            ->contains(fn ($id) => ! is_numeric($id) || (int) $id <= 0);
+
+        if ($invalidSantriKey) {
+            return back()
+                ->withErrors(['absensi' => 'Format data santri tidak valid.'])
+                ->withInput();
+        }
+
+        $santriIds = collect($santriKeys)
             ->map(fn ($id) => (int) $id)
-            ->filter(fn ($id) => $id > 0)
             ->values();
 
         $validSantriCount = Santri::query()->whereIn('id', $santriIds)->count();
@@ -152,14 +162,14 @@ class AbsensiController extends Controller
     {
         $validated = $request->validate([
             'santri_id' => ['required', 'exists:santris,id'],
-            'tanggal'   => [
+            'tanggal' => [
                 'required',
                 'date',
                 Rule::unique('absensis', 'tanggal')
                     ->where(fn ($q) => $q->where('santri_id', $request->santri_id)->where('kategori', $request->kategori))
                     ->ignore($absensi->id),
             ],
-            'status'   => ['required', Rule::in(['hadir', 'izin', 'sakit', 'alfa'])],
+            'status' => ['required', Rule::in(['hadir', 'izin', 'sakit', 'alfa'])],
             'kategori' => ['required', Rule::in(['sekolah', 'halaqoh', 'berkebun', 'dirosah'])],
         ]);
 
@@ -174,7 +184,7 @@ class AbsensiController extends Controller
      */
     public function destroy(Absensi $absensi)
     {
-        $tanggal  = $absensi->tanggal->toDateString();
+        $tanggal = $absensi->tanggal->toDateString();
         $kategori = $absensi->kategori;
         $absensi->delete();
 

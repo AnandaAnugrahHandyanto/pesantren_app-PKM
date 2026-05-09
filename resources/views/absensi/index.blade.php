@@ -153,7 +153,12 @@
     @if (session('success'))
         <script>
             document.addEventListener('DOMContentLoaded', () => {
-                window.Swal?.fire({
+                if (!window.Swal) {
+                    console.warn('SweetAlert2 gagal dimuat untuk toast notifikasi.');
+                    return;
+                }
+
+                window.Swal.fire({
                     toast: true,
                     position: 'top-end',
                     icon: 'success',
@@ -265,6 +270,7 @@
                         updateRowVisual(row, status);
                     });
                 } catch (error) {
+                    console.warn('Draft absensi rusak dan telah dibersihkan.', error);
                     localStorage.removeItem(storageKey);
                 }
             };
