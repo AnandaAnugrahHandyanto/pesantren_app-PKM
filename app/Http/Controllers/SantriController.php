@@ -124,9 +124,14 @@ class SantriController extends Controller
             'file' => ['required', 'file', 'mimes:xlsx,csv'],
         ]);
 
-        Excel::import(new SantriImport, $request->file('file'));
+        try {
+            Excel::import(new SantriImport, $request->file('file'));
 
-        return redirect()->route('santri.index')
-            ->with('success', 'Data santri berhasil diimport');
+            return redirect()->route('santri.index')
+                ->with('success', 'Data santri berhasil diimport');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Gagal mengimport data: ' . $e->getMessage());
+        }
     }
 }

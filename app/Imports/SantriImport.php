@@ -17,7 +17,7 @@ class SantriImport implements ToModel, WithHeadingRow
         }
 
         $jenisKelaminRaw = isset($row['jenis_kelamin']) ? trim((string) $row['jenis_kelamin']) : '';
-        $jenisKelaminMap = ['laki-laki' => 'L', 'perempuan' => 'P'];
+        $jenisKelaminMap = ['laki-laki' => 'L', 'perempuan' => 'P', 'l' => 'L', 'p' => 'P'];
         $jenisKelamin = $jenisKelaminMap[strtolower($jenisKelaminRaw)] ?? null;
 
         return new Santri([

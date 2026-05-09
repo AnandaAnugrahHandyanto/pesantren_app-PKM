@@ -98,10 +98,10 @@
         </div>
 
         {{-- Link kembali --}}
-        <div>
+        {{-- <div>
             <a href="{{ route('dashboard') }}" class="text-sm text-indigo-300 hover:text-indigo-200">
                 &larr; Kembali ke Dashboard
             </a>
-        </div>
+        </div> --}}
     </div>
 </x-app-layout>
