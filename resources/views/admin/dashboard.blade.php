@@ -100,7 +100,7 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-white/60">Izin</p>
-                            <p class="mt-2 text-4xl font-bold text-yellow-300">{{ $izin }}</p>
+                            <p class="mt-2 text-4xl font-bold text-amber-300">{{ $izin }}</p>
                         </div>
                         <div title="Izin - Menunggu/Persetujuan" class="flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-500/30 text-amber-300 ring-1 ring-amber-300/30">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
