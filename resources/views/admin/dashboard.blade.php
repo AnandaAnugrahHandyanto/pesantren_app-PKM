@@ -148,6 +148,12 @@
         {{-- ===== Menu Navigasi ===== --}}
         <div>
             <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-white/40">Menu</p>
+            <div class="mb-4">
+                <a href="{{ route('absensi.index', ['tanggal' => now()->toDateString()]) }}"
+                   class="inline-flex items-center gap-2 rounded-lg border border-amber-300/40 bg-amber-500/20 px-4 py-2 text-sm font-semibold text-amber-100 transition hover:bg-amber-500/30">
+                    Edit Absensi Hari Ini
+                </a>
+            </div>
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
                 {{-- Data Santri --}}
                 <a href="{{ route('santri.index') }}"

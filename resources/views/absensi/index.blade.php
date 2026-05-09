@@ -23,6 +23,12 @@
             </div>
         @endif
 
+        @if ($allAbsensiComplete)
+            <div class="rounded-xl border border-emerald-400/30 bg-emerald-500/20 px-4 py-3 text-sm font-semibold text-emerald-100 backdrop-blur-sm">
+                Semua absensi untuk kategori ini sudah lengkap.
+            </div>
+        @endif
+
         <form method="GET" action="{{ route('absensi.index') }}" class="glass-panel rounded-2xl p-4 sm:p-5">
             <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 <div>
@@ -63,6 +69,11 @@
                     class="rounded-lg border border-white/30 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/20">
                     Tampilkan Data
                 </button>
+                @if ($hasExistingAbsensi)
+                    <span class="rounded-full border border-orange-300/40 bg-orange-500/20 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-orange-100">
+                        Absensi Sudah Ada ({{ $existingCount }} data)
+                    </span>
+                @endif
                 <button type="button" id="btn-hadir-semua"
                     class="rounded-lg border border-emerald-300/50 bg-emerald-500/20 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-500/30">
                     Hadir Semua
@@ -85,10 +96,12 @@
             @csrf
             <input type="hidden" name="tanggal" value="{{ $tanggal }}">
             <input type="hidden" name="kategori" value="{{ $kategori }}">
+            <input type="hidden" name="form_mode" value="{{ $absensiMode }}">
 
             <div class="flex items-center justify-between border-b border-white/15 px-4 py-3 sm:px-5">
                 <div class="flex flex-wrap items-center gap-2 text-sm text-white/75">
-                    <span>Isi status lalu klik <span class="font-semibold text-white">Simpan Absensi</span></span>
+                    <span>{{ $absensiMode === 'edit' ? 'Edit status lalu klik' : 'Isi status lalu klik' }} <span
+                            class="font-semibold text-white">{{ $absensiMode === 'edit' ? 'Update Absensi' : 'Simpan Absensi' }}</span></span>
                     <span id="draft-state-badge"
                         class="rounded-full border px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide">
                     </span>
@@ -97,8 +110,16 @@
                 <button type="submit"
                     id="btn-simpan-absensi"
                     class="rounded-lg bg-gradient-to-r from-cyan-500/90 to-blue-600/90 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition hover:from-cyan-400 hover:to-blue-500">
-                    Simpan Absensi
+                    {{ $absensiMode === 'edit' ? 'Update Absensi' : 'Simpan Absensi' }}
                 </button>
+            </div>
+
+            <div class="grid gap-2 border-b border-white/10 px-4 py-3 text-xs text-white/75 sm:grid-cols-2 lg:grid-cols-5 sm:px-5">
+                <div><span class="text-white/55">Kategori aktif:</span> <span class="font-semibold text-white">{{ ucfirst($kategori) }}</span></div>
+                <div><span class="text-white/55">Tanggal aktif:</span> <span class="font-semibold text-white">{{ $tanggal }}</span></div>
+                <div><span class="text-white/55">Jumlah santri:</span> <span class="font-semibold text-white">{{ $totalSantri }}</span></div>
+                <div><span class="text-white/55">Sudah diabsen:</span> <span class="font-semibold text-white">{{ $existingCount }}</span></div>
+                <div><span class="text-white/55">Terakhir diupdate:</span> <span class="font-semibold text-white">{{ $lastUpdatedAt ? \Illuminate\Support\Carbon::parse($lastUpdatedAt)->format('d-m-Y H:i') : '-' }}</span></div>
             </div>
 
             <div class="table-scroll-wrapper">
@@ -114,11 +135,17 @@
                     </thead>
                     <tbody id="absensi-tbody" class="divide-y divide-white/10">
                         @forelse ($santris as $index => $santri)
+                            @php
+                                $existingStatus = $statusBySantri[$santri->id] ?? '';
+                                $initialStatus = old("absensi.{$santri->id}", $absensiMode === 'edit' ? $existingStatus : '');
+                            @endphp
                             <tr class="attendance-row transition duration-150 hover:bg-white/10"
                                 data-santri-row
                                 data-name="{{ strtolower($santri->nama_lengkap) }}"
                                 data-kelas="{{ strtolower($santri->kelas ?? '-') }}"
-                                data-row-id="{{ $santri->id }}">
+                                data-row-id="{{ $santri->id }}"
+                                data-existing-status="{{ $existingStatus }}"
+                                data-initial-status="{{ $initialStatus }}">
                                 <td class="px-3 py-2.5 text-sm text-white/70">{{ $index + 1 }}</td>
                                 <td class="px-3 py-2.5 text-sm font-medium text-white">
                                     <span>{{ $santri->nama_lengkap }}</span>
@@ -126,7 +153,7 @@
                                 <td class="px-3 py-2.5 text-sm text-white/80">{{ $santri->kelas ?? '-' }}</td>
                                 <td class="px-3 py-2.5 text-sm text-white/80">{{ $santri->jenis_kelamin ?? '-' }}</td>
                                 <td class="px-3 py-2.5">
-                                    <input type="hidden" name="absensi[{{ $santri->id }}]" value="{{ old("absensi.{$santri->id}", '') }}" data-status-input>
+                                    <input type="hidden" name="absensi[{{ $santri->id }}]" value="{{ $initialStatus }}" data-status-input>
                                     <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
                                         @foreach ($statusOptions as $statusOption)
                                             <button type="button"
@@ -174,6 +201,26 @@
         </script>
     @endif
 
+    @if (session('absensi_exists_warning'))
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                if (!window.Swal) {
+                    return;
+                }
+
+                const warning = @json(session('absensi_exists_warning'));
+                window.Swal.fire({
+                    icon: 'warning',
+                    title: 'Absensi Sudah Ada',
+                    text: `Absensi kategori ${warning.kategori} pada tanggal ${warning.tanggal} sudah pernah dilakukan. Silakan gunakan mode edit untuk memperbarui data.`,
+                    background: '#0f172acc',
+                    color: '#e2e8f0',
+                    confirmButtonText: 'Mengerti',
+                });
+            });
+        </script>
+    @endif
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const rows = Array.from(document.querySelectorAll('[data-santri-row]'));
@@ -190,9 +237,13 @@
             const totalRows = rows.length;
             const tanggal = form.querySelector('input[name="tanggal"]').value;
             const kategori = form.querySelector('input[name="kategori"]').value;
+            const formMode = form.querySelector('input[name="form_mode"]').value;
+            const isEditMode = formMode === 'edit';
             const storageKey = `absensi-draft:${tanggal}:${kategori}`;
             const hasSaveSuccess = @js((bool) session('success'));
+            const hasValidationErrors = @js($errors->any());
             const defaultButtonClass = 'status-badge rounded-lg border border-white/20 px-2 py-1.5 text-xs font-semibold text-white/90 transition duration-150 hover:-translate-y-[1px]';
+            const changedFlashClass = ['ring-1', 'ring-orange-300/70', 'bg-orange-500/10'];
 
             const rowStatusClasses = {
                 hadir: ['bg-emerald-500/20', 'hover:bg-emerald-500/25'],
@@ -218,12 +269,12 @@
                 draftStateBadge.className = 'rounded-full border px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide';
                 if (state === 'saved') {
                     draftStateBadge.classList.add('border-emerald-300/40', 'bg-emerald-500/20', 'text-emerald-100');
-                    draftStateBadge.textContent = 'Tersimpan';
+                    draftStateBadge.textContent = 'Data tersimpan di database';
                     return;
                 }
 
                 draftStateBadge.classList.add('border-orange-300/40', 'bg-orange-500/20', 'text-orange-100');
-                draftStateBadge.textContent = 'Belum disimpan';
+                draftStateBadge.textContent = 'Draft belum disimpan';
             };
 
             const updateSubmitState = () => {
@@ -254,6 +305,13 @@
                 setDraftBadgeState('draft');
             };
 
+            const flashEditedRow = (row) => {
+                row.classList.add(...changedFlashClass);
+                window.setTimeout(() => {
+                    row.classList.remove(...changedFlashClass);
+                }, 900);
+            };
+
             const updateRowVisual = (row, status) => {
                 row.classList.remove(
                     'bg-emerald-500/20', 'hover:bg-emerald-500/25',
@@ -277,11 +335,16 @@
 
             const setStatus = (row, status, options = {
                 persistDraft: true,
-                markDraft: true
+                markDraft: true,
+                flashIfChanged: false,
             }) => {
                 const input = row.querySelector('[data-status-input]');
                 input.value = status;
                 updateRowVisual(row, status);
+
+                if (options.flashIfChanged && isEditMode && row.dataset.existingStatus !== status) {
+                    flashEditedRow(row);
+                }
 
                 updateSubmitState();
                 syncMassButtonText();
@@ -315,7 +378,7 @@
 
             const resetAllStatuses = (markDraft = true) => {
                 rows.forEach((row) => {
-                    setStatus(row, '', { persistDraft: false, markDraft: false });
+                    setStatus(row, '', { persistDraft: false, markDraft: false, flashIfChanged: false });
                 });
                 clearDraft();
                 syncMassButtonText();
@@ -338,7 +401,7 @@
                     rows.forEach((row) => {
                         const rowId = row.dataset.rowId;
                         const status = draft[rowId] || '';
-                        setStatus(row, status, { persistDraft: false, markDraft: false });
+                        setStatus(row, status, { persistDraft: false, markDraft: false, flashIfChanged: false });
                     });
                     setDraftBadgeState('draft');
                 } catch (error) {
@@ -353,7 +416,7 @@
                 row.querySelectorAll('[data-status-btn]').forEach((button) => {
                     button.addEventListener('click', () => {
                         const status = button.dataset.statusBtn;
-                        setStatus(row, status);
+                        setStatus(row, status, { flashIfChanged: true });
                     });
                 });
             });
@@ -366,7 +429,7 @@
                 }
 
                 rows.forEach((row) => {
-                    setStatus(row, 'hadir', { persistDraft: false, markDraft: false });
+                    setStatus(row, 'hadir', { persistDraft: false, markDraft: false, flashIfChanged: true });
                 });
                 saveDraft();
                 syncMassButtonText();
@@ -378,7 +441,7 @@
                 rows.forEach((row) => {
                     const input = row.querySelector('[data-status-input]');
                     if (!input.value) {
-                        setStatus(row, 'alfa', { persistDraft: false, markDraft: false });
+                        setStatus(row, 'alfa', { persistDraft: false, markDraft: false, flashIfChanged: true });
                     }
                 });
                 saveDraft();
@@ -401,7 +464,7 @@
                 setDraftBadgeState('saved');
                 updateSubmitState();
             } else {
-                setDraftBadgeState('draft');
+                setDraftBadgeState(isEditMode && !hasValidationErrors ? 'saved' : 'draft');
                 updateSubmitState();
                 restoreDraft();
                 updateSubmitState();
