@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .glass-panel {
+        @apply border border-white/20 bg-white/10 shadow-xl shadow-black/10 backdrop-blur-md;
+    }
+
+    .table-scroll-wrapper {
+        @apply max-h-[65vh] overflow-auto;
+    }
+
+    .table-header-sticky {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+    }
+}

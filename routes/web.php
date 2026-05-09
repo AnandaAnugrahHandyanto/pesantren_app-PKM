@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // Accessible to both admin and guru
+    Route::post('/absensi/mass', [AbsensiController::class, 'massStore'])->name('absensi.mass-store');
     Route::resource('absensi', AbsensiController::class)->except(['show']);
     Route::get('/laporan/absensi', [LaporanController::class, 'absensi'])->name('laporan.absensi');
     Route::get('/rekap-absensi', [LaporanController::class, 'rekapSemester'])->name('rekap.absensi');
