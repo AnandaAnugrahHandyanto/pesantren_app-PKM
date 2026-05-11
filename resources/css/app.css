@@ -16,4 +16,221 @@
         top: 0;
         z-index: 5;
     }
+
+    /* Row highlight: neon left border + subtle inner glow (no full background) */
+    .status-row-hadir {
+        border-left: 3px solid rgb(52 211 153 / 0.8);
+        box-shadow: inset 8px 0 20px rgb(52 211 153 / 0.07);
+    }
+    .status-row-izin {
+        border-left: 3px solid rgb(251 191 36 / 0.8);
+        box-shadow: inset 8px 0 20px rgb(251 191 36 / 0.07);
+    }
+    .status-row-sakit {
+        border-left: 3px solid rgb(251 113 133 / 0.8);
+        box-shadow: inset 8px 0 20px rgb(251 113 133 / 0.07);
+    }
+    .status-row-alfa {
+        border-left: 3px solid rgb(239 68 68 / 0.85);
+        box-shadow: inset 8px 0 20px rgb(239 68 68 / 0.07);
+    }
+
+    /* Digital capsule button — base/inactive state (dimmed) */
+    .status-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.375rem;
+        border-radius: 9999px;
+        border-width: 1px;
+        border-color: rgb(255 255 255 / 0.12);
+        background-color: rgb(255 255 255 / 0.04);
+        padding: 0.375rem 0.625rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: rgb(255 255 255 / 0.35);
+        transition: all 200ms ease;
+        letter-spacing: 0.02em;
+    }
+    .status-btn:hover {
+        border-color: rgb(255 255 255 / 0.28);
+        background-color: rgb(255 255 255 / 0.09);
+        color: rgb(255 255 255 / 0.65);
+        transform: scale(1.04);
+    }
+
+    /* Digital capsule button — ACTIVE states with neon glow */
+    .status-btn-hadir-active {
+        border-color: rgb(52 211 153 / 0.75);
+        background: linear-gradient(
+            135deg,
+            rgb(16 185 129 / 0.22),
+            rgb(52 211 153 / 0.12)
+        );
+        color: rgb(167 243 208);
+        box-shadow:
+            0 0 14px rgb(52 211 153 / 0.4),
+            inset 0 0 8px rgb(52 211 153 / 0.1);
+        transform: scale(1.06);
+    }
+    .status-btn-izin-active {
+        border-color: rgb(251 191 36 / 0.75);
+        background: linear-gradient(
+            135deg,
+            rgb(245 158 11 / 0.22),
+            rgb(251 191 36 / 0.12)
+        );
+        color: rgb(253 230 138);
+        box-shadow:
+            0 0 14px rgb(251 191 36 / 0.4),
+            inset 0 0 8px rgb(251 191 36 / 0.1);
+        transform: scale(1.06);
+    }
+    .status-btn-sakit-active {
+        border-color: rgb(251 113 133 / 0.75);
+        background: linear-gradient(
+            135deg,
+            rgb(244 63 94 / 0.22),
+            rgb(251 113 133 / 0.12)
+        );
+        color: rgb(254 205 211);
+        box-shadow:
+            0 0 14px rgb(251 113 133 / 0.4),
+            inset 0 0 8px rgb(251 113 133 / 0.1);
+        transform: scale(1.06);
+    }
+    .status-btn-alfa-active {
+        border-color: rgb(239 68 68 / 0.8);
+        background: linear-gradient(
+            135deg,
+            rgb(185 28 28 / 0.3),
+            rgb(239 68 68 / 0.15)
+        );
+        color: rgb(254 202 202);
+        box-shadow:
+            0 0 14px rgb(239 68 68 / 0.45),
+            inset 0 0 8px rgb(239 68 68 / 0.12);
+        transform: scale(1.06);
+    }
+
+    /* Digital frame stat card */
+    .stat-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 1rem;
+        border-width: 1px;
+        background: linear-gradient(
+            135deg,
+            rgb(255 255 255 / 0.08),
+            rgb(255 255 255 / 0.03)
+        );
+        padding: 1.25rem;
+        box-shadow: 0 8px 32px rgb(0 0 0 / 0.18);
+        backdrop-filter: blur(12px);
+        transition: all 300ms ease;
+    }
+    .stat-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            135deg,
+            rgb(255 255 255 / 0.04) 0%,
+            transparent 60%
+        );
+        pointer-events: none;
+    }
+    .stat-card-hadir {
+        border-color: rgb(52 211 153 / 0.35);
+    }
+    .stat-card-hadir:hover {
+        border-color: rgb(52 211 153 / 0.6);
+        box-shadow:
+            0 0 36px rgb(52 211 153 / 0.28),
+            0 8px 32px rgb(0 0 0 / 0.18);
+    }
+    .stat-card-izin {
+        border-color: rgb(251 191 36 / 0.35);
+    }
+    .stat-card-izin:hover {
+        border-color: rgb(251 191 36 / 0.6);
+        box-shadow:
+            0 0 36px rgb(251 191 36 / 0.28),
+            0 8px 32px rgb(0 0 0 / 0.18);
+    }
+    .stat-card-sakit {
+        border-color: rgb(251 113 133 / 0.35);
+    }
+    .stat-card-sakit:hover {
+        border-color: rgb(251 113 133 / 0.6);
+        box-shadow:
+            0 0 36px rgb(251 113 133 / 0.28),
+            0 8px 32px rgb(0 0 0 / 0.18);
+    }
+    .stat-card-alfa {
+        border-color: rgb(239 68 68 / 0.4);
+    }
+    .stat-card-alfa:hover {
+        border-color: rgb(239 68 68 / 0.65);
+        box-shadow:
+            0 0 36px rgb(239 68 68 / 0.28),
+            0 8px 32px rgb(0 0 0 / 0.18);
+    }
+
+    /* Neon capsule badge (for display-only usage in tables/reports) */
+    .status-capsule {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        border-radius: 9999px;
+        border-width: 1px;
+        padding: 0.25rem 0.625rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        transition: all 200ms ease;
+    }
+    .status-capsule:hover {
+        transform: translateY(-1px);
+    }
+    .status-capsule-hadir {
+        border-color: rgb(52 211 153 / 0.6);
+        background: linear-gradient(
+            135deg,
+            rgb(16 185 129 / 0.2),
+            rgb(52 211 153 / 0.1)
+        );
+        color: rgb(167 243 208);
+        box-shadow: 0 0 10px rgb(52 211 153 / 0.25);
+    }
+    .status-capsule-izin {
+        border-color: rgb(251 191 36 / 0.6);
+        background: linear-gradient(
+            135deg,
+            rgb(245 158 11 / 0.2),
+            rgb(251 191 36 / 0.1)
+        );
+        color: rgb(253 230 138);
+        box-shadow: 0 0 10px rgb(251 191 36 / 0.25);
+    }
+    .status-capsule-sakit {
+        border-color: rgb(251 113 133 / 0.6);
+        background: linear-gradient(
+            135deg,
+            rgb(244 63 94 / 0.2),
+            rgb(251 113 133 / 0.1)
+        );
+        color: rgb(254 205 211);
+        box-shadow: 0 0 10px rgb(251 113 133 / 0.25);
+    }
+    .status-capsule-alfa {
+        border-color: rgb(239 68 68 / 0.65);
+        background: linear-gradient(
+            135deg,
+            rgb(185 28 28 / 0.28),
+            rgb(239 68 68 / 0.13)
+        );
+        color: rgb(254 202 202);
+        box-shadow: 0 0 10px rgb(239 68 68 / 0.25);
+    }
 }
