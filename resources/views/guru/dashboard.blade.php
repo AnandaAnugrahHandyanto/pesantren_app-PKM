@@ -10,65 +10,53 @@
             <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-white/40">Rekap Absensi Hari Ini</p>
             <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
                 {{-- Hadir --}}
-                <div class="rounded-2xl border border-emerald-300/20 bg-white/10 p-5 shadow-lg backdrop-blur-md transition duration-200 hover:shadow-[0_0_24px_rgba(16,185,129,0.25)]">
+                <div class="stat-card stat-card-hadir">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium text-white/60">Hadir</p>
-                            <p class="mt-2 text-4xl font-bold text-green-300">{{ $hadir }}</p>
+                            <p class="text-sm font-medium uppercase tracking-[0.18em] text-white/55">Hadir</p>
+                            <p class="mt-2 text-4xl font-bold text-emerald-300">{{ $hadir }}</p>
                         </div>
-                        <div title="Hadir - Sukses/Valid" class="flex h-14 w-14 items-center justify-center rounded-2xl bg-green-500/30 text-green-300 ring-1 ring-green-300/30">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
+                        <div title="Hadir - Sukses/Valid" class="flex h-16 w-16 items-center justify-center rounded-3xl border border-emerald-300/20 bg-emerald-500/10 text-emerald-300/80 shadow-[0_0_24px_rgba(16,185,129,0.18)]">
+                            <x-status-icon status="hadir" class="h-8 w-8" />
                         </div>
                     </div>
                 </div>
 
                 {{-- Izin --}}
-                <div class="rounded-2xl border border-amber-300/20 bg-white/10 p-5 shadow-lg backdrop-blur-md transition duration-200 hover:shadow-[0_0_24px_rgba(245,158,11,0.25)]">
+                <div class="stat-card stat-card-izin">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium text-white/60">Izin</p>
+                            <p class="text-sm font-medium uppercase tracking-[0.18em] text-white/55">Izin</p>
                             <p class="mt-2 text-4xl font-bold text-amber-300">{{ $izin }}</p>
                         </div>
-                        <div title="Izin - Menunggu/Persetujuan" class="flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-500/30 text-amber-300 ring-1 ring-amber-300/30">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                            </svg>
+                        <div title="Izin - Menunggu/Persetujuan" class="flex h-16 w-16 items-center justify-center rounded-3xl border border-amber-300/20 bg-amber-500/10 text-amber-300/80 shadow-[0_0_24px_rgba(245,158,11,0.18)]">
+                            <x-status-icon status="izin" class="h-8 w-8" />
                         </div>
                     </div>
                 </div>
 
                 {{-- Sakit --}}
-                <div class="rounded-2xl border border-rose-300/20 bg-white/10 p-5 shadow-lg backdrop-blur-md transition duration-200 hover:shadow-[0_0_24px_rgba(244,63,94,0.25)]">
+                <div class="stat-card stat-card-sakit">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium text-white/60">Sakit</p>
+                            <p class="text-sm font-medium uppercase tracking-[0.18em] text-white/55">Sakit</p>
                             <p class="mt-2 text-4xl font-bold text-rose-300">{{ $sakit }}</p>
                         </div>
-                        <div title="Sakit - Kondisi Kesehatan" class="flex h-14 w-14 items-center justify-center rounded-2xl bg-rose-500/30 text-rose-300 ring-1 ring-rose-300/30">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                            </svg>
+                        <div title="Sakit - Kondisi Kesehatan" class="flex h-16 w-16 items-center justify-center rounded-3xl border border-rose-300/20 bg-rose-500/10 text-rose-300/80 shadow-[0_0_24px_rgba(244,63,94,0.18)]">
+                            <x-status-icon status="sakit" class="h-8 w-8" />
                         </div>
                     </div>
                 </div>
 
                 {{-- Alfa --}}
-                <div class="rounded-2xl border border-red-400/25 bg-white/10 p-5 shadow-lg backdrop-blur-md transition duration-200 hover:shadow-[0_0_24px_rgba(185,28,28,0.25)]">
+                <div class="stat-card stat-card-alfa">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium text-white/60">Alfa</p>
+                            <p class="text-sm font-medium uppercase tracking-[0.18em] text-white/55">Alfa</p>
                             <p class="mt-2 text-4xl font-bold text-red-200">{{ $alfa }}</p>
                         </div>
-                        <div title="Alfa - Tidak Hadir Tanpa Keterangan" class="flex h-14 w-14 items-center justify-center rounded-2xl bg-red-700/40 text-red-200 ring-1 ring-red-400/40">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
+                        <div title="Alfa - Tidak Hadir Tanpa Keterangan" class="flex h-16 w-16 items-center justify-center rounded-3xl border border-red-400/20 bg-red-600/10 text-red-200/80 shadow-[0_0_24px_rgba(185,28,28,0.18)]">
+                            <x-status-icon status="alfa" class="h-8 w-8" />
                         </div>
                     </div>
                 </div>

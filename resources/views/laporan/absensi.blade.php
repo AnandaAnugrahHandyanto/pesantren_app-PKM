@@ -8,26 +8,30 @@
             'hadir' => [
                 'label' => 'Hadir',
                 'tooltip' => 'Hadir - Sukses/Valid',
-                'ringkasanClass' => 'border-emerald-400/30 bg-emerald-500/20 text-emerald-200',
-                'badgeClass' => 'border-emerald-300/50 bg-emerald-500/25 text-emerald-100',
+                'ringkasanClass' => 'stat-card stat-card-hadir',
+                'badgeClass' => 'status-capsule status-capsule-hadir',
+                'textClass' => 'text-emerald-300',
             ],
             'izin' => [
                 'label' => 'Izin',
                 'tooltip' => 'Izin - Menunggu/Persetujuan',
-                'ringkasanClass' => 'border-amber-400/30 bg-amber-500/20 text-amber-200',
-                'badgeClass' => 'border-amber-300/50 bg-amber-500/25 text-amber-100',
+                'ringkasanClass' => 'stat-card stat-card-izin',
+                'badgeClass' => 'status-capsule status-capsule-izin',
+                'textClass' => 'text-amber-300',
             ],
             'sakit' => [
                 'label' => 'Sakit',
                 'tooltip' => 'Sakit - Kondisi Kesehatan',
-                'ringkasanClass' => 'border-rose-400/30 bg-rose-500/20 text-rose-200',
-                'badgeClass' => 'border-rose-300/50 bg-rose-500/25 text-rose-100',
+                'ringkasanClass' => 'stat-card stat-card-sakit',
+                'badgeClass' => 'status-capsule status-capsule-sakit',
+                'textClass' => 'text-rose-300',
             ],
             'alfa' => [
                 'label' => 'Alfa',
                 'tooltip' => 'Alfa - Tidak Hadir Tanpa Keterangan',
-                'ringkasanClass' => 'border-red-500/35 bg-red-700/25 text-red-100',
-                'badgeClass' => 'border-red-400/50 bg-red-700/30 text-red-100',
+                'ringkasanClass' => 'stat-card stat-card-alfa',
+                'badgeClass' => 'status-capsule status-capsule-alfa',
+                'textClass' => 'text-red-200',
             ],
         ];
     @endphp
@@ -65,35 +69,16 @@
         {{-- Ringkasan --}}
         <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
             @foreach (['hadir', 'izin', 'sakit', 'alfa'] as $status)
-                <div class="rounded-2xl border p-4 shadow-lg backdrop-blur-md transition duration-200 hover:shadow-[0_0_20px_rgba(255,255,255,0.16)] {{ $statusMeta[$status]['ringkasanClass'] }}">
-                    <div class="flex items-center justify-center gap-1.5 text-xs font-semibold uppercase tracking-wide" title="{{ $statusMeta[$status]['tooltip'] }}">
-                        @switch($status)
-                            @case('hadir')
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                            @break
-
-                            @case('izin')
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                </svg>
-                            @break
-
-                            @case('sakit')
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                                </svg>
-                            @break
-
-                            @default
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                        @endswitch
-                        <span>{{ $statusMeta[$status]['label'] }}</span>
+                <div class="{{ $statusMeta[$status]['ringkasanClass'] }}">
+                    <div class="flex items-center justify-between gap-3" title="{{ $statusMeta[$status]['tooltip'] }}">
+                        <div>
+                            <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/55">{{ $statusMeta[$status]['label'] }}</p>
+                            <p class="mt-2 text-3xl font-bold {{ $statusMeta[$status]['textClass'] }}">{{ $ringkasan[$status] }}</p>
+                        </div>
+                        <div class="flex h-14 w-14 items-center justify-center rounded-3xl border border-white/10 bg-white/5 text-white/30">
+                            <x-status-icon :status="$status" class="h-7 w-7" />
+                        </div>
                     </div>
-                    <p class="mt-1 text-center text-3xl font-bold">{{ $ringkasan[$status] }}</p>
                 </div>
             @endforeach
         </div>
@@ -122,24 +107,8 @@
                             <td class="px-4 py-3 text-sm text-white/70">{{ ucfirst($absensi->kategori) }}</td>
                             <td class="px-4 py-3 text-sm">
                                 <span title="{{ $meta['tooltip'] ?? ucfirst($absensi->status) }}"
-                                    class="inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-xs font-semibold transition duration-200 hover:-translate-y-[1px] hover:shadow-md {{ $meta['badgeClass'] ?? 'border-white/20 bg-white/10 text-white/70' }}">
-                                    @if ($absensi->status === 'hadir')
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
-                                    @elseif ($absensi->status === 'izin')
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                        </svg>
-                                    @elseif ($absensi->status === 'sakit')
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                                        </svg>
-                                    @elseif ($absensi->status === 'alfa')
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
-                                    @endif
+                                    class="{{ $meta['badgeClass'] ?? 'status-capsule border-white/20 bg-white/10 text-white/70' }}">
+                                    <x-status-icon :status="$absensi->status" class="h-3.5 w-3.5" />
                                     {{ $meta['label'] ?? ucfirst($absensi->status) }}
                                 </span>
                             </td>
