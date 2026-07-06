@@ -5,8 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Santri extends Model
+class Siswa extends Model
 {
+    protected $table = 'siswas';
+
     protected $fillable = [
         'nama_lengkap',
         'kelas',
@@ -15,6 +17,6 @@ class Santri extends Model
 
     public function absensis(): HasMany
     {
-        return $this->hasMany(Absensi::class);
+        return $this->hasMany(Absensi::class, 'siswa_id');
     }
 }

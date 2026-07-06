@@ -43,9 +43,10 @@
                             class="rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
                         <option value="" {{ $kategori === '' ? 'selected' : '' }} class="bg-indigo-950 text-white">Semua Kategori</option>
                         <option value="sekolah"  {{ $kategori === 'sekolah'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Sekolah</option>
-                        <option value="halaqoh"  {{ $kategori === 'halaqoh'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Halaqoh</option>
-                        <option value="berkebun" {{ $kategori === 'berkebun' ? 'selected' : '' }} class="bg-indigo-950 text-white">Berkebun</option>
-                        <option value="dirosah"  {{ $kategori === 'dirosah'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Dirosah</option>
+                        <option value="pelajaran" {{ $kategori === 'pelajaran' ? 'selected' : '' }} class="bg-indigo-950 text-white">Pelajaran</option>
+                        <option value="ekstrakurikuler" {{ $kategori === 'ekstrakurikuler' ? 'selected' : '' }} class="bg-indigo-950 text-white">Ekstrakurikuler</option>
+                        <option value="upacara" {{ $kategori === 'upacara' ? 'selected' : '' }} class="bg-indigo-950 text-white">Upacara Sekolah</option>
+                        <option value="kegiatan_khusus" {{ $kategori === 'kegiatan_khusus' ? 'selected' : '' }} class="bg-indigo-950 text-white">Kegiatan Khusus</option>
                     </select>
                 </div>
 
@@ -83,7 +84,7 @@
                 <thead>
                     <tr class="border-b border-white/10 bg-white/5">
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">No</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Nama Santri</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Nama Siswa</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Kelas</th>
                         <th class="px-4 py-3 text-center text-xs font-semibold uppercase tracking-wider text-green-300">
                             <span title="Hadir - Sukses/Valid" class="inline-flex items-center gap-1">
@@ -112,40 +113,40 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-white/10">
-                    @forelse ($rekap as $i => $santri)
+                    @forelse ($rekap as $i => $siswa)
                         <tr class="transition hover:bg-white/[0.04]">
                             <td class="px-4 py-3 text-sm text-white/50">{{ $i + 1 }}</td>
-                            <td class="px-4 py-3 text-sm font-medium text-white">{{ $santri->nama_lengkap }}</td>
-                            <td class="px-4 py-3 text-sm text-white/70">{{ $santri->kelas }}</td>
+                            <td class="px-4 py-3 text-sm font-medium text-white">{{ $siswa->nama_lengkap }}</td>
+                            <td class="px-4 py-3 text-sm text-white/70">{{ $siswa->kelas }}</td>
                             <td class="px-4 py-3 text-center">
                                 <span title="Total Hadir" class="status-capsule status-capsule-hadir min-w-[3rem] justify-center px-2.5 py-1 text-sm">
                                     <x-status-icon status="hadir" class="h-3 w-3" />
-                                    {{ $santri->hadir }}
+                                    {{ $siswa->hadir }}
                                 </span>
                             </td>
                             <td class="px-4 py-3 text-center">
                                 <span title="Total Izin" class="status-capsule status-capsule-izin min-w-[3rem] justify-center px-2.5 py-1 text-sm">
                                     <x-status-icon status="izin" class="h-3 w-3" />
-                                    {{ $santri->izin }}
+                                    {{ $siswa->izin }}
                                 </span>
                             </td>
                             <td class="px-4 py-3 text-center">
                                 <span title="Total Sakit" class="status-capsule status-capsule-sakit min-w-[3rem] justify-center px-2.5 py-1 text-sm">
                                     <x-status-icon status="sakit" class="h-3 w-3" />
-                                    {{ $santri->sakit }}
+                                    {{ $siswa->sakit }}
                                 </span>
                             </td>
                             <td class="px-4 py-3 text-center">
                                 <span title="Total Alfa" class="status-capsule status-capsule-alfa min-w-[3rem] justify-center px-2.5 py-1 text-sm">
                                     <x-status-icon status="alfa" class="h-3 w-3" />
-                                    {{ $santri->alfa }}
+                                    {{ $siswa->alfa }}
                                 </span>
                             </td>
                         </tr>
                     @empty
                         <tr>
                             <td colspan="7" class="px-4 py-8 text-center text-sm text-white/40">
-                                Tidak ada data santri.
+                                Tidak ada data siswa.
                             </td>
                         </tr>
                     @endforelse

@@ -6,8 +6,8 @@
     <div class="space-y-6">
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
             <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-                <p class="text-sm text-slate-500">Total Santri</p>
-                <p class="mt-2 text-3xl font-bold text-slate-800">{{ $totalSantri }}</p>
+                <p class="text-sm text-slate-500">Total Siswa</p>
+                <p class="mt-2 text-3xl font-bold text-slate-800">{{ $totalSiswa }}</p>
             </div>
             <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
                 <p class="text-sm text-slate-500">Hadir Hari Ini</p>
@@ -57,9 +57,9 @@
 
         <div class="rounded-xl border border-slate-200 bg-white shadow-sm">
             <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4">
-                <h2 class="text-base font-semibold text-slate-800">Data Santri Terbaru</h2>
+                <h2 class="text-base font-semibold text-slate-800">Data Siswa Terbaru</h2>
                 @if (Auth::user()->role === 'admin')
-                    <a href="{{ route('santri.index') }}" class="text-sm font-medium text-blue-600 hover:text-blue-700">
+                    <a href="{{ route('siswa.index') }}" class="text-sm font-medium text-blue-600 hover:text-blue-700">
                         Lihat semua
                     </a>
                 @endif
@@ -77,19 +77,19 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100">
-                        @forelse ($latestSantri as $santri)
+                        @forelse ($latestSiswa as $siswa)
                             <tr class="hover:bg-slate-50">
-                                <td class="px-5 py-3 text-sm text-slate-700">{{ $santri->nis }}</td>
-                                <td class="px-5 py-3 text-sm font-medium text-slate-800">{{ $santri->nama_lengkap }}</td>
-                                <td class="px-5 py-3 text-sm text-slate-700">{{ $santri->kelas }}</td>
-                                <td class="px-5 py-3 text-sm text-slate-700">{{ $santri->kamar }}</td>
+                                <td class="px-5 py-3 text-sm text-slate-700">{{ $siswa->nis }}</td>
+                                <td class="px-5 py-3 text-sm font-medium text-slate-800">{{ $siswa->nama_lengkap }}</td>
+                                <td class="px-5 py-3 text-sm text-slate-700">{{ $siswa->kelas }}</td>
+                                <td class="px-5 py-3 text-sm text-slate-700">{{ $siswa->kamar }}</td>
                                 <td class="px-5 py-3 text-sm text-slate-700">
-                                    {{ $santri->jenis_kelamin === 'L' ? 'Laki-laki' : ($santri->jenis_kelamin === 'P' ? 'Perempuan' : '-') }}
+                                    {{ $siswa->jenis_kelamin === 'L' ? 'Laki-laki' : ($siswa->jenis_kelamin === 'P' ? 'Perempuan' : '-') }}
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="px-5 py-8 text-center text-sm text-slate-500">Belum ada data santri.</td>
+                                <td colspan="5" class="px-5 py-8 text-center text-sm text-slate-500">Belum ada data siswa.</td>
                             </tr>
                         @endforelse
                     </tbody>

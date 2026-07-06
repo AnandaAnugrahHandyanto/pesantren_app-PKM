@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('santris', function (Blueprint $table) {
+        Schema::create('siswas', function (Blueprint $table) {
             $table->id();
             $table->string('nis')->unique();
-            $table->string('nama');
+            $table->string('nama_lengkap');
             $table->string('kelas');
-            $table->string('kamar');
-            $table->enum('jenis_kelamin', ['L', 'P']);
+            $table->enum('jenis_kelamin', ['L', 'P'])->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('santris');
+        Schema::dropIfExists('siswas');
     }
 };

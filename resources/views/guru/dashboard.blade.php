@@ -73,8 +73,8 @@
                 </a>
             </div>
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                {{-- Absensi Sekolah --}}
-                <a href="{{ route('absensi.index', ['kategori' => 'sekolah']) }}"
+                {{-- Absensi Pelajaran --}}
+                <a href="{{ route('absensi.index', ['kategori' => 'pelajaran']) }}"
                    class="flex items-center gap-4 rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md transition hover:bg-white/20">
                     <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-green-500/30 text-green-200">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -83,13 +83,13 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="text-base font-semibold text-white">Absensi Sekolah</p>
-                        <p class="text-sm text-white/60">Kelola absensi kegiatan sekolah</p>
+                        <p class="text-base font-semibold text-white">Absensi Pelajaran</p>
+                        <p class="text-sm text-white/60">Kelola absensi kegiatan pelajaran</p>
                     </div>
                 </a>
 
-                {{-- Absensi Halaqoh --}}
-                <a href="{{ route('absensi.index', ['kategori' => 'halaqoh']) }}"
+                {{-- Absensi Ekstrakurikuler --}}
+                <a href="{{ route('absensi.index', ['kategori' => 'ekstrakurikuler']) }}"
                    class="flex items-center gap-4 rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md transition hover:bg-white/20">
                     <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-purple-500/30 text-purple-200">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -98,13 +98,13 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="text-base font-semibold text-white">Absensi Halaqoh</p>
-                        <p class="text-sm text-white/60">Kelola absensi kegiatan halaqoh</p>
+                        <p class="text-base font-semibold text-white">Absensi Ekstrakurikuler</p>
+                        <p class="text-sm text-white/60">Kelola absensi kegiatan ekstrakurikuler</p>
                     </div>
                 </a>
 
-                {{-- Absensi Berkebun --}}
-                <a href="{{ route('absensi.index', ['kategori' => 'berkebun']) }}"
+                {{-- Absensi Upacara --}}
+                <a href="{{ route('absensi.index', ['kategori' => 'upacara']) }}"
                    class="flex items-center gap-4 rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md transition hover:bg-white/20">
                     <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-emerald-500/30 text-emerald-200">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -113,13 +113,13 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="text-base font-semibold text-white">Absensi Berkebun</p>
-                        <p class="text-sm text-white/60">Kelola absensi kegiatan berkebun</p>
+                        <p class="text-base font-semibold text-white">Absensi Upacara</p>
+                        <p class="text-sm text-white/60">Kelola absensi kegiatan upacara sekolah</p>
                     </div>
                 </a>
 
-                {{-- Absensi Dirosah --}}
-                <a href="{{ route('absensi.index', ['kategori' => 'dirosah']) }}"
+                {{-- Absensi Kegiatan Khusus --}}
+                <a href="{{ route('absensi.index', ['kategori' => 'kegiatan_khusus']) }}"
                    class="flex items-center gap-4 rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md transition hover:bg-white/20">
                     <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-amber-500/30 text-amber-200">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -128,8 +128,8 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="text-base font-semibold text-white">Absensi Dirosah</p>
-                        <p class="text-sm text-white/60">Kelola absensi kegiatan dirosah</p>
+                        <p class="text-base font-semibold text-white">Absensi Kegiatan Khusus</p>
+                        <p class="text-sm text-white/60">Kelola absensi kegiatan khusus sekolah</p>
                     </div>
                 </a>
             </div>
@@ -150,7 +150,7 @@
                     </div>
                     <div>
                         <p class="text-base font-semibold text-white">Laporan Absensi</p>
-                        <p class="text-sm text-white/60">Lihat laporan absensi santri</p>
+                        <p class="text-sm text-white/60">Lihat laporan absensi siswa</p>
                     </div>
                 </a>
             </div>

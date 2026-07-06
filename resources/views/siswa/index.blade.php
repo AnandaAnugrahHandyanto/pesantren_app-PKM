@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h1 class="text-lg font-semibold">Data Santri</h1>
+        <h1 class="text-lg font-semibold">Data Siswa</h1>
     </x-slot>
 
     <div class="space-y-4">
@@ -14,18 +14,18 @@
             {{-- Card Header --}}
             <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 px-5 py-4">
                 <div>
-                    <h2 class="text-base font-semibold text-white">Daftar Santri</h2>
-                    <p class="mt-0.5 text-xs text-white/50">Kelola data santri pesantren.</p>
+                    <h2 class="text-base font-semibold text-white">Daftar Siswa</h2>
+                    <p class="mt-0.5 text-xs text-white/50">Kelola data siswa sekolah.</p>
                 </div>
                 <div class="flex flex-wrap gap-2">
-                <a href="{{ route('santri.create') }}"
+                <a href="{{ route('siswa.create') }}"
                     class="inline-flex items-center gap-1.5 rounded-lg bg-blue-500/80 px-4 py-2 text-sm font-medium text-white shadow-sm backdrop-blur-sm transition hover:bg-blue-400/80">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                     </svg>
-                    Tambah Santri
+                    Tambah Siswa
                 </a>
-                <a href="{{ route('santri.import.form') }}"
+                <a href="{{ route('siswa.import.form') }}"
                     class="inline-flex items-center gap-1.5 rounded-lg bg-green-500/80 px-4 py-2 text-sm font-medium text-white shadow-sm backdrop-blur-sm transition hover:bg-green-400/80">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
@@ -47,20 +47,20 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-white/10">
-                        @forelse ($santris as $santri)
+                        @forelse ($siswas as $siswa)
                             <tr class="transition hover:bg-white/[0.07]">
-                                <td class="px-5 py-3 text-sm font-medium text-white">{{ $santri->nama_lengkap }}</td>
-                                <td class="px-5 py-3 text-sm text-white/70">{{ $santri->kelas }}</td>
+                                <td class="px-5 py-3 text-sm font-medium text-white">{{ $siswa->nama_lengkap }}</td>
+                                <td class="px-5 py-3 text-sm text-white/70">{{ $siswa->kelas }}</td>
                                 <td class="px-5 py-3 text-sm text-white/70">
-                                    {{ $santri->jenis_kelamin === 'L' ? 'Laki-laki' : ($santri->jenis_kelamin === 'P' ? 'Perempuan' : '-') }}
+                                    {{ $siswa->jenis_kelamin === 'L' ? 'Laki-laki' : ($siswa->jenis_kelamin === 'P' ? 'Perempuan' : '-') }}
                                 </td>
                                 <td class="px-5 py-3 text-sm">
                                     <div class="flex gap-2">
-                                        <a href="{{ route('santri.edit', $santri) }}"
+                                        <a href="{{ route('siswa.edit', $siswa) }}"
                                             class="rounded-lg bg-yellow-500/80 px-3 py-1.5 text-xs font-medium text-white shadow-sm transition hover:bg-yellow-400/80">
                                             Edit
                                         </a>
-                                        <form action="{{ route('santri.destroy', $santri) }}" method="POST"
+                                        <form action="{{ route('siswa.destroy', $siswa) }}" method="POST"
                                             onsubmit="return confirm('Yakin ingin menghapus data ini?')">
                                             @csrf
                                             @method('DELETE')
@@ -75,7 +75,7 @@
                         @empty
                             <tr>
                                 <td colspan="4" class="px-5 py-8 text-center text-sm text-white/40">
-                                    Belum ada data santri.
+                                    Belum ada data siswa.
                                 </td>
                             </tr>
                         @endforelse

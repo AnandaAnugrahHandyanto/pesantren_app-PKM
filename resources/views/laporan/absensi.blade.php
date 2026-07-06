@@ -49,9 +49,10 @@
                         class="rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
                     <option value="" {{ $kategori === '' ? 'selected' : '' }} class="bg-indigo-950 text-white">Semua Kategori</option>
                     <option value="sekolah"  {{ $kategori === 'sekolah'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Sekolah</option>
-                    <option value="halaqoh"  {{ $kategori === 'halaqoh'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Halaqoh</option>
-                    <option value="berkebun" {{ $kategori === 'berkebun' ? 'selected' : '' }} class="bg-indigo-950 text-white">Berkebun</option>
-                    <option value="dirosah"  {{ $kategori === 'dirosah'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Dirosah</option>
+                    <option value="pelajaran" {{ $kategori === 'pelajaran' ? 'selected' : '' }} class="bg-indigo-950 text-white">Pelajaran</option>
+                    <option value="ekstrakurikuler" {{ $kategori === 'ekstrakurikuler' ? 'selected' : '' }} class="bg-indigo-950 text-white">Ekstrakurikuler</option>
+                    <option value="upacara" {{ $kategori === 'upacara' ? 'selected' : '' }} class="bg-indigo-950 text-white">Upacara Sekolah</option>
+                    <option value="kegiatan_khusus" {{ $kategori === 'kegiatan_khusus' ? 'selected' : '' }} class="bg-indigo-950 text-white">Kegiatan Khusus</option>
                 </select>
 
                 <button type="submit"
@@ -89,7 +90,7 @@
                 <thead>
                     <tr class="border-b border-white/10 bg-white/5">
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">No</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Nama Santri</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Nama Siswa</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Tanggal</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Kategori</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Status</th>
@@ -102,7 +103,7 @@
                         @endphp
                         <tr class="transition hover:bg-white/10">
                             <td class="px-4 py-3 text-sm text-white/70">{{ $i + 1 }}</td>
-                            <td class="px-4 py-3 text-sm font-medium text-white">{{ $absensi->santri->nama_lengkap }}</td>
+                            <td class="px-4 py-3 text-sm font-medium text-white">{{ $absensi->siswa->nama_lengkap }}</td>
                             <td class="px-4 py-3 text-sm text-white/70">{{ $absensi->tanggal->format('d/m/Y') }}</td>
                             <td class="px-4 py-3 text-sm text-white/70">{{ ucfirst($absensi->kategori) }}</td>
                             <td class="px-4 py-3 text-sm">

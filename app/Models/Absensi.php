@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Absensi extends Model
 {
     protected $fillable = [
-        'santri_id',
+        'siswa_id',
         'tanggal',
         'status',
         'kategori',
@@ -18,8 +18,8 @@ class Absensi extends Model
         'tanggal' => 'date',
     ];
 
-    public function santri(): BelongsTo
+    public function siswa(): BelongsTo
     {
-        return $this->belongsTo(Santri::class);
+        return $this->belongsTo(Siswa::class);
     }
 }

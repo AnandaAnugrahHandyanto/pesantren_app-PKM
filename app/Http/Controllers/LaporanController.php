@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Absensi;
-use App\Models\Santri;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 
 class LaporanController extends Controller
@@ -13,7 +13,7 @@ class LaporanController extends Controller
         $tanggal  = $request->query('tanggal', today()->toDateString());
         $kategori = $request->query('kategori', '');
 
-        $absensis = Absensi::with('santri')
+        $absensis = Absensi::with('siswa')
             ->whereDate('tanggal', $tanggal)
             ->when($kategori, fn ($q) => $q->where('kategori', $kategori))
             ->orderBy('id')
@@ -49,7 +49,7 @@ class LaporanController extends Controller
             $to       = "{$yearSem2}-06-30";
         }
 
-        $rekap = Santri::orderBy('kelas')->orderBy('nama_lengkap')
+        $rekap = Siswa::orderBy('kelas')->orderBy('nama_lengkap')
             ->withCount([
                 'absensis as hadir' => fn ($q) => $q->where('status', 'hadir')->whereBetween('tanggal', [$from, $to])->when($kategori, fn ($q) => $q->where('kategori', $kategori)),
                 'absensis as izin'  => fn ($q) => $q->where('status', 'izin')->whereBetween('tanggal', [$from, $to])->when($kategori, fn ($q) => $q->where('kategori', $kategori)),
@@ -85,7 +85,7 @@ class LaporanController extends Controller
             $to       = "{$yearSem2}-06-30";
         }
 
-        $rekap = Santri::orderBy('kelas')->orderBy('nama_lengkap')
+        $rekap = Siswa::orderBy('kelas')->orderBy('nama_lengkap')
             ->withCount([
                 'absensis as hadir' => fn ($q) => $q->where('status', 'hadir')->whereBetween('tanggal', [$from, $to])->when($kategori, fn ($q) => $q->where('kategori', $kategori)),
                 'absensis as izin'  => fn ($q) => $q->where('status', 'izin')->whereBetween('tanggal', [$from, $to])->when($kategori, fn ($q) => $q->where('kategori', $kategori)),

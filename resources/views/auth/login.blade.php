@@ -9,7 +9,7 @@
                 </svg>
             </div>
         </div>
-        <h1 class="text-xl font-bold text-white">Login Sistem Informasi Pesantren</h1>
+        <h1 class="text-xl font-bold text-white">Login Sistem Informasi Sekolah</h1>
     </div>
 
     <!-- Session Status -->

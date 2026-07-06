@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Sistem Informasi Manajemen Pesantren</title>
+        <title>Sistem Informasi Manajemen Sekolah</title>
 
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
@@ -42,13 +42,13 @@
                     {{-- Heading --}}
                     <div class="mb-2 text-center">
                         <h1 class="text-2xl font-bold leading-tight text-white sm:text-3xl">
-                            Sistem Informasi Manajemen Pesantren
+                            Sistem Informasi Manajemen Sekolah
                         </h1>
                     </div>
 
                     {{-- Subheading --}}
                     <p class="mb-8 text-center text-sm leading-relaxed text-white/60 sm:text-base">
-                        Aplikasi untuk pengelolaan data santri dan absensi pesantren
+                        Aplikasi untuk pengelolaan data siswa dan absensi sekolah
                     </p>
 
                     {{-- Action buttons --}}
@@ -75,7 +75,7 @@
 
                 {{-- Feature cards --}}
                 <div class="mt-8 grid w-full max-w-lg grid-cols-1 gap-4 sm:grid-cols-3">
-                    {{-- Data Santri --}}
+                    {{-- Data Siswa --}}
                     <div class="flex flex-col items-center gap-2 rounded-2xl border border-white/15 bg-white/8 p-4 text-center backdrop-blur-md">
                         <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-500/30 text-blue-300">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -83,8 +83,8 @@
                                       d="M17 20h5v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2h5M12 12a4 4 0 100-8 4 4 0 000 8z"/>
                             </svg>
                         </div>
-                        <p class="text-xs font-semibold text-white">Data Santri</p>
-                        <p class="text-xs text-white/50">Kelola data santri dengan mudah</p>
+                        <p class="text-xs font-semibold text-white">Data Siswa</p>
+                        <p class="text-xs text-white/50">Kelola data siswa dengan mudah</p>
                     </div>
 
                     {{-- Absensi --}}
@@ -96,7 +96,7 @@
                             </svg>
                         </div>
                         <p class="text-xs font-semibold text-white">Absensi</p>
-                        <p class="text-xs text-white/50">Catat kehadiran santri harian</p>
+                        <p class="text-xs text-white/50">Catat kehadiran siswa harian</p>
                     </div>
 
                     {{-- Laporan --}}
@@ -114,7 +114,7 @@
 
                 {{-- Footer --}}
                 <p class="mt-8 text-xs text-white/30">
-                    &copy; {{ date('Y') }} Pesantren App &mdash; Sistem Informasi Manajemen Pesantren
+                    &copy; {{ date('Y') }} Sekolah App &mdash; Sistem Informasi Manajemen Sekolah
                 </p>
 
             </div>

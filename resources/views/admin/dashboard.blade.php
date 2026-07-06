@@ -5,16 +5,16 @@
 
     <div class="space-y-6">
 
-        {{-- ===== Statistik Pesantren ===== --}}
+        {{-- ===== Statistik Sekolah ===== --}}
         <div>
-            <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-white/40">Statistik Pesantren</p>
+            <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-white/40">Statistik Sekolah</p>
             <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-                {{-- Total Santri --}}
+                {{-- Total Siswa --}}
                 <div class="rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium text-white/60">Total Santri</p>
-                            <p class="mt-2 text-4xl font-bold text-white">{{ $totalSantri }}</p>
+                            <p class="text-sm font-medium text-white/60">Total Siswa</p>
+                            <p class="mt-2 text-4xl font-bold text-white">{{ $totalSiswa }}</p>
                         </div>
                         <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-500/30 text-blue-300">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -25,12 +25,12 @@
                     </div>
                 </div>
 
-                {{-- Santri Laki-laki --}}
+                {{-- Siswa Laki-laki --}}
                 <div class="rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium text-white/60">Santri Laki-laki</p>
-                            <p class="mt-2 text-4xl font-bold text-cyan-300">{{ $santriLaki }}</p>
+                            <p class="text-sm font-medium text-white/60">Siswa Laki-laki</p>
+                            <p class="mt-2 text-4xl font-bold text-cyan-300">{{ $siswaLaki }}</p>
                         </div>
                         <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-500/30 text-cyan-300">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -41,12 +41,12 @@
                     </div>
                 </div>
 
-                {{-- Santri Perempuan --}}
+                {{-- Siswa Perempuan --}}
                 <div class="rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium text-white/60">Santri Perempuan</p>
-                            <p class="mt-2 text-4xl font-bold text-pink-300">{{ $santriPerempuan }}</p>
+                            <p class="text-sm font-medium text-white/60">Siswa Perempuan</p>
+                            <p class="mt-2 text-4xl font-bold text-pink-300">{{ $siswaPerempuan }}</p>
                         </div>
                         <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-pink-500/30 text-pink-300">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -143,8 +143,8 @@
                 </a>
             </div>
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-                {{-- Data Santri --}}
-                <a href="{{ route('santri.index') }}"
+                {{-- Data Siswa --}}
+                <a href="{{ route('siswa.index') }}"
                    class="flex items-center gap-4 rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md transition hover:bg-white/20">
                     <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-blue-500/30 text-blue-200">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -153,13 +153,13 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="text-base font-semibold text-white">Data Santri</p>
-                        <p class="text-sm text-white/60">Kelola data santri</p>
+                        <p class="text-base font-semibold text-white">Data Siswa</p>
+                        <p class="text-sm text-white/60">Kelola data siswa</p>
                     </div>
                 </a>
 
-                {{-- Tambah Santri --}}
-                <a href="{{ route('santri.create') }}"
+                {{-- Tambah Siswa --}}
+                <a href="{{ route('siswa.create') }}"
                    class="flex items-center gap-4 rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md transition hover:bg-white/20">
                     <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-cyan-500/30 text-cyan-200">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -168,8 +168,8 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="text-base font-semibold text-white">Tambah Santri</p>
-                        <p class="text-sm text-white/60">Daftarkan santri baru</p>
+                        <p class="text-base font-semibold text-white">Tambah Siswa</p>
+                        <p class="text-sm text-white/60">Daftarkan siswa baru</p>
                     </div>
                 </a>
 
@@ -205,11 +205,11 @@
             </div>
         </div>
 
-        {{-- ===== Data Santri Terbaru ===== --}}
+        {{-- ===== Data Siswa Terbaru ===== --}}
         <div class="rounded-2xl border border-white/20 bg-white/10 shadow-lg backdrop-blur-md">
             <div class="flex items-center justify-between border-b border-white/20 px-5 py-4">
-                <h2 class="text-base font-semibold text-white">Data Santri Terbaru</h2>
-                <a href="{{ route('santri.index') }}" class="text-sm font-medium text-indigo-300 hover:text-indigo-200">
+                <h2 class="text-base font-semibold text-white">Data Siswa Terbaru</h2>
+                <a href="{{ route('siswa.index') }}" class="text-sm font-medium text-indigo-300 hover:text-indigo-200">
                     Lihat semua
                 </a>
             </div>
@@ -223,17 +223,17 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-white/10">
-                        @forelse ($latestSantri as $santri)
+                        @forelse ($latestSiswa as $siswa)
                             <tr class="transition hover:bg-white/10">
-                                <td class="px-5 py-3 text-sm font-medium text-white">{{ $santri->nama_lengkap }}</td>
-                                <td class="px-5 py-3 text-sm text-white/70">{{ $santri->kelas }}</td>
+                                <td class="px-5 py-3 text-sm font-medium text-white">{{ $siswa->nama_lengkap }}</td>
+                                <td class="px-5 py-3 text-sm text-white/70">{{ $siswa->kelas }}</td>
                                 <td class="px-5 py-3 text-sm text-white/70">
-                                    {{ $santri->jenis_kelamin === 'L' ? 'Laki-laki' : ($santri->jenis_kelamin === 'P' ? 'Perempuan' : '-') }}
+                                    {{ $siswa->jenis_kelamin === 'L' ? 'Laki-laki' : ($siswa->jenis_kelamin === 'P' ? 'Perempuan' : '-') }}
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="3" class="px-5 py-8 text-center text-sm text-white/40">Belum ada data santri.</td>
+                                <td colspan="3" class="px-5 py-8 text-center text-sm text-white/40">Belum ada data siswa.</td>
                             </tr>
                         @endforelse
                     </tbody>

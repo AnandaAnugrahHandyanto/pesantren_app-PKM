@@ -18,24 +18,24 @@ return new class extends Migration
         $oldIndexExists = DB::table('information_schema.statistics')
             ->where('table_schema', $database)
             ->where('table_name', 'absensis')
-            ->where('index_name', 'absensis_santri_id_tanggal_unique')
+            ->where('index_name', 'absensis_siswa_id_tanggal_unique')
             ->exists();
 
         if ($oldIndexExists) {
             Schema::table('absensis', function (Blueprint $table): void {
-                $table->dropUnique('absensis_santri_id_tanggal_unique');
+                $table->dropUnique('absensis_siswa_id_tanggal_unique');
             });
         }
 
         $newIndexExists = DB::table('information_schema.statistics')
             ->where('table_schema', $database)
             ->where('table_name', 'absensis')
-            ->where('index_name', 'absensis_santri_id_tanggal_kategori_unique')
+            ->where('index_name', 'absensis_siswa_id_tanggal_kategori_unique')
             ->exists();
 
         if (! $newIndexExists) {
             Schema::table('absensis', function (Blueprint $table): void {
-                $table->unique(['santri_id', 'tanggal', 'kategori'], 'absensis_santri_id_tanggal_kategori_unique');
+                $table->unique(['siswa_id', 'tanggal', 'kategori'], 'absensis_siswa_id_tanggal_kategori_unique');
             });
         }
     }
@@ -51,24 +51,24 @@ return new class extends Migration
         $newIndexExists = DB::table('information_schema.statistics')
             ->where('table_schema', $database)
             ->where('table_name', 'absensis')
-            ->where('index_name', 'absensis_santri_id_tanggal_kategori_unique')
+            ->where('index_name', 'absensis_siswa_id_tanggal_kategori_unique')
             ->exists();
 
         if ($newIndexExists) {
             Schema::table('absensis', function (Blueprint $table): void {
-                $table->dropUnique('absensis_santri_id_tanggal_kategori_unique');
+                $table->dropUnique('absensis_siswa_id_tanggal_kategori_unique');
             });
         }
 
         $oldIndexExists = DB::table('information_schema.statistics')
             ->where('table_schema', $database)
             ->where('table_name', 'absensis')
-            ->where('index_name', 'absensis_santri_id_tanggal_unique')
+            ->where('index_name', 'absensis_siswa_id_tanggal_unique')
             ->exists();
 
         if (! $oldIndexExists) {
             Schema::table('absensis', function (Blueprint $table): void {
-                $table->unique(['santri_id', 'tanggal'], 'absensis_santri_id_tanggal_unique');
+                $table->unique(['siswa_id', 'tanggal'], 'absensis_siswa_id_tanggal_unique');
             });
         }
     }

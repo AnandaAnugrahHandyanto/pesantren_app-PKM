@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Imports\SantriImport;
-use App\Models\Santri;
+use App\Imports\SiswaImport;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
 
-class SantriController extends Controller
+class SiswaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $santris = Santri::all();
-        return view('santri.index', compact('santris'));
+        $siswas = Siswa::all();
+        return view('siswa.index', compact('siswas'));
     }
 
     /**
@@ -24,7 +24,7 @@ class SantriController extends Controller
      */
     public function create()
     {
-        return view('santri.create');
+        return view('siswa.create');
     }
 
     /**
@@ -38,16 +38,16 @@ class SantriController extends Controller
             'jenis_kelamin' => ['required', Rule::in(['L', 'P'])],
         ]);
 
-        Santri::create($validated);
+        Siswa::create($validated);
 
-        return redirect()->route('santri.index')
+        return redirect()->route('siswa.index')
             ->with('success', 'Data santri berhasil ditambahkan');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Santri $santri)
+    public function show(Siswa $siswa)
     {
         //
     }
@@ -55,15 +55,15 @@ class SantriController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Santri $santri)
+    public function edit(Siswa $siswa)
     {
-        return view('santri.edit', compact('santri'));
+        return view('siswa.edit', compact('siswa'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Santri $santri)
+    public function update(Request $request, Siswa $siswa)
     {
         $validated = $request->validate([
             'nama_lengkap' => ['required', 'string', 'max:255'],
@@ -71,20 +71,20 @@ class SantriController extends Controller
             'jenis_kelamin' => ['required', Rule::in(['L', 'P'])],
         ]);
 
-        $santri->update($validated);
+        $siswa->update($validated);
 
-        return redirect()->route('santri.index')
+        return redirect()->route('siswa.index')
             ->with('success', 'Data santri berhasil diperbarui');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Santri $santri)
+    public function destroy(Siswa $siswa)
     {
-        $santri->delete();
+        $siswa->delete();
 
-        return redirect()->route('santri.index')
+        return redirect()->route('siswa.index')
             ->with('success', 'Data santri berhasil dihapus');
     }
 
@@ -95,7 +95,7 @@ class SantriController extends Controller
     {
         $headers = [
             'Content-Type'        => 'text/csv',
-            'Content-Disposition' => 'attachment; filename="template_santri.csv"',
+            'Content-Disposition' => 'attachment; filename="template_siswa.csv"',
         ];
 
         $callback = function () {
@@ -112,7 +112,7 @@ class SantriController extends Controller
      */
     public function importForm()
     {
-        return view('santri.import');
+        return view('siswa.import');
     }
 
     /**
@@ -125,9 +125,9 @@ class SantriController extends Controller
         ]);
 
         try {
-            Excel::import(new SantriImport, $request->file('file'));
+            Excel::import(new SiswaImport, $request->file('file'));
 
-            return redirect()->route('santri.index')
+            return redirect()->route('siswa.index')
                 ->with('success', 'Data santri berhasil diimport');
         } catch (\Exception $e) {
             return redirect()->back()

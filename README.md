@@ -1,11 +1,11 @@
-# Sistem Informasi Manajemen Pondok Pesantren - Pesantren App
+# Sistem Informasi Manajemen Pondok Sekolah - Absensi App
 
 [![Laravel](https://img.shields.io/badge/Laravel-^12.0-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com/)
 [![PHP](https://img.shields.io/badge/PHP-^8.3-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://www.php.net/)
 [![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-E7E5E4?style=for-the-badge&logo=tailwindcss&logoColor=06B6D4)](https://tailwindcss.com/)
 [![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
 
-Aplikasi ini adalah sistem informasi berbasis web yang dirancang untuk mempermudah pengelolaan administrasi di lingkungan pondok pesantren. `Pesantren App` menyediakan solusi terintegrasi untuk manajemen data santri, pencatatan absensi harian, serta pelaporan rekapitulasi absensi dengan sistem otorisasi berbasis peran untuk Administrator dan Guru.
+Aplikasi ini adalah sistem informasi berbasis web yang dirancang untuk mempermudah pengelolaan administrasi di lingkungan pondok sekolah. `Absensi App` menyediakan solusi terintegrasi untuk manajemen data siswa, pencatatan absensi harian, serta pelaporan rekapitulasi absensi dengan sistem otorisasi berbasis peran untuk Administrator dan Guru.
 
 ## Daftar Isi
 
@@ -24,10 +24,10 @@ Aplikasi ini adalah sistem informasi berbasis web yang dirancang untuk mempermud
 
 ## Fitur Utama
 
-- **Manajemen Data Santri**:
-    - Fungsionalitas lengkap untuk membuat, membaca, memperbarui, dan menghapus (CRUD) data santri.
-    - Dukungan untuk impor data santri secara massal melalui file Excel atau CSV, dilengkapi dengan validasi.
-    - Penyediaan template impor data santri untuk kemudahan penggunaan.
+- **Manajemen Data Siswa**:
+    - Fungsionalitas lengkap untuk membuat, membaca, memperbarui, dan menghapus (CRUD) data siswa.
+    - Dukungan untuk impor data siswa secara massal melalui file Excel atau CSV, dilengkapi dengan validasi.
+    - Penyediaan template impor data siswa untuk kemudahan penggunaan.
 - **Manajemen Absensi**:
     - Sistem pencatatan absensi harian yang fleksibel berdasarkan tanggal dan berbagai kategori kegiatan (seperti sekolah, halaqoh, berkebun, dirosah).
     - Pilihan status absensi meliputi Hadir, Izin, Sakit, dan Alfa.
@@ -42,20 +42,20 @@ Aplikasi ini adalah sistem informasi berbasis web yang dirancang untuk mempermud
     - Fungsionalitas manajemen profil pengguna, termasuk pembaruan informasi pribadi, perubahan kata sandi, dan penghapusan akun.
 - **Dasbor Interaktif dan Adaptif**:
     - Dasbor umum yang menyajikan ringkasan data esensial bagi seluruh pengguna terautentikasi.
-    - Dasbor khusus Administrator dengan tampilan statistik total santri, jumlah guru, dan rangkuman absensi.
+    - Dasbor khusus Administrator dengan tampilan statistik total siswa, jumlah guru, dan rangkuman absensi.
     - Dasbor khusus Guru yang fokus pada data absensi relevan untuk tugas mengajar.
 
 ## Screenshot
 
-Untuk memberikan gambaran visual, berikut adalah beberapa tangkapan layar (screenshot) utama dari `Pesantren App`.
+Untuk memberikan gambaran visual, berikut adalah beberapa tangkapan layar (screenshot) utama dari `Absensi App`.
 
 | Halaman Login                                    | Halaman Dashboard (Admin)                                   |
 | :----------------------------------------------- | :---------------------------------------------------------- |
 | ![Tampilan Halaman Login](docs/images/login.png) | ![Tampilan Dasbor Administrator](docs/images/dashboard.png) |
 
-| Manajemen Santri                                        | Pencatatan Absensi                                      |
+| Manajemen Siswa                                        | Pencatatan Absensi                                      |
 | :------------------------------------------------------ | :------------------------------------------------------ |
-| ![Daftar Manajemen Santri](docs/images/data_santri.png) | ![Formulir Pencatatan Absensi](docs/images/absensi.png) |
+| ![Daftar Manajemen Siswa](docs/images/data_siswa.png) | ![Formulir Pencatatan Absensi](docs/images/absensi.png) |
 
 | Laporan Absensi                                                           |
 | :------------------------------------------------------------------------ |
@@ -63,7 +63,7 @@ Untuk memberikan gambaran visual, berikut adalah beberapa tangkapan layar (scree
 
 ## Tumpukan Teknologi
 
-Aplikasi `Pesantren App` dibangun menggunakan tumpukan teknologi modern sebagai berikut:
+Aplikasi `Absensi App` dibangun menggunakan tumpukan teknologi modern sebagai berikut:
 
 - **Backend Framework**: Laravel v12.x (PHP)
 - **Bahasa Pemrograman**: PHP ^8.3
@@ -76,7 +76,7 @@ Aplikasi `Pesantren App` dibangun menggunakan tumpukan teknologi modern sebagai 
 
 ## Persyaratan Sistem
 
-Untuk berhasil menginstal dan menjalankan `Pesantren App`, sistem Anda harus memenuhi persyaratan teknis berikut:
+Untuk berhasil menginstal dan menjalankan `Absensi App`, sistem Anda harus memenuhi persyaratan teknis berikut:
 
 - **PHP**: Versi ^8.3
 - **Composer**: Versi stabil terbaru
@@ -87,13 +87,13 @@ Untuk berhasil menginstal dan menjalankan `Pesantren App`, sistem Anda harus mem
 
 ## Instalasi
 
-Ikuti langkah-langkah di bawah ini untuk menyiapkan dan menjalankan `Pesantren App` di lingkungan pengembangan lokal Anda:
+Ikuti langkah-langkah di bawah ini untuk menyiapkan dan menjalankan `Absensi App` di lingkungan pengembangan lokal Anda:
 
 1.  **Clone Repositori:**
 
     ```bash
-    git clone https://github.com/AnandaAnugrahHandyanto/pesantren-app.git
-    cd pesantren-app
+    git clone https://github.com/AnandaAnugrahHandyanto/sekolah-app.git
+    cd sekolah-app
     ```
 
 2.  **Instal Dependensi PHP:**
@@ -133,7 +133,7 @@ Ikuti langkah-langkah di bawah ini untuk menyiapkan dan menjalankan `Pesantren A
     DB_CONNECTION=mysql
     DB_HOST=127.0.0.1
     DB_PORT=3306
-    DB_DATABASE=pesantren_app_db
+    DB_DATABASE=sekolah_app_db
     DB_USERNAME=root
     DB_PASSWORD=***
     ```
@@ -181,17 +181,17 @@ Berikut adalah gambaran singkat mengenai direktori-direktori kunci dalam proyek 
 
 ## Peran Pengguna
 
-`Pesantren App` dirancang dengan sistem kontrol akses berbasis peran (Role-Based Access Control - RBAC) yang mendukung dua peran pengguna utama:
+`Absensi App` dirancang dengan sistem kontrol akses berbasis peran (Role-Based Access Control - RBAC) yang mendukung dua peran pengguna utama:
 
-- **Administrator**: Memiliki hak akses penuh ke seluruh fungsionalitas aplikasi, termasuk manajemen lengkap data santri (CRUD, impor), manajemen absensi, pelaporan komprehensif, dan pengelolaan pengguna sistem.
-- **Guru**: Memiliki hak akses terbatas untuk mencatat absensi santri, melihat berbagai laporan absensi, dan mengakses dasbor yang disesuaikan untuk kebutuhan pengajaran. Guru tidak memiliki hak untuk memodifikasi data master santri atau mengelola akun pengguna lain.
+- **Administrator**: Memiliki hak akses penuh ke seluruh fungsionalitas aplikasi, termasuk manajemen lengkap data siswa (CRUD, impor), manajemen absensi, pelaporan komprehensif, dan pengelolaan pengguna sistem.
+- **Guru**: Memiliki hak akses terbatas untuk mencatat absensi siswa, melihat berbagai laporan absensi, dan mengakses dasbor yang disesuaikan untuk kebutuhan pengajaran. Guru tidak memiliki hak untuk memodifikasi data master siswa atau mengelola akun pengguna lain.
 
 ## Keamanan
 
-Aspek keamanan merupakan prioritas dalam pengembangan `Pesantren App`:
+Aspek keamanan merupakan prioritas dalam pengembangan `Absensi App`:
 
 - **Otentikasi Aman**: Aplikasi ini memanfaatkan [Laravel Fortify](https://laravel.com/docs/10.x/fortify) untuk mengelola semua proses otentikasi. Ini mencakup login yang aman, registrasi pengguna baru, mekanisme reset kata sandi, dan verifikasi email, memastikan standar keamanan industri yang tinggi.
-- **Otorisasi Berbasis Peran**: Implementasi otorisasi dilakukan melalui _middleware_ kustom (`RoleMiddleware`). _Middleware_ ini secara ketat membatasi akses ke berbagai bagian aplikasi hanya untuk pengguna yang memiliki peran yang sesuai (misalnya, hanya `admin` yang dapat mengakses modul manajemen santri), mencegah akses tidak sah.
+- **Otorisasi Berbasis Peran**: Implementasi otorisasi dilakukan melalui _middleware_ kustom (`RoleMiddleware`). _Middleware_ ini secara ketat membatasi akses ke berbagai bagian aplikasi hanya untuk pengguna yang memiliki peran yang sesuai (misalnya, hanya `admin` yang dapat mengakses modul manajemen siswa), mencegah akses tidak sah.
 
 ## License
 

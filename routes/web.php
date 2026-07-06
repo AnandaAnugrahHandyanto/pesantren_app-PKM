@@ -4,7 +4,7 @@ use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SantriController;
+use App\Http\Controllers\SiswaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,10 +22,10 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('role:admin')->group(function () {
         Route::get('/admin/dashboard', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
-        Route::get('/santri/import', [SantriController::class, 'importForm'])->name('santri.import.form');
-        Route::post('/santri/import', [SantriController::class, 'importExcel'])->name('santri.import');
-        Route::get('/santri/template', [SantriController::class, 'downloadTemplate'])->name('santri.template');
-        Route::resource('santri', SantriController::class);
+        Route::get('/santri/import', [SiswaController::class, 'importForm'])->name('santri.import.form');
+        Route::post('/santri/import', [SiswaController::class, 'importExcel'])->name('santri.import');
+        Route::get('/santri/template', [SiswaController::class, 'downloadTemplate'])->name('santri.template');
+        Route::resource('siswa', SiswaController::class);
     });
 
     Route::middleware('role:guru')->group(function () {

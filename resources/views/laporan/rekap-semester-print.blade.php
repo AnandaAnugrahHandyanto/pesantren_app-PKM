@@ -41,7 +41,7 @@
         <thead>
             <tr>
                 <th style="width:40px">No</th>
-                <th>Nama Santri</th>
+                <th>Nama Siswa</th>
                 <th>Kelas</th>
                 <th class="num">Hadir</th>
                 <th class="num">Izin</th>
@@ -50,19 +50,19 @@
             </tr>
         </thead>
         <tbody>
-            @forelse ($rekap as $i => $santri)
+            @forelse ($rekap as $i => $siswa)
                 <tr>
                     <td class="num">{{ $i + 1 }}</td>
-                    <td>{{ $santri->nama_lengkap }}</td>
-                    <td>{{ $santri->kelas }}</td>
-                    <td class="num">{{ $santri->hadir }}</td>
-                    <td class="num">{{ $santri->izin }}</td>
-                    <td class="num">{{ $santri->sakit }}</td>
-                    <td class="num">{{ $santri->alfa }}</td>
+                    <td>{{ $siswa->nama_lengkap }}</td>
+                    <td>{{ $siswa->kelas }}</td>
+                    <td class="num">{{ $siswa->hadir }}</td>
+                    <td class="num">{{ $siswa->izin }}</td>
+                    <td class="num">{{ $siswa->sakit }}</td>
+                    <td class="num">{{ $siswa->alfa }}</td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="7" style="text-align:center; color:#888;">Tidak ada data santri.</td>
+                    <td colspan="7" style="text-align:center; color:#888;">Tidak ada data siswa.</td>
                 </tr>
             @endforelse
         </tbody>

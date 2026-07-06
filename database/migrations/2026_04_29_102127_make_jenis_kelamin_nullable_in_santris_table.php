@@ -10,10 +10,10 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
+    public function up(): void
     {
-        Schema::table('santris', function (Blueprint $table) {
-            $table->enum('jenis_kelamin', ['L', 'P'])->nullable()->change();
-            $table->string('kamar')->nullable()->change();
+        Schema::table('siswas', function (Blueprint $table) {
+            $table->string('jenis_kelamin')->nullable()->change();
         });
     }
 
@@ -22,9 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('santris', function (Blueprint $table) {
-            $table->enum('jenis_kelamin', ['L', 'P'])->nullable(false)->change();
-            $table->string('kamar')->nullable(false)->change();
+        Schema::table('siswas', function (Blueprint $table) {
+            $table->string('jenis_kelamin')->nullable(false)->change();
         });
+    }
     }
 };

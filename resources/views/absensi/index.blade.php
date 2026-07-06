@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h1 class="text-lg font-semibold">Absensi Massal Santri</h1>
+        <h1 class="text-lg font-semibold">Absensi Massal Siswa</h1>
     </x-slot>
 
     @php
@@ -65,8 +65,8 @@
                     </select>
                 </div>
                 <div>
-                    <label for="search_santri" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-white/75">Cari Santri</label>
-                    <input id="search_santri" type="text" placeholder="Ketik nama santri..."
+                    <label for="search_siswa" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-white/75">Cari Siswa</label>
+                    <input id="search_siswa" type="text" placeholder="Ketik nama siswa..."
                         class="w-full rounded-lg border border-white/25 bg-white/10 px-3 py-2 text-sm text-white placeholder:text-white/45 focus:border-cyan-300/70 focus:outline-none focus:ring-2 focus:ring-cyan-300/30">
                 </div>
             </div>
@@ -94,7 +94,7 @@
                     Reset Absensi
                 </button>
                 <span id="visible-counter" class="ms-auto text-xs font-medium text-white/70">
-                    0 / {{ $santris->count() }} santri tampil
+                    0 / {{ $siswas->count() }} siswa tampil
                 </span>
             </div>
         </form>
@@ -124,7 +124,7 @@
             <div class="grid gap-2 border-b border-white/10 px-4 py-3 text-xs text-white/75 sm:grid-cols-2 lg:grid-cols-5 sm:px-5">
                 <div><span class="text-white/55">Kategori aktif:</span> <span class="font-semibold text-white">{{ ucfirst($kategori) }}</span></div>
                 <div><span class="text-white/55">Tanggal aktif:</span> <span class="font-semibold text-white">{{ $tanggal }}</span></div>
-                <div><span class="text-white/55">Jumlah santri:</span> <span class="font-semibold text-white">{{ $totalSantri }}</span></div>
+                <div><span class="text-white/55">Jumlah siswa:</span> <span class="font-semibold text-white">{{ $totalSiswa }}</span></div>
                 <div><span class="text-white/55">Sudah diabsen:</span> <span class="font-semibold text-white">{{ $existingCount }}</span></div>
                 <div><span class="text-white/55">Terakhir diupdate:</span> <span class="font-semibold text-white">{{ $lastUpdatedAt ? \Illuminate\Support\Carbon::parse($lastUpdatedAt)->format('d-m-Y H:i') : '-' }}</span></div>
             </div>
@@ -141,26 +141,26 @@
                         </tr>
                     </thead>
                     <tbody id="absensi-tbody" class="divide-y divide-white/10">
-                        @forelse ($santris as $index => $santri)
+                        @forelse ($siswas as $index => $siswa)
                             @php
-                                $existingStatus = $statusBySantri[$santri->id] ?? '';
-                                $initialStatus = old("absensi.{$santri->id}", $absensiMode === 'edit' ? $existingStatus : '');
+                                $existingStatus = $statusBySiswa[$siswa->id] ?? '';
+                                $initialStatus = old("absensi.{$siswa->id}", $absensiMode === 'edit' ? $existingStatus : '');
                             @endphp
                             <tr class="attendance-row border-l-[3px] border-transparent transition duration-200 hover:bg-white/[0.03]"
-                                data-santri-row
-                                data-name="{{ strtolower($santri->nama_lengkap) }}"
-                                data-kelas="{{ strtolower($santri->kelas ?? '-') }}"
-                                data-row-id="{{ $santri->id }}"
+                                data-siswa-row
+                                data-name="{{ strtolower($siswa->nama_lengkap) }}"
+                                data-kelas="{{ strtolower($siswa->kelas ?? '-') }}"
+                                data-row-id="{{ $siswa->id }}"
                                 data-existing-status="{{ $existingStatus }}"
                                 data-initial-status="{{ $initialStatus }}">
                                 <td class="px-3 py-2.5 text-sm text-white/70">{{ $index + 1 }}</td>
                                 <td class="px-3 py-2.5 text-sm font-medium text-white">
-                                    <span>{{ $santri->nama_lengkap }}</span>
+                                    <span>{{ $siswa->nama_lengkap }}</span>
                                 </td>
-                                <td class="px-3 py-2.5 text-sm text-white/80">{{ $santri->kelas ?? '-' }}</td>
-                                <td class="px-3 py-2.5 text-sm text-white/80">{{ $santri->jenis_kelamin ?? '-' }}</td>
+                                <td class="px-3 py-2.5 text-sm text-white/80">{{ $siswa->kelas ?? '-' }}</td>
+                                <td class="px-3 py-2.5 text-sm text-white/80">{{ $siswa->jenis_kelamin ?? '-' }}</td>
                                 <td class="px-3 py-2.5">
-                                    <input type="hidden" name="absensi[{{ $santri->id }}]" value="{{ $initialStatus }}" data-status-input>
+                                    <input type="hidden" name="absensi[{{ $siswa->id }}]" value="{{ $initialStatus }}" data-status-input>
                                     <div class="grid grid-cols-2 gap-1.5 sm:grid-cols-4">
                                         @foreach ($statusOptions as $statusOption)
                                             <button type="button"
@@ -177,7 +177,7 @@
                         @empty
                             <tr>
                                 <td colspan="5" class="px-4 py-10 text-center text-sm text-white/55">
-                                    Data santri belum tersedia.
+                                    Data siswa belum tersedia.
                                 </td>
                             </tr>
                         @endforelse
@@ -232,9 +232,9 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const rows = Array.from(document.querySelectorAll('[data-santri-row]'));
+            const rows = Array.from(document.querySelectorAll('[data-siswa-row]'));
             const kelasFilter = document.getElementById('kelas_filter');
-            const searchInput = document.getElementById('search_santri');
+            const searchInput = document.getElementById('search_siswa');
             const visibleCounter = document.getElementById('visible-counter');
             const filledCounter = document.getElementById('filled-counter');
             const draftStateBadge = document.getElementById('draft-state-badge');
@@ -292,7 +292,7 @@
                 submitBtn.disabled = !allFilled;
                 submitBtn.classList.toggle('opacity-50', !allFilled);
                 submitBtn.classList.toggle('cursor-not-allowed', !allFilled);
-                filledCounter.textContent = `${filledCount} / ${totalRows} santri sudah diabsen`;
+                filledCounter.textContent = `${filledCount} / ${totalRows} siswa sudah diabsen`;
             };
 
             const syncMassButtonText = () => {
@@ -382,7 +382,7 @@
                     if (show) visible++;
                 });
 
-                visibleCounter.textContent = `${visible} / ${rows.length} santri tampil`;
+                visibleCounter.textContent = `${visible} / ${rows.length} siswa tampil`;
             };
 
             const resetAllStatuses = (markDraft = true) => {
