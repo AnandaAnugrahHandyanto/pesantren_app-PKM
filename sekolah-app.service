@@ -1,0 +1,17 @@
+[Unit]
+Description=Sekolah App - PHP Artisan Serve
+After=network.target mysql.service mariadb.service
+
+[Service]
+Type=simple
+User=nands
+WorkingDirectory=/home/nands/sekolah-app
+ExecStartPre=/bin/rm -f /home/nands/sekolah-app/public/hot
+ExecStartPre=/usr/bin/php /home/nands/sekolah-app/artisan config:clear
+ExecStartPre=/usr/bin/php /home/nands/sekolah-app/artisan view:clear
+ExecStart=/usr/bin/php /home/nands/sekolah-app/artisan serve --host=0.0.0.0 --port=8000
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
