@@ -1,0 +1,17 @@
+node_modules
+vendor
+.git
+.gitignore
+README.md
+.env
+.DS_Store
+*.log
+storage/logs/*
+bootstrap/cache/*
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.env.local
+docker-compose.override.yml
