@@ -22,9 +22,9 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('role:admin')->group(function () {
         Route::get('/admin/dashboard', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
-        Route::get('/santri/import', [SiswaController::class, 'importForm'])->name('santri.import.form');
-        Route::post('/santri/import', [SiswaController::class, 'importExcel'])->name('santri.import');
-        Route::get('/santri/template', [SiswaController::class, 'downloadTemplate'])->name('santri.template');
+        Route::get('/siswa/import', [SiswaController::class, 'importForm'])->name('siswa.import.form');
+        Route::post('/siswa/import', [SiswaController::class, 'importExcel'])->name('siswa.import');
+        Route::get('/siswa/template', [SiswaController::class, 'downloadTemplate'])->name('siswa.template');
         Route::resource('siswa', SiswaController::class);
     });
 
