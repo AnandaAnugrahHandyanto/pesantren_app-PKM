@@ -12,24 +12,31 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Rename table from santris to siswas
-        Schema::rename('santris', 'siswas');
-        
-        // Rename foreign key constraint in absensis table
-        Schema::table('absensis', function (Blueprint $table) {
-            // Drop old FK
-            $table->dropForeign(['santri_id']);
-        });
-        
-        // Rename column
-        Schema::table('absensis', function (Blueprint $table) {
-            $table->renameColumn('santri_id', 'siswa_id');
-        });
-        
-        // Re-add FK with new name
-        Schema::table('absensis', function (Blueprint $table) {
-            $table->foreign('siswa_id')->references('id')->on('siswas')->cascadeOnDelete();
-        });
+        // Check if santris table exists (from old schema)
+        if (Schema::hasTable('santris')) {
+            // Rename table from santris to siswas
+            Schema::rename('santris', 'siswas');
+            
+            // Rename foreign key constraint in absensis table
+            try {
+                Schema::table('absensis', function (Blueprint $table) {
+                    // Drop old FK if exists
+                    $table->dropForeign(['santri_id']);
+                });
+            } catch (\Exception $e) {
+                // FK might not exist, ignore
+            }
+            
+            // Rename column
+            Schema::table('absensis', function (Blueprint $table) {
+                $table->renameColumn('santri_id', 'siswa_id');
+            });
+            
+            // Re-add FK with new name
+            Schema::table('absensis', function (Blueprint $table) {
+                $table->foreign('siswa_id')->references('id')->on('siswas')->cascadeOnDelete();
+            });
+        }
     }
 
     /**
