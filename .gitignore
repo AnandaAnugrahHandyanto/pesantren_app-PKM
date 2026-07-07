@@ -23,3 +23,11 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+ngrok
+cloudflared
+nginx/default.conf
+tunnel.log
+storage/framework/cache/*
+ngrok
+cloudflared
+tunnel.log
