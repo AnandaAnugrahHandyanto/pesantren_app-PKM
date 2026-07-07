@@ -75,7 +75,7 @@ url() {
     echo "🌐 Network: http://$IP:8000"
     if pgrep -f "serveo.net" > /dev/null; then
         TUNNEL_URL=$(ps aux | grep serveo | grep -oP 'https://[a-z0-9.-]+\.serveousercontent\.com' | head -1)
-        echo "🌍 Public:  $TUNNEL_URL" (via Serveo)
+        echo "🌍 Public:  $TUNNEL_URL (via Serveo)"
     fi
 }
 

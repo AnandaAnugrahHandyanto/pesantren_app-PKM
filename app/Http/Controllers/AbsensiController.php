@@ -81,7 +81,7 @@ class AbsensiController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'siswa_id' => ['required', 'exists:santris,id'],
+            'siswa_id' => ['required', 'exists:siswas,id'],
             'tanggal' => [
                 'required',
                 'date',
@@ -118,7 +118,7 @@ class AbsensiController extends Controller
             'absensi.*' => ['required', Rule::in(self::STATUS_OPTIONS)],
         ], [
             'absensi.required' => 'Data absensi tidak boleh kosong.',
-            'absensi.*.required' => 'Semua santri harus memiliki status absensi.',
+            'absensi.*.required' => 'Semua siswa harus memiliki status absensi.',
             'absensi.*.in' => 'Status absensi tidak valid.',
         ]);
 
@@ -128,7 +128,7 @@ class AbsensiController extends Controller
 
         if ($invalidSiswaKey) {
             return back()
-                ->withErrors(['absensi' => 'Format data santri tidak valid.'])
+                ->withErrors(['absensi' => 'Format data siswa tidak valid.'])
                 ->withInput();
         }
 
@@ -156,7 +156,7 @@ class AbsensiController extends Controller
         $validSiswaCount = Siswa::query()->whereIn('id', $siswaIds)->count();
         if ($validSiswaCount !== $siswaIds->count()) {
             return back()
-                ->withErrors(['absensi' => 'Terdapat data santri yang tidak valid.'])
+                ->withErrors(['absensi' => 'Terdapat data siswa yang tidak valid.'])
                 ->withInput();
         }
 
@@ -195,7 +195,7 @@ class AbsensiController extends Controller
     public function update(Request $request, Absensi $absensi)
     {
         $validated = $request->validate([
-            'siswa_id' => ['required', 'exists:santris,id'],
+            'siswa_id' => ['required', 'exists:siswas,id'],
             'tanggal' => [
                 'required',
                 'date',

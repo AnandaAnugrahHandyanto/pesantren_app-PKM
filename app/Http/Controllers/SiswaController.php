@@ -41,7 +41,7 @@ class SiswaController extends Controller
         Siswa::create($validated);
 
         return redirect()->route('siswa.index')
-            ->with('success', 'Data santri berhasil ditambahkan');
+            ->with('success', 'Data siswa berhasil ditambahkan');
     }
 
     /**
@@ -74,7 +74,7 @@ class SiswaController extends Controller
         $siswa->update($validated);
 
         return redirect()->route('siswa.index')
-            ->with('success', 'Data santri berhasil diperbarui');
+            ->with('success', 'Data siswa berhasil diperbarui');
     }
 
     /**
@@ -85,11 +85,11 @@ class SiswaController extends Controller
         $siswa->delete();
 
         return redirect()->route('siswa.index')
-            ->with('success', 'Data santri berhasil dihapus');
+            ->with('success', 'Data siswa berhasil dihapus');
     }
 
     /**
-     * Download a blank CSV template for the santri import.
+     * Download a blank CSV template for the siswa import.
      */
     public function downloadTemplate()
     {
@@ -108,7 +108,7 @@ class SiswaController extends Controller
     }
 
     /**
-     * Show the form for importing santri data.
+     * Show the form for importing siswa data.
      */
     public function importForm()
     {
@@ -128,7 +128,7 @@ class SiswaController extends Controller
             Excel::import(new SiswaImport, $request->file('file'));
 
             return redirect()->route('siswa.index')
-                ->with('success', 'Data santri berhasil diimport');
+                ->with('success', 'Data siswa berhasil diimport');
         } catch (\Exception $e) {
             return redirect()->back()
                 ->with('error', 'Gagal mengimport data: ' . $e->getMessage());
