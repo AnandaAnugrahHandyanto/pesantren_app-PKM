@@ -24,9 +24,10 @@
                         class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
                         <option value="" disabled {{ old('kategori', $kategori) === '' ? 'selected' : '' }} class="bg-indigo-950 text-white">Pilih kategori</option>
                         <option value="sekolah"  {{ old('kategori', $kategori) === 'sekolah'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Sekolah</option>
-                        <option value="halaqoh"  {{ old('kategori', $kategori) === 'halaqoh'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Halaqoh</option>
-                        <option value="berkebun" {{ old('kategori', $kategori) === 'berkebun' ? 'selected' : '' }} class="bg-indigo-950 text-white">Berkebun</option>
-                        <option value="dirosah"  {{ old('kategori', $kategori) === 'dirosah'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Dirosah</option>
+                        <option value="pelajaran"  {{ old('kategori', $kategori) === 'pelajaran'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Pelajaran</option>
+                        <option value="ekstrakurikuler" {{ old('kategori', $kategori) === 'ekstrakurikuler' ? 'selected' : '' }} class="bg-indigo-950 text-white">Ekstrakurikuler</option>
+                        <option value="upacara"  {{ old('kategori', $kategori) === 'upacara'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Upacara</option>
+                        <option value="kegiatan_khusus" {{ old('kategori', $kategori) === 'kegiatan_khusus' ? 'selected' : '' }} class="bg-indigo-950 text-white">Kegiatan Khusus</option>
                     </select>
                 </div>
 

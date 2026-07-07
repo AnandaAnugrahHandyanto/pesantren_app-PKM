@@ -23,10 +23,10 @@
                     <label for="kategori" class="mb-1 block text-sm font-medium text-white/80">Kategori</label>
                     <select id="kategori" name="kategori" required
                         class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
-                        <option value="sekolah"  {{ old('kategori', $absensi->kategori) === 'sekolah'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Sekolah</option>
-                        <option value="halaqoh"  {{ old('kategori', $absensi->kategori) === 'halaqoh'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Halaqoh</option>
-                        <option value="berkebun" {{ old('kategori', $absensi->kategori) === 'berkebun' ? 'selected' : '' }} class="bg-indigo-950 text-white">Berkebun</option>
-                        <option value="dirosah"  {{ old('kategori', $absensi->kategori) === 'dirosah'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Dirosah</option>
+                        <option value="pelajaran"  {{ old('kategori', $absensi->kategori) === 'pelajaran'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Pelajaran</option>
+                        <option value="ekstrakurikuler" {{ old('kategori', $absensi->kategori) === 'ekstrakurikuler' ? 'selected' : '' }} class="bg-indigo-950 text-white">Ekstrakurikuler</option>
+                        <option value="upacara"  {{ old('kategori', $absensi->kategori) === 'upacara'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Upacara</option>
+                        <option value="kegiatan_khusus" {{ old('kategori', $absensi->kategori) === 'kegiatan_khusus' ? 'selected' : '' }} class="bg-indigo-950 text-white">Kegiatan Khusus</option>
                     </select>
                 </div>
 
