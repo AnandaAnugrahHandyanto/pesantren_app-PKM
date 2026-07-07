@@ -46,6 +46,12 @@ class AbsensiController extends Controller
         $allAbsensiComplete = $totalSiswa > 0 && $existingCount === $totalSiswa;
         $lastUpdatedAt = $existingAbsensi->max('updated_at');
         $kelasOptions = $siswas->pluck('kelas')->filter()->unique()->sort()->values();
+        $statusCounts = [
+            'hadir' => $existingAbsensi->where('status', 'hadir')->count(),
+            'izin' => $existingAbsensi->where('status', 'izin')->count(),
+            'sakit' => $existingAbsensi->where('status', 'sakit')->count(),
+            'alfa' => $existingAbsensi->where('status', 'alfa')->count(),
+        ];
 
         return view('absensi.index', [
             'siswas' => $siswas,
@@ -61,6 +67,7 @@ class AbsensiController extends Controller
             'allAbsensiComplete' => $allAbsensiComplete,
             'lastUpdatedAt' => $lastUpdatedAt,
             'absensiMode' => $hasExistingAbsensi ? 'edit' : 'create',
+            'statusCounts' => $statusCounts,
         ]);
     }
 

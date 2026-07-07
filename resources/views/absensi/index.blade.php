@@ -126,8 +126,40 @@
                 <div><span class="text-white/55">Kategori aktif:</span> <span class="font-semibold text-white">{{ ucfirst($kategori) }}</span></div>
                 <div><span class="text-white/55">Tanggal aktif:</span> <span class="font-semibold text-white">{{ $tanggal }}</span></div>
                 <div><span class="text-white/55">Jumlah siswa:</span> <span class="font-semibold text-white">{{ $totalSiswa }}</span></div>
-                <div><span class="text-white/55">Sudah diabsen:</span> <span class="font-semibold text-white">{{ $existingCount }}</span></div>
+                <div><span class="text-white/55">Sudah diabsen:</span> <span class="font-semibold text-white" id="existing-count">{{ $existingCount }}</span></div>
                 <div><span class="text-white/55">Terakhir diupdate:</span> <span class="font-semibold text-white">{{ $lastUpdatedAt ? \Illuminate\Support\Carbon::parse($lastUpdatedAt)->format('d-m-Y H:i') : '-' }}</span></div>
+            </div>
+
+            {{-- Status Breakdown --}}
+            <div class="grid grid-cols-2 gap-2 border-b border-white/10 px-4 py-3 sm:grid-cols-4 sm:px-5">
+                <div class="flex items-center gap-2 rounded-lg border border-emerald-500/20 bg-emerald-500/10 px-3 py-2 text-xs">
+                    <span class="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">✓</span>
+                    <div>
+                        <span class="text-white/55">Hadir</span>
+                        <span class="ml-1 font-bold text-emerald-300" id="count-hadir">{{ $statusCounts['hadir'] ?? 0 }}</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 rounded-lg border border-amber-500/20 bg-amber-500/10 px-3 py-2 text-xs">
+                    <span class="flex h-5 w-5 items-center justify-center rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-bold">→</span>
+                    <div>
+                        <span class="text-white/55">Izin</span>
+                        <span class="ml-1 font-bold text-amber-300" id="count-izin">{{ $statusCounts['izin'] ?? 0 }}</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 rounded-lg border border-rose-500/20 bg-rose-500/10 px-3 py-2 text-xs">
+                    <span class="flex h-5 w-5 items-center justify-center rounded-full bg-rose-500/20 text-rose-300 text-[10px] font-bold">✚</span>
+                    <div>
+                        <span class="text-white/55">Sakit</span>
+                        <span class="ml-1 font-bold text-rose-300" id="count-sakit">{{ $statusCounts['sakit'] ?? 0 }}</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 rounded-lg border border-red-500/20 bg-red-500/10 px-3 py-2 text-xs">
+                    <span class="flex h-5 w-5 items-center justify-center rounded-full bg-red-500/20 text-red-300 text-[10px] font-bold">✕</span>
+                    <div>
+                        <span class="text-white/55">Alfa</span>
+                        <span class="ml-1 font-bold text-red-300" id="count-alfa">{{ $statusCounts['alfa'] ?? 0 }}</span>
+                    </div>
+                </div>
             </div>
 
             <div class="table-scroll-wrapper">
@@ -293,6 +325,19 @@
 
             const clearDraft = () => localStorage.removeItem(storageKey);
 
+            const updateStatusCounts = () => {
+                const counts = { hadir: 0, izin: 0, sakit: 0, alfa: 0 };
+                rows.forEach((row) => {
+                    const val = row.querySelector('[data-status-input]').value;
+                    if (counts.hasOwnProperty(val)) counts[val]++;
+                });
+                document.getElementById('count-hadir').textContent = counts.hadir;
+                document.getElementById('count-izin').textContent = counts.izin;
+                document.getElementById('count-sakit').textContent = counts.sakit;
+                document.getElementById('count-alfa').textContent = counts.alfa;
+                document.getElementById('existing-count').textContent = getFilledCount();
+            };
+
             const setDraftBadgeState = (state) => {
                 draftStateBadge.className = 'rounded-full border px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide';
                 if (state === 'saved') {
@@ -376,6 +421,7 @@
 
                 updateSubmitState();
                 syncMassButtonText();
+                updateStatusCounts();
 
                 if (options.markDraft) {
                     setDraftBadgeState('draft');
@@ -587,6 +633,7 @@
             kelasFilter?.addEventListener('change', applyFilter);
             searchInput?.addEventListener('input', applyFilter);
             syncMassButtonText();
+            updateStatusCounts();
             applyFilter();
 
             if (hasSaveSuccess) {
@@ -599,6 +646,7 @@
                 restoreDraft();
                 updateSubmitState();
                 syncMassButtonText();
+                updateStatusCounts();
             }
         });
     </script>
