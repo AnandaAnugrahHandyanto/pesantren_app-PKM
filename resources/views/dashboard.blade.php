@@ -73,7 +73,7 @@
                 </table>
             </div>
             <div class="mt-2 text-right text-xs text-white/40">
-                Menampilkan {{ $siswas->count() }} siswa
+                Menampilkan {{ $latestSiswa->count() }} siswa
             </div>
         </div>
     </div>
