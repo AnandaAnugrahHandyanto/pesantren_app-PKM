@@ -39,7 +39,7 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-white/10">
-                        @forelse ($siswas as $siswa)
+                        @forelse ($latestSiswa as $siswa)
                             <tr class="transition hover:bg-white/[0.04]">
                                 <td class="whitespace-nowrap px-5 py-3 font-mono text-xs text-white/60">{{ $siswa->nis ?? '-' }}</td>
                                 <td class="whitespace-nowrap px-5 py-3 font-medium text-white">{{ $siswa->nama_lengkap }}</td>
