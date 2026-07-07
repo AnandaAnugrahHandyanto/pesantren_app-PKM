@@ -15,6 +15,9 @@
         @apply rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md;
     }
 
+    /* Prevent sidebar flash on page load */
+    [x-cloak] { display: none !important; }
+
     .table-header-sticky {
         position: sticky;
         top: 0;

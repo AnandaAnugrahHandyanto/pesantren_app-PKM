@@ -1,7 +1,8 @@
 <aside
+    x-cloak
     role="navigation"
     aria-label="Main navigation"
-    class="fixed inset-y-0 left-0 z-40 flex w-64 flex-col transform border-r border-white/20 bg-white/10 backdrop-blur-xl transition-transform duration-200 ease-in-out lg:translate-x-0"
+    class="fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r border-white/20 bg-white/10 backdrop-blur-xl transition-transform duration-200 ease-in-out lg:translate-x-0"
     :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
 >
     {{-- Logo / Brand --}}
