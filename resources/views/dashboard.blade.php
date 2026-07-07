@@ -1,99 +1,79 @@
 <x-app-layout>
     <x-slot name="header">
-        <h1 class="text-lg font-semibold">Dashboard Admin</h1>
+        <h1 class="text-lg font-semibold">Dashboard</h1>
     </x-slot>
 
     <div class="space-y-6">
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
-            <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-                <p class="text-sm text-slate-500">Total Siswa</p>
-                <p class="mt-2 text-3xl font-bold text-slate-800">{{ $totalSiswa }}</p>
+
+        {{-- Stat Cards --}}
+        <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+            <div class="rounded-2xl border border-white/20 bg-white/10 p-4 shadow-lg backdrop-blur-md">
+                <p class="text-xs font-semibold uppercase tracking-wider text-white/50">Total Siswa</p>
+                <p class="mt-1 text-3xl font-bold text-white">{{ $totalSiswa }}</p>
             </div>
-            <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-                <p class="text-sm text-slate-500">Hadir Hari Ini</p>
-                <div class="mt-2 flex items-center justify-between">
-                    <p class="text-3xl font-bold text-green-600">{{ $hadir }}</p>
-                    <span title="Hadir - Sukses/Valid" class="rounded-full bg-emerald-100 p-2 text-emerald-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                    </span>
-                </div>
+            <div class="rounded-2xl border border-white/20 bg-white/10 p-4 shadow-lg backdrop-blur-md">
+                <p class="text-xs font-semibold uppercase tracking-wider text-white/50">Hadir Hari Ini</p>
+                <p class="mt-1 text-3xl font-bold text-emerald-300">{{ $hadir }}</p>
             </div>
-            <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-                <p class="text-sm text-slate-500">Izin Hari Ini</p>
-                <div class="mt-2 flex items-center justify-between">
-                    <p class="text-3xl font-bold text-amber-600">{{ $izin }}</p>
-                    <span title="Izin - Menunggu/Persetujuan" class="rounded-full bg-amber-100 p-2 text-amber-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                        </svg>
-                    </span>
-                </div>
+            <div class="rounded-2xl border border-white/20 bg-white/10 p-4 shadow-lg backdrop-blur-md">
+                <p class="text-xs font-semibold uppercase tracking-wider text-white/50">Sakit</p>
+                <p class="mt-1 text-3xl font-bold text-rose-300">{{ $sakit }}</p>
             </div>
-            <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-                <p class="text-sm text-slate-500">Sakit Hari Ini</p>
-                <div class="mt-2 flex items-center justify-between">
-                    <p class="text-3xl font-bold text-rose-600">{{ $sakit }}</p>
-                    <span title="Sakit - Kondisi Kesehatan" class="rounded-full bg-rose-100 p-2 text-rose-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                        </svg>
-                    </span>
-                </div>
-            </div>
-            <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-                <p class="text-sm text-slate-500">Alfa Hari Ini</p>
-                <div class="mt-2 flex items-center justify-between">
-                    <p class="text-3xl font-bold text-red-700">{{ $alfa }}</p>
-                    <span title="Alfa - Tidak Hadir Tanpa Keterangan" class="rounded-full bg-red-100 p-2 text-red-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                    </span>
-                </div>
+            <div class="rounded-2xl border border-white/20 bg-white/10 p-4 shadow-lg backdrop-blur-md">
+                <p class="text-xs font-semibold uppercase tracking-wider text-white/50">Izin / Alfa</p>
+                <p class="mt-1 text-3xl font-bold text-amber-300">{{ $izin + $alfa }}</p>
             </div>
         </div>
 
-        <div class="rounded-xl border border-slate-200 bg-white shadow-sm">
-            <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4">
-                <h2 class="text-base font-semibold text-slate-800">Data Siswa Terbaru</h2>
-                @if (Auth::user()->role === 'admin')
-                    <a href="{{ route('siswa.index') }}" class="text-sm font-medium text-blue-600 hover:text-blue-700">
-                        Lihat semua
-                    </a>
-                @endif
-            </div>
-
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-slate-200">
-                    <thead class="bg-slate-50">
-                        <tr>
-                            <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">NIS</th>
-                            <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Nama</th>
-                            <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Kelas</th>
-                            <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Kamar</th>
-                            <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Jenis Kelamin</th>
+        {{-- Recent Students --}}
+        <div>
+            <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-white/40">Siswa Terdaftar</p>
+            <div class="overflow-x-auto rounded-2xl border border-white/20 bg-white/10 shadow-lg backdrop-blur-md">
+                <table class="min-w-full text-sm">
+                    <thead>
+                        <tr class="border-b border-white/10 bg-white/5">
+                            <th class="whitespace-nowrap px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">NIS</th>
+                            <th class="whitespace-nowrap px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Nama</th>
+                            <th class="whitespace-nowrap px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Kelas</th>
+                            <th class="whitespace-nowrap px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Jenis Kelamin</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-slate-100">
-                        @forelse ($latestSiswa as $siswa)
-                            <tr class="hover:bg-slate-50">
-                                <td class="px-5 py-3 text-sm text-slate-700">{{ $siswa->nis }}</td>
-                                <td class="px-5 py-3 text-sm font-medium text-slate-800">{{ $siswa->nama_lengkap }}</td>
-                                <td class="px-5 py-3 text-sm text-slate-700">{{ $siswa->kelas }}</td>
-                                <td class="px-5 py-3 text-sm text-slate-700">{{ $siswa->kamar }}</td>
-                                <td class="px-5 py-3 text-sm text-slate-700">
-                                    {{ $siswa->jenis_kelamin === 'L' ? 'Laki-laki' : ($siswa->jenis_kelamin === 'P' ? 'Perempuan' : '-') }}
+                    <tbody class="divide-y divide-white/10">
+                        @forelse ($siswas as $siswa)
+                            <tr class="transition hover:bg-white/[0.04]">
+                                <td class="whitespace-nowrap px-5 py-3 font-mono text-xs text-white/60">{{ $siswa->nis ?? '-' }}</td>
+                                <td class="whitespace-nowrap px-5 py-3 font-medium text-white">{{ $siswa->nama_lengkap }}</td>
+                                <td class="whitespace-nowrap px-5 py-3 text-white/70">{{ $siswa->kelas }}</td>
+                                <td class="whitespace-nowrap px-5 py-3">
+                                    @if (($siswa->jenis_kelamin ?? '') === 'L')
+                                        <span class="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/30 bg-cyan-500/20 px-3 py-1 text-xs font-semibold text-cyan-200 shadow-sm">
+                                            <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="12" cy="5" r="3.5"/><path d="M12 8.5v10M8 14h8"/>
+                                            </svg>
+                                            Laki-laki
+                                        </span>
+                                    @elseif (($siswa->jenis_kelamin ?? '') === 'P')
+                                        <span class="inline-flex items-center gap-1.5 rounded-full border border-pink-400/30 bg-pink-500/20 px-3 py-1 text-xs font-semibold text-pink-200 shadow-sm">
+                                            <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="12" cy="5" r="3.5"/><path d="M12 8.5v6M8 11h8"/>
+                                            </svg>
+                                            Perempuan
+                                        </span>
+                                    @else
+                                        <span class="text-white/50">-</span>
+                                    @endif
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="px-5 py-8 text-center text-sm text-slate-500">Belum ada data siswa.</td>
+                                <td colspan="4" class="px-5 py-8 text-center text-sm text-white/40">Belum ada siswa.</td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
+            </div>
+            <div class="mt-2 text-right text-xs text-white/40">
+                Menampilkan {{ $siswas->count() }} siswa
             </div>
         </div>
     </div>

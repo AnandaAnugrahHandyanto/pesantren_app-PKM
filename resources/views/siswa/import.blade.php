@@ -3,9 +3,9 @@
         <h1 class="text-lg font-semibold">Import Data Siswa</h1>
     </x-slot>
 
-    <div class="mx-auto max-w-xl space-y-4">
+    <div class="mx-auto max-w-2xl space-y-6">
 
-        {{-- Format Guide Card --}}
+        {{-- Guide Card --}}
         <div class="rounded-2xl border border-white/20 bg-white/10 p-6 shadow-lg backdrop-blur-md">
             <h2 class="mb-3 text-sm font-semibold text-white">Panduan Format File</h2>
             <p class="mb-3 text-sm text-white/60">
@@ -17,6 +17,7 @@
                 <table class="min-w-full text-sm">
                     <thead>
                         <tr class="border-b border-white/10 bg-white/5">
+                            <th class="px-4 py-2 text-left text-xs font-semibold uppercase tracking-wider text-white/70">nis</th>
                             <th class="px-4 py-2 text-left text-xs font-semibold uppercase tracking-wider text-white/70">nama_lengkap</th>
                             <th class="px-4 py-2 text-left text-xs font-semibold uppercase tracking-wider text-white/70">kelas</th>
                             <th class="px-4 py-2 text-left text-xs font-semibold uppercase tracking-wider text-white/70">jenis_kelamin</th>
@@ -24,14 +25,16 @@
                     </thead>
                     <tbody class="divide-y divide-white/10">
                         <tr class="hover:bg-white/[0.04]">
+                            <td class="px-4 py-2 text-yellow-400/70">(auto)</td>
                             <td class="px-4 py-2 text-white/70">Ahmad</td>
                             <td class="px-4 py-2 text-white/70">7A</td>
                             <td class="px-4 py-2 text-white/70">Laki-laki</td>
                         </tr>
                         <tr class="hover:bg-white/[0.04]">
+                            <td class="px-4 py-2 text-yellow-400/70">(auto)</td>
                             <td class="px-4 py-2 text-white/70">Ali</td>
                             <td class="px-4 py-2 text-white/70">7B</td>
-                            <td class="px-4 py-2 text-white/70">Perempuan</td>
+                            <td class="px-4 py-2 text-white/70">Laki-laki</td>
                         </tr>
                     </tbody>
                 </table>
@@ -41,7 +44,11 @@
             <ul class="space-y-1 text-sm text-white/60">
                 <li class="flex items-start gap-2">
                     <span class="mt-0.5 text-yellow-400">•</span>
-                    <span>Header kolom harus sesuai persis: <span class="font-medium text-white/80">nama_lengkap, kelas, jenis_kelamin</span>.</span>
+                    <span>Header kolom harus sesuai persis: <span class="font-medium text-white/80">nis, nama_lengkap, kelas, jenis_kelamin</span>.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="mt-0.5 text-yellow-400">•</span>
+                    <span>Kolom <span class="font-medium text-white/80">nis</span> <strong class="text-white">opsional</strong> — akan diisi otomatis jika dikosongkan.</span>
                 </li>
                 <li class="flex items-start gap-2">
                     <span class="mt-0.5 text-yellow-400">•</span>
@@ -75,6 +82,12 @@
             @if (session('success'))
                 <div class="mb-4 rounded-xl border border-green-400/30 bg-green-500/20 px-4 py-3 text-sm text-green-200 backdrop-blur-sm">
                     {{ session('success') }}
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="mb-4 rounded-xl border border-red-400/30 bg-red-500/20 px-4 py-3 text-sm text-red-200 backdrop-blur-sm">
+                    {{ session('error') }}
                 </div>
             @endif
 

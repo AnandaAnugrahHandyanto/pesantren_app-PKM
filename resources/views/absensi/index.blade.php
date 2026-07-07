@@ -71,7 +71,8 @@
                 </div>
             </div>
 
-            <div class="mt-4 flex flex-wrap items-center gap-2">
+            {{-- Action Bar --}}
+            <div class="mt-4 flex flex-wrap items-center gap-2 sm:gap-3">
                 <button type="submit"
                     class="rounded-lg border border-white/30 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/20">
                     Tampilkan Data
@@ -105,7 +106,7 @@
             <input type="hidden" name="kategori" value="{{ $kategori }}">
             <input type="hidden" name="form_mode" value="{{ $absensiMode }}">
 
-            <div class="flex items-center justify-between border-b border-white/15 px-4 py-3 sm:px-5">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/15 px-4 py-3 sm:px-5">
                 <div class="flex flex-wrap items-center gap-2 text-sm text-white/75">
                     <span>{{ $absensiMode === 'edit' ? 'Edit status lalu klik' : 'Isi status lalu klik' }} <span
                             class="font-semibold text-white">{{ $absensiMode === 'edit' ? 'Update Absensi' : 'Simpan Absensi' }}</span></span>
@@ -116,7 +117,7 @@
                 </div>
                 <button type="submit"
                     id="btn-simpan-absensi"
-                    class="rounded-lg bg-gradient-to-r from-cyan-500/90 to-blue-600/90 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition hover:from-cyan-400 hover:to-blue-500">
+                    class="w-full whitespace-nowrap rounded-lg bg-gradient-to-r from-cyan-500/90 to-blue-600/90 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition hover:from-cyan-400 hover:to-blue-500 sm:w-auto">
                     {{ $absensiMode === 'edit' ? 'Update Absensi' : 'Simpan Absensi' }}
                 </button>
             </div>
@@ -133,11 +134,11 @@
                 <table class="min-w-full table-fixed">
                     <thead class="table-header-sticky bg-white/10 backdrop-blur-sm">
                         <tr class="border-b border-white/10">
-                            <th class="w-16 px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/75">No</th>
-                            <th class="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/75">Nama Lengkap</th>
-                            <th class="w-32 px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/75">Kelas</th>
-                            <th class="w-36 px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/75">Jenis Kelamin</th>
-                            <th class="w-[22rem] px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/75">Status Absensi</th>
+                            <th class="w-10 px-2 py-2.5 text-left text-[10px] font-semibold uppercase tracking-wider text-white/75 sm:w-16 sm:px-3 sm:py-3 sm:text-xs">No</th>
+                            <th class="px-2 py-2.5 text-left text-[10px] font-semibold uppercase tracking-wider text-white/75 sm:px-3 sm:py-3 sm:text-xs">Nama Lengkap</th>
+                            <th class="w-20 px-2 py-2.5 text-left text-[10px] font-semibold uppercase tracking-wider text-white/75 sm:w-32 sm:px-3 sm:py-3 sm:text-xs">Kelas</th>
+                            <th class="hidden px-2 py-2.5 text-left text-[10px] font-semibold uppercase tracking-wider text-white/75 sm:table-cell sm:w-36 sm:px-3 sm:py-3 sm:text-xs">Jenis Kelamin</th>
+                            <th class="w-auto px-2 py-2.5 text-left text-[10px] font-semibold uppercase tracking-wider text-white/75 sm:w-[22rem] sm:px-3 sm:py-3 sm:text-xs">Status Absensi</th>
                         </tr>
                     </thead>
                     <tbody id="absensi-tbody" class="divide-y divide-white/10">
@@ -153,22 +154,40 @@
                                 data-row-id="{{ $siswa->id }}"
                                 data-existing-status="{{ $existingStatus }}"
                                 data-initial-status="{{ $initialStatus }}">
-                                <td class="px-3 py-2.5 text-sm text-white/70">{{ $index + 1 }}</td>
-                                <td class="px-3 py-2.5 text-sm font-medium text-white">
+                                <td class="px-2 py-2 text-sm text-white/70 sm:px-3 sm:py-2.5">{{ $index + 1 }}</td>
+                                <td class="px-2 py-2 text-sm font-medium text-white sm:px-3 sm:py-2.5">
                                     <span>{{ $siswa->nama_lengkap }}</span>
                                 </td>
-                                <td class="px-3 py-2.5 text-sm text-white/80">{{ $siswa->kelas ?? '-' }}</td>
-                                <td class="px-3 py-2.5 text-sm text-white/80">{{ $siswa->jenis_kelamin ?? '-' }}</td>
-                                <td class="px-3 py-2.5">
+                                <td class="px-2 py-2 text-sm text-white/80 sm:px-3 sm:py-2.5">{{ $siswa->kelas ?? '-' }}</td>
+                                <td class="hidden px-2 py-2 text-sm text-white/80 sm:table-cell sm:px-3 sm:py-2.5">
+                                    @if (($siswa->jenis_kelamin ?? '') === 'L')
+                                        <span class="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/30 bg-cyan-500/20 px-2.5 py-0.5 text-[11px] font-semibold text-cyan-200 shadow-sm">
+                                            <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="12" cy="5" r="3.5"/><path d="M12 8.5v10M8 14h8"/>
+                                            </svg>
+                                            Laki-laki
+                                        </span>
+                                    @elseif (($siswa->jenis_kelamin ?? '') === 'P')
+                                        <span class="inline-flex items-center gap-1.5 rounded-full border border-pink-400/30 bg-pink-500/20 px-2.5 py-0.5 text-[11px] font-semibold text-pink-200 shadow-sm">
+                                            <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="12" cy="5" r="3.5"/><path d="M12 8.5v6M8 11h8"/>
+                                            </svg>
+                                            Perempuan
+                                        </span>
+                                    @else
+                                        <span class="text-white/50">-</span>
+                                    @endif
+                                </td>
+                                <td class="px-2 py-2 sm:px-3 sm:py-2.5">
                                     <input type="hidden" name="absensi[{{ $siswa->id }}]" value="{{ $initialStatus }}" data-status-input>
-                                    <div class="grid grid-cols-2 gap-1.5 sm:grid-cols-4">
+                                    <div class="grid grid-cols-2 gap-1 sm:grid-cols-4 sm:gap-1.5">
                                         @foreach ($statusOptions as $statusOption)
                                             <button type="button"
                                                 data-status-btn="{{ $statusOption }}"
                                                 title="{{ $statusTooltips[$statusOption] }}"
                                                 class="status-btn">
-                                                <x-status-icon :status="$statusOption" class="h-3.5 w-3.5 shrink-0" />
-                                                {{ $statusLabels[$statusOption] }}
+                                                <x-status-icon :status="$statusOption" class="h-3 w-3 shrink-0 sm:h-3.5 sm:w-3.5" />
+                                                <span class="text-[10px] leading-none sm:text-[11px]">{{ $statusLabels[$statusOption] }}</span>
                                             </button>
                                         @endforeach
                                     </div>

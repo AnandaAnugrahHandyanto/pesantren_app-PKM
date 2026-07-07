@@ -16,11 +16,20 @@ class SiswaImport implements ToModel, WithHeadingRow
             return null;
         }
 
+        $nis = isset($row['nis']) ? trim((string) $row['nis']) : null;
+        if (empty($nis)) {
+            $nis = Siswa::generateNIS();
+        } elseif (Siswa::where('nis', $nis)->exists()) {
+            // NIS sudah terpakai, auto-generate ulang
+            $nis = Siswa::generateNIS();
+        }
+
         $jenisKelaminRaw = isset($row['jenis_kelamin']) ? trim((string) $row['jenis_kelamin']) : '';
         $jenisKelaminMap = ['laki-laki' => 'L', 'perempuan' => 'P', 'l' => 'L', 'p' => 'P'];
         $jenisKelamin = $jenisKelaminMap[strtolower($jenisKelaminRaw)] ?? null;
 
         return new Siswa([
+            'nis'           => $nis,
             'nama_lengkap'  => $namaLengkap,
             'kelas'         => isset($row['kelas']) ? trim((string) $row['kelas']) : '',
             'jenis_kelamin' => $jenisKelamin,

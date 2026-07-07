@@ -8,12 +8,12 @@
         {{-- Filter Form --}}
         <div class="rounded-2xl border border-white/20 bg-white/10 p-4 shadow-lg backdrop-blur-md">
             <form method="GET" action="{{ route('rekap.absensi') }}"
-                  class="flex flex-wrap items-end gap-3">
+                  class="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end">
 
                 <div class="flex flex-col gap-1">
                     <label class="text-xs font-medium text-white/70">Tahun Ajaran</label>
                     <select name="tahun_ajaran"
-                            class="rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
+                            class="w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
                         @foreach ($tahunAjaranList as $year)
                             <option value="{{ $year }}"
                                     {{ $year === $tahunAjaran ? 'selected' : '' }}
@@ -27,7 +27,7 @@
                 <div class="flex flex-col gap-1">
                     <label class="text-xs font-medium text-white/70">Semester</label>
                     <select name="semester"
-                            class="rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
+                            class="w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
                         <option value="1" {{ $semester === 1 ? 'selected' : '' }} class="bg-indigo-950 text-white">
                             Semester 1 (Juli – Desember)
                         </option>
@@ -40,7 +40,7 @@
                 <div class="flex flex-col gap-1">
                     <label class="text-xs font-medium text-white/70">Kategori</label>
                     <select name="kategori"
-                            class="rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
+                            class="w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
                         <option value="" {{ $kategori === '' ? 'selected' : '' }} class="bg-indigo-950 text-white">Semua Kategori</option>
                         <option value="sekolah"  {{ $kategori === 'sekolah'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Sekolah</option>
                         <option value="pelajaran" {{ $kategori === 'pelajaran' ? 'selected' : '' }} class="bg-indigo-950 text-white">Pelajaran</option>
@@ -50,19 +50,21 @@
                     </select>
                 </div>
 
-                <button type="submit"
-                        class="rounded-xl bg-indigo-500/80 px-5 py-2 text-sm font-medium text-white backdrop-blur-sm transition hover:bg-indigo-400/80">
-                    Tampilkan
-                </button>
+                <div class="flex gap-2 sm:items-end">
+                    <button type="submit"
+                            class="flex-1 rounded-xl bg-indigo-500/80 px-5 py-2 text-sm font-medium text-white backdrop-blur-sm transition hover:bg-indigo-400/80 sm:flex-none">
+                        Tampilkan
+                    </button>
 
-                <a href="{{ route('rekap.absensi.cetak', ['semester' => $semester, 'tahun_ajaran' => $tahunAjaran, 'kategori' => $kategori]) }}"
-                   target="_blank"
-                   class="ml-auto inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-5 py-2 text-sm font-medium text-white/80 backdrop-blur-sm transition hover:bg-white/20">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
-                    </svg>
-                    Cetak Rekap
-                </a>
+                    <a href="{{ route('rekap.absensi.cetak', ['semester' => $semester, 'tahun_ajaran' => $tahunAjaran, 'kategori' => $kategori]) }}"
+                       target="_blank"
+                       class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/10 px-5 py-2 text-sm font-medium text-white/80 backdrop-blur-sm transition hover:bg-white/20 sm:flex-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                        </svg>
+                        Cetak Rekap
+                    </a>
+                </div>
             </form>
         </div>
 

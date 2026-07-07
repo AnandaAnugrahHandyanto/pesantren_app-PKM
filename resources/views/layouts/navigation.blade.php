@@ -23,6 +23,18 @@
             </div>
             <span class="text-sm font-semibold tracking-wide text-white">Sekolah App</span>
         </a>
+
+        {{-- Close button — visible only on mobile --}}
+        <button
+            type="button"
+            class="ml-auto rounded-lg p-1.5 text-white/70 hover:bg-white/10 hover:text-white lg:hidden"
+            @click="sidebarOpen = false"
+            aria-label="Close sidebar"
+        >
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
     </div>
 
     {{-- Navigation --}}

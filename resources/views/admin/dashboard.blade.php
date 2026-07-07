@@ -228,7 +228,23 @@
                                 <td class="px-5 py-3 text-sm font-medium text-white">{{ $siswa->nama_lengkap }}</td>
                                 <td class="px-5 py-3 text-sm text-white/70">{{ $siswa->kelas }}</td>
                                 <td class="px-5 py-3 text-sm text-white/70">
-                                    {{ $siswa->jenis_kelamin === 'L' ? 'Laki-laki' : ($siswa->jenis_kelamin === 'P' ? 'Perempuan' : '-') }}
+                                @if(($siswa->jenis_kelamin ?? '') === 'L')
+                                    <span class="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/30 bg-cyan-500/20 px-3 py-1 text-xs font-semibold text-cyan-200 shadow-sm">
+                                        <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="5" r="3.5"/><path d="M12 8.5v10M8 14h8"/>
+                                        </svg>
+                                        Laki-laki
+                                    </span>
+                                @elseif(($siswa->jenis_kelamin ?? '') === 'P')
+                                    <span class="inline-flex items-center gap-1.5 rounded-full border border-pink-400/30 bg-pink-500/20 px-3 py-1 text-xs font-semibold text-pink-200 shadow-sm">
+                                        <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="5" r="3.5"/><path d="M12 8.5v6M8 11h8"/>
+                                        </svg>
+                                        Perempuan
+                                    </span>
+                                @else
+                                    <span class="text-white/50">-</span>
+                                @endif
                                 </td>
                             </tr>
                         @empty

@@ -33,15 +33,18 @@ class SiswaController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'nis' => ['nullable', 'string', 'max:50', Rule::unique('siswas', 'nis')],
             'nama_lengkap' => ['required', 'string', 'max:255'],
             'kelas' => ['required', 'string', 'max:255'],
             'jenis_kelamin' => ['required', Rule::in(['L', 'P'])],
         ]);
 
+        $validated['nis'] = $validated['nis'] ?? Siswa::generateNIS();
+
         Siswa::create($validated);
 
         return redirect()->route('siswa.index')
-            ->with('success', 'Data siswa berhasil ditambahkan');
+            ->with('success', 'Data siswa berhasil ditambahkan (NIS: ' . $validated['nis'] . ')');
     }
 
     /**
@@ -66,10 +69,13 @@ class SiswaController extends Controller
     public function update(Request $request, Siswa $siswa)
     {
         $validated = $request->validate([
+            'nis' => ['nullable', 'string', 'max:50', Rule::unique('siswas', 'nis')->ignore($siswa->id)],
             'nama_lengkap' => ['required', 'string', 'max:255'],
             'kelas' => ['required', 'string', 'max:255'],
             'jenis_kelamin' => ['required', Rule::in(['L', 'P'])],
         ]);
+
+        $validated['nis'] = $validated['nis'] ?? $siswa->nis;
 
         $siswa->update($validated);
 
@@ -100,7 +106,7 @@ class SiswaController extends Controller
 
         $callback = function () {
             $handle = fopen('php://output', 'w');
-            fputcsv($handle, ['nama_lengkap', 'kelas', 'jenis_kelamin']);
+            fputcsv($handle, ['nis', 'nama_lengkap', 'kelas', 'jenis_kelamin']);
             fclose($handle);
         };
 

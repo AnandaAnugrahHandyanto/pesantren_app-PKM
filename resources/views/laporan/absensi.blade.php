@@ -40,26 +40,31 @@
         {{-- Filter Tanggal --}}
         <div class="rounded-2xl border border-white/20 bg-white/10 p-4 shadow-lg backdrop-blur-md">
             <form method="GET" action="{{ route('laporan.absensi') }}"
-                  class="flex flex-wrap items-center gap-3">
-                <label class="text-sm font-medium text-white/80">Pilih Tanggal:</label>
-                <input type="date" name="tanggal" value="{{ $tanggal }}"
-                       class="rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
+                  class="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end">
+                <div class="flex flex-col gap-1 sm:min-w-0">
+                    <label class="text-xs font-medium text-white/70">Pilih Tanggal:</label>
+                    <input type="date" name="tanggal" value="{{ $tanggal }}"
+                           class="w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
+                </div>
 
-                <select name="kategori"
-                        class="rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
-                    <option value="" {{ $kategori === '' ? 'selected' : '' }} class="bg-indigo-950 text-white">Semua Kategori</option>
-                    <option value="sekolah"  {{ $kategori === 'sekolah'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Sekolah</option>
-                    <option value="pelajaran" {{ $kategori === 'pelajaran' ? 'selected' : '' }} class="bg-indigo-950 text-white">Pelajaran</option>
-                    <option value="ekstrakurikuler" {{ $kategori === 'ekstrakurikuler' ? 'selected' : '' }} class="bg-indigo-950 text-white">Ekstrakurikuler</option>
-                    <option value="upacara" {{ $kategori === 'upacara' ? 'selected' : '' }} class="bg-indigo-950 text-white">Upacara Sekolah</option>
-                    <option value="kegiatan_khusus" {{ $kategori === 'kegiatan_khusus' ? 'selected' : '' }} class="bg-indigo-950 text-white">Kegiatan Khusus</option>
-                </select>
+                <div class="flex flex-col gap-1 sm:min-w-0">
+                    <label class="text-xs font-medium text-white/70">Kategori</label>
+                    <select name="kategori"
+                            class="w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
+                        <option value="" {{ $kategori === '' ? 'selected' : '' }} class="bg-indigo-950 text-white">Semua Kategori</option>
+                        <option value="sekolah"  {{ $kategori === 'sekolah'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Sekolah</option>
+                        <option value="pelajaran" {{ $kategori === 'pelajaran' ? 'selected' : '' }} class="bg-indigo-950 text-white">Pelajaran</option>
+                        <option value="ekstrakurikuler" {{ $kategori === 'ekstrakurikuler' ? 'selected' : '' }} class="bg-indigo-950 text-white">Ekstrakurikuler</option>
+                        <option value="upacara" {{ $kategori === 'upacara' ? 'selected' : '' }} class="bg-indigo-950 text-white">Upacara Sekolah</option>
+                        <option value="kegiatan_khusus" {{ $kategori === 'kegiatan_khusus' ? 'selected' : '' }} class="bg-indigo-950 text-white">Kegiatan Khusus</option>
+                    </select>
+                </div>
 
                 <button type="submit"
-                        class="rounded-xl bg-indigo-500/80 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition hover:bg-indigo-400/80">
+                        class="w-full rounded-xl bg-indigo-500/80 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition hover:bg-indigo-400/80 sm:w-auto">
                     Tampilkan
                 </button>
-                <span class="ml-auto text-sm text-white/60">
+                <span class="text-sm text-white/60 sm:ml-auto sm:self-center">
                     Tanggal: <span class="font-semibold text-white">
                         {{ \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y') }}
                     </span>
@@ -76,7 +81,13 @@
                             <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/55">{{ $statusMeta[$status]['label'] }}</p>
                             <p class="mt-2 text-3xl font-bold {{ $statusMeta[$status]['textClass'] }}">{{ $ringkasan[$status] }}</p>
                         </div>
-                        <div class="flex h-14 w-14 items-center justify-center rounded-3xl border border-white/10 bg-white/5 text-white/30">
+                        <div @class([
+                            'flex h-14 w-14 items-center justify-center rounded-3xl border',
+                            'border-emerald-300/20 bg-emerald-500/10 text-emerald-300/80' => $status === 'hadir',
+                            'border-amber-300/20 bg-amber-500/10 text-amber-300/80' => $status === 'izin',
+                            'border-rose-300/20 bg-rose-500/10 text-rose-300/80' => $status === 'sakit',
+                            'border-red-400/20 bg-red-600/10 text-red-200/80' => $status === 'alfa',
+                        ])>
                             <x-status-icon :status="$status" class="h-7 w-7" />
                         </div>
                     </div>
