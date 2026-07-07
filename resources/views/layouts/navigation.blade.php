@@ -65,14 +65,6 @@
                 Absensi
             </a>
 
-            <a href="{{ route('laporan.absensi') }}"
-                class="flex items-center gap-3 rounded-xl px-3 py-2.5 transition {{ request()->routeIs('laporan.absensi') ? 'bg-white/20 text-white shadow-sm' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
-                <svg class="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-6a2 2 0 012-2h2a2 2 0 012 2v6m-6 0h6M3 17h18"/>
-                </svg>
-                Laporan Absensi
-            </a>
-
             <a href="{{ route('rekap.absensi') }}"
                 class="flex items-center gap-3 rounded-xl px-3 py-2.5 transition {{ request()->routeIs('rekap.absensi*') ? 'bg-white/20 text-white shadow-sm' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
                 <svg class="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -95,14 +87,6 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
                 </svg>
                 Absensi
-            </a>
-
-            <a href="{{ route('laporan.absensi') }}"
-                class="flex items-center gap-3 rounded-xl px-3 py-2.5 transition {{ request()->routeIs('laporan.absensi') ? 'bg-white/20 text-white shadow-sm' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
-                <svg class="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-6a2 2 0 012-2h2a2 2 0 012 2v6m-6 0h6M3 17h18"/>
-                </svg>
-                Laporan Absensi
             </a>
 
             <a href="{{ route('rekap.absensi') }}"
