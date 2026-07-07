@@ -3,7 +3,7 @@
         <h1 class="text-lg font-semibold">Data Siswa</h1>
     </x-slot>
 
-    <div class="mx-auto space-y-4 max-w-7xl">
+    <div class="space-y-4">
 
         @if (session('success'))
             <div class="mb-4 rounded-xl border border-green-400/30 bg-green-500/20 px-4 py-3 text-sm text-green-200 backdrop-blur-sm">
