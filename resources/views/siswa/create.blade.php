@@ -28,12 +28,19 @@
 
                 <div>
                     <label for="jenis_kelamin" class="mb-1 block text-sm font-medium text-white/80">Jenis Kelamin <span aria-hidden="true">*</span></label>
-                    <select id="jenis_kelamin" name="jenis_kelamin" required aria-required="true" aria-label="Pilih jenis kelamin"
-                        class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
-                        <option value="" disabled {{ old('jenis_kelamin') ? '' : 'selected' }} aria-hidden="true" class="bg-indigo-950 text-white">Pilih jenis kelamin</option>
-                        <option value="L" {{ old('jenis_kelamin') === 'L' ? 'selected' : '' }} class="bg-indigo-950 text-white">Laki-laki</option>
-                        <option value="P" {{ old('jenis_kelamin') === 'P' ? 'selected' : '' }} class="bg-indigo-950 text-white">Perempuan</option>
-                    </select>
+                    <div class="relative">
+                        <select id="jenis_kelamin" name="jenis_kelamin" required aria-required="true" aria-label="Pilih jenis kelamin"
+                            class="w-full appearance-none rounded-lg border border-white/30 bg-white/10 px-3 py-2 pr-10 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
+                            <option value="" disabled {{ old('jenis_kelamin') ? '' : 'selected' }} aria-hidden="true" class="bg-indigo-950 text-white">Pilih jenis kelamin</option>
+                            <option value="L" {{ old('jenis_kelamin') === 'L' ? 'selected' : '' }} class="bg-indigo-950 text-white">Laki-laki</option>
+                            <option value="P" {{ old('jenis_kelamin') === 'P' ? 'selected' : '' }} class="bg-indigo-950 text-white">Perempuan</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                            <svg class="h-4 w-4 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </div>
+                    </div>
                     @error('jenis_kelamin')
                         <p class="mt-1 text-xs text-red-300">{{ $message }}</p>
                     @enderror

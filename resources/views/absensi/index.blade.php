@@ -451,37 +451,139 @@
 
             hadirSemuaBtn?.addEventListener('click', () => {
                 const currentlyAllHadir = isAllHadir() && getFilledCount() === totalRows && totalRows > 0;
-                if (currentlyAllHadir) {
-                    resetAllStatuses(true);
-                    return;
-                }
+                const message = currentlyAllHadir
+                    ? 'Semua status siswa akan dikosongkan. Data yang sudah tersimpan di database tidak akan berubah sampai kamu menyimpan ulang.'
+                    : 'Semua status siswa yang tampil akan diisi menjadi <strong>Hadir</strong>.';
 
-                rows.forEach((row) => {
-                    setStatus(row, 'hadir', { persistDraft: false, markDraft: false, flashIfChanged: true });
+                Swal.fire({
+                    title: currentlyAllHadir ? 'Batalkan Hadir Semua?' : 'Hadirkan Semua?',
+                    html: message,
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: currentlyAllHadir ? 'Ya, Kosongkan' : 'Ya, Hadirkan Semua',
+                    cancelButtonText: 'Batal',
+                    confirmButtonColor: currentlyAllHadir ? '#64748b' : '#10b981',
+                    cancelButtonColor: '#6b7280',
+                    background: '#1e1b4b',
+                    color: '#e2e8f0',
+                    iconColor: '#60a5fa',
+                }).then((result) => {
+                    if (!result.isConfirmed) return;
+
+                    if (currentlyAllHadir) {
+                        resetAllStatuses(true);
+                        return;
+                    }
+
+                    rows.forEach((row) => {
+                        setStatus(row, 'hadir', { persistDraft: false, markDraft: false, flashIfChanged: true });
+                    });
+                    saveDraft();
+                    syncMassButtonText();
+                    updateSubmitState();
+                    setDraftBadgeState('draft');
                 });
-                saveDraft();
-                syncMassButtonText();
-                updateSubmitState();
-                setDraftBadgeState('draft');
             });
 
             isiAlfaBtn?.addEventListener('click', () => {
-                rows.forEach((row) => {
-                    const input = row.querySelector('[data-status-input]');
-                    if (!input.value) {
-                        setStatus(row, 'alfa', { persistDraft: false, markDraft: false, flashIfChanged: true });
-                    }
+                const emptyCount = rows.filter((row) => !row.querySelector('[data-status-input]').value).length;
+                if (emptyCount === 0) {
+                    Swal.fire({
+                        title: 'Tidak Ada Perubahan',
+                        text: 'Semua siswa sudah memiliki status. Tidak ada yang perlu diisi Alfa.',
+                        icon: 'info',
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#6b7280',
+                        background: '#1e1b4b',
+                        color: '#e2e8f0',
+                    });
+                    return;
+                }
+
+                Swal.fire({
+                    title: 'Isi Alfa?',
+                    html: `<strong>${emptyCount}</strong> siswa yang belum diabsen akan diisi <strong>Alfa</strong>.`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, Isi Alfa',
+                    cancelButtonText: 'Batal',
+                    confirmButtonColor: '#f43f5e',
+                    cancelButtonColor: '#6b7280',
+                    background: '#1e1b4b',
+                    color: '#e2e8f0',
+                    iconColor: '#f43f5e',
+                }).then((result) => {
+                    if (!result.isConfirmed) return;
+
+                    rows.forEach((row) => {
+                        const input = row.querySelector('[data-status-input]');
+                        if (!input.value) {
+                            setStatus(row, 'alfa', { persistDraft: false, markDraft: false, flashIfChanged: true });
+                        }
+                    });
+                    saveDraft();
+                    syncMassButtonText();
+                    updateSubmitState();
+                    setDraftBadgeState('draft');
                 });
-                saveDraft();
-                syncMassButtonText();
-                updateSubmitState();
-                setDraftBadgeState('draft');
             });
 
             resetAbsensiBtn?.addEventListener('click', () => {
-                resetAllStatuses(true);
+                Swal.fire({
+                    title: 'Reset Absensi?',
+                    text: 'Semua status siswa akan dikosongkan. Data yang sudah tersimpan di database tidak terpengaruh sampai kamu menyimpan ulang.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, Reset',
+                    cancelButtonText: 'Batal',
+                    confirmButtonColor: '#ef4444',
+                    cancelButtonColor: '#6b7280',
+                    background: '#1e1b4b',
+                    color: '#e2e8f0',
+                    iconColor: '#f43f5e',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        resetAllStatuses(true);
+                    }
+                });
             });
 
+            form?.addEventListener('submit', (e) => {
+                const filledCount = getFilledCount();
+                if (filledCount === 0) {
+                    e.preventDefault();
+                    Swal.fire({
+                        title: 'Belum Ada Data',
+                        text: 'Isi status absensi terlebih dahulu sebelum menyimpan.',
+                        icon: 'info',
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#6b7280',
+                        background: '#1e1b4b',
+                        color: '#e2e8f0',
+                    });
+                    return;
+                }
+
+                e.preventDefault();
+                const mode = isEditMode ? 'Update' : 'Simpan';
+                Swal.fire({
+                    title: isEditMode ? 'Update Absensi?' : 'Simpan Absensi?',
+                    html: `<strong>${filledCount}</strong> dari <strong>${totalRows}</strong> siswa akan disimpan.<br>Data yang sudah ada akan ditimpa.`,
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: isEditMode ? 'Ya, Update' : 'Ya, Simpan',
+                    cancelButtonText: 'Batal',
+                    confirmButtonColor: '#06b6d4',
+                    cancelButtonColor: '#6b7280',
+                    background: '#1e1b4b',
+                    color: '#e2e8f0',
+                    iconColor: '#60a5fa',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
             kelasFilter?.addEventListener('change', applyFilter);
             searchInput?.addEventListener('input', applyFilter);
             syncMassButtonText();
