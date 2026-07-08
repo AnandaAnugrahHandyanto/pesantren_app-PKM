@@ -47,3 +47,41 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+// ─── Siswa Routes ─────────────────────────────────────────
+Route::middleware(['auth', 'verified', 'role:siswa'])->prefix('siswa')->name('siswa.')->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\SiswaController::class, 'dashboard'])->name('dashboard');
+});
+
+// ─── SPP (Admin) ──────────────────────────────────────────
+Route::middleware(['auth', 'verified', 'role:admin'])->prefix('spp')->name('spp.')->group(function () {
+    Route::get('/', [App\Http\Controllers\SppController::class, 'index'])->name('index');
+    Route::get('/generate', [App\Http\Controllers\SppController::class, 'create'])->name('create');
+    Route::post('/generate', [App\Http\Controllers\SppController::class, 'generate'])->name('generate');
+    Route::post('/{sppBill}/paid', [App\Http\Controllers\SppController::class, 'markPaid'])->name('mark-paid');
+});
+
+// ─── Jadwal (Admin) ───────────────────────────────────────
+Route::middleware(['auth', 'verified', 'role:admin'])->prefix('jadwal')->name('jadwal.')->group(function () {
+    Route::get('/', [App\Http\Controllers\JadwalController::class, 'index'])->name('index');
+    Route::get('/create', [App\Http\Controllers\JadwalController::class, 'create'])->name('create');
+    Route::post('/', [App\Http\Controllers\JadwalController::class, 'store'])->name('store');
+    Route::get('/{jadwal}/edit', [App\Http\Controllers\JadwalController::class, 'edit'])->name('edit');
+    Route::put('/{jadwal}', [App\Http\Controllers\JadwalController::class, 'update'])->name('update');
+    Route::delete('/{jadwal}', [App\Http\Controllers\JadwalController::class, 'destroy'])->name('destroy');
+});
+
+// ─── Siswa (akses siswa) ──────────────────────────────────
+Route::middleware(['auth', 'verified', 'role:siswa'])->prefix('siswa')->name('siswa.')->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\SiswaController::class, 'dashboard'])->name('dashboard');
+    Route::get('/absensi', function () {
+        $user = Auth::user();
+        $absensis = App\Models\Absensi::where('siswa_id', $user->siswa_id)
+            ->with('mataPelajaran')
+            ->orderBy('tanggal', 'desc')
+            ->paginate(30);
+        return view('siswa.absensi', compact('absensis'));
+    })->name('absensi');
+    Route::get('/spp', [App\Http\Controllers\SppController::class, 'siswaIndex'])->name('spp.index');
+    Route::get('/jadwal', [App\Http\Controllers\JadwalController::class, 'siswa'])->name('jadwal');
+});

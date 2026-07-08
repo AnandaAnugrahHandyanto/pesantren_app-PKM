@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Siswa extends Model
 {
@@ -25,6 +26,11 @@ class Siswa extends Model
     public function absensis(): HasMany
     {
         return $this->hasMany(Absensi::class, 'siswa_id');
+    }
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'siswa_id');
     }
 
     /**

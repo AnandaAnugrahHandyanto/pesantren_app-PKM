@@ -12,6 +12,8 @@
                 $homeRoute = route('admin.dashboard');
             } elseif (Auth::user()->role === 'guru') {
                 $homeRoute = route('guru.dashboard');
+            } elseif (Auth::user()->role === 'siswa') {
+                $homeRoute = route('siswa.dashboard');
             } else {
                 $homeRoute = route('dashboard');
             }
@@ -96,6 +98,22 @@
                 </svg>
                 Keuangan
             </a>
+
+            <a href="{{ route('spp.index') }}"
+                class="flex items-center gap-3 rounded-xl px-3 py-2.5 transition {{ request()->routeIs('spp.*') ? 'bg-white/20 text-white shadow-sm' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
+                <svg class="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-2h-2v2zm0-4h2V7h-2v6z"/>
+                </svg>
+                SPP
+            </a>
+
+            <a href="{{ route('jadwal.index') }}"
+                class="flex items-center gap-3 rounded-xl px-3 py-2.5 transition {{ request()->routeIs('jadwal.*') ? 'bg-white/20 text-white shadow-sm' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
+                <svg class="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+                Jadwal
+            </a>
         @elseif (Auth::user()->role === 'guru')
             <a href="{{ route('guru.dashboard') }}"
                 class="flex items-center gap-3 rounded-xl px-3 py-2.5 transition {{ request()->routeIs('guru.dashboard') ? 'bg-white/20 text-white shadow-sm' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
@@ -119,6 +137,38 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 6h18M3 14h18M3 18h18"/>
                 </svg>
                 Rekap Absensi
+            </a>
+        @elseif (Auth::user()->role === 'siswa')
+            <a href="{{ route('siswa.dashboard') }}"
+                class="flex items-center gap-3 rounded-xl px-3 py-2.5 transition {{ request()->routeIs('siswa.dashboard') ? 'bg-white/20 text-white shadow-sm' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
+                <svg class="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                Dashboard
+            </a>
+
+            <a href="{{ route('siswa.absensi') }}"
+                class="flex items-center gap-3 rounded-xl px-3 py-2.5 transition {{ request()->routeIs('siswa.absensi*') ? 'bg-white/20 text-white shadow-sm' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
+                <svg class="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                </svg>
+                Riwayat Absensi
+            </a>
+
+            <a href="{{ route('siswa.spp.index') }}"
+                class="flex items-center gap-3 rounded-xl px-3 py-2.5 transition {{ request()->routeIs('siswa.spp*') ? 'bg-white/20 text-white shadow-sm' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
+                <svg class="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-2h-2v2zm0-4h2V7h-2v6z"/>
+                </svg>
+                Tagihan SPP
+            </a>
+
+            <a href="{{ route('siswa.jadwal') }}"
+                class="flex items-center gap-3 rounded-xl px-3 py-2.5 transition {{ request()->routeIs('siswa.jadwal*') ? 'bg-white/20 text-white shadow-sm' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
+                <svg class="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+                Jadwal
             </a>
         @else
             <a href="{{ route('dashboard') }}"

@@ -3,6 +3,7 @@
 use App\Http\Middleware\RoleAdminMiddleware;
 use App\Http\Middleware\RoleGuruMiddleware;
 use App\Http\Middleware\RoleMiddleware;
+use App\Http\Middleware\RoleSiswaMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -18,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => RoleMiddleware::class,
             'role.admin' => RoleAdminMiddleware::class,
             'role.guru' => RoleGuruMiddleware::class,
+            'role.siswa' => RoleSiswaMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
