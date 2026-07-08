@@ -51,6 +51,7 @@ Route::middleware('auth')->group(function () {
             ->title('Dashboard Guru | ' . config('app.name'));
     });
 
+    // Accessible to both admin and guru
     Route::post('/absensi/mass', [AbsensiController::class, 'massStore'])->name('absensi.mass-store');
     Route::resource('absensi', AbsensiController::class)->except(['show']);
     Route::get('/laporan/absensi', [LaporanController::class, 'absensi'])
