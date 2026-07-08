@@ -1,11 +1,10 @@
 <?php
 
 if (!function_exists('routeTitle')) {
-    function routeTitle(?string $default = null): string  // tambah ? disini
+    function routeTitle(?string $default = null): string
     {
-        return Route::current()->defaults['title'] 
-            ?? $default 
+        return Route::current()?->defaults['title']
+            ?? $default
             ?? config('app.name');
     }
 }
-?>
