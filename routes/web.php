@@ -16,12 +16,7 @@ Route::get('/', function () {
 
 Route::get('dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
-    ->name('dashboard')
-    ->title('Dashboard | ' . config('app.name', 'Laravel'));
-
-Route::get('404', function() {
-    return view('404');
-});
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
