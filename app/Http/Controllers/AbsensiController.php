@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Absensi;
+use App\Models\MataPelajaran;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,8 +11,6 @@ use Illuminate\Validation\Rule;
 
 class AbsensiController extends Controller
 {
-    private const KATEGORI_OPTIONS = ['pelajaran', 'ekstrakurikuler', 'upacara', 'kegiatan_khusus'];
-
     private const STATUS_OPTIONS = ['hadir', 'izin', 'sakit', 'alfa'];
 
     /**
@@ -20,10 +19,15 @@ class AbsensiController extends Controller
     public function index(Request $request)
     {
         $tanggal = $request->query('tanggal', today()->toDateString());
-        $kategori = $request->query('kategori', self::KATEGORI_OPTIONS[0]);
+        $mataPelajaranId = $request->query('mata_pelajaran_id');
 
-        if (! in_array($kategori, self::KATEGORI_OPTIONS, true)) {
-            $kategori = self::KATEGORI_OPTIONS[0];
+        // Default ke mata pelajaran pertama yang ada
+        $mataPelajaranOptions = MataPelajaran::orderBy('kelas')->orderBy('nama')->get();
+        if (! $mataPelajaranId || ! $mataPelajaranOptions->contains('id', (int) $mataPelajaranId)) {
+            $first = $mataPelajaranOptions->first();
+            $mataPelajaranId = $first ? $first->id : null;
+        } else {
+            $mataPelajaranId = (int) $mataPelajaranId;
         }
 
         $siswas = Siswa::query()
@@ -35,7 +39,7 @@ class AbsensiController extends Controller
         $existingAbsensi = Absensi::query()
             ->select(['siswa_id', 'status', 'updated_at'])
             ->whereDate('tanggal', $tanggal)
-            ->where('kategori', $kategori)
+            ->when($mataPelajaranId, fn ($q) => $q->where('mata_pelajaran_id', $mataPelajaranId))
             ->whereIn('siswa_id', $siswas->pluck('id'))
             ->get();
 
@@ -52,12 +56,14 @@ class AbsensiController extends Controller
             'sakit' => $existingAbsensi->where('status', 'sakit')->count(),
             'alfa' => $existingAbsensi->where('status', 'alfa')->count(),
         ];
+        $selectedMataPelajaran = $mataPelajaranId ? $mataPelajaranOptions->firstWhere('id', $mataPelajaranId) : null;
 
         return view('absensi.index', [
             'siswas' => $siswas,
             'tanggal' => $tanggal,
-            'kategori' => $kategori,
-            'kategoriOptions' => self::KATEGORI_OPTIONS,
+            'mataPelajaranOptions' => $mataPelajaranOptions,
+            'mataPelajaranId' => $mataPelajaranId,
+            'selectedMataPelajaran' => $selectedMataPelajaran,
             'statusOptions' => self::STATUS_OPTIONS,
             'kelasOptions' => $kelasOptions,
             'statusBySiswa' => $statusBySiswa,
@@ -77,9 +83,9 @@ class AbsensiController extends Controller
     public function create(Request $request)
     {
         $siswas = Siswa::orderBy('nama_lengkap')->get();
-        $kategori = $request->query('kategori', '');
+        $mataPelajaranId = $request->query('mata_pelajaran_id', '');
 
-        return view('absensi.create', compact('siswas', 'kategori'));
+        return view('absensi.create', compact('siswas', 'mataPelajaranId'));
     }
 
     /**
@@ -93,22 +99,22 @@ class AbsensiController extends Controller
                 'required',
                 'date',
                 Rule::unique('absensis', 'tanggal')
-                    ->where(fn ($q) => $q->where('siswa_id', $request->siswa_id)->where('kategori', $request->kategori)),
+                    ->where(fn ($q) => $q->where('siswa_id', $request->siswa_id)->where('mata_pelajaran_id', $request->mata_pelajaran_id)),
             ],
             'status' => ['required', Rule::in(self::STATUS_OPTIONS)],
-            'kategori' => ['required', Rule::in(self::KATEGORI_OPTIONS)],
+            'mata_pelajaran_id' => ['required', 'exists:mata_pelajarans,id'],
         ]);
 
         Absensi::updateOrCreate(
             [
                 'siswa_id' => $validated['siswa_id'],
                 'tanggal' => $validated['tanggal'],
-                'kategori' => $validated['kategori'],
+                'mata_pelajaran_id' => $validated['mata_pelajaran_id'],
             ],
             ['status' => $validated['status']]
         );
 
-        return redirect()->route('absensi.index', ['tanggal' => $validated['tanggal'], 'kategori' => $validated['kategori']])
+        return redirect()->route('absensi.index', ['tanggal' => $validated['tanggal'], 'mata_pelajaran_id' => $validated['mata_pelajaran_id']])
             ->with('success', 'Data absensi berhasil disimpan');
     }
 
@@ -119,7 +125,7 @@ class AbsensiController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => ['required', 'date'],
-            'kategori' => ['required', Rule::in(self::KATEGORI_OPTIONS)],
+            'mata_pelajaran_id' => ['required', 'exists:mata_pelajarans,id'],
             'form_mode' => ['nullable', Rule::in(['create', 'edit'])],
             'absensi' => ['required', 'array', 'min:1'],
             'absensi.*' => ['required', Rule::in(self::STATUS_OPTIONS)],
@@ -145,7 +151,7 @@ class AbsensiController extends Controller
 
         $existingCountForScope = Absensi::query()
             ->whereDate('tanggal', $validated['tanggal'])
-            ->where('kategori', $validated['kategori'])
+            ->where('mata_pelajaran_id', $validated['mata_pelajaran_id'])
             ->count();
         $hasExistingForScope = $existingCountForScope > 0;
         $isEditMode = ($validated['form_mode'] ?? 'create') === 'edit';
@@ -153,9 +159,9 @@ class AbsensiController extends Controller
         if ($hasExistingForScope && ! $isEditMode) {
             return redirect()->route('absensi.index', [
                 'tanggal' => $validated['tanggal'],
-                'kategori' => $validated['kategori'],
+                'mata_pelajaran_id' => $validated['mata_pelajaran_id'],
             ])->with('absensi_exists_warning', [
-                'kategori' => $validated['kategori'],
+                'mata_pelajaran_id' => $validated['mata_pelajaran_id'],
                 'tanggal' => $validated['tanggal'],
             ]);
         }
@@ -173,7 +179,7 @@ class AbsensiController extends Controller
                     [
                         'siswa_id' => $siswaId,
                         'tanggal' => $validated['tanggal'],
-                        'kategori' => $validated['kategori'],
+                        'mata_pelajaran_id' => $validated['mata_pelajaran_id'],
                     ],
                     ['status' => $validated['absensi'][$siswaId]]
                 );
@@ -182,7 +188,7 @@ class AbsensiController extends Controller
 
         return redirect()->route('absensi.index', [
             'tanggal' => $validated['tanggal'],
-            'kategori' => $validated['kategori'],
+            'mata_pelajaran_id' => $validated['mata_pelajaran_id'],
         ])->with('success', $hasExistingForScope ? 'Absensi massal berhasil diperbarui.' : 'Absensi massal berhasil disimpan.');
     }
 
@@ -207,16 +213,16 @@ class AbsensiController extends Controller
                 'required',
                 'date',
                 Rule::unique('absensis', 'tanggal')
-                    ->where(fn ($q) => $q->where('siswa_id', $request->siswa_id)->where('kategori', $request->kategori))
+                    ->where(fn ($q) => $q->where('siswa_id', $request->siswa_id)->where('mata_pelajaran_id', $request->mata_pelajaran_id))
                     ->ignore($absensi->id),
             ],
             'status' => ['required', Rule::in(self::STATUS_OPTIONS)],
-            'kategori' => ['required', Rule::in(self::KATEGORI_OPTIONS)],
+            'mata_pelajaran_id' => ['required', 'exists:mata_pelajarans,id'],
         ]);
 
         $absensi->update($validated);
 
-        return redirect()->route('absensi.index', ['tanggal' => $validated['tanggal'], 'kategori' => $validated['kategori']])
+        return redirect()->route('absensi.index', ['tanggal' => $validated['tanggal'], 'mata_pelajaran_id' => $validated['mata_pelajaran_id']])
             ->with('success', 'Data absensi berhasil diperbarui');
     }
 
@@ -226,10 +232,10 @@ class AbsensiController extends Controller
     public function destroy(Absensi $absensi)
     {
         $tanggal = $absensi->tanggal->toDateString();
-        $kategori = $absensi->kategori;
+        $mataPelajaranId = $absensi->mata_pelajaran_id;
         $absensi->delete();
 
-        return redirect()->route('absensi.index', ['tanggal' => $tanggal, 'kategori' => $kategori])
+        return redirect()->route('absensi.index', ['tanggal' => $tanggal, 'mata_pelajaran_id' => $mataPelajaranId])
             ->with('success', 'Data absensi berhasil dihapus');
     }
 }

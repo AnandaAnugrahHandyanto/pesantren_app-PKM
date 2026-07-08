@@ -47,16 +47,16 @@
                            class="w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
                 </div>
 
-                <div class="flex flex-col gap-1 sm:min-w-0">
-                    <label class="text-xs font-medium text-white/70">Kategori</label>
-                    <select name="kategori"
+                <div class="flex flex-col gap-1">
+                    <label class="text-xs font-medium text-white/70">Mata Pelajaran</label>
+                    <select name="mata_pelajaran_id"
                             class="w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
-                        <option value="" {{ $kategori === '' ? 'selected' : '' }} class="bg-indigo-950 text-white">Semua Kategori</option>
-                        <option value="sekolah"  {{ $kategori === 'sekolah'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Sekolah</option>
-                        <option value="pelajaran" {{ $kategori === 'pelajaran' ? 'selected' : '' }} class="bg-indigo-950 text-white">Pelajaran</option>
-                        <option value="ekstrakurikuler" {{ $kategori === 'ekstrakurikuler' ? 'selected' : '' }} class="bg-indigo-950 text-white">Ekstrakurikuler</option>
-                        <option value="upacara" {{ $kategori === 'upacara' ? 'selected' : '' }} class="bg-indigo-950 text-white">Upacara Sekolah</option>
-                        <option value="kegiatan_khusus" {{ $kategori === 'kegiatan_khusus' ? 'selected' : '' }} class="bg-indigo-950 text-white">Kegiatan Khusus</option>
+                        <option value="" {{ $mataPelajaranId === '' || $mataPelajaranId === null ? 'selected' : '' }} class="bg-indigo-950 text-white">Semua Mata Pelajaran</option>
+                        @foreach ($mataPelajaranOptions as $mp)
+                            <option value="{{ $mp->id }}" {{ (int) $mataPelajaranId === $mp->id ? 'selected' : '' }} class="bg-indigo-950 text-white">
+                                {{ $mp->nama }} (Kelas {{ $mp->kelas }})
+                            </option>
+                        @endforeach
                     </select>
                 </div>
 
@@ -103,7 +103,7 @@
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">No</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Nama Siswa</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Tanggal</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Kategori</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Mata Pelajaran</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Status</th>
                     </tr>
                 </thead>
@@ -116,7 +116,7 @@
                             <td class="px-4 py-3 text-sm text-white/70">{{ $i + 1 }}</td>
                             <td class="px-4 py-3 text-sm font-medium text-white">{{ $absensi->siswa->nama_lengkap }}</td>
                             <td class="px-4 py-3 text-sm text-white/70">{{ $absensi->tanggal->format('d/m/Y') }}</td>
-                            <td class="px-4 py-3 text-sm text-white/70">{{ ucfirst($absensi->kategori) }}</td>
+                            <td class="px-4 py-3 text-sm text-white/70">{{ $absensi->mataPelajaran->nama ?? '-' }}</td>
                             <td class="px-4 py-3 text-sm">
                                 <span title="{{ $meta['tooltip'] ?? ucfirst($absensi->status) }}"
                                     class="{{ $meta['badgeClass'] ?? 'status-capsule border-white/20 bg-white/10 text-white/70' }}">

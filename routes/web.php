@@ -3,6 +3,9 @@
 use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\GuruController;
+use App\Http\Controllers\KeuanganController;
+use App\Http\Controllers\MataPelajaranController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SiswaController;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +29,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/siswa/import', [SiswaController::class, 'importExcel'])->name('siswa.import');
         Route::get('/siswa/template', [SiswaController::class, 'downloadTemplate'])->name('siswa.template');
         Route::resource('siswa', SiswaController::class);
+        Route::resource('guru', GuruController::class)->except(['show']);
+        Route::resource('keuangan', KeuanganController::class)->except(['show']);
+        Route::resource('mata-pelajaran', MataPelajaranController::class)->except(['show']);
     });
 
     Route::middleware('role:guru')->group(function () {

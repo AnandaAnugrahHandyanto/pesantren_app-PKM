@@ -32,7 +32,7 @@
 
         @if ($allAbsensiComplete)
             <div class="rounded-xl border border-emerald-400/30 bg-emerald-500/20 px-4 py-3 text-sm font-semibold text-emerald-100 backdrop-blur-sm">
-                Semua absensi untuk kategori ini sudah lengkap.
+                Semua absensi untuk mata pelajaran ini sudah lengkap.
             </div>
         @endif
 
@@ -44,12 +44,12 @@
                         class="w-full rounded-lg border border-white/25 bg-white/10 px-3 py-2 text-sm text-white focus:border-cyan-300/70 focus:outline-none focus:ring-2 focus:ring-cyan-300/30">
                 </div>
                 <div>
-                    <label for="kategori_filter" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-white/75">Kategori</label>
-                    <select id="kategori_filter" name="kategori"
+                    <label for="mata_pelajaran_filter" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-white/75">Mata Pelajaran</label>
+                    <select id="mata_pelajaran_filter" name="mata_pelajaran_id"
                         class="w-full rounded-lg border border-white/25 bg-white/10 px-3 py-2 text-sm text-white focus:border-cyan-300/70 focus:outline-none focus:ring-2 focus:ring-cyan-300/30">
-                        @foreach ($kategoriOptions as $kategoriItem)
-                            <option value="{{ $kategoriItem }}" @selected($kategori === $kategoriItem) class="bg-indigo-950 text-white">
-                                {{ ucfirst($kategoriItem) }}
+                        @foreach ($mataPelajaranOptions as $mp)
+                            <option value="{{ $mp->id }}" @selected($mataPelajaranId === $mp->id) class="bg-indigo-950 text-white">
+                                {{ $mp->nama }} (Kelas {{ $mp->kelas }})
                             </option>
                         @endforeach
                     </select>
@@ -103,7 +103,7 @@
         <form method="POST" action="{{ route('absensi.mass-store') }}" id="mass-absensi-form" class="glass-panel rounded-2xl">
             @csrf
             <input type="hidden" name="tanggal" value="{{ $tanggal }}">
-            <input type="hidden" name="kategori" value="{{ $kategori }}">
+            <input type="hidden" name="mata_pelajaran_id" value="{{ $mataPelajaranId }}">
             <input type="hidden" name="form_mode" value="{{ $absensiMode }}">
 
             <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/15 px-4 py-3 sm:px-5">
@@ -123,7 +123,7 @@
             </div>
 
             <div class="grid gap-2 border-b border-white/10 px-4 py-3 text-xs text-white/75 sm:grid-cols-2 lg:grid-cols-5 sm:px-5">
-                <div><span class="text-white/55">Kategori aktif:</span> <span class="font-semibold text-white">{{ ucfirst($kategori) }}</span></div>
+                <div><span class="text-white/55">Mata Pelajaran:</span> <span class="font-semibold text-white">{{ $selectedMataPelajaran?->nama ?? '-' }} (Kelas {{ $selectedMataPelajaran?->kelas ?? '-' }})</span></div>
                 <div><span class="text-white/55">Tanggal aktif:</span> <span class="font-semibold text-white">{{ $tanggal }}</span></div>
                 <div><span class="text-white/55">Jumlah siswa:</span> <span class="font-semibold text-white">{{ $totalSiswa }}</span></div>
                 <div><span class="text-white/55">Sudah diabsen:</span> <span class="font-semibold text-white" id="existing-count">{{ $existingCount }}</span></div>
@@ -272,7 +272,7 @@
                 window.Swal.fire({
                     icon: 'warning',
                     title: 'Absensi Sudah Ada',
-                    text: `Absensi kategori ${warning.kategori} pada tanggal ${warning.tanggal} sudah pernah dilakukan. Silakan gunakan mode edit untuk memperbarui data.`,
+                    text: `Absensi untuk mata pelajaran tersebut pada tanggal ${warning.tanggal} sudah pernah dilakukan. Silakan gunakan mode edit untuk memperbarui data.`,
                     background: '#0f172acc',
                     color: '#e2e8f0',
                     confirmButtonText: 'Mengerti',
@@ -296,10 +296,10 @@
             const form = document.getElementById('mass-absensi-form');
             const totalRows = rows.length;
             const tanggal = form.querySelector('input[name="tanggal"]').value;
-            const kategori = form.querySelector('input[name="kategori"]').value;
+            const mataPelajaranId = form.querySelector('input[name="mata_pelajaran_id"]').value;
             const formMode = form.querySelector('input[name="form_mode"]').value;
             const isEditMode = formMode === 'edit';
-            const storageKey = `absensi-draft:${tanggal}:${kategori}`;
+            const storageKey = `absensi-draft:${tanggal}:${mataPelajaranId}`;
             const hasSaveSuccess = @js((bool) session('success'));
             const hasValidationErrors = @js($errors->any());
             const defaultButtonClass = 'status-btn';

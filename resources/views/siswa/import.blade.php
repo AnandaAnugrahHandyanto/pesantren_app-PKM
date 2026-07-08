@@ -44,7 +44,8 @@
             <ul class="space-y-1 text-sm text-white/60">
                 <li class="flex items-start gap-2">
                     <span class="mt-0.5 text-yellow-400">•</span>
-                    <span>Header kolom harus sesuai persis: <span class="font-medium text-white/80">nis, nama_lengkap, kelas, jenis_kelamin</span>.</span>
+                    <span>Header kolom: <span class="font-medium text-white/80">nis, nama_lengkap, kelas, jenis_kelamin</span>.<br>
+                    Bisa juga pakai <span class="font-medium text-white/80">tingkat + jurusan</span> (contoh: 7 + A) — otomatis digabung jadi <span class="font-medium text-white/80">7A</span>.</span>
                 </li>
                 <li class="flex items-start gap-2">
                     <span class="mt-0.5 text-yellow-400">•</span>

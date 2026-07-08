@@ -4,7 +4,6 @@
     </x-slot>
 
     <div class="space-y-4">
-
         @if (session('success'))
             <div class="mb-4 rounded-xl border border-green-400/30 bg-green-500/20 px-4 py-3 text-sm text-green-200 backdrop-blur-sm">
                 {{ session('success') }}
@@ -16,6 +15,45 @@
                 {{ session('error') }}
             </div>
         @endif
+
+        {{-- Filter --}}
+        <div class="rounded-2xl border border-white/20 bg-white/10 p-4 shadow-lg backdrop-blur-md">
+            <form method="GET" action="{{ route('siswa.index') }}" class="flex flex-col gap-3 sm:flex-row sm:items-end sm:flex-wrap">
+                <div class="flex flex-col gap-1">
+                    <label class="text-xs font-medium text-white/70">Tingkat</label>
+                    <select name="tingkat"
+                        class="rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
+                        <option value="" {{ !request('tingkat') ? 'selected' : '' }} class="bg-indigo-950 text-white">Semua Tingkat</option>
+                        @foreach ($tingkatOptions as $t)
+                            <option value="{{ $t }}" {{ request('tingkat') == $t ? 'selected' : '' }} class="bg-indigo-950 text-white">Kelas {{ $t }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                    <label class="text-xs font-medium text-white/70">Jurusan</label>
+                    <select name="jurusan"
+                        class="rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
+                        <option value="" {{ !request('jurusan') ? 'selected' : '' }} class="bg-indigo-950 text-white">Semua Jurusan</option>
+                        @foreach ($jurusanOptions as $j)
+                            <option value="{{ $j }}" {{ request('jurusan') === $j ? 'selected' : '' }} class="bg-indigo-950 text-white">{{ $j }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <button type="submit"
+                    class="rounded-lg bg-indigo-500/80 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition hover:bg-indigo-400/80">
+                    Filter
+                </button>
+
+                @if (request()->anyFilled(['tingkat', 'jurusan']))
+                    <a href="{{ route('siswa.index') }}"
+                        class="rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white/80 backdrop-blur-sm transition hover:bg-white/20">
+                        Reset
+                    </a>
+                @endif
+            </form>
+        </div>
 
         {{-- Toolbar: action buttons --}}
         <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between rounded-2xl border border-white/20 bg-white/10 px-4 py-3 shadow-lg backdrop-blur-md sm:px-5 sm:py-3">
@@ -112,8 +150,13 @@
             </table>
         </div>
 
-        <div class="text-right text-xs text-white/40">
-            Total: {{ $siswas->count() }} siswa
+        <div class="flex items-center justify-between">
+            <div class="text-xs text-white/40">
+                Total: {{ $siswas->total() }} siswa
+            </div>
+            <div class="text-xs text-white/40">
+                {{ $siswas->links() }}
+            </div>
         </div>
     </div>
 </x-app-layout>

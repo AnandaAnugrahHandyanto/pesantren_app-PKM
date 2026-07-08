@@ -13,12 +13,42 @@ class Siswa extends Model
         'nis',
         'nama_lengkap',
         'kelas',
+        'tingkat',
+        'jurusan',
         'jenis_kelamin',
+    ];
+
+    protected $casts = [
+        'tingkat' => 'integer',
     ];
 
     public function absensis(): HasMany
     {
         return $this->hasMany(Absensi::class, 'siswa_id');
+    }
+
+    /**
+     * Get the formatted kelas (e.g., "7A", "8B").
+     */
+    public function getKelasFormattedAttribute(): string
+    {
+        return $this->tingkat . $this->jurusan;
+    }
+
+    /**
+     * Get list of available tingkat options.
+     */
+    public static function tingkatOptions(): array
+    {
+        return [7, 8, 9];
+    }
+
+    /**
+     * Get list of available jurusan options.
+     */
+    public static function jurusanOptions(): array
+    {
+        return ['A', 'B', 'C', 'D', 'E'];
     }
 
     /**

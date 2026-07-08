@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cetak Rekap Absensi Semester {{ $semester }} – {{ $tahunAjaran }}/{{ $tahunAjaran + 1 }}</title>
+    <title>Cetak Rekap Absensi Semester {{ $semesterLabel }} – {{ $tahunAjaran }}/{{ $tahunAjaran + 1 }}</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: Arial, sans-serif; font-size: 13px; color: #111; padding: 24px; }
@@ -29,12 +29,12 @@
     </style>
 </head>
 <body>
-    <h1>Rekap Absensi Semester {{ $semester }}</h1>
+    <h1>Rekap Absensi Semester {{ $semesterLabel }}</h1>
     <p class="subtitle">
         Tahun Ajaran {{ $tahunAjaran }}/{{ $tahunAjaran + 1 }} &mdash;
         Periode {{ \Carbon\Carbon::parse($from)->translatedFormat('d F Y') }}
         s.d. {{ \Carbon\Carbon::parse($to)->translatedFormat('d F Y') }}
-        @if ($kategori) &mdash; Kategori: {{ ucfirst($kategori) }} @endif
+        @if ($mataPelajaranId) &mdash; {{ $mataPelajaranOptions->firstWhere('id', (int) $mataPelajaranId)?->nama ?? 'Mata Pelajaran' }} @endif
     </p>
 
     <table>
@@ -81,7 +81,7 @@
 
     <div class="no-print">
         <button onclick="window.print()">🖨 Cetak</button>
-        <a href="{{ route('rekap.absensi', ['semester' => $semester, 'tahun_ajaran' => $tahunAjaran, 'kategori' => $kategori]) }}">
+        <a href="{{ route('rekap.absensi', ['semester' => $semester, 'tahun_ajaran' => $tahunAjaran, 'mata_pelajaran_id' => $mataPelajaranId]) }}">
             ← Kembali
         </a>
     </div>

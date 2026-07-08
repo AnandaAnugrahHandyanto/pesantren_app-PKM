@@ -1,0 +1,49 @@
+<x-app-layout>
+    <x-slot name="header">
+        <h1 class="text-lg font-semibold">Edit Mata Pelajaran</h1>
+    </x-slot>
+
+    <div class="max-w-lg">
+        <div class="rounded-2xl border border-white/20 bg-white/10 p-6 shadow-lg backdrop-blur-md">
+            <form method="POST" action="{{ route('mata-pelajaran.update', $mataPelajaran) }}" class="space-y-5">
+                @csrf @method('PUT')
+
+                <div>
+                    <label for="nama" class="mb-1 block text-sm font-medium text-white/80">Nama Mata Pelajaran <span class="text-red-400">*</span></label>
+                    <input type="text" name="nama" id="nama" value="{{ old('nama', $mataPelajaran->nama) }}" required
+                           placeholder="Contoh: Matematika, Bahasa Indonesia, IPA"
+                           class="w-full rounded-xl border border-white/20 bg-white/[0.06] px-4 py-2.5 text-sm text-white placeholder-white/30 backdrop-blur-sm transition focus:border-indigo-400/50 focus:outline-none focus:ring-2 focus:ring-indigo-400/20">
+                    @error('nama')
+                        <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="kelas" class="mb-1 block text-sm font-medium text-white/80">Kelas <span class="text-red-400">*</span></label>
+                    <select name="kelas" id="kelas" required
+                            class="w-full appearance-none rounded-xl border border-white/20 bg-white/[0.06] px-4 py-2.5 pr-10 text-sm text-white backdrop-blur-sm transition focus:border-indigo-400/50 focus:outline-none focus:ring-2 focus:ring-indigo-400/20">
+                        @foreach (range(1, 12) as $k)
+                            <option value="{{ $k }}" {{ (old('kelas', $mataPelajaran->kelas) == $k) ? 'selected' : '' }} class="bg-indigo-950 text-white">
+                                Kelas {{ $k }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('kelas')
+                        <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="flex items-center gap-3 pt-2">
+                    <button type="submit"
+                            class="rounded-xl bg-gradient-to-r from-indigo-500/90 to-blue-600/90 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 transition hover:from-indigo-400 hover:to-blue-500">
+                        Update
+                    </button>
+                    <a href="{{ route('mata-pelajaran.index') }}"
+                       class="rounded-xl border border-white/20 px-6 py-2.5 text-sm text-white/70 transition hover:bg-white/10 hover:text-white">
+                        Batal
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</x-app-layout>

@@ -57,6 +57,14 @@
                 Data Siswa
             </a>
 
+            <a href="{{ route('guru.index') }}"
+                class="flex items-center gap-3 rounded-xl px-3 py-2.5 transition {{ request()->routeIs('guru.*') ? 'bg-white/20 text-white shadow-sm' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
+                <svg class="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
+                </svg>
+                Data Guru
+            </a>
+
             <a href="{{ route('absensi.index') }}"
                 class="flex items-center gap-3 rounded-xl px-3 py-2.5 transition {{ request()->routeIs('absensi.*') ? 'bg-white/20 text-white shadow-sm' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
                 <svg class="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -71,6 +79,22 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 6h18M3 14h18M3 18h18"/>
                 </svg>
                 Rekap Absensi
+            </a>
+
+            <a href="{{ route('mata-pelajaran.index') }}"
+                class="flex items-center gap-3 rounded-xl px-3 py-2.5 transition {{ request()->routeIs('mata-pelajaran.*') ? 'bg-white/20 text-white shadow-sm' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
+                <svg class="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11a3 3 0 10-6 0"/>
+                </svg>
+                Mata Pelajaran
+            </a>
+
+            <a href="{{ route('keuangan.index') }}"
+                class="flex items-center gap-3 rounded-xl px-3 py-2.5 transition {{ request()->routeIs('keuangan.*') ? 'bg-white/20 text-white shadow-sm' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
+                <svg class="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 2c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8 3.59-8 8-8zm-1 13h2v-6h-2v6zm0-8h2V5h-2v4z"/>
+                </svg>
+                Keuangan
             </a>
         @elseif (Auth::user()->role === 'guru')
             <a href="{{ route('guru.dashboard') }}"

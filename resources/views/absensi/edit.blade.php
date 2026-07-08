@@ -20,18 +20,22 @@
                 @method('PUT')
 
                 <div>
-                    <label for="kategori" class="mb-1 block text-sm font-medium text-white/80">Kategori</label>
-                    <select id="kategori" name="kategori" required
+                    <label for="mata_pelajaran_id" class="mb-1 block text-sm font-medium text-white/80">Mata Pelajaran <span aria-hidden="true">*</span></label>
+                    <select id="mata_pelajaran_id" name="mata_pelajaran_id" required
                         class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
-                        <option value="pelajaran"  {{ old('kategori', $absensi->kategori) === 'pelajaran'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Pelajaran</option>
-                        <option value="ekstrakurikuler" {{ old('kategori', $absensi->kategori) === 'ekstrakurikuler' ? 'selected' : '' }} class="bg-indigo-950 text-white">Ekstrakurikuler</option>
-                        <option value="upacara"  {{ old('kategori', $absensi->kategori) === 'upacara'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Upacara</option>
-                        <option value="kegiatan_khusus" {{ old('kategori', $absensi->kategori) === 'kegiatan_khusus' ? 'selected' : '' }} class="bg-indigo-950 text-white">Kegiatan Khusus</option>
+                        @foreach ($mataPelajaranOptions as $mp)
+                            <option value="{{ $mp->id }}" {{ old('mata_pelajaran_id', $absensi->mata_pelajaran_id) == $mp->id ? 'selected' : '' }} class="bg-indigo-950 text-white">
+                                {{ $mp->nama }} (Kelas {{ $mp->kelas }})
+                            </option>
+                        @endforeach
                     </select>
+                    @error('mata_pelajaran_id')
+                        <p class="mt-1 text-xs text-red-300">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div>
-                    <label for="siswa_id" class="mb-1 block text-sm font-medium text-white/80">Siswa</label>
+                    <label for="siswa_id" class="mb-1 block text-sm font-medium text-white/80">Siswa <span aria-hidden="true">*</span></label>
                     <select id="siswa_id" name="siswa_id" required aria-label="Pilih siswa"
                         class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
                         <option value="" disabled class="bg-indigo-950 text-white">Pilih siswa</option>
@@ -43,18 +47,24 @@
                             </option>
                         @endforeach
                     </select>
+                    @error('siswa_id')
+                        <p class="mt-1 text-xs text-red-300">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div>
-                    <label for="tanggal" class="mb-1 block text-sm font-medium text-white/80">Tanggal</label>
+                    <label for="tanggal" class="mb-1 block text-sm font-medium text-white/80">Tanggal <span aria-hidden="true">*</span></label>
                     <input type="date" id="tanggal" name="tanggal"
                         value="{{ old('tanggal', $absensi->tanggal->toDateString()) }}"
                         required
                         class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
+                    @error('tanggal')
+                        <p class="mt-1 text-xs text-red-300">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div>
-                    <label for="status" class="mb-1 block text-sm font-medium text-white/80">Status</label>
+                    <label for="status" class="mb-1 block text-sm font-medium text-white/80">Status <span aria-hidden="true">*</span></label>
                     <select id="status" name="status" required
                         class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
                         <option value="" disabled class="bg-indigo-950 text-white">Pilih status</option>
@@ -63,6 +73,9 @@
                         <option value="sakit" {{ old('status', $absensi->status) === 'sakit' ? 'selected' : '' }} class="bg-indigo-950 text-white">Sakit</option>
                         <option value="alfa"  {{ old('status', $absensi->status) === 'alfa'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Alfa</option>
                     </select>
+                    @error('status')
+                        <p class="mt-1 text-xs text-red-300">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="flex gap-2 pt-2">
@@ -70,7 +83,7 @@
                         class="rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 px-5 py-2 text-sm font-medium text-white shadow-md transition hover:from-blue-400 hover:to-indigo-500 hover:shadow-lg">
                         Update
                     </button>
-                    <a href="{{ route('absensi.index', ['tanggal' => $absensi->tanggal->toDateString(), 'kategori' => $absensi->kategori]) }}"
+                    <a href="{{ route('absensi.index', ['tanggal' => $absensi->tanggal->toDateString(), 'mata_pelajaran_id' => $absensi->mata_pelajaran_id]) }}"
                         class="rounded-lg border border-white/20 bg-white/10 px-5 py-2 text-sm font-medium text-white/80 backdrop-blur-sm transition hover:bg-white/20">
                         Batal
                     </a>

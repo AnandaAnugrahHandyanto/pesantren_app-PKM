@@ -13,10 +13,26 @@ class SiswaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $siswas = Siswa::all();
-        return view('siswa.index', compact('siswas'));
+        $query = Siswa::query();
+
+        // Filter by tingkat (7, 8, 9)
+        if ($request->filled('tingkat')) {
+            $query->where('tingkat', $request->tingkat);
+        }
+
+        // Filter by jurusan (A, B, C, D, E)
+        if ($request->filled('jurusan')) {
+            $query->where('jurusan', $request->jurusan);
+        }
+
+        $siswas = $query->latest()->paginate(25);
+
+        $tingkatOptions = Siswa::tingkatOptions();
+        $jurusanOptions = Siswa::jurusanOptions();
+
+        return view('siswa.index', compact('siswas', 'tingkatOptions', 'jurusanOptions'));
     }
 
     /**
@@ -24,7 +40,9 @@ class SiswaController extends Controller
      */
     public function create()
     {
-        return view('siswa.create');
+        $tingkatOptions = Siswa::tingkatOptions();
+        $jurusanOptions = Siswa::jurusanOptions();
+        return view('siswa.create', compact('tingkatOptions', 'jurusanOptions'));
     }
 
     /**
@@ -35,11 +53,13 @@ class SiswaController extends Controller
         $validated = $request->validate([
             'nis' => ['nullable', 'string', 'max:50', Rule::unique('siswas', 'nis')],
             'nama_lengkap' => ['required', 'string', 'max:255'],
-            'kelas' => ['required', 'string', 'max:255'],
+            'tingkat' => ['required', 'integer', 'in:7,8,9'],
+            'jurusan' => ['required', 'string', 'size:1', Rule::in(['A', 'B', 'C', 'D', 'E'])],
             'jenis_kelamin' => ['required', Rule::in(['L', 'P'])],
         ]);
 
         $validated['nis'] = $validated['nis'] ?? Siswa::generateNIS();
+        $validated['kelas'] = $validated['tingkat'] . $validated['jurusan'];
 
         Siswa::create($validated);
 
@@ -60,7 +80,9 @@ class SiswaController extends Controller
      */
     public function edit(Siswa $siswa)
     {
-        return view('siswa.edit', compact('siswa'));
+        $tingkatOptions = Siswa::tingkatOptions();
+        $jurusanOptions = Siswa::jurusanOptions();
+        return view('siswa.edit', compact('siswa', 'tingkatOptions', 'jurusanOptions'));
     }
 
     /**
@@ -71,11 +93,13 @@ class SiswaController extends Controller
         $validated = $request->validate([
             'nis' => ['nullable', 'string', 'max:50', Rule::unique('siswas', 'nis')->ignore($siswa->id)],
             'nama_lengkap' => ['required', 'string', 'max:255'],
-            'kelas' => ['required', 'string', 'max:255'],
+            'tingkat' => ['required', 'integer', 'in:7,8,9'],
+            'jurusan' => ['required', 'string', 'size:1', Rule::in(['A', 'B', 'C', 'D', 'E'])],
             'jenis_kelamin' => ['required', Rule::in(['L', 'P'])],
         ]);
 
         $validated['nis'] = $validated['nis'] ?? $siswa->nis;
+        $validated['kelas'] = $validated['tingkat'] . $validated['jurusan'];
 
         $siswa->update($validated);
 
@@ -106,7 +130,7 @@ class SiswaController extends Controller
 
         $callback = function () {
             $handle = fopen('php://output', 'w');
-            fputcsv($handle, ['nis', 'nama_lengkap', 'kelas', 'jenis_kelamin']);
+            fputcsv($handle, ['nis', 'nama_lengkap', 'tingkat', 'jurusan', 'jenis_kelamin']);
             fclose($handle);
         };
 

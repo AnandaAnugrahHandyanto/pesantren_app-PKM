@@ -29,24 +29,24 @@
                     <select name="semester"
                             class="w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
                         <option value="1" {{ $semester === 1 ? 'selected' : '' }} class="bg-indigo-950 text-white">
-                            Semester 1 (Juli – Desember)
+                            Ganjil (Juli – Desember)
                         </option>
                         <option value="2" {{ $semester === 2 ? 'selected' : '' }} class="bg-indigo-950 text-white">
-                            Semester 2 (Januari – Juni)
+                            Genap (Januari – Juni)
                         </option>
                     </select>
                 </div>
 
                 <div class="flex flex-col gap-1">
-                    <label class="text-xs font-medium text-white/70">Kategori</label>
-                    <select name="kategori"
+                    <label class="text-xs font-medium text-white/70">Mata Pelajaran</label>
+                    <select name="mata_pelajaran_id"
                             class="w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
-                        <option value="" {{ $kategori === '' ? 'selected' : '' }} class="bg-indigo-950 text-white">Semua Kategori</option>
-                        <option value="sekolah"  {{ $kategori === 'sekolah'  ? 'selected' : '' }} class="bg-indigo-950 text-white">Sekolah</option>
-                        <option value="pelajaran" {{ $kategori === 'pelajaran' ? 'selected' : '' }} class="bg-indigo-950 text-white">Pelajaran</option>
-                        <option value="ekstrakurikuler" {{ $kategori === 'ekstrakurikuler' ? 'selected' : '' }} class="bg-indigo-950 text-white">Ekstrakurikuler</option>
-                        <option value="upacara" {{ $kategori === 'upacara' ? 'selected' : '' }} class="bg-indigo-950 text-white">Upacara Sekolah</option>
-                        <option value="kegiatan_khusus" {{ $kategori === 'kegiatan_khusus' ? 'selected' : '' }} class="bg-indigo-950 text-white">Kegiatan Khusus</option>
+                        <option value="" {{ $mataPelajaranId === '' || $mataPelajaranId === null ? 'selected' : '' }} class="bg-indigo-950 text-white">Semua Mata Pelajaran</option>
+                        @foreach ($mataPelajaranOptions as $mp)
+                            <option value="{{ $mp->id }}" {{ (int) $mataPelajaranId === $mp->id ? 'selected' : '' }} class="bg-indigo-950 text-white">
+                                {{ $mp->nama }} (Kelas {{ $mp->kelas }})
+                            </option>
+                        @endforeach
                     </select>
                 </div>
 
@@ -56,7 +56,7 @@
                         Tampilkan
                     </button>
 
-                    <a href="{{ route('rekap.absensi.cetak', ['semester' => $semester, 'tahun_ajaran' => $tahunAjaran, 'kategori' => $kategori]) }}"
+                    <a href="{{ route('rekap.absensi.cetak', ['semester' => $semester, 'tahun_ajaran' => $tahunAjaran, 'mata_pelajaran_id' => $mataPelajaranId]) }}"
                        target="_blank"
                        class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/10 px-5 py-2 text-sm font-medium text-white/80 backdrop-blur-sm transition hover:bg-white/20 sm:flex-none">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -70,7 +70,7 @@
 
         {{-- Info Periode --}}
         <p class="text-sm text-white/60">
-            Menampilkan rekap semester <span class="font-semibold text-white">{{ $semester }}</span>
+            Menampilkan rekap semester <span class="font-semibold text-white">{{ $semesterLabel }}</span>
             tahun ajaran <span class="font-semibold text-white">{{ $tahunAjaran }}/{{ $tahunAjaran + 1 }}</span>
             &mdash;
             periode <span class="font-semibold text-white">
