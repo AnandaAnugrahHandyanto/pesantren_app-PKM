@@ -19,8 +19,8 @@ Route::get('dashboard', [DashboardController::class, 'index'])
     ->name('dashboard')
     ->title('Dashboard | ' . config('app.name', 'Laravel'));
 
-Route::get('404', function () {
-    return view('_404');
+Route::get('404', function() {
+    return view('404');
 });
 
 Route::middleware('auth')->group(function () {
@@ -29,16 +29,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::middleware('role:admin')->group(function () {
-        Route::get('/admin/dashboard', [DashboardController::class, 'adminDashboard'])
-            ->name('admin.dashboard')
-            ->title('Dashboard Admin | ' . config('app.name'));
-        Route::get('/siswa/import', [SiswaController::class, 'importForm'])
-            ->name('siswa.import.form')
-            ->title('Import Siswa | ' . config('app.name'));
-        Route::post('/siswa/import', [SiswaController::class, 'importExcel'])
-            ->name('siswa.import');
-        Route::get('/siswa/template', [SiswaController::class, 'downloadTemplate'])
-            ->name('siswa.template');
+        Route::get('/admin/dashboard', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
+        Route::get('/siswa/import', [SiswaController::class, 'importForm'])->name('siswa.import.form');
+        Route::post('/siswa/import', [SiswaController::class, 'importExcel'])->name('siswa.import');
+        Route::get('/siswa/template', [SiswaController::class, 'downloadTemplate'])->name('siswa.template');
         Route::resource('siswa', SiswaController::class);
         Route::resource('guru', GuruController::class)->except(['show']);
         Route::resource('keuangan', KeuanganController::class)->except(['show']);
@@ -46,23 +40,15 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware('role:guru')->group(function () {
-        Route::get('/guru/dashboard', [DashboardController::class, 'guruDashboard'])
-            ->name('guru.dashboard')
-            ->title('Dashboard Guru | ' . config('app.name'));
+        Route::get('/guru/dashboard', [DashboardController::class, 'guruDashboard'])->name('guru.dashboard');
     });
 
     // Accessible to both admin and guru
     Route::post('/absensi/mass', [AbsensiController::class, 'massStore'])->name('absensi.mass-store');
     Route::resource('absensi', AbsensiController::class)->except(['show']);
-    Route::get('/laporan/absensi', [LaporanController::class, 'absensi'])
-        ->name('laporan.absensi')
-        ->title('Laporan Absensi | ' . config('app.name'));
-    Route::get('/rekap-absensi', [LaporanController::class, 'rekapSemester'])
-        ->name('rekap.absensi')
-        ->title('Rekap Absensi | ' . config('app.name'));
-    Route::get('/rekap-absensi/cetak', [LaporanController::class, 'rekapSemesterPrint'])
-        ->name('rekap.absensi.cetak')
-        ->title('Cetak Rekap Absensi | ' . config('app.name'));
+    Route::get('/laporan/absensi', [LaporanController::class, 'absensi'])->name('laporan.absensi');
+    Route::get('/rekap-absensi', [LaporanController::class, 'rekapSemester'])->name('rekap.absensi');
+    Route::get('/rekap-absensi/cetak', [LaporanController::class, 'rekapSemesterPrint'])->name('rekap.absensi.cetak');
 });
 
 require __DIR__.'/auth.php';
