@@ -31,7 +31,7 @@ class SiswaTemplateExport implements FromArray, WithHeadings, WithStyles, WithTi
             'NIS',
             'Nama Lengkap',
             'Tingkat',
-            'Jurusan',
+            'Rombel',
             'Jenis Kelamin',
         ];
     }

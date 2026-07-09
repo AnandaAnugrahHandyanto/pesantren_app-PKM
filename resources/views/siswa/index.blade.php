@@ -1,17 +1,31 @@
 <x-app-layout>
     <x-slot name="header">
-        <h1 class="text-lg font-semibold">Data Siswa</h1>
+        <div class="flex items-center gap-3">
+            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-cyan-500/20 ring-1 ring-cyan-400/30">
+                <svg class="h-5 w-5 text-cyan-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                </svg>
+            </div>
+            <div>
+                <h1 class="text-lg font-semibold text-white">Data Siswa</h1>
+                <p class="text-xs text-white/50">Kelola data siswa dan akun login mereka</p>
+            </div>
+        </div>
     </x-slot>
 
-    <div class="space-y-4">
+    <div class="space-y-6">
+        {{-- Alerts --}}
         @if (session('success'))
-            <div class="mb-4 rounded-xl border border-green-400/30 bg-green-500/20 px-4 py-3 text-sm text-green-200 backdrop-blur-sm">
-                {{ session('success') }}
+            <div class="alert-success flex items-center gap-2">
+                <svg class="h-4 w-4 flex-shrink-0 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>{{ session('success') }}</span>
                 @if (session('new_siswa_nis'))
-                    <div class="mt-2 rounded-lg border border-green-400/20 bg-green-500/10 px-3 py-2 text-xs">
-                        <span class="font-semibold">NIS:</span> {{ session('new_siswa_nis') }}
+                    <div class="ml-3 flex gap-3 text-xs">
+                        <span><span class="font-semibold">NIS:</span> {{ session('new_siswa_nis') }}</span>
                         @if (session('new_siswa_password'))
-                            • <span class="font-semibold">Password:</span> <code class="rounded bg-white/10 px-1 py-0.5 font-mono">{{ session('new_siswa_password') }}</code>
+                            <span><span class="font-semibold">Password:</span> <code class="rounded bg-white/10 px-1 py-0.5 font-mono">{{ session('new_siswa_password') }}</code></span>
                         @endif
                     </div>
                 @endif
@@ -19,18 +33,27 @@
         @endif
 
         @if (session('error'))
-            <div class="mb-4 rounded-xl border border-red-400/30 bg-red-500/20 px-4 py-3 text-sm text-red-200 backdrop-blur-sm">
-                {{ session('error') }}
+            <div class="alert-error flex items-center gap-2">
+                <svg class="h-4 w-4 flex-shrink-0 text-red-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                </svg>
+                <span>{{ session('error') }}</span>
             </div>
         @endif
 
-        {{-- Filter --}}
-        <div class="rounded-2xl border border-white/20 bg-white/10 p-4 shadow-lg backdrop-blur-md">
-            <form method="GET" action="{{ route('siswa.index') }}" class="flex flex-col gap-3 sm:flex-row sm:items-end sm:flex-wrap">
-                <div class="flex flex-col gap-1">
+        {{-- Filter Section --}}
+        <div class="rounded-2xl border border-white/20 bg-white/[0.06] p-5 shadow-lg backdrop-blur-md">
+            <div class="section-title mb-4">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" />
+                </svg>
+                Filter
+            </div>
+            <form method="GET" action="{{ route('siswa.index') }}" class="flex flex-wrap items-end gap-4">
+                <div class="flex flex-col gap-1.5">
                     <label class="text-xs font-medium text-white/70">Tingkat</label>
                     <select name="tingkat"
-                        class="rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
+                            class="form-select min-w-[130px]">
                         <option value="" {{ !request('tingkat') ? 'selected' : '' }} class="bg-indigo-950 text-white">Semua Tingkat</option>
                         @foreach ($tingkatOptions as $t)
                             <option value="{{ $t }}" {{ request('tingkat') == $t ? 'selected' : '' }} class="bg-indigo-950 text-white">Kelas {{ $t }}</option>
@@ -38,44 +61,54 @@
                     </select>
                 </div>
 
-                <div class="flex flex-col gap-1">
-                    <label class="text-xs font-medium text-white/70">Jurusan</label>
-                    <select name="jurusan"
-                        class="rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
-                        <option value="" {{ !request('jurusan') ? 'selected' : '' }} class="bg-indigo-950 text-white">Semua Jurusan</option>
-                        @foreach ($jurusanOptions as $j)
-                            <option value="{{ $j }}" {{ request('jurusan') === $j ? 'selected' : '' }} class="bg-indigo-950 text-white">{{ $j }}</option>
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-xs font-medium text-white/70">Rombel</label>
+                    <select name="rombel"
+                            class="form-select min-w-[130px]">
+                        <option value="" {{ !request('rombel') ? 'selected' : '' }} class="bg-indigo-950 text-white">Semua Rombel</option>
+                        @foreach ($rombelOptions as $r)
+                            <option value="{{ $r }}" {{ request('rombel') === $r ? 'selected' : '' }} class="bg-indigo-950 text-white">{{ $r }}</option>
                         @endforeach
                     </select>
                 </div>
 
-                <button type="submit"
-                    class="rounded-lg bg-indigo-500/80 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition hover:bg-indigo-400/80">
-                    Filter
-                </button>
-
-                @if (request()->anyFilled(['tingkat', 'jurusan']))
-                    <a href="{{ route('siswa.index') }}"
-                        class="rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white/80 backdrop-blur-sm transition hover:bg-white/20">
-                        Reset
-                    </a>
-                @endif
+                <div class="flex items-end gap-2">
+                    <button type="submit" class="btn-primary text-sm">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" />
+                        </svg>
+                        Filter
+                    </button>
+                    @if (request()->anyFilled(['tingkat', 'rombel']))
+                        <a href="{{ route('siswa.index') }}" class="btn-secondary text-sm">
+                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                            Reset
+                        </a>
+                    @endif
+                </div>
             </form>
         </div>
 
-        {{-- Toolbar: action buttons --}}
-        <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between rounded-2xl border border-white/20 bg-white/10 px-4 py-3 shadow-lg backdrop-blur-md sm:px-5 sm:py-3">
-            <p class="text-xs font-semibold uppercase tracking-widest text-white/40">Daftar Siswa</p>
+        {{-- Toolbar --}}
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between rounded-2xl border border-white/20 bg-white/[0.06] p-5 shadow-lg backdrop-blur-md">
+            <div class="section-title">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                </svg>
+                Daftar Siswa
+            </div>
             <div class="flex flex-col gap-2 sm:flex-row">
                 <a href="{{ route('siswa.import.form') }}"
-                    class="inline-flex items-center justify-center gap-2 rounded-lg border border-emerald-400/40 bg-emerald-500/20 px-4 py-2 text-sm font-medium text-emerald-200 backdrop-blur-sm transition hover:bg-emerald-500/30 hover:text-white">
+                   class="btn-success text-sm">
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
                     </svg>
                     Import
                 </a>
                 <a href="{{ route('siswa.create') }}"
-                    class="inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-md transition hover:from-blue-400 hover:to-indigo-500 hover:shadow-lg">
+                   class="btn-primary text-sm">
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                     </svg>
@@ -85,54 +118,51 @@
         </div>
 
         {{-- Table --}}
-        <div class="overflow-x-auto rounded-2xl border border-white/20 bg-white/10 shadow-lg backdrop-blur-md">
-            <table class="min-w-full text-sm">
+        <div class="table-wrap">
+            <table>
                 <thead>
-                    <tr class="border-b border-white/15 bg-white/10">
-                        <th class="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-white/70">NIS</th>
-                        <th class="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-white/70">Nama Lengkap</th>
-                        <th class="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-white/70">Kelas</th>
-                        <th class="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-white/70">Jenis Kelamin</th>
-                        <th class="px-4 py-3.5 text-right text-xs font-semibold uppercase tracking-wider text-white/70">Aksi</th>
+                    <tr>
+                        <th>NIS</th>
+                        <th>Nama Lengkap</th>
+                        <th>Kelas</th>
+                        <th>Jenis Kelamin</th>
+                        <th class="text-right">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-white/10">
                     @forelse ($siswas as $siswa)
                         <tr class="transition hover:bg-white/[0.04]">
-                            <td class="whitespace-nowrap px-4 py-3 font-mono text-xs text-white/60">{{ $siswa->nis ?? '-' }}</td>
-                            <td class="whitespace-nowrap px-4 py-3 font-medium text-white/90">{{ $siswa->nama_lengkap }}</td>
-                            <td class="whitespace-nowrap px-4 py-3 text-white/70">{{ $siswa->kelas }}</td>
-                            <td class="whitespace-nowrap px-4 py-3">
+                            <td class="font-mono text-xs text-white/60">{{ $siswa->nis ?? '-' }}</td>
+                            <td class="font-medium text-white/90">{{ $siswa->nama_lengkap }}</td>
+                            <td class="text-white/70">{{ $siswa->kelas }}</td>
+                            <td>
                                 @if ($siswa->jenis_kelamin === 'L')
-                                    <span class="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/30 bg-cyan-500/20 px-3 py-1 text-xs font-semibold text-cyan-200 shadow-sm">
-                                        <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                            <circle cx="12" cy="5" r="3.5"/>
-                                            <path d="M12 8.5v10M8 14h8"/>
+                                    <span class="gender-badge-male">
+                                        <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="5" r="3.5"/><path d="M12 8.5v10M8 14h8"/>
                                         </svg>
                                         Laki-laki
                                     </span>
                                 @else
-                                    <span class="inline-flex items-center gap-1.5 rounded-full border border-pink-400/30 bg-pink-500/20 px-3 py-1 text-xs font-semibold text-pink-200 shadow-sm">
-                                        <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                            <circle cx="12" cy="5" r="3.5"/>
-                                            <path d="M12 8.5v6M8 11h8"/>
+                                    <span class="gender-badge-female">
+                                        <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="5" r="3.5"/><path d="M12 8.5v6M8 11h8"/>
                                         </svg>
                                         Perempuan
                                     </span>
                                 @endif
                             </td>
-                            <td class="whitespace-nowrap px-4 py-3 text-right">
+                            <td class="text-right">
                                 <div class="flex items-center justify-end gap-2">
                                     <a href="{{ route('siswa.edit', $siswa) }}"
-                                        class="rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-medium text-white/80 backdrop-blur-sm transition hover:bg-white/20">
+                                       class="rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-medium text-white/80 backdrop-blur-sm transition hover:bg-white/20">
                                         Edit
                                     </a>
                                     <form action="{{ route('siswa.destroy', $siswa) }}" method="POST"
-                                        onsubmit="return confirm('Yakin ingin menghapus siswa {{ $siswa->nama_lengkap }}?')">
-                                        @csrf
-                                        @method('DELETE')
+                                          onsubmit="return confirm('Yakin ingin menghapus siswa {{ $siswa->nama_lengkap }}?')">
+                                        @csrf @method('DELETE')
                                         <button type="submit"
-                                            class="rounded-lg border border-red-400/30 bg-red-500/20 px-3 py-1.5 text-xs font-medium text-red-200 backdrop-blur-sm transition hover:bg-red-500/30 hover:text-white">
+                                                class="rounded-lg border border-red-400/30 bg-red-500/20 px-3 py-1.5 text-xs font-medium text-red-200 backdrop-blur-sm transition hover:bg-red-500/30">
                                             Hapus
                                         </button>
                                     </form>
@@ -141,13 +171,13 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-4 py-16 text-center text-sm text-white/40">
-                                <div class="flex flex-col items-center gap-2">
-                                    <svg class="h-12 w-12 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                            <td colspan="5">
+                                <div class="flex flex-col items-center justify-center py-16">
+                                    <svg class="mb-3 h-12 w-12 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
                                     </svg>
-                                    <span>Belum ada data siswa.</span>
-                                    <a href="{{ route('siswa.create') }}" class="text-xs text-indigo-300 hover:text-indigo-200 underline underline-offset-2">
+                                    <p class="text-sm font-medium text-white/40">Belum ada data siswa</p>
+                                    <a href="{{ route('siswa.create') }}" class="mt-2 text-xs text-cyan-300 underline underline-offset-2 hover:text-cyan-200">
                                         Tambah siswa sekarang
                                     </a>
                                 </div>
@@ -158,11 +188,12 @@
             </table>
         </div>
 
-        <div class="flex items-center justify-between">
-            <div class="text-xs text-white/40">
+        {{-- Pagination --}}
+        <div class="pagination-wrap">
+            <p class="pagination-info">
                 Total: {{ $siswas->total() }} siswa
-            </div>
-            <div class="text-xs text-white/40">
+            </p>
+            <div class="text-white/60">
                 {{ $siswas->links() }}
             </div>
         </div>

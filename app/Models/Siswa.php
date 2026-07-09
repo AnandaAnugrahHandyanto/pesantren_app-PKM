@@ -15,7 +15,7 @@ class Siswa extends Model
         'nama_lengkap',
         'kelas',
         'tingkat',
-        'jurusan',
+        'rombel',
         'jenis_kelamin',
     ];
 
@@ -38,7 +38,7 @@ class Siswa extends Model
      */
     public function getKelasFormattedAttribute(): string
     {
-        return $this->tingkat . $this->jurusan;
+        return $this->tingkat . $this->rombel;
     }
 
     /**
@@ -50,9 +50,9 @@ class Siswa extends Model
     }
 
     /**
-     * Get list of available jurusan options.
+     * Get list available rombel options.
      */
-    public static function jurusanOptions(): array
+    public static function rombelOptions(): array
     {
         return ['A', 'B', 'C', 'D', 'E'];
     }

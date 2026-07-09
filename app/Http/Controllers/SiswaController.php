@@ -19,23 +19,23 @@ class SiswaController extends Controller
             $query->where('tingkat', $tingkat);
         }
 
-        if ($jurusan = request('jurusan')) {
-            $query->where('jurusan', $jurusan);
+        if ($rombel = request('rombel')) {
+            $query->where('rombel', $rombel);
         }
 
         $siswas = $query->latest()->paginate(15);
         $tingkatOptions = Siswa::tingkatOptions();
-        $jurusanOptions = Siswa::jurusanOptions();
+        $rombelOptions = Siswa::rombelOptions();
 
-        return view('siswa.index', compact('siswas', 'tingkatOptions', 'jurusanOptions'));
+        return view('siswa.index', compact('siswas', 'tingkatOptions', 'rombelOptions'));
     }
 
     public function create()
     {
         $tingkatOptions = Siswa::tingkatOptions();
-        $jurusanOptions = Siswa::jurusanOptions();
+        $rombelOptions = Siswa::rombelOptions();
 
-        return view('siswa.create', compact('tingkatOptions', 'jurusanOptions'));
+        return view('siswa.create', compact('tingkatOptions', 'rombelOptions'));
     }
 
     public function store(Request $request)
@@ -43,7 +43,7 @@ class SiswaController extends Controller
         $validated = $request->validate([
             'nama_lengkap' => 'required|string|max:255',
             'tingkat' => 'required|integer|in:7,8,9',
-            'jurusan' => 'required|string|max:10',
+            'rombel' => 'required|string|max:10',
             'jenis_kelamin' => 'required|in:L,P',
             'nis' => 'nullable|string|max:50|unique:siswas,nis',
             'password' => 'nullable|string|min:4|max:255',
@@ -53,7 +53,7 @@ class SiswaController extends Controller
             $validated['nis'] = Siswa::generateNIS();
         }
 
-        $validated['kelas'] = $validated['tingkat'] . $validated['jurusan'];
+        $validated['kelas'] = $validated['tingkat'] . $validated['rombel'];
 
         $siswa = Siswa::create($validated);
 
@@ -71,9 +71,9 @@ class SiswaController extends Controller
     public function edit(Siswa $siswa)
     {
         $tingkatOptions = Siswa::tingkatOptions();
-        $jurusanOptions = Siswa::jurusanOptions();
+        $rombelOptions = Siswa::rombelOptions();
 
-        return view('siswa.edit', compact('siswa', 'tingkatOptions', 'jurusanOptions'));
+        return view('siswa.edit', compact('siswa', 'tingkatOptions', 'rombelOptions'));
     }
 
     public function update(Request $request, Siswa $siswa)
@@ -81,17 +81,12 @@ class SiswaController extends Controller
         $validated = $request->validate([
             'nama_lengkap' => 'required|string|max:255',
             'tingkat' => 'required|integer|in:7,8,9',
-            'jurusan' => 'required|string|max:10',
+            'rombel' => 'required|string|max:10',
             'jenis_kelamin' => 'required|in:L,P',
             'nis' => 'nullable|string|max:50|unique:siswas,nis,' . $siswa->id,
         ]);
 
-        if (empty($validated['nis'])) {
-            $validated['nis'] = Siswa::generateNIS();
-        }
-
-        $validated['kelas'] = $validated['tingkat'] . $validated['jurusan'];
-
+        $validated['kelas'] = $validated['tingkat'] . $validated['rombel'];
         $siswa->update($validated);
 
         return redirect()->route('siswa.index')

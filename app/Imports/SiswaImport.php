@@ -39,28 +39,32 @@ class SiswaImport implements ToModel, WithHeadingRow
         $jenisKelaminMap = ['laki-laki' => 'L', 'perempuan' => 'P', 'l' => 'L', 'p' => 'P'];
         $jenisKelamin = $jenisKelaminMap[strtolower($jenisKelaminRaw)] ?? null;
 
-        // Support both old 'kelas' and new 'tingkat'/'jurusan' columns
-        $tingkat = isset($row['tingkat']) ? (int) trim((string) $row['tingkat']) : null;
-        $jurusan = isset($row['jurusan']) ? strtoupper(trim((string) $row['jurusan'])) : null;
+        // Support both old 'kelas' and new 'tingkat'/'rombel' columns
+                $tingkat = isset($row['tingkat']) ? (int) trim((string) $row['tingkat']) : null;
+                $rombel = isset($row['rombel']) ? strtoupper(trim((string) $row['rombel'])) : null;
+                // Fallback: also check 'jurusan' column for backward compat
+                if (!$rombel && isset($row['jurusan'])) {
+                    $rombel = strtoupper(trim((string) $row['jurusan']));
+                }
 
-        // If tingkat/jurusan not provided, try to parse from old 'kelas' field (e.g., "7A")
-        if (!$tingkat || !$jurusan) {
-            $kelasRaw = isset($row['kelas']) ? trim((string) $row['kelas']) : '';
-            if (preg_match('/^(\d+)([A-Z])$/', $kelasRaw, $matches)) {
-                $tingkat = $tingkat ?: (int) $matches[1];
-                $jurusan = $jurusan ?: $matches[2];
-            }
-        }
+                // If tingkat/rombel not provided, try to parse from old 'kelas' field (e.g., "7A")
+                if (!$tingkat || !$rombel) {
+                    $kelasRaw = isset($row['kelas']) ? trim((string) $row['kelas']) : '';
+                    if (preg_match('/^(\\d+)([A-Z])$/', $kelasRaw, $matches)) {
+                        $tingkat = $tingkat ?: (int) $matches[1];
+                        $rombel = $rombel ?: $matches[2];
+                    }
+                }
 
-        $this->success++;
+                $this->success++;
 
-        return new Siswa([
-            'nis'           => $nis,
-            'nama_lengkap'  => $namaLengkap,
-            'kelas'         => $tingkat && $jurusan ? $tingkat . $jurusan : '',
-            'tingkat'       => $tingkat,
-            'jurusan'       => $jurusan,
-            'jenis_kelamin' => $jenisKelamin,
-        ]);
+                return new Siswa([
+                    'nis'           => $nis,
+                    'nama_lengkap'  => $namaLengkap,
+                    'kelas'         => $tingkat && $rombel ? $tingkat . $rombel : '',
+                    'tingkat'       => $tingkat,
+                    'rombel'        => $rombel,
+                    'jenis_kelamin' => $jenisKelamin,
+                ]);
     }
 }

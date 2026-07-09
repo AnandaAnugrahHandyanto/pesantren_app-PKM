@@ -225,6 +225,14 @@
         @apply inline-flex items-center justify-center gap-2 rounded-xl border border-red-400/30 bg-red-500/20 px-4 py-2 text-sm font-medium text-red-200 transition-all duration-200 hover:bg-red-500/30 hover:text-red-100;
     }
 
+    /* ─── Gender Badge ─── */
+    .gender-badge-male {
+        @apply inline-flex items-center gap-1.5 rounded-full border border-cyan-400/30 bg-cyan-500/20 px-3 py-1 text-xs font-semibold text-cyan-200 shadow-sm;
+    }
+    .gender-badge-female {
+        @apply inline-flex items-center gap-1.5 rounded-full border border-pink-400/30 bg-pink-500/20 px-3 py-1 text-xs font-semibold text-pink-200 shadow-sm;
+    }
+
     /* ─── Form Input ─── */
     .form-input {
         @apply w-full rounded-xl border border-white/20 bg-white/10 px-4 py-2.5 text-sm text-white placeholder:text-white/40 backdrop-blur-sm transition-all duration-200 focus:border-cyan-400/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/20;

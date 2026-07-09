@@ -28,7 +28,7 @@
                     <ol class="ml-4 mt-1 list-decimal space-y-0.5">
                         <li>Download template Excel terlebih dahulu.</li>
                         <li>Isi data siswa sesuai format template.</li>
-                        <li>Kolom <strong class="text-white">Nama Lengkap</strong>, <strong class="text-white">Tingkat</strong>, <strong class="text-white">Jurusan</strong>, dan <strong class="text-white">Jenis Kelamin</strong> wajib diisi.</li>
+                        <li>Kolom <strong class="text-white">Nama Lengkap</strong>, <strong class="text-white">Tingkat</strong>, <strong class="text-white">Rombel</strong>, dan <strong class="text-white">Jenis Kelamin</strong> wajib diisi.</li>
                         <li>NIS boleh dikosongkan (akan auto-generate).</li>
                         <li>Upload file <strong class="text-white">.xlsx</strong>, <strong class="text-white">.xls</strong>, atau <strong class="text-white">.csv</strong> (maks 5 MB).</li>
                     </ol>
