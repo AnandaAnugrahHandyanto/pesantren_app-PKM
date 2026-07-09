@@ -32,6 +32,9 @@ class KeuanganController extends Controller
         $totalPemasukan = (clone $query)->where('jenis', 'pemasukan')->sum('jumlah');
         $totalPengeluaran = (clone $query)->where('jenis', 'pengeluaran')->sum('jumlah');
         $saldo = $totalPemasukan - $totalPengeluaran;
+        $countPemasukan = (clone $query)->where('jenis', 'pemasukan')->count();
+        $countPengeluaran = (clone $query)->where('jenis', 'pengeluaran')->count();
+        $totalTransaksi = $keuangans->total();
 
         $bulanOptions = [
             1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',
@@ -40,7 +43,8 @@ class KeuanganController extends Controller
         ];
 
         return view('keuangan.index', compact(
-            'keuangans', 'totalPemasukan', 'totalPengeluaran', 'saldo', 'bulanOptions'
+            'keuangans', 'totalPemasukan', 'totalPengeluaran', 'saldo', 'bulanOptions',
+            'countPemasukan', 'countPengeluaran', 'totalTransaksi'
         ));
     }
 

@@ -36,19 +36,21 @@ class LoginRequest extends FormRequest
         if (str_contains($input, '@')) {
             $credentials['email'] = $input;
         } else {
-            // Login via NIS — find user by NIS
+            // Login via NIS — find user by NIS, then log in directly
+            // (siswa users have email=null, so Auth::attempt with email won't work)
             $user = User::where('nis', $input)->first();
 
-            if (! $user || ! Auth::attempt([
-                'email' => $user->email,
+            if (! $user || ! Auth::validate([
+                'id' => $user->id,
                 'password' => $credentials['password'],
-            ], $this->boolean('remember'))) {
+            ])) {
                 RateLimiter::hit($this->throttleKey());
                 throw ValidationException::withMessages([
                     'email' => trans('auth.failed'),
                 ]);
             }
 
+            Auth::login($user, $this->boolean('remember'));
             RateLimiter::clear($this->throttleKey());
             return;
         }

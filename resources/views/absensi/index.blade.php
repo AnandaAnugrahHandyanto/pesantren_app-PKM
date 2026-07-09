@@ -133,28 +133,36 @@
             {{-- Status Breakdown --}}
             <div class="grid grid-cols-2 gap-2 border-b border-white/10 px-4 py-3 sm:grid-cols-4 sm:px-5">
                 <div class="flex items-center gap-2 rounded-lg border border-emerald-500/20 bg-emerald-500/10 px-3 py-2 text-xs">
-                    <span class="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">✓</span>
+                    <svg class="h-3 w-3 flex-shrink-0 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
                     <div>
                         <span class="text-white/55">Hadir</span>
                         <span class="ml-1 font-bold text-emerald-300" id="count-hadir">{{ $statusCounts['hadir'] ?? 0 }}</span>
                     </div>
                 </div>
                 <div class="flex items-center gap-2 rounded-lg border border-amber-500/20 bg-amber-500/10 px-3 py-2 text-xs">
-                    <span class="flex h-5 w-5 items-center justify-center rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-bold">→</span>
+                    <svg class="h-3 w-3 flex-shrink-0 text-amber-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
                     <div>
                         <span class="text-white/55">Izin</span>
                         <span class="ml-1 font-bold text-amber-300" id="count-izin">{{ $statusCounts['izin'] ?? 0 }}</span>
                     </div>
                 </div>
                 <div class="flex items-center gap-2 rounded-lg border border-rose-500/20 bg-rose-500/10 px-3 py-2 text-xs">
-                    <span class="flex h-5 w-5 items-center justify-center rounded-full bg-rose-500/20 text-rose-300 text-[10px] font-bold">✚</span>
+                    <svg class="h-3 w-3 flex-shrink-0 text-rose-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                    </svg>
                     <div>
                         <span class="text-white/55">Sakit</span>
                         <span class="ml-1 font-bold text-rose-300" id="count-sakit">{{ $statusCounts['sakit'] ?? 0 }}</span>
                     </div>
                 </div>
                 <div class="flex items-center gap-2 rounded-lg border border-red-500/20 bg-red-500/10 px-3 py-2 text-xs">
-                    <span class="flex h-5 w-5 items-center justify-center rounded-full bg-red-500/20 text-red-300 text-[10px] font-bold">✕</span>
+                    <svg class="h-3 w-3 flex-shrink-0 text-red-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
                     <div>
                         <span class="text-white/55">Alfa</span>
                         <span class="ml-1 font-bold text-red-300" id="count-alfa">{{ $statusCounts['alfa'] ?? 0 }}</span>

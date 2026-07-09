@@ -30,7 +30,19 @@ class SppController extends Controller
         $tagihan = $query->paginate(50);
         $kelasList = Siswa::select('kelas')->distinct()->pluck('kelas')->sort();
 
-        return view('spp.index', compact('tagihan', 'kelasList'));
+        // Statistics
+        $totalTagihan = $tagihan->total();
+        $totalLunas = SppBill::where('status', 'lunas')->count();
+        $totalTunggakan = SppBill::where('status', 'tunggakan')->count();
+        $totalBelum = SppBill::where('status', 'belum')->count();
+        $totalJumlah = SppBill::sum('jumlah');
+        $jumlahLunas = SppBill::where('status', 'lunas')->sum('jumlah');
+
+        return view('spp.index', compact(
+            'tagihan', 'kelasList',
+            'totalTagihan', 'totalLunas', 'totalTunggakan', 'totalBelum',
+            'totalJumlah', 'jumlahLunas'
+        ));
     }
 
     /**
@@ -90,7 +102,7 @@ class SppController extends Controller
         }
 
         return redirect()->route('spp.index')
-            ->with('success', "✅ Berhasil generate {$created} tagihan baru. {$skipped} sudah ada.");
+            ->with('success', 'Berhasil generate ' . $created . ' tagihan baru. ' . $skipped . ' sudah ada.');
     }
 
     /**
@@ -119,7 +131,7 @@ class SppController extends Controller
             'paid_at' => now(),
         ]);
 
-        return back()->with('success', '✅ SPP ' . $sppBill->nama_bulan . ' ' . $sppBill->tahun . ' ditandai lunas.');
+        return back()->with('success', 'SPP ' . $sppBill->nama_bulan . ' ' . $sppBill->tahun . ' ditandai lunas.');
     }
 
     // ─── Siswa ──────────────────────────────────────────────
@@ -135,6 +147,16 @@ class SppController extends Controller
             ->orderBy('bulan')
             ->get();
 
-        return view('siswa.spp', compact('tagihan'));
+        $totalTagihan = $tagihan->count();
+        $totalLunas = $tagihan->where('status', 'lunas')->count();
+        $totalBelum = $tagihan->where('status', 'belum')->count();
+        $totalTunggakan = $tagihan->where('status', 'tunggakan')->count();
+        $jumlahLunas = $tagihan->where('status', 'lunas')->sum('jumlah');
+        $jumlahTotal = $tagihan->sum('jumlah');
+
+        return view('siswa.spp', compact(
+            'tagihan', 'totalTagihan', 'totalLunas', 'totalBelum', 'totalTunggakan',
+            'jumlahLunas', 'jumlahTotal'
+        ));
     }
 }

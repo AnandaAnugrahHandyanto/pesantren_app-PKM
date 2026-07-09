@@ -101,6 +101,16 @@
                     @enderror
                 </div>
 
+                <div>
+                    <label for="password" class="mb-1 block text-sm font-medium text-white/80">Password Login <span aria-hidden="true">*</span></label>
+                    <input type="password" id="password" name="password" value="{{ old('password') }}" minlength="4" maxlength="255" required aria-required="true"
+                        class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white placeholder-white/40 backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
+                    <p class="mt-1 text-xs text-white/40">Password minimal 4 karakter. Gunakan untuk login siswa.</p>
+                    @error('password')
+                        <p class="mt-1 text-xs text-red-300">{{ $message }}</p>
+                    @enderror
+                </div>
+
                 <div class="flex gap-2 pt-2">
                     <button type="submit"
                         class="rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 px-5 py-2 text-sm font-medium text-white shadow-md transition hover:from-blue-400 hover:to-indigo-500 hover:shadow-lg">

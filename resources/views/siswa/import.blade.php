@@ -3,120 +3,155 @@
         <h1 class="text-lg font-semibold">Import Data Siswa</h1>
     </x-slot>
 
-    <div class="mx-auto max-w-2xl space-y-6">
-
-        {{-- Guide Card --}}
-        <div class="rounded-2xl border border-white/20 bg-white/10 p-6 shadow-lg backdrop-blur-md">
-            <h2 class="mb-3 text-sm font-semibold text-white">Panduan Format File</h2>
-            <p class="mb-3 text-sm text-white/60">
-                Pastikan file Excel atau CSV memiliki header kolom berikut di baris pertama:
-            </p>
-
-            {{-- Example Table --}}
-            <div class="mb-4 overflow-x-auto rounded-lg border border-white/10">
-                <table class="min-w-full text-sm">
-                    <thead>
-                        <tr class="border-b border-white/10 bg-white/5">
-                            <th class="px-4 py-2 text-left text-xs font-semibold uppercase tracking-wider text-white/70">nis</th>
-                            <th class="px-4 py-2 text-left text-xs font-semibold uppercase tracking-wider text-white/70">nama_lengkap</th>
-                            <th class="px-4 py-2 text-left text-xs font-semibold uppercase tracking-wider text-white/70">kelas</th>
-                            <th class="px-4 py-2 text-left text-xs font-semibold uppercase tracking-wider text-white/70">jenis_kelamin</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-white/10">
-                        <tr class="hover:bg-white/[0.04]">
-                            <td class="px-4 py-2 text-yellow-400/70">(auto)</td>
-                            <td class="px-4 py-2 text-white/70">Ahmad</td>
-                            <td class="px-4 py-2 text-white/70">7A</td>
-                            <td class="px-4 py-2 text-white/70">Laki-laki</td>
-                        </tr>
-                        <tr class="hover:bg-white/[0.04]">
-                            <td class="px-4 py-2 text-yellow-400/70">(auto)</td>
-                            <td class="px-4 py-2 text-white/70">Ali</td>
-                            <td class="px-4 py-2 text-white/70">7B</td>
-                            <td class="px-4 py-2 text-white/70">Laki-laki</td>
-                        </tr>
-                    </tbody>
-                </table>
+    <div class="space-y-6">
+        {{-- Pesan sukses/error --}}
+        @if (session('success'))
+            <div class="mb-4 rounded-xl border border-green-400/30 bg-green-500/20 px-4 py-3 text-sm text-green-200 backdrop-blur-sm">
+                {{ session('success') }}
             </div>
+        @endif
 
-            {{-- Notes --}}
-            <ul class="space-y-1 text-sm text-white/60">
-                <li class="flex items-start gap-2">
-                    <span class="mt-0.5 text-yellow-400">•</span>
-                    <span>Header kolom: <span class="font-medium text-white/80">nis, nama_lengkap, kelas, jenis_kelamin</span>.<br>
-                    Bisa juga pakai <span class="font-medium text-white/80">tingkat + jurusan</span> (contoh: 7 + A) — otomatis digabung jadi <span class="font-medium text-white/80">7A</span>.</span>
-                </li>
-                <li class="flex items-start gap-2">
-                    <span class="mt-0.5 text-yellow-400">•</span>
-                    <span>Kolom <span class="font-medium text-white/80">nis</span> <strong class="text-white">opsional</strong> — akan diisi otomatis jika dikosongkan.</span>
-                </li>
-                <li class="flex items-start gap-2">
-                    <span class="mt-0.5 text-yellow-400">•</span>
-                    <span>Kolom <span class="font-medium text-white/80">nama_lengkap</span> wajib diisi; baris dengan nilai kosong akan dilewati.</span>
-                </li>
-                <li class="flex items-start gap-2">
-                    <span class="mt-0.5 text-yellow-400">•</span>
-                    <span>Kolom <span class="font-medium text-white/80">jenis_kelamin</span> harus berisi <span class="font-medium text-white/80">Laki-laki</span> atau <span class="font-medium text-white/80">Perempuan</span>.</span>
-                </li>
-                <li class="flex items-start gap-2">
-                    <span class="mt-0.5 text-yellow-400">•</span>
-                    <span>Format file yang didukung: <span class="font-medium text-white/80">.xlsx</span> dan <span class="font-medium text-white/80">.csv</span>.</span>
-                </li>
-            </ul>
+        @if (session('error'))
+            <div class="mb-4 rounded-xl border border-red-400/30 bg-red-500/20 px-4 py-3 text-sm text-red-200 backdrop-blur-sm">
+                {{ session('error') }}
+            </div>
+        @endif
 
-            {{-- Download Template Button --}}
-            <div class="mt-4">
-                <a href="{{ route('siswa.template') }}"
-                    class="inline-flex items-center gap-2 rounded-lg border border-emerald-400/40 bg-emerald-500/20 px-4 py-2 text-sm font-medium text-emerald-200 backdrop-blur-sm transition hover:bg-emerald-500/30 hover:text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4" />
-                    </svg>
-                    Download Template Excel
-                </a>
+        {{-- Petunjuk --}}
+        <div class="rounded-2xl border border-blue-400/30 bg-blue-500/10 px-5 py-4 shadow-lg backdrop-blur-md">
+            <div class="flex items-start gap-3">
+                <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+                </svg>
+                <div class="text-sm text-blue-100/80">
+                    <p class="font-medium text-blue-100">Petunjuk Import Data Siswa:</p>
+                    <ol class="ml-4 mt-1 list-decimal space-y-0.5">
+                        <li>Download template Excel terlebih dahulu.</li>
+                        <li>Isi data siswa sesuai format template.</li>
+                        <li>Kolom <strong class="text-white">Nama Lengkap</strong>, <strong class="text-white">Tingkat</strong>, <strong class="text-white">Jurusan</strong>, dan <strong class="text-white">Jenis Kelamin</strong> wajib diisi.</li>
+                        <li>NIS boleh dikosongkan (akan auto-generate).</li>
+                        <li>Upload file <strong class="text-white">.xlsx</strong>, <strong class="text-white">.xls</strong>, atau <strong class="text-white">.csv</strong> (maks 5 MB).</li>
+                    </ol>
+                </div>
             </div>
         </div>
 
-        {{-- Upload Form Card --}}
-        <div class="rounded-2xl border border-white/20 bg-white/10 p-6 shadow-lg backdrop-blur-md">
-
-            @if (session('success'))
-                <div class="mb-4 rounded-xl border border-green-400/30 bg-green-500/20 px-4 py-3 text-sm text-green-200 backdrop-blur-sm">
-                    {{ session('success') }}
-                </div>
-            @endif
-
-            @if (session('error'))
-                <div class="mb-4 rounded-xl border border-red-400/30 bg-red-500/20 px-4 py-3 text-sm text-red-200 backdrop-blur-sm">
-                    {{ session('error') }}
-                </div>
-            @endif
-
-            <form action="{{ route('siswa.import') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
-                @csrf
-
-                <div>
-                    <label for="file" class="mb-1 block text-sm font-medium text-white/80">
-                        File Excel / CSV <span aria-hidden="true">*</span>
-                    </label>
-                    <input type="file" id="file" name="file" accept=".xlsx,.csv" required aria-required="true"
-                        class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white file:mr-3 file:cursor-pointer file:rounded-md file:border-0 file:bg-blue-500/70 file:px-3 file:py-1 file:text-xs file:font-medium file:text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
-                    @error('file')
-                        <p class="mt-1 text-xs text-red-300">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="flex gap-2 pt-2">
-                    <button type="submit"
-                        class="rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 px-5 py-2 text-sm font-medium text-white shadow-md transition hover:from-blue-400 hover:to-indigo-500 hover:shadow-lg">
-                        Import
-                    </button>
-                    <a href="{{ route('siswa.index') }}"
-                        class="rounded-lg border border-white/20 bg-white/10 px-5 py-2 text-sm font-medium text-white/80 backdrop-blur-sm transition hover:bg-white/20">
-                        Batal
+        <div class="grid gap-6 md:grid-cols-2">
+            {{-- Download Template --}}
+            <div class="rounded-2xl border border-white/20 bg-white/10 p-6 shadow-lg backdrop-blur-md">
+                <div class="flex flex-col items-center gap-4 text-center">
+                    <div class="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20">
+                        <svg class="h-8 w-8 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-semibold text-white">Download Template</h3>
+                        <p class="mt-1 text-xs text-white/50">Template Excel dengan format kolom yang sudah sesuai.</p>
+                    </div>
+                    <a href="{{ route('siswa.template') }}"
+                        class="inline-flex items-center gap-2 rounded-lg bg-emerald-500/20 px-5 py-2.5 text-sm font-medium text-emerald-200 ring-1 ring-emerald-400/30 transition hover:bg-emerald-500/30 hover:text-white">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                        </svg>
+                        Download Template
                     </a>
                 </div>
-            </form>
+            </div>
+
+            {{-- Upload --}}
+            <div class="rounded-2xl border border-white/20 bg-white/10 p-6 shadow-lg backdrop-blur-md">
+                <form action="{{ route('siswa.import') }}" method="POST" enctype="multipart/form-data" class="flex flex-col items-center gap-4 text-center">
+                    @csrf
+
+                    <div class="flex h-16 w-16 items-center justify-center rounded-full bg-indigo-500/20">
+                        <svg class="h-8 w-8 text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                        </svg>
+                    </div>
+
+                    <div>
+                        <h3 class="text-base font-semibold text-white">Upload File</h3>
+                        <p class="mt-1 text-xs text-white/50">Pilih file Excel yang sudah diisi.</p>
+                    </div>
+
+                    <div class="w-full">
+                        <label for="file"
+                            class="flex cursor-pointer flex-col items-center gap-2 rounded-xl border-2 border-dashed border-white/20 px-4 py-6 transition hover:border-indigo-400/50 hover:bg-white/[0.02]">
+                            <svg class="h-8 w-8 text-white/30" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
+                            </svg>
+                            <span id="file-label" class="text-sm text-white/40">Klik untuk pilih file Excel</span>
+                            <span id="file-name" class="hidden text-xs text-indigo-300"></span>
+                        </label>
+                        <input type="file" id="file" name="file" accept=".xlsx,.xls,.csv"
+                            class="hidden"
+                            onchange="document.getElementById('file-name').textContent = this.files[0]?.name; document.getElementById('file-label').classList.add('hidden'); document.getElementById('file-name').classList.remove('hidden');">
+                        @error('file')
+                            <p class="mt-1 text-xs text-red-300">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="w-full">
+                        <label for="default_password" class="mb-1 block text-left text-xs font-medium text-white/60">Password Default</label>
+                        <input type="text" id="default_password" name="default_password" value="{{ old('default_password') }}"
+                            placeholder="Kosongkan jika tidak ingin buat akun"
+                            class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white placeholder-white/40 backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
+                        <p class="mt-1 text-left text-xs text-white/30">Jika diisi, akun login akan otomatis dibuat untuk semua siswa yang diimport.</p>
+                        @error('default_password')
+                            <p class="mt-1 text-xs text-red-300">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <button type="submit"
+                        class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-indigo-500 to-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow-md transition hover:from-indigo-400 hover:to-blue-500 hover:shadow-lg">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                        </svg>
+                        Import Data
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        {{-- Hasil import terakhir --}}
+        @if (session('import_results'))
+            <div class="rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md">
+                <h3 class="mb-3 text-sm font-semibold uppercase tracking-wider text-white/60">Hasil Import</h3>
+                <div class="grid grid-cols-2 gap-4 text-center sm:grid-cols-4">
+                    @foreach (session('import_results') as $key => $value)
+                        <div class="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-3">
+                            <div class="text-lg font-bold
+                                @switch($key)
+                                    @case('success') text-green-300 @break
+                                    @case('skipped') text-amber-300 @break
+                                    @case('duplicates') text-rose-300 @break
+                                    @default text-white
+                                @endswitch
+                            ">{{ $value }}</div>
+                            <div class="mt-0.5 text-xs text-white/50">
+                                @switch($key)
+                                    @case('success') Berhasil @break
+                                    @case('skipped') Dilewati @break
+                                    @case('duplicates') Duplikat @break
+                                    @default {{ $key }}
+                                @endswitch
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+
+        {{-- Tombol kembali --}}
+        <div class="flex justify-start">
+            <a href="{{ route('siswa.index') }}"
+                class="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white/80 backdrop-blur-sm transition hover:bg-white/20">
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+                Kembali ke Data Siswa
+            </a>
         </div>
     </div>
 </x-app-layout>

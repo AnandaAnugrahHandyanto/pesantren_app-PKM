@@ -32,6 +32,7 @@ class GenerateSiswaUsers extends Command
                 'name' => $siswa->nama_lengkap,
                 'nis' => $nis,
                 'email' => null,
+                'email_verified_at' => now(),
                 'password' => $password,
                 'role' => 'siswa',
                 'siswa_id' => $siswa->id,

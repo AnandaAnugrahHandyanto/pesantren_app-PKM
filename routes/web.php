@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/siswa/import', [SiswaController::class, 'importForm'])->name('siswa.import.form');
         Route::post('/siswa/import', [SiswaController::class, 'importExcel'])->name('siswa.import');
         Route::get('/siswa/template', [SiswaController::class, 'downloadTemplate'])->name('siswa.template');
-        Route::resource('siswa', SiswaController::class);
+        Route::resource('siswa', SiswaController::class)->except(['show']);
         Route::resource('guru', GuruController::class)->except(['show']);
         Route::resource('keuangan', KeuanganController::class)->except(['show']);
         Route::resource('mata-pelajaran', MataPelajaranController::class)->except(['show']);
@@ -47,11 +47,6 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
-
-// ─── Siswa Routes ─────────────────────────────────────────
-Route::middleware(['auth', 'verified', 'role:siswa'])->prefix('siswa')->name('siswa.')->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\SiswaController::class, 'dashboard'])->name('dashboard');
-});
 
 // ─── SPP (Admin) ──────────────────────────────────────────
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('spp')->name('spp.')->group(function () {
@@ -72,7 +67,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('jadwal')->name('j
 });
 
 // ─── Siswa (akses siswa) ──────────────────────────────────
-Route::middleware(['auth', 'verified', 'role:siswa'])->prefix('siswa')->name('siswa.')->group(function () {
+Route::middleware(['auth', 'role:siswa'])->prefix('siswa')->name('siswa.')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\SiswaController::class, 'dashboard'])->name('dashboard');
     Route::get('/absensi', function () {
         $user = Auth::user();

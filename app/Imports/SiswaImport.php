@@ -8,11 +8,23 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class SiswaImport implements ToModel, WithHeadingRow
 {
+    private int $success = 0;
+    private int $skipped = 0;
+
+    public function getResults(): array
+    {
+        return [
+            'success' => $this->success,
+            'skipped' => $this->skipped,
+        ];
+    }
+
     public function model(array $row): ?Siswa
     {
         $namaLengkap = isset($row['nama_lengkap']) ? trim((string) $row['nama_lengkap']) : null;
 
         if (empty($namaLengkap)) {
+            $this->skipped++;
             return null;
         }
 
@@ -39,6 +51,8 @@ class SiswaImport implements ToModel, WithHeadingRow
                 $jurusan = $jurusan ?: $matches[2];
             }
         }
+
+        $this->success++;
 
         return new Siswa([
             'nis'           => $nis,

@@ -34,7 +34,13 @@ class JadwalController extends Controller
         }
         $jamList = $jamList->unique()->sort()->values();
 
-        return view('jadwal.index', compact('grid', 'kelas', 'kelasList', 'jamList'));
+        // Statistics
+        $totalJadwal = $jadwals->count();
+        $totalMapel = $jadwals->pluck('mata_pelajaran_id')->unique()->count();
+        $totalGuru = $jadwals->pluck('guru_id')->filter()->unique()->count();
+
+        return view('jadwal.index', compact('grid', 'kelas', 'kelasList', 'jamList',
+            'totalJadwal', 'totalMapel', 'totalGuru'));
     }
 
     /**
@@ -84,7 +90,7 @@ class JadwalController extends Controller
         Jadwal::create($request->all());
 
         return redirect()->route('jadwal.index', ['kelas' => $request->kelas])
-            ->with('success', '✅ Jadwal berhasil ditambahkan.');
+            ->with('success', 'Jadwal berhasil ditambahkan.');
     }
 
     /**
@@ -135,7 +141,7 @@ class JadwalController extends Controller
         $jadwal->update($request->all());
 
         return redirect()->route('jadwal.index', ['kelas' => $request->kelas])
-            ->with('success', '✅ Jadwal berhasil diperbarui.');
+            ->with('success', 'Jadwal berhasil diperbarui.');
     }
 
     /**
@@ -147,7 +153,7 @@ class JadwalController extends Controller
         $jadwal->delete();
 
         return redirect()->route('jadwal.index', ['kelas' => $kelas])
-            ->with('success', '✅ Jadwal berhasil dihapus.');
+            ->with('success', 'Jadwal berhasil dihapus.');
     }
 
     /**

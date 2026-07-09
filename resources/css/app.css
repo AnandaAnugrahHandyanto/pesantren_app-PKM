@@ -3,16 +3,52 @@
 @tailwind utilities;
 
 @layer components {
+    /* ─── Base Glass Panel ─── */
     .glass-panel {
         @apply border border-white/20 bg-white/10 shadow-xl shadow-black/10 backdrop-blur-md;
+    }
+    .glass-panel-strong {
+        @apply border border-white/20 bg-white/[0.14] shadow-xl shadow-black/10 backdrop-blur-xl;
     }
 
     .table-scroll-wrapper {
         @apply max-h-[65vh] overflow-auto;
     }
 
+    /* ─── Stat Card ─── */
     .stat-card {
-        @apply rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md;
+        @apply relative overflow-hidden rounded-2xl border border-white/20 bg-white/[0.07] p-5 shadow-lg backdrop-blur-md transition duration-200 hover:bg-white/[0.10];
+    }
+    .stat-card .stat-icon {
+        @apply mb-3 flex h-10 w-10 items-center justify-center rounded-xl;
+    }
+    .stat-card .stat-label {
+        @apply text-[0.7rem] font-semibold uppercase tracking-[0.15em] text-white/50;
+    }
+    .stat-card .stat-value {
+        @apply mt-1 text-2xl font-bold tracking-tight;
+    }
+    .stat-card .stat-sub {
+        @apply mt-1 text-[0.65rem] text-white/40;
+    }
+
+    /* ─── Action Panel ─── */
+    .action-panel {
+        @apply rounded-2xl border border-white/20 bg-gradient-to-br from-white/[0.06] to-white/[0.02] p-6 shadow-lg backdrop-blur-md;
+    }
+    .action-panel .panel-title {
+        @apply flex items-center gap-2 text-base font-semibold text-white;
+    }
+    .action-panel .panel-desc {
+        @apply mt-1 text-sm text-white/50;
+    }
+
+    /* ─── Section Title ─── */
+    .section-title {
+        @apply flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/40;
+    }
+    .section-title svg {
+        @apply h-3.5 w-3.5;
     }
 
     /* Prevent sidebar flash on page load */
@@ -24,7 +60,7 @@
         z-index: 5;
     }
 
-    /* Status capsule badges (laporan, rekap, dll) */
+    /* ─── Status Badges (Absensi) ─── */
     .status-capsule {
         @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold uppercase leading-none;
     }
@@ -53,7 +89,27 @@
         box-shadow: 0 0 12px rgb(239 68 68 / 0.08);
     }
 
-    /* Row highlight: full background tint + left border accent */
+    /* ─── Status Badges (SPP) ─── */
+    .status-capsule-lunas {
+        background: linear-gradient(135deg, rgb(52 211 153 / 0.25), rgb(16 185 129 / 0.18));
+        color: rgb(110 231 183);
+        border: 1px solid rgb(52 211 153 / 0.35);
+        box-shadow: 0 0 14px rgb(52 211 153 / 0.12);
+    }
+    .status-capsule-tunggakan {
+        background: linear-gradient(135deg, rgb(239 68 68 / 0.22), rgb(220 38 38 / 0.16));
+        color: rgb(252 129 129 / 0.95);
+        border: 1px solid rgb(239 68 68 / 0.35);
+        box-shadow: 0 0 14px rgb(239 68 68 / 0.10);
+    }
+    .status-capsule-belum {
+        background: linear-gradient(135deg, rgb(251 191 36 / 0.22), rgb(245 158 11 / 0.16));
+        color: rgb(252 211 77 / 0.95);
+        border: 1px solid rgb(251 191 36 / 0.35);
+        box-shadow: 0 0 14px rgb(251 191 36 / 0.10);
+    }
+
+    /* ─── Row Highlight ─── */
     .status-row-hadir {
         border-left: 3px solid rgb(52 211 153 / 0.8) !important;
         background-color: rgb(52 211 153 / 0.08) !important;
@@ -74,10 +130,23 @@
         background-color: rgb(239 68 68 / 0.08) !important;
         box-shadow: inset 8px 0 20px rgb(239 68 68 / 0.07);
     }
+    .status-row-lunas {
+        border-left: 3px solid rgb(52 211 153 / 0.8) !important;
+        background-color: rgb(52 211 153 / 0.08) !important;
+        box-shadow: inset 8px 0 20px rgb(52 211 153 / 0.07);
+    }
+    .status-row-tunggakan {
+        border-left: 3px solid rgb(239 68 68 / 0.8) !important;
+        background-color: rgb(239 68 68 / 0.08) !important;
+        box-shadow: inset 8px 0 20px rgb(239 68 68 / 0.07);
+    }
+    .status-row-belum {
+        border-left: 3px solid rgb(251 191 36 / 0.8) !important;
+        background-color: rgb(251 191 36 / 0.08) !important;
+        box-shadow: inset 8px 0 20px rgb(251 191 36 / 0.07);
+    }
 
-    /* ===== Status Button Styles ===== */
-
-    /* Base — super compact on mobile, normal on desktop */
+    /* ─── Status Button Styles ─── */
     .status-btn {
         display: inline-flex;
         align-items: center;
@@ -99,13 +168,11 @@
         user-select: none;
         white-space: nowrap;
     }
-
     .status-btn:hover {
         border-color: rgb(255 255 255 / 0.28);
         background-color: rgb(255 255 255 / 0.09);
         color: rgb(255 255 255 / 0.85);
     }
-
     .status-btn:active {
         transform: scale(0.95);
     }
@@ -119,7 +186,6 @@
         }
     }
 
-    /* Active state per status */
     .status-btn-hadir-active {
         border-color: rgb(52 211 153 / 0.6) !important;
         background: linear-gradient(135deg, rgb(52 211 153 / 0.25), rgb(16 185 129 / 0.18)) !important;
@@ -145,11 +211,80 @@
         box-shadow: 0 0 16px rgb(239 68 68 / 0.15), inset 0 0 12px rgb(239 68 68 / 0.06);
     }
 
-    /* ===== Filter bar ===== */
+    /* ─── Primary Button ─── */
+    .btn-primary {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition-all duration-200 hover:from-cyan-400 hover:to-blue-500 hover:shadow-xl hover:shadow-cyan-500/30 active:scale-[0.97];
+    }
+    .btn-secondary {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/10 px-5 py-2.5 text-sm font-medium text-white/80 backdrop-blur-sm transition-all duration-200 hover:bg-white/20 hover:text-white;
+    }
+    .btn-success {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl border border-emerald-400/30 bg-emerald-500/20 px-4 py-2 text-sm font-medium text-emerald-200 transition-all duration-200 hover:bg-emerald-500/30 hover:text-emerald-100;
+    }
+    .btn-danger {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl border border-red-400/30 bg-red-500/20 px-4 py-2 text-sm font-medium text-red-200 transition-all duration-200 hover:bg-red-500/30 hover:text-red-100;
+    }
+
+    /* ─── Form Input ─── */
+    .form-input {
+        @apply w-full rounded-xl border border-white/20 bg-white/10 px-4 py-2.5 text-sm text-white placeholder:text-white/40 backdrop-blur-sm transition-all duration-200 focus:border-cyan-400/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/20;
+    }
+    .form-select {
+        @apply w-full rounded-xl border border-white/20 bg-white/10 px-4 py-2.5 text-sm text-white backdrop-blur-sm transition-all duration-200 focus:border-cyan-400/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/20;
+    }
+    .form-select option {
+        @apply bg-indigo-950 text-white;
+    }
+    .form-label {
+        @apply text-xs font-semibold uppercase tracking-wider text-white/60;
+    }
+
+    /* ─── Filter Bar ─── */
     .filter-bar label {
         font-size: 0.75rem;
         line-height: 1rem;
         font-weight: 600;
         color: rgb(255 255 255 / 0.7);
+    }
+
+    /* ─── Table ─── */
+    .table-wrap {
+        @apply overflow-x-auto rounded-2xl border border-white/20 bg-white/[0.06] shadow-lg backdrop-blur-md;
+    }
+    .table-wrap table {
+        @apply min-w-full text-sm;
+    }
+    .table-wrap th {
+        @apply whitespace-nowrap border-b border-white/10 bg-white/[0.06] px-5 py-3.5 text-left text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-white/50;
+    }
+    .table-wrap td {
+        @apply border-b border-white/[0.04] px-5 py-3.5;
+    }
+    .table-wrap tbody tr {
+        @apply transition duration-150 hover:bg-white/[0.03];
+    }
+
+    /* ─── Pagination ─── */
+    .pagination-wrap {
+        @apply flex flex-col items-center gap-3 sm:flex-row sm:justify-between;
+    }
+    .pagination-info {
+        @apply text-xs text-white/40;
+    }
+
+    /* ─── Card ─── */
+    .content-card {
+        @apply rounded-2xl border border-white/20 bg-white/[0.06] p-5 shadow-lg backdrop-blur-md;
+    }
+
+    /* ─── Alert ─── */
+    .alert-success {
+        @apply rounded-xl border border-emerald-400/30 bg-emerald-500/20 px-4 py-3 text-sm text-emerald-200 backdrop-blur-sm;
+    }
+    .alert-error {
+        @apply rounded-xl border border-red-400/30 bg-red-500/20 px-4 py-3 text-sm text-red-200 backdrop-blur-sm;
+    }
+    .alert-warning {
+        @apply rounded-xl border border-amber-400/30 bg-amber-500/20 px-4 py-3 text-sm text-amber-200 backdrop-blur-sm;
     }
 }
