@@ -72,10 +72,6 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                         </svg>
                     </a>
-                    <a href="{{ route('register') }}"
-                        class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/10 px-8 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/20 active:scale-[0.98]">
-                        Daftar Akun Baru
-                    </a>
                 @else
                     <a href="{{ url('/dashboard') }}"
                         class="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 px-8 py-3.5 text-sm font-semibold text-white shadow-xl shadow-indigo-500/30 transition hover:from-indigo-500 hover:to-blue-500 active:scale-[0.98]">

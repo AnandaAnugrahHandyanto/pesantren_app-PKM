@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreGuruRequest;
+use App\Http\Requests\UpdateGuruRequest;
 use App\Models\Guru;
-use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class GuruController extends Controller
 {
     public function index()
     {
-        $gurus = Guru::latest()->paginate(15);
+        $gurus = Guru::with('user')->latest()->paginate(15);
+
         return view('guru.index', compact('gurus'));
     }
 
@@ -18,57 +23,71 @@ class GuruController extends Controller
         return view('guru.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreGuruRequest $request)
     {
-        $validated = $request->validate([
-            'nip' => 'required|string|max:255|unique:gurus',
-            'nama_lengkap' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:gurus',
-            'no_hp' => 'nullable|string|max:20',
-            'jenis_kelamin' => 'required|in:L,P',
-            'alamat' => 'nullable|string',
-            'tanggal_lahir' => 'nullable|date',
-            'tanggal_masuk' => 'nullable|date',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+        $validated = $request->validated();
+        $password  = $validated['password'];
+
+        // Remove password from guru data (gurus table doesn't have password)
+        unset($validated['password'], $validated['username']);
 
         if ($request->hasFile('foto')) {
             $validated['foto'] = $request->file('foto')->store('guru', 'public');
         }
 
-        Guru::create($validated);
+        $guru = Guru::create($validated);
+
+        // Create User account for login
+        User::create([
+            'name'       => $guru->nama_lengkap,
+            'username'   => $request->username,
+            'email'      => $guru->email,
+            'password'   => Hash::make($password),
+            'role'       => 'guru',
+            'guru_id'    => $guru->id,
+        ]);
 
         return redirect()->route('guru.index')
-            ->with('success', 'Data guru berhasil ditambahkan.');
+            ->with('success', 'Data guru dan akun login berhasil dibuat.');
     }
 
     public function edit(Guru $guru)
     {
+        $guru->load('user');
+
         return view('guru.edit', compact('guru'));
     }
 
-    public function update(Request $request, Guru $guru)
+    public function update(UpdateGuruRequest $request, Guru $guru)
     {
-        $validated = $request->validate([
-            'nip' => 'required|string|max:255|unique:gurus,nip,' . $guru->id,
-            'nama_lengkap' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:gurus,email,' . $guru->id,
-            'no_hp' => 'nullable|string|max:20',
-            'jenis_kelamin' => 'required|in:L,P',
-            'alamat' => 'nullable|string',
-            'tanggal_lahir' => 'nullable|date',
-            'tanggal_masuk' => 'nullable|date',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+        $validated = $request->validated();
+        $password  = $validated['password'] ?? null;
+
+        // Remove password from guru data
+        unset($validated['password'], $validated['username']);
 
         if ($request->hasFile('foto')) {
             if ($guru->foto) {
-                \Storage::disk('public')->delete($guru->foto);
+                Storage::disk('public')->delete($guru->foto);
             }
             $validated['foto'] = $request->file('foto')->store('guru', 'public');
         }
 
         $guru->update($validated);
+
+        // Update linked User account
+        $user = $guru->user;
+        if ($user) {
+            $user->update([
+                'name'     => $guru->nama_lengkap,
+                'username' => $request->username,
+                'email'    => $guru->email,
+            ]);
+
+            if ($password) {
+                $user->update(['password' => Hash::make($password)]);
+            }
+        }
 
         return redirect()->route('guru.index')
             ->with('success', 'Data guru berhasil diperbarui.');
@@ -76,9 +95,13 @@ class GuruController extends Controller
 
     public function destroy(Guru $guru)
     {
+        // Delete linked User account first
+        $guru->user?->delete();
+
         if ($guru->foto) {
-            \Storage::disk('public')->delete($guru->foto);
+            Storage::disk('public')->delete($guru->foto);
         }
+
         $guru->delete();
 
         return redirect()->route('guru.index')

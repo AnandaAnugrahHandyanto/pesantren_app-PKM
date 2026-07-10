@@ -14,11 +14,13 @@ class User extends Authenticatable
 
     protected $fillable = [
         'name',
+        'username',
         'nis',
         'email',
         'password',
         'role',
         'siswa_id',
+        'guru_id',
     ];
 
     protected $hidden = [
@@ -37,5 +39,10 @@ class User extends Authenticatable
     public function siswa(): BelongsTo
     {
         return $this->belongsTo(Siswa::class, 'siswa_id');
+    }
+
+    public function guru(): BelongsTo
+    {
+        return $this->belongsTo(Guru::class, 'guru_id');
     }
 }

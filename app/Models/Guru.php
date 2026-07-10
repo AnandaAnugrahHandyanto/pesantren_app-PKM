@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Guru extends Model
 {
@@ -29,5 +30,10 @@ class Guru extends Model
     public function mataPelajaran()
     {
         return $this->hasMany(MataPelajaran::class, 'guru_id');
+    }
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'guru_id');
     }
 }

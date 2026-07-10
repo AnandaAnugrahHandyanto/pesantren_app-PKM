@@ -92,14 +92,5 @@
             </span>
         </button>
 
-        {{-- Register link --}}
-        @if (Route::has('register'))
-            <p class="text-center text-sm text-white/40">
-                Belum punya akun?
-                <a href="{{ route('register') }}" class="font-medium text-indigo-300/80 underline decoration-indigo-300/20 underline-offset-2 hover:text-indigo-200">
-                    Daftar di sini
-                </a>
-            </p>
-        @endif
     </form>
 </x-guest-layout>

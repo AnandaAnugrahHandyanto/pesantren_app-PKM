@@ -8,13 +8,12 @@
             </div>
             <div>
                 <h1 class="text-lg font-semibold text-white">Data Guru</h1>
-                <p class="text-xs text-white/50">Kelola data guru pengajar</p>
+                <p class="text-xs text-white/50">Kelola data guru dan akun login</p>
             </div>
         </div>
     </x-slot>
 
     <div class="space-y-6">
-        {{-- Alert --}}
         @if (session('success'))
             <div class="alert-success flex items-center gap-2">
                 <svg class="h-4 w-4 flex-shrink-0 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -24,7 +23,6 @@
             </div>
         @endif
 
-        {{-- Toolbar --}}
         <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between rounded-2xl border border-white/20 bg-white/[0.06] p-5 shadow-lg backdrop-blur-md">
             <div class="section-title">
                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
@@ -43,7 +41,6 @@
             </div>
         </div>
 
-        {{-- Table --}}
         <div class="table-wrap">
             <table>
                 <thead>
@@ -51,9 +48,9 @@
                         <th>NIP</th>
                         <th>Nama Lengkap</th>
                         <th>Email</th>
+                        <th>Username</th>
                         <th>No HP</th>
-                        <th>Jenis Kelamin</th>
-                        <th>Tgl Masuk</th>
+                        <th>Akun</th>
                         <th class="text-right">Aksi</th>
                     </tr>
                 </thead>
@@ -63,25 +60,19 @@
                             <td class="font-mono text-xs text-white/70">{{ $guru->nip ?? '-' }}</td>
                             <td class="font-medium text-white">{{ $guru->nama_lengkap }}</td>
                             <td class="text-white/70">{{ $guru->email ?? '-' }}</td>
+                            <td class="font-mono text-xs text-white/70">{{ $guru->user?->username ?? '-' }}</td>
                             <td class="text-white/70">{{ $guru->no_hp ?? '-' }}</td>
                             <td>
-                                @if($guru->jenis_kelamin === 'L')
-                                    <span class="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/30 bg-cyan-500/20 px-3 py-1 text-xs font-semibold text-cyan-200">
-                                        <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                            <circle cx="12" cy="5" r="3.5"/><path d="M12 8.5v10M8 14h8"/>
-                                        </svg>
-                                        Laki-laki
+                                @if($guru->user)
+                                    <span class="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-500/20 px-3 py-1 text-xs font-semibold text-emerald-200">
+                                        Aktif
                                     </span>
                                 @else
-                                    <span class="inline-flex items-center gap-1.5 rounded-full border border-pink-400/30 bg-pink-500/20 px-3 py-1 text-xs font-semibold text-pink-200">
-                                        <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                            <circle cx="12" cy="5" r="3.5"/><path d="M12 8.5v6M8 11h8"/>
-                                        </svg>
-                                        Perempuan
+                                    <span class="inline-flex items-center gap-1.5 rounded-full border border-red-400/30 bg-red-500/20 px-3 py-1 text-xs font-semibold text-red-200">
+                                        Tidak Aktif
                                     </span>
                                 @endif
                             </td>
-                            <td class="text-white/70">{{ $guru->tanggal_masuk ? \Carbon\Carbon::parse($guru->tanggal_masuk)->format('d M Y') : '-' }}</td>
                             <td class="text-right">
                                 <div class="flex items-center justify-end gap-2">
                                     <a href="{{ route('guru.edit', $guru) }}"
@@ -89,7 +80,7 @@
                                         Edit
                                     </a>
                                     <form action="{{ route('guru.destroy', $guru) }}" method="POST" class="inline"
-                                          onsubmit="return confirm('Hapus data {{ $guru->nama_lengkap }}?')">
+                                          onsubmit="return confirm('Hapus data {{ $guru->nama_lengkap }} dan akun loginnya?')">
                                         @csrf @method('DELETE')
                                         <button type="submit"
                                                 class="rounded-lg border border-red-400/30 bg-red-500/20 px-3 py-1.5 text-xs font-medium text-red-200 backdrop-blur-sm transition hover:bg-red-500/30">
@@ -118,7 +109,6 @@
             </table>
         </div>
 
-        {{-- Pagination --}}
         <div class="pagination-wrap">
             <p class="pagination-info">
                 Total: {{ $gurus->total() }} guru
