@@ -11,6 +11,15 @@
                     <input type="hidden" name="kelas" value="{{ request('kelas', old('kelas')) }}">
 
                     <div class="space-y-4">
+                        @if ($errors->any())
+                            <div class="rounded-xl bg-red-500/20 p-4 border border-red-500/30 text-red-200 text-sm">
+                                <ul class="list-disc pl-5">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label class="text-sm font-medium text-white/70">Hari</label>

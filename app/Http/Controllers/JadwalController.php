@@ -37,8 +37,9 @@ class JadwalController extends Controller
 
         // Group by day for grid view
         $grid = [];
+        $hariList = Jadwal::hariOptions();
         $jamList = collect();
-        foreach (Jadwal::hariOptions() as $hari) {
+        foreach ($hariList as $hari) {
             $grid[$hari] = $jadwals->where('hari', $hari)->values();
             $jamList = $jamList->merge($grid[$hari]->pluck('jam_mulai'))
                 ->merge($grid[$hari]->pluck('jam_selesai'));
@@ -50,7 +51,7 @@ class JadwalController extends Controller
         $totalMapel = $jadwals->pluck('mata_pelajaran_id')->unique()->count();
         $totalGuru = $jadwals->pluck('guru_id')->filter()->unique()->count();
 
-        return view('jadwal.index', compact('grid', 'kelas', 'kelasList', 'jamList',
+        return view('jadwal.index', compact('grid', 'kelas', 'kelasList', 'jamList', 'hariList',
             'totalJadwal', 'totalMapel', 'totalGuru', 'rombelList'));
     }
 
@@ -71,6 +72,7 @@ class JadwalController extends Controller
      */
     public function store(Request $request)
     {
+        $request->merge(['hari' => strtolower($request->hari)]);
         $request->validate([
             'hari' => 'required|in:' . implode(',', Jadwal::hariOptions()),
             'jam_mulai' => 'required|date_format:H:i',
@@ -100,8 +102,7 @@ class JadwalController extends Controller
 
         Jadwal::create($request->all());
 
-        return redirect()->route('jadwal.index', ['kelas' => $request->kelas])
-            ->with('success', 'Jadwal berhasil ditambahkan.');
+        return redirect()->route('jadwal.index', ['kelas' => $request->kelas]);
     }
 
     /**
@@ -121,6 +122,7 @@ class JadwalController extends Controller
      */
     public function update(Request $request, Jadwal $jadwal)
     {
+        $request->merge(['hari' => strtolower($request->hari)]);
         $request->validate([
             'hari' => 'required|in:' . implode(',', Jadwal::hariOptions()),
             'jam_mulai' => 'required|date_format:H:i',
@@ -151,8 +153,7 @@ class JadwalController extends Controller
 
         $jadwal->update($request->all());
 
-        return redirect()->route('jadwal.index', ['kelas' => $request->kelas])
-            ->with('success', 'Jadwal berhasil diperbarui.');
+        return redirect()->route('jadwal.index', ['kelas' => $request->kelas]);
     }
 
     /**

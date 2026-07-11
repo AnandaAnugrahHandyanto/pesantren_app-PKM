@@ -32,12 +32,12 @@
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label class="text-sm font-medium text-white/70">Jam Mulai</label>
-                                <input type="time" name="jam_mulai" value="{{ old('jam_mulai', substr($jadwal->jam_mulai, 0, 5)) }}" required
+                                <input type="time" name="jam_mulai" value="{{ old('jam_mulai', $jadwal->jam_mulai?->format('H:i')) }}" required
                                        class="mt-1 block w-full rounded-xl border-white/20 bg-white/10 px-4 py-2.5 text-white">
                             </div>
                             <div>
                                 <label class="text-sm font-medium text-white/70">Jam Selesai</label>
-                                <input type="time" name="jam_selesai" value="{{ old('jam_selesai', substr($jadwal->jam_selesai, 0, 5)) }}" required
+                                <input type="time" name="jam_selesai" value="{{ old('jam_selesai', $jadwal->jam_selesai?->format('H:i')) }}" required
                                        class="mt-1 block w-full rounded-xl border-white/20 bg-white/10 px-4 py-2.5 text-white">
                             </div>
                         </div>

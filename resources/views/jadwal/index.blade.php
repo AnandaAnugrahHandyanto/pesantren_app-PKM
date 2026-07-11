@@ -107,88 +107,51 @@
             </div>
         </div>
 
-        {{-- ═══ Grid Jadwal ═══ --}}
-        <div class="table-wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="w-28">Jam</th>
-                        @foreach(['senin','selasa','rabu','kamis','jumat','sabtu'] as $hari)
-                            <th class="text-center">{{ ucfirst($hari) }}</th>
-                        @endforeach
-                    </tr>
-                </thead>
-                <tbody>
-                    @php
-                        $jamSlots = [
-                            ['07:00', '07:45'], ['07:45', '08:30'], ['08:30', '09:15'],
-                            ['09:15', '09:45'], ['09:45', '10:30'], ['10:30', '11:15'],
-                            ['11:15', '12:00'], ['12:00', '12:45'], ['12:45', '13:30'],
-                        ];
-                        $hariList = ['senin','selasa','rabu','kamis','jumat','sabtu'];
-                    @endphp
-
-                    @forelse($jamSlots as $slot)
-                        @php [$mulai, $selesai] = $slot; @endphp
-                        <tr class="border-b border-white/[0.04] transition hover:bg-white/[0.02]">
-                            <td class="whitespace-nowrap px-4 py-2 text-[0.65rem] font-semibold uppercase tracking-wide text-white/40">
-                                {{ $mulai }}
-                            </td>
-                            @foreach($hariList as $hari)
-                                @php
-                                    $entry = $grid[$hari]->first(function($j) use ($mulai) {
-                                        return $j->jam_mulai->format('H:i') === $mulai;
-                                    });
-                                @endphp
-                                <td class="px-2 py-1.5 text-center align-middle">
-                                    @if($entry)
-                                        <div class="group relative mx-auto max-w-[140px] rounded-xl bg-gradient-to-br from-cyan-500/10 to-blue-500/5 p-2.5 ring-1 ring-cyan-400/20 transition-all duration-200 hover:from-cyan-500/15 hover:to-blue-500/10 hover:ring-cyan-400/30">
-                                            <p class="truncate text-xs font-semibold text-cyan-200">{{ $entry->mataPelajaran->nama ?? '-' }}</p>
-                                            <p class="truncate text-[10px] text-white/50">{{ $entry->guru->nama_lengkap ?? '-' }}</p>
-                                            <p class="text-[10px] text-white/30">{{ substr($entry->jam_mulai, 0, 5) }} - {{ substr($entry->jam_selesai, 0, 5) }}</p>
-                                            <div class="mt-1.5 flex justify-center gap-1 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                                                <a href="{{ route('jadwal.edit', $entry) }}"
-                                                   class="inline-flex items-center justify-center rounded-lg px-1.5 py-1 text-indigo-300 transition hover:bg-indigo-500/20 hover:text-indigo-200"
-                                                   title="Edit">
-                                                    <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                                                    </svg>
-                                                </a>
-                                                <form action="{{ route('jadwal.destroy', $entry) }}" method="POST" class="inline"
-                                                      onsubmit="return confirm('Hapus jadwal {{ $entry->mataPelajaran->nama ?? '' }}?')">
-                                                    @csrf @method('DELETE')
-                                                    <button class="inline-flex items-center justify-center rounded-lg px-1.5 py-1 text-red-300 transition hover:bg-red-500/20 hover:text-red-200"
-                                                            title="Hapus">
-                                                        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                                                        </svg>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    @else
-                                        <span class="text-[10px] text-white/15">—</span>
-                                    @endif
-                                </td>
-                            @endforeach
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="7">
-                                <div class="flex flex-col items-center justify-center py-12">
-                                    <svg class="mb-3 h-12 w-12 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
-                                    </svg>
-                                    <p class="text-sm font-medium text-white/40">Belum ada jadwal untuk kelas {{ $kelas }}</p>
-                                    <a href="{{ route('jadwal.create', ['kelas' => $kelas]) }}" class="mt-2 text-xs text-cyan-300 underline underline-offset-2 hover:text-cyan-200">
-                                        Tambah jadwal sekarang
-                                    </a>
+        {{-- ═══ List Jadwal (User Friendly) ═══ --}}
+        <div class="space-y-8">
+            @foreach($hariList as $hari)
+                <div>
+                    <h3 class="text-white/80 font-bold uppercase tracking-wider text-sm mb-4 border-l-4 border-cyan-500 pl-3">{{ ucfirst($hari) }}</h3>
+                    
+                    <div class="space-y-3">
+                        @forelse($grid[$hari] as $entry)
+                            <div class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition group">
+                                <div class="flex items-center gap-4">
+                                    <div class="flex flex-col items-center justify-center w-14 h-14 rounded-xl bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">
+                                        <span class="text-[10px] font-bold">JAM</span>
+                                        <span class="text-xs font-bold">{{ $entry->jam_mulai->format('H:i') }}</span>
+                                    </div>
+                                    <div>
+                                        <p class="text-white font-semibold">{{ $entry->mataPelajaran->nama ?? '-' }}</p>
+                                        <p class="text-xs text-white/50">{{ $entry->guru->nama_lengkap ?? '-' }}</p>
+                                    </div>
                                 </div>
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+                                <div class="text-right flex items-center gap-6">
+                                    <span class="text-sm font-medium text-white/70">
+                                        <span class="text-white/90 font-bold">{{ $entry->jam_mulai->format('H:i') }} - {{ $entry->jam_selesai->format('H:i') }}</span>
+                                        <br>
+                                        <span class="text-[11px] text-cyan-300/80 bg-cyan-500/10 px-2 py-0.5 rounded-md">
+                                            Durasi: {{ $entry->jam_mulai->diffInMinutes($entry->jam_selesai) }} menit
+                                        </span>
+                                    </span>
+                                    
+                                    {{-- Actions --}}
+                                    <div class="flex gap-1 transition">
+                                        <a href="{{ route('jadwal.edit', $entry) }}"
+                                           class="p-2 rounded-lg bg-indigo-500/10 text-indigo-300 hover:bg-indigo-500/20">Edit</a>
+                                        <form action="{{ route('jadwal.destroy', $entry) }}" method="POST" class="btn-delete-form">
+                                            @csrf @method('DELETE')
+                                            <button type="button" class="btn-delete p-2 rounded-lg bg-red-500/10 text-red-300 hover:bg-red-500/20">Hapus</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        @empty
+                            <p class="text-white/20 text-xs italic px-4">Tidak ada jadwal</p>
+                        @endforelse
+                    </div>
+                </div>
+            @endforeach
         </div>
     </div>
 </x-app-layout>
