@@ -8,7 +8,6 @@
             <div class="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
                 <form method="POST" action="{{ route('jadwal.store') }}">
                     @csrf
-                    <input type="hidden" name="kelas" value="{{ request('kelas', old('kelas')) }}">
 
                     <div class="space-y-4">
                         <div class="grid grid-cols-2 gap-4">
@@ -22,7 +21,7 @@
                             </div>
                             <div>
                                 <label class="text-sm font-medium text-white/70">Kelas</label>
-                                <select name="kelas" required class="mt-1 block w-full rounded-xl border-white/20 bg-white/10 px-4 py-2.5 text-white">
+                                <select name="kelas" id="kelas" required class="mt-1 block w-full rounded-xl border-white/20 bg-white/10 px-4 py-2.5 text-white">
                                     @foreach($kelasList as $k)
                                         <option value="{{ $k }}" {{ request('kelas') == $k ? 'selected' : '' }}>{{ $k }}</option>
                                     @endforeach
@@ -45,20 +44,20 @@
 
                         <div>
                             <label class="text-sm font-medium text-white/70">Mata Pelajaran</label>
-                            <select name="mata_pelajaran_id" required class="mt-1 block w-full rounded-xl border-white/20 bg-white/10 px-4 py-2.5 text-white">
+                            <select name="mata_pelajaran_id" id="mapel_select" required class="mt-1 block w-full rounded-xl border-white/20 bg-white/10 px-4 py-2.5 text-white">
                                 <option value="">Pilih Mapel</option>
                                 @foreach($mapels as $m)
-                                    <option value="{{ $m->id }}">{{ $m->nama }} ({{ $m->kelas }})</option>
+                                    <option value="{{ $m->id }}" data-guru-id="{{ $m->guru_id }}" class="mapel-option">{{ $m->nama }} ({{ $m->kelas }})</option>
                                 @endforeach
                             </select>
                         </div>
 
                         <div>
                             <label class="text-sm font-medium text-white/70">Guru Pengajar</label>
-                            <select name="guru_id" class="mt-1 block w-full rounded-xl border-white/20 bg-white/10 px-4 py-2.5 text-white">
+                            <select name="guru_id" id="guru_select" class="mt-1 block w-full rounded-xl border-white/20 bg-white/10 px-4 py-2.5 text-white">
                                 <option value="">Pilih Guru</option>
                                 @foreach($gurus as $g)
-                                    <option value="{{ $g->id }}">{{ $g->nama_lengkap }}</option>
+                                    <option value="{{ $g->id }}" data-guru-id="{{ $g->id }}" class="guru-option" style="display:none;">{{ $g->nama_lengkap }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -72,4 +71,28 @@
             </div>
         </div>
     </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mapelSelect = document.getElementById('mapel_select');
+            const guruSelect = document.getElementById('guru_select');
+            const guruOptions = document.querySelectorAll('.guru-option');
+
+            mapelSelect.addEventListener('change', function() {
+                const selectedMapel = this.options[this.selectedIndex];
+                const guruId = selectedMapel.getAttribute('data-guru-id');
+
+                guruOptions.forEach(option => {
+                    if (option.getAttribute('data-guru-id') === guruId) {
+                        option.style.display = 'block';
+                    } else {
+                        option.style.display = 'none';
+                    }
+                });
+                
+                // Reset guru select
+                guruSelect.value = guruId || '';
+            });
+        });
+    </script>
 </x-app-layout>
