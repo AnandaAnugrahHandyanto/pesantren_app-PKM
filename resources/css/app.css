@@ -243,6 +243,9 @@
     .form-select option {
         @apply bg-slate-900 text-white;
     }
+    select {
+        color-scheme: dark;
+    }
     .form-label {
         @apply text-xs font-semibold uppercase tracking-wider text-white/60;
     }
