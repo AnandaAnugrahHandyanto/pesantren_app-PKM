@@ -16,20 +16,39 @@
     <div class="space-y-6">
         {{-- Alerts --}}
         @if (session('success'))
-            <div class="alert-success flex items-center gap-2">
-                <svg class="h-4 w-4 flex-shrink-0 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span>{{ session('success') }}</span>
-                @if (session('new_siswa_nis'))
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    });
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: '{{ session('success') }}',
+                        background: '#0f172a',
+                        color: '#fff',
+                        iconColor: '#34d399'
+                    });
+                });
+            </script>
+            @if (session('new_siswa_nis'))
+                <div class="alert-success flex items-center gap-2">
                     <div class="ml-3 flex gap-3 text-xs">
                         <span><span class="font-semibold">NIS:</span> {{ session('new_siswa_nis') }}</span>
                         @if (session('new_siswa_password'))
                             <span><span class="font-semibold">Password:</span> <code class="rounded bg-white/10 px-1 py-0.5 font-mono">{{ session('new_siswa_password') }}</code></span>
                         @endif
                     </div>
-                @endif
-            </div>
+                </div>
+            @endif
         @endif
 
         @if (session('error'))
