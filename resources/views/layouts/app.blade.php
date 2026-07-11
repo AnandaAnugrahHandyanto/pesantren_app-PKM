@@ -14,12 +14,15 @@
 
         {{-- SweetAlert2 --}}
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        
+        <style> [x-cloak] { display: none !important; } </style>
     </head>
     <body class="font-sans antialiased">
         <div x-data="{ 
             sidebarOpen: false, 
             touchStartX: 0, 
             touchStartY: 0,
+            loading: false,
             handleSwipe(e) {
                 if (e.type === 'touchstart') {
                     this.touchStartX = e.changedTouches[0].screenX;
@@ -32,11 +35,23 @@
                 }
             }
         }" 
+        x-init="window.addEventListener('beforeunload', () => { 
+            loading = true;
+            document.body.style.backgroundColor = '#0f172a';
+        })"
         :class="sidebarOpen ? 'fixed inset-0 h-full overflow-hidden' : 'relative min-h-screen'"
         @touchstart="handleSwipe($event)"
         @touchend="handleSwipe($event)"
         @click="if (navigator.vibrate) navigator.vibrate(30)"
         class="bg-gradient-to-br from-blue-950 via-indigo-950 to-cyan-950">
+
+            {{-- Loading Overlay --}}
+            <div x-show="loading" 
+                 x-cloak
+                 class="fixed inset-0 z-50 flex items-center justify-center bg-blue-950/80 backdrop-blur-sm">
+                <div class="h-10 w-10 animate-spin rounded-full border-4 border-cyan-500 border-t-transparent"></div>
+            </div>
+
             {{-- Liquid glass background blobs --}}
             <div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
                 <div class="absolute -left-48 -top-48 h-[700px] w-[700px] rounded-full bg-blue-500/20 blur-3xl"></div>
