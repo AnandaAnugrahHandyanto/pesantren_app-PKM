@@ -69,7 +69,7 @@ class JadwalController extends Controller
     /**
      * Admin: simpan jadwal baru.
      */
-    public function store(StoreJadwalRequest $request)
+    public function store(Request $request)
     {
         $request->validate([
             'hari' => 'required|in:' . implode(',', Jadwal::hariOptions()),
@@ -98,7 +98,7 @@ class JadwalController extends Controller
             }
         }
 
-        Jadwal::create($request->validated());
+        Jadwal::create($request->all());
 
         return redirect()->route('jadwal.index', ['kelas' => $request->kelas])
             ->with('success', 'Jadwal berhasil ditambahkan.');
@@ -119,7 +119,7 @@ class JadwalController extends Controller
     /**
      * Admin: update jadwal.
      */
-    public function update(UpdateJadwalRequest $request, Jadwal $jadwal)
+    public function update(Request $request, Jadwal $jadwal)
     {
         $request->validate([
             'hari' => 'required|in:' . implode(',', Jadwal::hariOptions()),
@@ -149,7 +149,7 @@ class JadwalController extends Controller
             }
         }
 
-        $jadwal->update($request->validated());
+        $jadwal->update($request->all());
 
         return redirect()->route('jadwal.index', ['kelas' => $request->kelas])
             ->with('success', 'Jadwal berhasil diperbarui.');
