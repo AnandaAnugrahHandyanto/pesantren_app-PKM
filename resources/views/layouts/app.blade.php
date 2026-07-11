@@ -17,7 +17,7 @@
         
         <style> [x-cloak] { display: none !important; } </style>
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased" style="background-color: #0f172a;">
         <div x-data="{ 
             sidebarOpen: false, 
             touchStartX: 0, 
