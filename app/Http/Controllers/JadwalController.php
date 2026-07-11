@@ -193,10 +193,11 @@ class JadwalController extends Controller
             ->get();
 
         $grid = [];
-        foreach (Jadwal::hariOptions() as $hari) {
+        $hariList = Jadwal::hariOptions();
+        foreach ($hariList as $hari) {
             $grid[$hari] = $jadwals->where('hari', $hari)->values();
         }
 
-        return view('siswa.jadwal', compact('grid', 'kelasSiswa'));
+        return view('siswa.jadwal', compact('grid', 'kelasSiswa', 'hariList'));
     }
 }
