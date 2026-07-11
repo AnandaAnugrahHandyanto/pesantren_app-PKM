@@ -52,7 +52,9 @@
     }
 
     /* Prevent sidebar flash on page load */
-    [x-cloak] { display: none !important; }
+    [x-cloak] {
+        display: none !important;
+    }
 
     .table-header-sticky {
         position: sticky;
@@ -65,25 +67,41 @@
         @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold uppercase leading-none;
     }
     .status-capsule-hadir {
-        background: linear-gradient(135deg, rgb(52 211 153 / 0.2), rgb(16 185 129 / 0.15));
+        background: linear-gradient(
+            135deg,
+            rgb(52 211 153 / 0.2),
+            rgb(16 185 129 / 0.15)
+        );
         color: rgb(110 231 183 / 0.95);
         border: 1px solid rgb(52 211 153 / 0.3);
         box-shadow: 0 0 12px rgb(52 211 153 / 0.08);
     }
     .status-capsule-izin {
-        background: linear-gradient(135deg, rgb(251 191 36 / 0.2), rgb(245 158 11 / 0.15));
+        background: linear-gradient(
+            135deg,
+            rgb(251 191 36 / 0.2),
+            rgb(245 158 11 / 0.15)
+        );
         color: rgb(252 211 77 / 0.95);
         border: 1px solid rgb(251 191 36 / 0.3);
         box-shadow: 0 0 12px rgb(251 191 36 / 0.08);
     }
     .status-capsule-sakit {
-        background: linear-gradient(135deg, rgb(251 113 133 / 0.2), rgb(244 63 94 / 0.15));
+        background: linear-gradient(
+            135deg,
+            rgb(251 113 133 / 0.2),
+            rgb(244 63 94 / 0.15)
+        );
         color: rgb(253 164 175 / 0.95);
         border: 1px solid rgb(251 113 133 / 0.3);
         box-shadow: 0 0 12px rgb(251 113 133 / 0.08);
     }
     .status-capsule-alfa {
-        background: linear-gradient(135deg, rgb(239 68 68 / 0.2), rgb(220 38 38 / 0.15));
+        background: linear-gradient(
+            135deg,
+            rgb(239 68 68 / 0.2),
+            rgb(220 38 38 / 0.15)
+        );
         color: rgb(252 129 129 / 0.95);
         border: 1px solid rgb(239 68 68 / 0.3);
         box-shadow: 0 0 12px rgb(239 68 68 / 0.08);
@@ -91,22 +109,34 @@
 
     /* ─── Status Badges (SPP) ─── */
     .status-capsule-lunas {
-        background: linear-gradient(135deg, rgb(52 211 153 / 0.25), rgb(16 185 129 / 0.18));
+        background: linear-gradient(
+            135deg,
+            rgb(52 211 153 / 0.25),
+            rgb(16 185 129 / 0.18)
+        );
         color: rgb(110 231 183);
         border: 1px solid rgb(52 211 153 / 0.35);
         box-shadow: 0 0 14px rgb(52 211 153 / 0.12);
     }
     .status-capsule-tunggakan {
-        background: linear-gradient(135deg, rgb(239 68 68 / 0.22), rgb(220 38 38 / 0.16));
+        background: linear-gradient(
+            135deg,
+            rgb(239 68 68 / 0.22),
+            rgb(220 38 38 / 0.16)
+        );
         color: rgb(252 129 129 / 0.95);
         border: 1px solid rgb(239 68 68 / 0.35);
-        box-shadow: 0 0 14px rgb(239 68 68 / 0.10);
+        box-shadow: 0 0 14px rgb(239 68 68 / 0.1);
     }
     .status-capsule-belum {
-        background: linear-gradient(135deg, rgb(251 191 36 / 0.22), rgb(245 158 11 / 0.16));
+        background: linear-gradient(
+            135deg,
+            rgb(251 191 36 / 0.22),
+            rgb(245 158 11 / 0.16)
+        );
         color: rgb(252 211 77 / 0.95);
         border: 1px solid rgb(251 191 36 / 0.35);
-        box-shadow: 0 0 14px rgb(251 191 36 / 0.10);
+        box-shadow: 0 0 14px rgb(251 191 36 / 0.1);
     }
 
     /* ─── Row Highlight ─── */
@@ -188,27 +218,51 @@
 
     .status-btn-hadir-active {
         border-color: rgb(52 211 153 / 0.6) !important;
-        background: linear-gradient(135deg, rgb(52 211 153 / 0.25), rgb(16 185 129 / 0.18)) !important;
+        background: linear-gradient(
+            135deg,
+            rgb(52 211 153 / 0.25),
+            rgb(16 185 129 / 0.18)
+        ) !important;
         color: rgb(110 231 183) !important;
-        box-shadow: 0 0 16px rgb(52 211 153 / 0.15), inset 0 0 12px rgb(52 211 153 / 0.06);
+        box-shadow:
+            0 0 16px rgb(52 211 153 / 0.15),
+            inset 0 0 12px rgb(52 211 153 / 0.06);
     }
     .status-btn-izin-active {
         border-color: rgb(251 191 36 / 0.6) !important;
-        background: linear-gradient(135deg, rgb(251 191 36 / 0.25), rgb(245 158 11 / 0.18)) !important;
+        background: linear-gradient(
+            135deg,
+            rgb(251 191 36 / 0.25),
+            rgb(245 158 11 / 0.18)
+        ) !important;
         color: rgb(252 211 77) !important;
-        box-shadow: 0 0 16px rgb(251 191 36 / 0.15), inset 0 0 12px rgb(251 191 36 / 0.06);
+        box-shadow:
+            0 0 16px rgb(251 191 36 / 0.15),
+            inset 0 0 12px rgb(251 191 36 / 0.06);
     }
     .status-btn-sakit-active {
         border-color: rgb(251 113 133 / 0.6) !important;
-        background: linear-gradient(135deg, rgb(251 113 133 / 0.25), rgb(244 63 94 / 0.18)) !important;
+        background: linear-gradient(
+            135deg,
+            rgb(251 113 133 / 0.25),
+            rgb(244 63 94 / 0.18)
+        ) !important;
         color: rgb(253 164 175) !important;
-        box-shadow: 0 0 16px rgb(251 113 133 / 0.15), inset 0 0 12px rgb(251 113 133 / 0.06);
+        box-shadow:
+            0 0 16px rgb(251 113 133 / 0.15),
+            inset 0 0 12px rgb(251 113 133 / 0.06);
     }
     .status-btn-alfa-active {
         border-color: rgb(239 68 68 / 0.6) !important;
-        background: linear-gradient(135deg, rgb(239 68 68 / 0.25), rgb(220 38 38 / 0.18)) !important;
+        background: linear-gradient(
+            135deg,
+            rgb(239 68 68 / 0.25),
+            rgb(220 38 38 / 0.18)
+        ) !important;
         color: rgb(252 129 129) !important;
-        box-shadow: 0 0 16px rgb(239 68 68 / 0.15), inset 0 0 12px rgb(239 68 68 / 0.06);
+        box-shadow:
+            0 0 16px rgb(239 68 68 / 0.15),
+            inset 0 0 12px rgb(239 68 68 / 0.06);
     }
 
     /* ─── Primary Button ─── */
@@ -238,13 +292,18 @@
         @apply w-full rounded-xl border border-white/20 bg-white/10 px-4 py-2.5 text-sm text-white placeholder:text-white/40 backdrop-blur-sm transition-all duration-200 focus:border-cyan-400/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/20;
     }
     .form-select {
-        @apply w-full rounded-xl border border-white/20 bg-white/10 px-4 py-2.5 text-sm text-white backdrop-blur-sm transition-all duration-200 focus:border-cyan-400/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/20;
+        @apply w-full rounded-xl border border-white/20 bg-slate-800 px-4 py-2.5 text-sm text-white backdrop-blur-sm transition-all duration-200 focus:border-cyan-400/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/20;
     }
     .form-select option {
         @apply bg-slate-900 text-white;
     }
     select {
-        color-scheme: dark;
+        background-color: #1e293b !important;
+        color: #ffffff !important;
+    }
+    select option {
+        background-color: #1e293b !important;
+        color: #ffffff !important;
     }
     .form-label {
         @apply text-xs font-semibold uppercase tracking-wider text-white/60;
