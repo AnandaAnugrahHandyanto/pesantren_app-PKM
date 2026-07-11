@@ -5,7 +5,8 @@
                 <svg class="mr-2 inline-block h-5 w-5 text-cyan-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
                 </svg>
-                Jadwal Pelajaran</h2>
+                Jadwal Pelajaran
+            </h2>
             <span class="rounded-full bg-cyan-500/20 px-3 py-1 text-xs font-medium text-cyan-200 ring-1 ring-cyan-400/30">
                 Kelas {{ $kelasSiswa }}
             </span>
@@ -13,57 +14,44 @@
     </x-slot>
 
     <div class="py-6">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-
-            <div class="overflow-x-auto rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl">
-                <table class="w-full text-left text-sm">
-                    <thead>
-                        <tr class="border-b border-white/10 text-xs uppercase tracking-wider text-white/50">
-                            <th class="w-24 px-3 py-3 font-medium">Jam</th>
-                            @foreach(['senin','selasa','rabu','kamis','jumat','sabtu'] as $hari)
-                                <th class="px-3 py-3 text-center font-medium">{{ ucfirst($hari) }}</th>
-                            @endforeach
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php
-                            $jamSlots = [
-                                ['07:00', '07:45'], ['07:45', '08:30'], ['08:30', '09:15'],
-                                ['09:15', '09:45'], ['09:45', '10:30'], ['10:30', '11:15'],
-                                ['11:15', '12:00'], ['12:00', '12:45'], ['12:45', '13:30'],
-                            ];
-                            $hariList = ['senin','selasa','rabu','kamis','jumat','sabtu'];
-                        @endphp
-
-                        @foreach($jamSlots as $slot)
-                            @php [$mulai, $selesai] = $slot; @endphp
-                            <tr class="border-b border-white/5 hover:bg-white/5">
-                                <td class="px-3 py-3 text-xs font-medium text-white/50">
-                                    {{ $mulai }} - {{ $selesai }}
-                                </td>
-                                @foreach($hariList as $hari)
-                                    @php
-                                        $entry = $grid[$hari]->first(function($j) use ($mulai) {
-                                            return $j->jam_mulai->format('H:i') === $mulai;
-                                        });
-                                    @endphp
-                                    <td class="px-3 py-2 text-center align-middle">
-                                        @if($entry)
-                                            <div class="rounded-xl bg-cyan-500/10 p-2 ring-1 ring-cyan-400/20">
-                                                <p class="text-xs font-medium text-cyan-200">{{ $entry->mataPelajaran->nama ?? '-' }}</p>
-                                                <p class="text-[10px] text-white/50">{{ $entry->guru->nama_lengkap ?? '-' }}</p>
-                                            </div>
-                                        @else
-                                            <span class="text-[10px] text-white/20">—</span>
-                                        @endif
-                                    </td>
-                                @endforeach
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+        <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            {{-- List Jadwal --}}
+            @php $hariList = ['senin','selasa','rabu','kamis','jumat','sabtu']; @endphp
+            <div class="space-y-8">
+                @foreach($hariList as $hari)
+                    <div>
+                        <h3 class="text-white/80 font-bold uppercase tracking-wider text-sm mb-4 border-l-4 border-cyan-500 pl-3">{{ ucfirst($hari) }}</h3>
+                        
+                        <div class="space-y-3">
+                            @forelse($grid[$hari] as $entry)
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition group gap-4">
+                                    <div class="flex items-center gap-4">
+                                        <div class="flex flex-col items-center justify-center w-14 h-14 rounded-xl bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 flex-shrink-0">
+                                            <span class="text-[10px] font-bold">JAM</span>
+                                            <span class="text-xs font-bold">{{ $entry->jam_mulai->format('H:i') }}</span>
+                                        </div>
+                                        <div>
+                                            <p class="text-white font-semibold">{{ $entry->mataPelajaran->nama ?? '-' }}</p>
+                                            <p class="text-xs text-white/50">{{ $entry->guru->nama_lengkap ?? '-' }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between sm:justify-end gap-6 w-full sm:w-auto">
+                                        <span class="text-sm font-medium text-white/70 text-left sm:text-right">
+                                            <span class="text-white/90 font-bold">{{ $entry->jam_mulai->format('H:i') }} - {{ $entry->jam_selesai->format('H:i') }}</span>
+                                            <br>
+                                            <span class="text-[11px] text-cyan-300/80 bg-cyan-500/10 px-2 py-0.5 rounded-md">
+                                                Durasi: {{ $entry->jam_mulai->diffInMinutes($entry->jam_selesai) }} menit
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                            @empty
+                                <p class="text-white/20 text-xs italic px-4">Tidak ada jadwal</p>
+                            @endforelse
+                        </div>
+                    </div>
+                @endforeach
             </div>
-
         </div>
     </div>
 </x-app-layout>
