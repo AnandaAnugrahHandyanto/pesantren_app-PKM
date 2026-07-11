@@ -115,9 +115,9 @@
                     
                     <div class="space-y-3">
                         @forelse($grid[$hari] as $entry)
-                            <div class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition group">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition group gap-4">
                                 <div class="flex items-center gap-4">
-                                    <div class="flex flex-col items-center justify-center w-14 h-14 rounded-xl bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">
+                                    <div class="flex flex-col items-center justify-center w-14 h-14 rounded-xl bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 flex-shrink-0">
                                         <span class="text-[10px] font-bold">JAM</span>
                                         <span class="text-xs font-bold">{{ $entry->jam_mulai->format('H:i') }}</span>
                                     </div>
@@ -126,8 +126,8 @@
                                         <p class="text-xs text-white/50">{{ $entry->guru->nama_lengkap ?? '-' }}</p>
                                     </div>
                                 </div>
-                                <div class="text-right flex items-center gap-6">
-                                    <span class="text-sm font-medium text-white/70">
+                                <div class="flex items-center justify-between sm:justify-end gap-6 w-full sm:w-auto">
+                                    <span class="text-sm font-medium text-white/70 text-left sm:text-right">
                                         <span class="text-white/90 font-bold">{{ $entry->jam_mulai->format('H:i') }} - {{ $entry->jam_selesai->format('H:i') }}</span>
                                         <br>
                                         <span class="text-[11px] text-cyan-300/80 bg-cyan-500/10 px-2 py-0.5 rounded-md">
