@@ -6,7 +6,7 @@
     <div class="py-6">
         <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
             <div class="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
-                <form method="POST" action="{{ route('jadwal.update', $jadwal) }}">
+                <form method="POST" action="{{ route('jadwal.update', $jadwal) }}" onsubmit="return validateTimes(this)">
                     @csrf @method('PUT')
 
                     <div class="space-y-4">
@@ -70,4 +70,23 @@
             </div>
         </div>
     </div>
+    
+    <script>
+        function validateTimes(form) {
+            const start = form.querySelector('input[name="jam_mulai"]').value;
+            const end = form.querySelector('input[name="jam_selesai"]').value;
+            if (start >= end) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Waktu Tidak Valid',
+                    text: 'Jam mulai tidak boleh sama dengan atau setelah jam selesai. Periksa kembali jadwal Anda.',
+                    confirmButtonColor: '#06b6d4',
+                    background: '#1e293b',
+                    color: '#fff'
+                });
+                return false;
+            }
+            return true;
+        }
+    </script>
 </x-app-layout>

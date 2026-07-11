@@ -6,7 +6,7 @@
     <div class="py-6">
         <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
             <div class="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
-                <form method="POST" action="{{ route('jadwal.store') }}">
+                <form method="POST" action="{{ route('jadwal.store') }}" onsubmit="return validateTimes(this)">
                     @csrf
                     <input type="hidden" name="kelas" value="{{ request('kelas', old('kelas')) }}">
 
@@ -54,17 +54,17 @@
 
                         <div>
                             <label class="text-sm font-medium text-white/70">Mata Pelajaran</label>
-                            <select name="mata_pelajaran_id" required class="mt-1 block w-full rounded-xl border-white/20 bg-white/10 px-4 py-2.5 text-white">
+                            <select name="mata_pelajaran_id" id="mata_pelajaran_id" required class="mt-1 block w-full rounded-xl border-white/20 bg-white/10 px-4 py-2.5 text-white">
                                 <option value="">Pilih Mapel</option>
                                 @foreach($mapels as $m)
-                                    <option value="{{ $m->id }}">{{ $m->nama }} ({{ $m->kelas }})</option>
+                                    <option value="{{ $m->id }}" data-guru-id="{{ $m->guru_id }}">{{ $m->nama }} ({{ $m->kelas }})</option>
                                 @endforeach
                             </select>
                         </div>
 
                         <div>
                             <label class="text-sm font-medium text-white/70">Guru Pengajar</label>
-                            <select name="guru_id" class="mt-1 block w-full rounded-xl border-white/20 bg-white/10 px-4 py-2.5 text-white">
+                            <select name="guru_id" id="guru_id" class="mt-1 block w-full rounded-xl border-white/20 bg-white/10 px-4 py-2.5 text-white">
                                 <option value="">Pilih Guru</option>
                                 @foreach($gurus as $g)
                                     <option value="{{ $g->id }}">{{ $g->nama_lengkap }}</option>
@@ -81,4 +81,35 @@
             </div>
         </div>
     </div>
+    
+    <script>
+        document.getElementById('mata_pelajaran_id').addEventListener('change', function() {
+            var guruSelect = document.getElementById('guru_id');
+            var selectedOption = this.options[this.selectedIndex];
+            var guruId = selectedOption.getAttribute('data-guru-id');
+
+            if (guruId) {
+                guruSelect.value = guruId;
+            } else {
+                guruSelect.value = '';
+            }
+        });
+
+        function validateTimes(form) {
+            const start = form.querySelector('input[name="jam_mulai"]').value;
+            const end = form.querySelector('input[name="jam_selesai"]').value;
+            if (start >= end) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Waktu Tidak Valid',
+                    text: 'Jam mulai tidak boleh sama dengan atau setelah jam selesai. Periksa kembali jadwal Anda.',
+                    confirmButtonColor: '#06b6d4',
+                    background: '#1e293b',
+                    color: '#fff'
+                });
+                return false;
+            }
+            return true;
+        }
+    </script>
 </x-app-layout>
