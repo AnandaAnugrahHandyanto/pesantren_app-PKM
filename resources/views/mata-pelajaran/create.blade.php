@@ -19,12 +19,28 @@
                 </div>
 
                 <div>
+                    <label for="guru_id" class="mb-1 block text-sm font-medium text-white/80">Guru Pengajar <span class="text-red-400">*</span></label>
+                    <select name="guru_id" id="guru_id" required
+                            class="w-full appearance-none rounded-xl border border-white/20 bg-white/[0.06] px-4 py-2.5 pr-10 text-sm text-white backdrop-blur-sm transition focus:border-indigo-400/50 focus:outline-none focus:ring-2 focus:ring-indigo-400/20">
+                        <option value="" disabled class="bg-slate-900 text-white" {{ !old('guru_id') ? 'selected' : '' }}>Pilih guru</option>
+                        @foreach (\App\Models\Guru::orderBy('nama_lengkap')->get() as $guru)
+                            <option value="{{ $guru->id }}" {{ old('guru_id') == $guru->id ? 'selected' : '' }} class="bg-slate-900 text-white">
+                                {{ $guru->nama_lengkap }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('guru_id')
+                        <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div>
                     <label for="kelas" class="mb-1 block text-sm font-medium text-white/80">Kelas <span class="text-red-400">*</span></label>
                     <select name="kelas" id="kelas" required
                             class="w-full appearance-none rounded-xl border border-white/20 bg-white/[0.06] px-4 py-2.5 pr-10 text-sm text-white backdrop-blur-sm transition focus:border-indigo-400/50 focus:outline-none focus:ring-2 focus:ring-indigo-400/20">
-                        <option value="" disabled class="bg-indigo-950 text-white">Pilih kelas</option>
+                        <option value="" disabled class="bg-slate-900 text-white" {{ !old('kelas') ? 'selected' : '' }}>Pilih kelas</option>
                         @foreach (range(1, 12) as $k)
-                            <option value="{{ $k }}" {{ old('kelas') == $k ? 'selected' : '' }} class="bg-indigo-950 text-white">
+                            <option value="{{ $k }}" {{ old('kelas') == $k ? 'selected' : '' }} class="bg-slate-900 text-white">
                                 Kelas {{ $k }}
                             </option>
                         @endforeach

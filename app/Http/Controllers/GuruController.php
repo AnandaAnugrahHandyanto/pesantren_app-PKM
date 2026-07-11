@@ -31,6 +31,10 @@ class GuruController extends Controller
         // Remove password from guru data (gurus table doesn't have password)
         unset($validated['password'], $validated['username']);
 
+        if (empty($validated['nip'])) {
+            $validated['nip'] = null;
+        }
+
         if ($request->hasFile('foto')) {
             $validated['foto'] = $request->file('foto')->store('guru', 'public');
         }

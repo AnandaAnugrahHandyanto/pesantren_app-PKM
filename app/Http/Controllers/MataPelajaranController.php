@@ -10,7 +10,7 @@ class MataPelajaranController extends Controller
 {
     public function index()
     {
-        $mataPelajarans = MataPelajaran::orderBy('kelas')->orderBy('nama')->get();
+        $mataPelajarans = MataPelajaran::with('guru')->orderBy('kelas')->orderBy('nama')->get();
 
         return view('mata-pelajaran.index', compact('mataPelajarans'));
     }
@@ -25,6 +25,7 @@ class MataPelajaranController extends Controller
         $validated = $request->validate([
             'nama' => ['required', 'string', 'max:255'],
             'kelas' => ['required', 'string', 'max:50'],
+            'guru_id' => ['required', 'exists:gurus,id'],
         ]);
 
         // Cek unique (nama + kelas)

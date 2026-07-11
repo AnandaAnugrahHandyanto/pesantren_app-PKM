@@ -36,6 +36,11 @@ class Jadwal extends Model
         return $this->belongsTo(Guru::class, 'guru_id');
     }
 
+    public function siswa()
+    {
+        return $this->hasMany(Siswa::class, 'kelas', 'kelas');
+    }
+
     /**
      * Daftar hari dalam Bahasa Indonesia.
      */

@@ -79,6 +79,13 @@
                 </div>
                 <div class="flex flex-wrap items-center gap-3">
                     <form method="GET" action="{{ route('jadwal.index') }}" class="flex items-center gap-2">
+                        <select name="rombel" onchange="this.form.submit()"
+                                class="form-select w-auto min-w-[120px]">
+                            <option value="">Semua Rombel</option>
+                            @foreach($rombelList as $r)
+                                <option value="{{ $r }}" {{ request('rombel') == $r ? 'selected' : '' }}>{{ $r }}</option>
+                            @endforeach
+                        </select>
                         <select name="kelas" onchange="this.form.submit()"
                                 class="form-select w-auto min-w-[120px]">
                             @foreach($kelasList as $k)

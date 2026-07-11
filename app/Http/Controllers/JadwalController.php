@@ -15,11 +15,21 @@ class JadwalController extends Controller
      */
     public function index(Request $request)
     {
-        $kelas = $request->kelas ?? '7A';
-        $kelasList = MataPelajaran::select('kelas')->distinct()->pluck('kelas')->sort();
+        $rombelList = \App\Models\Siswa::select('rombel')->distinct()->pluck('rombel')->filter()->sort();
+        $rombel = $request->rombel;
 
-        $jadwals = Jadwal::with(['mataPelajaran', 'guru'])
-            ->where('kelas', $kelas)
+        $kelas = $request->kelas ?? '7A';
+        $kelasList = \App\Models\MataPelajaran::select('kelas')->distinct()->pluck('kelas')->sort();
+
+        $query = Jadwal::with(['mataPelajaran', 'guru']);
+        
+        if ($rombel) {
+            $query->whereHas('siswa', function($q) use ($rombel) {
+                $q->where('rombel', $rombel);
+            });
+        }
+        
+        $jadwals = $query->where('kelas', $kelas)
             ->orderBy('hari')
             ->orderBy('jam_mulai')
             ->get();
@@ -40,7 +50,7 @@ class JadwalController extends Controller
         $totalGuru = $jadwals->pluck('guru_id')->filter()->unique()->count();
 
         return view('jadwal.index', compact('grid', 'kelas', 'kelasList', 'jamList',
-            'totalJadwal', 'totalMapel', 'totalGuru'));
+            'totalJadwal', 'totalMapel', 'totalGuru', 'rombelList'));
     }
 
     /**

@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('gurus', function (Blueprint $table) {
             $table->id();
-            $table->string('nip')->unique();
+            $table->string('nip')->nullable()->unique();
             $table->string('nama_lengkap');
             $table->string('email')->unique();
             $table->string('no_hp')->nullable();
