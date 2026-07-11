@@ -19,8 +19,18 @@ class JadwalController extends Controller
         $rombelList = \App\Models\Siswa::select('rombel')->distinct()->pluck('rombel')->filter()->sort();
         $rombel = $request->rombel;
 
-        $kelas = $request->kelas ?? '7A';
+        // Persist kelas in session
+        if ($request->has('kelas')) {
+            session(['last_kelas' => $request->kelas]);
+        }
+        $kelas = $request->kelas ?? session('last_kelas', '7A');
+        
         $kelasList = \App\Models\MataPelajaran::select('kelas')->distinct()->pluck('kelas')->sort();
+        
+        // Ensure $kelas is valid
+        if (!$kelasList->contains($kelas) && $kelasList->isNotEmpty()) {
+            $kelas = $kelasList->first();
+        }
 
         $query = Jadwal::with(['mataPelajaran', 'guru']);
         
