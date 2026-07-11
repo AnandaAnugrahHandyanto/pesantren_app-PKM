@@ -16,7 +16,27 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
     <body class="font-sans antialiased">
-        <div x-data="{ sidebarOpen: false }" class="relative min-h-screen overflow-hidden bg-gradient-to-br from-blue-950 via-indigo-950 to-cyan-950">
+        <div x-data="{ 
+            sidebarOpen: false, 
+            touchStartX: 0, 
+            touchStartY: 0,
+            handleSwipe(e) {
+                if (e.type === 'touchstart') {
+                    this.touchStartX = e.changedTouches[0].screenX;
+                    this.touchStartY = e.changedTouches[0].screenY;
+                }
+                if (e.type === 'touchend') {
+                    const diffX = e.changedTouches[0].screenX - this.touchStartX;
+                    const diffY = Math.abs(e.changedTouches[0].screenY - this.touchStartY);
+                    if (this.touchStartX < 50 && diffX > 100 && diffY < 50) this.sidebarOpen = true;
+                }
+            }
+        }" 
+        :class="sidebarOpen ? 'fixed inset-0 h-full overflow-hidden' : 'relative min-h-screen'"
+        @touchstart="handleSwipe($event)"
+        @touchend="handleSwipe($event)"
+        @click="if (navigator.vibrate) navigator.vibrate(30)"
+        class="bg-gradient-to-br from-blue-950 via-indigo-950 to-cyan-950">
             {{-- Liquid glass background blobs --}}
             <div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
                 <div class="absolute -left-48 -top-48 h-[700px] w-[700px] rounded-full bg-blue-500/20 blur-3xl"></div>
