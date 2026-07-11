@@ -3,7 +3,7 @@
         <h1 class="text-lg font-semibold">Edit Mata Pelajaran</h1>
     </x-slot>
 
-    <div class="max-w-lg">
+    <div class="mx-auto max-w-lg">
         <div class="rounded-2xl border border-white/20 bg-white/10 p-6 shadow-lg backdrop-blur-md">
             <form method="POST" action="{{ route('mata-pelajaran.update', $mataPelajaran) }}" class="space-y-5">
                 @csrf @method('PUT')
