@@ -38,9 +38,8 @@
                 <thead>
                     <tr class="border-b border-white/10 bg-white/5">
                         <th class="w-12 px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">No</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Nama</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">MAPEL</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Guru Pengajar</th>
-                        <th class="w-24 px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Kelas</th>
                         <th class="w-32 px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-white/50">Aksi</th>
                     </tr>
                 </thead>
@@ -50,11 +49,6 @@
                             <td class="px-4 py-3 text-sm text-white/50">{{ $i + 1 }}</td>
                             <td class="px-4 py-3 text-sm font-medium text-white">{{ $mp->nama }}</td>
                             <td class="px-4 py-3 text-sm text-white/70">{{ $mp->guru->nama_lengkap ?? '-' }}</td>
-                            <td class="px-4 py-3">
-                                <span class="inline-flex rounded-full bg-white/10 px-2.5 py-0.5 text-xs font-medium text-white/80">
-                                    {{ $mp->kelas }}
-                                </span>
-                            </td>
                             <td class="px-4 py-3 text-right">
                                 <div class="flex items-center justify-end gap-2">
                                     <a href="{{ route('mata-pelajaran.edit', $mp) }}"
@@ -74,7 +68,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-4 py-10 text-center text-sm text-white/40">
+                            <td colspan="4" class="px-4 py-10 text-center text-sm text-white/40">
                                 Belum ada mata pelajaran. <a href="{{ route('mata-pelajaran.create') }}" class="text-indigo-300 underline hover:text-indigo-200">Tambah sekarang</a>.
                             </td>
                         </tr>
