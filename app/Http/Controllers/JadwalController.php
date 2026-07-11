@@ -184,10 +184,18 @@ class JadwalController extends Controller
     public function siswa()
     {
         $user = Auth::user();
-        $kelasSiswa = $user->siswa->kelasFormatted ?? $user->siswa->kelas ?? '';
+        $siswa = $user->siswa;
+
+        if (!$siswa) {
+            return view('siswa.jadwal', ['grid' => [], 'kelasSiswa' => '?', 'hariList' => Jadwal::hariOptions()]);
+        }
+
+        // Gunakan tingkat (e.g. 7) sebagai acuan kelas untuk jadwal
+        // Karena di DB kolom 'kelas' pada 'jadwals' berisi '7', '6'
+        $targetKelas = (string)$siswa->tingkat;
 
         $jadwals = Jadwal::with(['mataPelajaran', 'guru'])
-            ->where('kelas', $kelasSiswa)
+            ->where('kelas', $targetKelas)
             ->orderBy('hari')
             ->orderBy('jam_mulai')
             ->get();
@@ -198,6 +206,6 @@ class JadwalController extends Controller
             $grid[$hari] = $jadwals->where('hari', $hari)->values();
         }
 
-        return view('siswa.jadwal', compact('grid', 'kelasSiswa', 'hariList'));
+        return view('siswa.jadwal', compact('grid', 'hariList'), ['kelasSiswa' => $siswa->kelasFormatted]);
     }
 }
