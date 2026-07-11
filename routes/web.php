@@ -48,6 +48,13 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
+// ─── SPP (Admin) ──────────────────────────────────────────
+Route::middleware(['auth', 'verified', 'role:admin'])->prefix('spp')->name('spp.')->group(function () {
+    Route::get('/', [App\Http\Controllers\SppController::class, 'index'])->name('index');
+    Route::get('/generate', [App\Http\Controllers\SppController::class, 'create'])->name('create');
+    Route::post('/generate', [App\Http\Controllers\SppController::class, 'generate'])->name('generate');
+    Route::post('/{sppBill}/paid', [App\Http\Controllers\SppController::class, 'markPaid'])->name('mark-paid');
+});
 
 // ─── Jadwal (Admin) ───────────────────────────────────────
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('jadwal')->name('jadwal.')->group(function () {
