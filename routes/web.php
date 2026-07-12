@@ -8,6 +8,8 @@ use App\Http\Controllers\KeuanganController;
 use App\Http\Controllers\MataPelajaranController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\SppController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -50,10 +52,11 @@ require __DIR__.'/auth.php';
 
 // ─── SPP (Admin) ──────────────────────────────────────────
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('spp')->name('spp.')->group(function () {
-    Route::get('/', [App\Http\Controllers\SppController::class, 'index'])->name('index');
-    Route::get('/generate', [App\Http\Controllers\SppController::class, 'create'])->name('create');
-    Route::post('/generate', [App\Http\Controllers\SppController::class, 'generate'])->name('generate');
-    Route::post('/{sppBill}/paid', [App\Http\Controllers\SppController::class, 'markPaid'])->name('mark-paid');
+    Route::get('/', [SppController::class, 'index'])->name('index');
+    Route::get('/generate', [SppController::class, 'create'])->name('create');
+    Route::post('/generate', [SppController::class, 'generate'])->name('generate');
+    Route::post('/{sppBill}/paid', [SppController::class, 'markPaid'])->name('mark-paid');
+    Route::post('/{sppBill}/checkout', [PaymentController::class, 'checkout'])->name('checkout');
 });
 
 // ─── Jadwal (Admin) ───────────────────────────────────────
