@@ -55,6 +55,7 @@ class MataPelajaranController extends Controller
         $validated = $request->validate([
             'nama' => ['required', 'string', 'max:255'],
             'kelas' => ['required', 'string', 'max:50'],
+            'guru_id' => ['required', 'exists:gurus,id'],
         ]);
 
         // Cek unique (nama + kelas) kecuali dirinya sendiri
