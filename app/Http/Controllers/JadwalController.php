@@ -17,52 +17,50 @@ class JadwalController extends Controller
     public function index(Request $request)
     {
         $rombelList = \App\Models\Siswa::select('rombel')->distinct()->pluck('rombel')->filter()->sort();
-        $rombel = $request->rombel;
-
-        // Persist kelas in session
-        if ($request->has('kelas')) {
-            session(['last_kelas' => $request->kelas]);
+        
+        // Persist rombel in session
+        if ($request->has('rombel')) {
+            session(['last_rombel' => $request->rombel]);
         }
-        $kelas = $request->kelas ?? session('last_kelas', '7A');
+        $rombel = $request->rombel ?? session('last_rombel');
+
+        // Reset kelas and rombel if not explicitly requested
+        if (!$request->has('kelas') && !$request->has('rombel') && !$request->has('page')) {
+             session()->forget(['last_kelas', 'last_rombel']);
+             $kelas = null;
+             $rombel = null;
+        } else {
+             $kelas = $request->kelas ?? session('last_kelas');
+        }
         
         $kelasList = \App\Models\MataPelajaran::select('kelas')->distinct()->pluck('kelas')->sort();
         
-        // Ensure $kelas is valid
-        if (!$kelasList->contains($kelas) && $kelasList->isNotEmpty()) {
-            $kelas = $kelasList->first();
-        }
+        $jadwals = collect();
 
-        $query = Jadwal::with(['mataPelajaran', 'guru']);
-        
-        if ($rombel) {
-            $query->whereHas('siswa', function($q) use ($rombel) {
-                $q->where('rombel', $rombel);
-            });
+        if ($kelas && $rombel) {
+            $query = Jadwal::with(['mataPelajaran', 'guru']);
+            
+            $query->where('kelas', $kelas)->where('rombel', $rombel);
+            
+            $jadwals = $query->orderBy('hari')
+                ->orderBy('jam_mulai')
+                ->get();
         }
-        
-        $jadwals = $query->where('kelas', $kelas)
-            ->orderBy('hari')
-            ->orderBy('jam_mulai')
-            ->get();
 
         // Group by day for grid view
         $grid = [];
         $hariList = Jadwal::hariOptions();
-        $jamList = collect();
         foreach ($hariList as $hari) {
             $grid[$hari] = $jadwals->where('hari', $hari)->values();
-            $jamList = $jamList->merge($grid[$hari]->pluck('jam_mulai'))
-                ->merge($grid[$hari]->pluck('jam_selesai'));
         }
-        $jamList = $jamList->unique()->sort()->values();
 
         // Statistics
         $totalJadwal = $jadwals->count();
         $totalMapel = $jadwals->pluck('mata_pelajaran_id')->unique()->count();
         $totalGuru = $jadwals->pluck('guru_id')->filter()->unique()->count();
 
-        return view('jadwal.index', compact('grid', 'kelas', 'kelasList', 'jamList', 'hariList',
-            'totalJadwal', 'totalMapel', 'totalGuru', 'rombelList'));
+        return view('jadwal.index', compact('grid', 'kelas', 'kelasList', 'hariList', 'rombel', 'rombelList',
+            'totalJadwal', 'totalMapel', 'totalGuru'));
     }
 
     /**

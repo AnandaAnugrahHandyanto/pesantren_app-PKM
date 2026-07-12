@@ -81,9 +81,9 @@
                     <form method="GET" action="{{ route('jadwal.index') }}" class="flex items-center gap-2">
                         <select name="rombel" onchange="this.form.submit()"
                                 class="form-select w-auto min-w-[120px]">
-                            <option value="">Semua Rombel</option>
+                            <option value="">Pilih Rombel</option>
                             @foreach($rombelList as $r)
-                                <option value="{{ $r }}" {{ request('rombel') == $r ? 'selected' : '' }}>{{ $r }}</option>
+                                <option value="{{ $r }}" {{ request('rombel') == $r ? 'selected' : '' }}>Rombel {{ $r }}</option>
                             @endforeach
                         </select>
                         <select name="kelas" onchange="this.form.submit()"
@@ -109,7 +109,7 @@
         </div>
 
         {{-- ═══ List Jadwal (User Friendly) ═══ --}}
-        @if($kelas)
+        @if($kelas && $rombel)
             <div class="space-y-8">
                 @foreach($hariList as $hari)
                     <div>
@@ -157,7 +157,7 @@
             </div>
         @else
             <div class="p-10 text-center rounded-2xl border border-dashed border-white/10 bg-white/5">
-                <p class="text-white/50 text-sm">Silakan pilih kelas terlebih dahulu untuk menampilkan jadwal pelajaran.</p>
+                <p class="text-white/50 text-sm">Silakan pilih kelas dan rombel terlebih dahulu untuk menampilkan jadwal pelajaran.</p>
             </div>
         @endif
     </div>
