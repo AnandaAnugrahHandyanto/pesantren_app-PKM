@@ -76,7 +76,7 @@
             </div>
         @endif
 
-{{-- ═══ Tabel ═══ --}}
+        {{-- ═══ Tabel ═══ --}}
         <div class="table-wrap">
             <table>
                 <thead>
@@ -85,6 +85,7 @@
                         <th class="text-right">Jumlah</th>
                         <th>Status</th>
                         <th>Tanggal Bayar</th>
+                        <th class="text-right">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -131,20 +132,39 @@
                                     </button>
                                 @endif
                             </td>
-                            </tr>
-                            @endforeach
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5">
+                                <div class="flex flex-col items-center justify-center py-12">
+                                    <p class="text-sm font-medium text-white/40">Belum ada tagihan SPP untuk tahun ini</p>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
-                    </div>
-                    <div class="h-8 w-px bg-white/10"></div>
-                    <div class="text-center">
-                        <p class="text-2xl font-bold text-white">{{ $totalTagihan }}</p>
-                        <p class="text-xs text-white/50">Total Tagihan</p>
-                    </div>
+
+        {{-- Ringkasan --}}
+        <div class="content-card">
+            <div class="flex items-center justify-center gap-6 text-sm">
+                <div class="text-center">
+                    <p class="text-2xl font-bold text-emerald-300">{{ $totalLunas }}</p>
+                    <p class="text-xs text-white/50">Lunas</p>
+                </div>
+                <div class="h-8 w-px bg-white/10"></div>
+                <div class="text-center">
+                    <p class="text-2xl font-bold text-amber-300">{{ $totalBelum + $totalTunggakan }}</p>
+                    <p class="text-xs text-white/50">Belum Dibayar</p>
+                </div>
+                <div class="h-8 w-px bg-white/10"></div>
+                <div class="text-center">
+                    <p class="text-2xl font-bold text-white">{{ $totalTagihan }}</p>
+                    <p class="text-xs text-white/50">Total Tagihan</p>
                 </div>
             </div>
-        @endif
+        </div>
     </div>
 
     {{-- Midtrans Snap Script --}}

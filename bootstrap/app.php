@@ -14,14 +14,18 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->alias([
-            'role' => RoleMiddleware::class,
-            'role.admin' => RoleAdminMiddleware::class,
-            'role.guru' => RoleGuruMiddleware::class,
-            'role.siswa' => RoleSiswaMiddleware::class,
-        ]);
-    })
+->withMiddleware(function (Middleware $middleware): void {
+    $middleware->validateCsrfTokens(except: [
+        'payments/webhook',
+    ]);
+
+    $middleware->alias([
+        'role' => RoleMiddleware::class,
+        'role.admin' => RoleAdminMiddleware::class,
+        'role.guru' => RoleGuruMiddleware::class,
+        'role.siswa' => RoleSiswaMiddleware::class,
+    ]);
+})
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();

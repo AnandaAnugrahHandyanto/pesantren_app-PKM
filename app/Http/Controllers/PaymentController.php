@@ -14,20 +14,18 @@ class PaymentController extends Controller
 {
     public function checkout(SppBill $sppBill, PaymentService $service): JsonResponse
     {
-        // 4. Otorisasi
         $user = Auth::user();
         if ($user->role !== 'admin' && ($user->siswa_id !== $sppBill->siswa_id)) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
-        // 3. Pastikan hanya tagihan SPP yang belum lunas
         if ($sppBill->status === 'lunas') {
             return response()->json(['message' => 'Tagihan sudah lunas.'], 400);
         }
 
         try {
-            // 1 & 5. Bungkus dengan DB transaction & lockForUpdate untuk cegah race condition
             return DB::transaction(function () use ($sppBill, $service) {
+                // Cari transaksi pending yang belum expired
                 $transaction = PaymentTransaction::where('spp_bill_id', $sppBill->id)
                     ->where('status', 'pending')
                     ->where(function ($query) {
@@ -37,6 +35,7 @@ class PaymentController extends Controller
                     ->lockForUpdate()
                     ->first();
 
+                // Jika belum ada, buat baru
                 if (!$transaction) {
                     $transaction = PaymentTransaction::create([
                         'spp_bill_id' => $sppBill->id,
@@ -44,15 +43,18 @@ class PaymentController extends Controller
                         'amount' => $sppBill->jumlah,
                         'status' => 'pending',
                         'currency' => 'IDR',
+                        'expired_at' => now()->addHours(24), // Set expired 24 jam
                     ]);
                 }
 
+                // Jika belum ada snap_token, generate
                 if (!$transaction->snap_token) {
-                    // 2. Try-catch untuk error dari PaymentService (Midtrans)
                     $transaction->snap_token = $service->getSnapToken($transaction);
                     $transaction->save();
+                    Log::info('Snap token generated', ['transaction_id' => $transaction->id, 'order_id' => $transaction->external_id]);
                 }
 
+                Log::info('Checkout successful', ['transaction_id' => $transaction->id, 'order_id' => $transaction->external_id]);
                 return response()->json([
                     'snap_token' => $transaction->snap_token,
                     'external_id' => $transaction->external_id
