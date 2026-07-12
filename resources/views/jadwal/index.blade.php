@@ -88,8 +88,9 @@
                         </select>
                         <select name="kelas" onchange="this.form.submit()"
                                 class="form-select w-auto min-w-[120px]">
+                            <option value="">Pilih Kelas</option>
                             @foreach($kelasList as $k)
-                                <option value="{{ $k }}" {{ $kelas == $k ? 'selected' : '' }}>{{ $k }}</option>
+                                <option value="{{ $k }}" {{ $kelas == $k ? 'selected' : '' }}>Kelas {{ $k }}</option>
                             @endforeach
                         </select>
                         <noscript>
@@ -108,50 +109,56 @@
         </div>
 
         {{-- ═══ List Jadwal (User Friendly) ═══ --}}
-        <div class="space-y-8">
-            @foreach($hariList as $hari)
-                <div>
-                    <h3 class="text-white/80 font-bold uppercase tracking-wider text-sm mb-4 border-l-4 border-cyan-500 pl-3">{{ ucfirst($hari) }}</h3>
-                    
-                    <div class="space-y-3">
-                        @forelse($grid[$hari] as $entry)
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition group gap-4">
-                                <div class="flex items-center gap-4">
-                                    <div class="flex flex-col items-center justify-center w-14 h-14 rounded-xl bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 flex-shrink-0">
-                                        <span class="text-[10px] font-bold">JAM</span>
-                                        <span class="text-xs font-bold">{{ $entry->jam_mulai->format('H:i') }}</span>
+        @if($kelas)
+            <div class="space-y-8">
+                @foreach($hariList as $hari)
+                    <div>
+                        <h3 class="text-white/80 font-bold uppercase tracking-wider text-sm mb-4 border-l-4 border-cyan-500 pl-3">{{ ucfirst($hari) }}</h3>
+                        
+                        <div class="space-y-3">
+                            @forelse($grid[$hari] as $entry)
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition group gap-4">
+                                    <div class="flex items-center gap-4">
+                                        <div class="flex flex-col items-center justify-center w-14 h-14 rounded-xl bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 flex-shrink-0">
+                                            <span class="text-[10px] font-bold">JAM</span>
+                                            <span class="text-xs font-bold">{{ $entry->jam_mulai->format('H:i') }}</span>
+                                        </div>
+                                        <div>
+                                            <p class="text-white font-semibold">{{ $entry->mataPelajaran->nama ?? '-' }}</p>
+                                            <p class="text-xs text-white/50">{{ $entry->guru->nama_lengkap ?? '-' }}</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <p class="text-white font-semibold">{{ $entry->mataPelajaran->nama ?? '-' }}</p>
-                                        <p class="text-xs text-white/50">{{ $entry->guru->nama_lengkap ?? '-' }}</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-between sm:justify-end gap-6 w-full sm:w-auto">
-                                    <span class="text-sm font-medium text-white/70 text-left sm:text-right">
-                                        <span class="text-white/90 font-bold">{{ $entry->jam_mulai->format('H:i') }} - {{ $entry->jam_selesai->format('H:i') }}</span>
-                                        <br>
-                                        <span class="text-[11px] text-cyan-300/80 bg-cyan-500/10 px-2 py-0.5 rounded-md">
-                                            Durasi: {{ $entry->jam_mulai->diffInMinutes($entry->jam_selesai) }} menit
+                                    <div class="flex items-center justify-between sm:justify-end gap-6 w-full sm:w-auto">
+                                        <span class="text-sm font-medium text-white/70 text-left sm:text-right">
+                                            <span class="text-white/90 font-bold">{{ $entry->jam_mulai->format('H:i') }} - {{ $entry->jam_selesai->format('H:i') }}</span>
+                                            <br>
+                                            <span class="text-[11px] text-cyan-300/80 bg-cyan-500/10 px-2 py-0.5 rounded-md">
+                                                Durasi: {{ $entry->jam_mulai->diffInMinutes($entry->jam_selesai) }} menit
+                                            </span>
                                         </span>
-                                    </span>
-                                    
-                                    {{-- Actions --}}
-                                    <div class="flex gap-1 transition">
-                                        <a href="{{ route('jadwal.edit', $entry) }}"
-                                           class="p-2 rounded-lg bg-indigo-500/10 text-indigo-300 hover:bg-indigo-500/20">Edit</a>
-                                        <form action="{{ route('jadwal.destroy', $entry) }}" method="POST" class="btn-delete-form">
-                                            @csrf @method('DELETE')
-                                            <button type="button" class="btn-delete p-2 rounded-lg bg-red-500/10 text-red-300 hover:bg-red-500/20">Hapus</button>
-                                        </form>
+                                        
+                                        {{-- Actions --}}
+                                        <div class="flex gap-1 transition">
+                                            <a href="{{ route('jadwal.edit', $entry) }}"
+                                               class="p-2 rounded-lg bg-indigo-500/10 text-indigo-300 hover:bg-indigo-500/20">Edit</a>
+                                            <form action="{{ route('jadwal.destroy', $entry) }}" method="POST" class="btn-delete-form">
+                                                @csrf @method('DELETE')
+                                                <button type="button" class="btn-delete p-2 rounded-lg bg-red-500/10 text-red-300 hover:bg-red-500/20">Hapus</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        @empty
-                            <p class="text-white/20 text-xs italic px-4">Tidak ada jadwal</p>
-                        @endforelse
+                            @empty
+                                <p class="text-white/20 text-xs italic px-4">Tidak ada jadwal</p>
+                            @endforelse
+                        </div>
                     </div>
-                </div>
-            @endforeach
-        </div>
+                @endforeach
+            </div>
+        @else
+            <div class="p-10 text-center rounded-2xl border border-dashed border-white/10 bg-white/5">
+                <p class="text-white/50 text-sm">Silakan pilih kelas terlebih dahulu untuk menampilkan jadwal pelajaran.</p>
+            </div>
+        @endif
     </div>
 </x-app-layout>

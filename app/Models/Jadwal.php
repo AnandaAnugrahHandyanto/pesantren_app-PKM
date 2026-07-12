@@ -16,6 +16,7 @@ class Jadwal extends Model
         'mata_pelajaran_id',
         'guru_id',
         'kelas',
+        'rombel',
     ];
 
     protected function casts(): array

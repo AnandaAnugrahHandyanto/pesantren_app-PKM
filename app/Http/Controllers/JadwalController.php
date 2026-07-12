@@ -90,12 +90,15 @@ class JadwalController extends Controller
             'mata_pelajaran_id' => 'required|exists:mata_pelajarans,id',
             'guru_id' => 'nullable|exists:gurus,id',
             'kelas' => 'required|string|max:10',
+            'rombel' => 'required|string|max:5',
         ]);
 
         // Cek bentrok guru
         if ($request->filled('guru_id')) {
             $bentrok = Jadwal::where('hari', $request->hari)
                 ->where('guru_id', $request->guru_id)
+                ->where('kelas', $request->kelas)
+                ->where('rombel', $request->rombel)
                 ->where(function ($q) use ($request) {
                     $q->whereBetween('jam_mulai', [$request->jam_mulai, $request->jam_selesai])
                         ->orWhereBetween('jam_selesai', [$request->jam_mulai, $request->jam_selesai])
@@ -140,12 +143,15 @@ class JadwalController extends Controller
             'mata_pelajaran_id' => 'required|exists:mata_pelajarans,id',
             'guru_id' => 'nullable|exists:gurus,id',
             'kelas' => 'required|string|max:10',
+            'rombel' => 'required|string|max:5',
         ]);
 
         // Cek bentrok guru (kecuali dirinya sendiri)
         if ($request->filled('guru_id')) {
             $bentrok = Jadwal::where('hari', $request->hari)
                 ->where('guru_id', $request->guru_id)
+                ->where('kelas', $request->kelas)
+                ->where('rombel', $request->rombel)
                 ->where('id', '!=', $jadwal->id)
                 ->where(function ($q) use ($request) {
                     $q->whereBetween('jam_mulai', [$request->jam_mulai, $request->jam_selesai])
