@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\PaymentTransaction;
 
 class SppBill extends Model
 {
@@ -35,6 +36,11 @@ class SppBill extends Model
     public function keuangan(): BelongsTo
     {
         return $this->belongsTo(Keuangan::class, 'keuangan_id');
+    }
+
+    public function transactions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(PaymentTransaction::class, 'spp_bill_id');
     }
 
     /**
