@@ -75,73 +75,9 @@
             </div>
         </div>
 
-        {{-- ===== Rekap Absensi Hari Ini ===== --}}
-        <div>
-            <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-white/40">Rekap Absensi Hari Ini</p>
-            <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
-                {{-- Hadir --}}
-                <div class="stat-card stat-card-hadir">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm font-medium uppercase tracking-[0.18em] text-white/55">Hadir</p>
-                            <p class="mt-2 text-4xl font-bold text-emerald-300">{{ $hadir }}</p>
-                        </div>
-                        <div title="Hadir - Sukses/Valid" class="flex h-16 w-16 items-center justify-center rounded-3xl border border-emerald-300/20 bg-emerald-500/10 text-emerald-300/80 shadow-[0_0_24px_rgba(16,185,129,0.18)]">
-                            <x-status-icon status="hadir" class="h-8 w-8" />
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Izin --}}
-                <div class="stat-card stat-card-izin">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm font-medium uppercase tracking-[0.18em] text-white/55">Izin</p>
-                            <p class="mt-2 text-4xl font-bold text-amber-300">{{ $izin }}</p>
-                        </div>
-                        <div title="Izin - Menunggu/Persetujuan" class="flex h-16 w-16 items-center justify-center rounded-3xl border border-amber-300/20 bg-amber-500/10 text-amber-300/80 shadow-[0_0_24px_rgba(245,158,11,0.18)]">
-                            <x-status-icon status="izin" class="h-8 w-8" />
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Sakit --}}
-                <div class="stat-card stat-card-sakit">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm font-medium uppercase tracking-[0.18em] text-white/55">Sakit</p>
-                            <p class="mt-2 text-4xl font-bold text-rose-300">{{ $sakit }}</p>
-                        </div>
-                        <div title="Sakit - Kondisi Kesehatan" class="flex h-16 w-16 items-center justify-center rounded-3xl border border-rose-300/20 bg-rose-500/10 text-rose-300/80 shadow-[0_0_24px_rgba(244,63,94,0.18)]">
-                            <x-status-icon status="sakit" class="h-8 w-8" />
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Alfa --}}
-                <div class="stat-card stat-card-alfa">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm font-medium uppercase tracking-[0.18em] text-white/55">Alfa</p>
-                            <p class="mt-2 text-4xl font-bold text-red-200">{{ $alfa }}</p>
-                        </div>
-                        <div title="Alfa - Tidak Hadir Tanpa Keterangan" class="flex h-16 w-16 items-center justify-center rounded-3xl border border-red-400/20 bg-red-600/10 text-red-200/80 shadow-[0_0_24px_rgba(185,28,28,0.18)]">
-                            <x-status-icon status="alfa" class="h-8 w-8" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         {{-- ===== Menu Navigasi ===== --}}
         <div>
             <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-white/40">Menu</p>
-            <div class="mb-4">
-                <a href="{{ route('absensi.index', ['tanggal' => now()->toDateString()]) }}"
-                   class="inline-flex items-center gap-2 rounded-lg border border-amber-300/40 bg-amber-500/20 px-4 py-2 text-sm font-semibold text-amber-100 transition hover:bg-amber-500/30">
-                    Edit Absensi Hari Ini
-                </a>
-            </div>
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
                 {{-- Data Siswa --}}
                 <a href="{{ route('siswa.index') }}"

@@ -107,9 +107,6 @@
             <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <div>
                     <h3 class="panel-title">
-                        <svg class="h-5 w-5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                        </svg>
                         Generate Tagihan SPP
                     </h3>
                     <p class="panel-desc">Buat tagihan SPP massal untuk semua siswa berdasarkan tahun dan kelas.</p>
@@ -138,9 +135,6 @@
                     </div>
                     <button type="submit" class="btn-primary whitespace-nowrap"
                             onclick="return confirm('Generate tagihan SPP untuk semua siswa?')">
-                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                        </svg>
                         Generate
                     </button>
                 </form>
