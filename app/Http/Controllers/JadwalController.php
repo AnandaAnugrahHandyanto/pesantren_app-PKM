@@ -14,7 +14,7 @@ class JadwalController extends Controller
     /**
      * Admin/Guru: daftar jadwal per kelas.
      */
-    public function index(Request $request)
+    public function index(Request $request, \App\Services\JadwalService $jadwalService)
     {
         $rombelList = \App\Models\Siswa::select('rombel')->distinct()->pluck('rombel')->filter()->sort();
         
@@ -31,21 +31,14 @@ class JadwalController extends Controller
              $rombel = null;
         } else {
              $kelas = $request->kelas ?? session('last_kelas');
+             if ($request->has('kelas')) {
+                session(['last_kelas' => $request->kelas]);
+            }
         }
         
         $kelasList = \App\Models\MataPelajaran::select('kelas')->distinct()->pluck('kelas')->sort();
         
-        $jadwals = collect();
-
-        if ($kelas && $rombel) {
-            $query = Jadwal::with(['mataPelajaran', 'guru']);
-            
-            $query->where('kelas', $kelas)->where('rombel', $rombel);
-            
-            $jadwals = $query->orderBy('hari')
-                ->orderBy('jam_mulai')
-                ->get();
-        }
+        $jadwals = $jadwalService->getJadwalByKelasRombel($kelas, $rombel);
 
         // Group by day for grid view
         $grid = [];
