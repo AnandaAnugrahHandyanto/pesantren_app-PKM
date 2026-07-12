@@ -10,6 +10,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\SppController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\WebhookController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -56,6 +57,9 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('spp')->name('spp.
     Route::get('/generate', [SppController::class, 'create'])->name('create');
     Route::post('/generate', [SppController::class, 'generate'])->name('generate');
     Route::post('/{sppBill}/paid', [SppController::class, 'markPaid'])->name('mark-paid');
+});
+
+Route::middleware(['auth', 'verified'])->prefix('spp')->name('spp.')->group(function () {
     Route::post('/{sppBill}/checkout', [PaymentController::class, 'checkout'])->name('checkout');
 });
 
@@ -83,3 +87,6 @@ Route::middleware(['auth', 'role:siswa'])->prefix('siswa')->name('siswa.')->grou
     Route::get('/spp', [App\Http\Controllers\SppController::class, 'siswaIndex'])->name('spp.index');
     Route::get('/jadwal', [App\Http\Controllers\JadwalController::class, 'siswa'])->name('jadwal');
 });
+
+// ─── Webhooks ──────────────────────────────────────────────
+Route::post('/payments/webhook', [WebhookController::class, 'handle']);

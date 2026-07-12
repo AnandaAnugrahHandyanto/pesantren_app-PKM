@@ -240,25 +240,29 @@
                                 @endif
                             </td>
                             <td class="text-right">
-                                @if($t->status !== 'lunas')
-                                    <form action="{{ route('spp.mark-paid', $t) }}" method="POST" class="inline">
-                                        @csrf
-                                        <button type="submit" class="btn-success text-xs"
-                                                onclick="return confirm('Tandai {{ $t->nama_bulan }} {{ $t->tahun }} sebagai lunas?')">
+                                <div class="flex items-center justify-end gap-2">
+                                    @if($t->status !== 'lunas')
+                                        <button type="button" 
+                                            onclick="initPayment('{{ route('spp.checkout', $t->id) }}')"
+                                            class="btn-primary text-xs py-1.5 px-3">
+                                            Bayar Sekarang
+                                        </button>
+                                        <form action="{{ route('spp.mark-paid', $t) }}" method="POST" class="inline">
+                                            @csrf
+                                            <button type="submit" class="btn-success text-xs py-1.5 px-3"
+                                                    onclick="return confirm('Tandai {{ $t->nama_bulan }} {{ $t->tahun }} sebagai lunas?')">
+                                                Tandai Lunas
+                                            </button>
+                                        </form>
+                                    @else
+                                        <span class="inline-flex items-center gap-1 text-xs text-emerald-400/70">
                                             <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                             </svg>
-                                            Tandai Lunas
-                                        </button>
-                                    </form>
-                                @else
-                                    <span class="inline-flex items-center gap-1 text-xs text-emerald-400/70">
-                                        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        Selesai
-                                    </span>
-                                @endif
+                                            Selesai
+                                        </span>
+                                    @endif
+                                </div>
                             </td>
                         </tr>
                     @empty
@@ -288,4 +292,35 @@
             </div>
         </div>
     </div>
+
+    {{-- Midtrans Snap Script --}}
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('services.midtrans.client_key') }}"></script>
+    <script>
+        function initPayment(checkoutUrl) {
+            fetch(checkoutUrl, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.snap_token) {
+                    snap.pay(data.snap_token, {
+                        onSuccess: function(result){ alert("Pembayaran Berhasil!"); },
+                        onPending: function(result){ alert("Menunggu Pembayaran!"); },
+                        onError: function(result){ alert("Pembayaran Gagal!"); },
+                        onClose: function(){ alert('Anda menutup popup tanpa menyelesaikan pembayaran.'); }
+                    });
+                } else {
+                    alert(data.message || "Gagal memproses pembayaran");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Terjadi kesalahan sistem");
+            });
+        }
+    </script>
 </x-app-layout>
