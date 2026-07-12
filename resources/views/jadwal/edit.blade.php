@@ -31,9 +31,11 @@
 
                         <div>
                             <label class="text-sm font-medium text-white/70">Rombel</label>
-                            <input type="text" name="rombel" value="{{ old('rombel', $jadwal->rombel) }}" required
-                                   placeholder="Contoh: A, B"
-                                   class="mt-1 block w-full rounded-xl border-white/20 bg-white/10 px-4 py-2.5 text-white">
+                            <select name="rombel" required class="mt-1 block w-full rounded-xl border-white/20 bg-white/10 px-4 py-2.5 text-white">
+                                @foreach(\App\Models\Siswa::rombelOptions() as $r)
+                                    <option value="{{ $r }}" {{ $jadwal->rombel == $r ? 'selected' : '' }}>{{ $r }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="grid grid-cols-2 gap-4">
