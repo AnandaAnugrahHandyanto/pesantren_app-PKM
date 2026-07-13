@@ -11,20 +11,14 @@ class GuruJadwalController extends Controller
 {
     public function index(Request $request)
     {
-        $currentGuru = Auth::user()->guru;
-        $guruId = $request->query('guru_id', $currentGuru ? $currentGuru->id : null);
+        $guru = Auth::user()->guru;
+        $guruId = $request->query('guru_id', $guru ? $guru->id : null);
         $kelas = $request->query('kelas');
+        $rombel = $request->query('rombel');
 
-        $guru = $guruId ? Guru::find($guruId) : $currentGuru;
-
-        // Fetch options
         $guruList = Guru::orderBy('nama_lengkap')->get();
-        $kelasList = Jadwal::query()
-            ->when($guruId, fn ($q) => $q->where('guru_id', $guruId))
-            ->select('kelas')
-            ->distinct()
-            ->pluck('kelas')
-            ->sort();
+        $kelasList = Jadwal::select('kelas')->distinct()->pluck('kelas')->sort();
+        $rombelList = Jadwal::select('rombel')->distinct()->pluck('rombel')->sort();
 
         $query = Jadwal::with(['mataPelajaran', 'guru']);
 
@@ -34,6 +28,10 @@ class GuruJadwalController extends Controller
             
         if ($kelas) {
             $query->where('kelas', $kelas);
+        }
+
+        if ($rombel) {
+            $query->where('rombel', $rombel);
         }
 
         $jadwals = $query->orderBy('hari')
@@ -46,6 +44,6 @@ class GuruJadwalController extends Controller
             $grid[$hari] = $jadwals->where('hari', $hari)->values();
         }
 
-        return view('guru.jadwal', compact('grid', 'hariList', 'kelas', 'kelasList', 'guru', 'guruList', 'guruId'));
+        return view('guru.jadwal', compact('grid', 'hariList', 'kelas', 'rombel', 'kelasList', 'rombelList', 'guruList', 'guruId'));
     }
 }

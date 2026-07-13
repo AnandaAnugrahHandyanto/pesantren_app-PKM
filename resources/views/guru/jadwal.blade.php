@@ -27,8 +27,18 @@
             </div>
 
             <div class="flex items-center gap-2">
+                <span class="text-xs font-semibold text-white/50">PILIH ROMBEL:</span>
+                <select name="rombel" onchange="this.form.submit()" class="form-select w-auto min-w-[120px]">
+                    <option value="">Pilih Rombel</option>
+                    @foreach($rombelList as $r)
+                        <option value="{{ $r }}" {{ $rombel == $r ? 'selected' : '' }}>Rombel {{ $r }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="flex items-center gap-2">
                 <span class="text-xs font-semibold text-white/50">PILIH KELAS:</span>
-                <select name="kelas" onchange="this.form.submit()" class="form-select w-auto min-w-[150px]">
+                <select name="kelas" onchange="this.form.submit()" class="form-select w-auto min-w-[120px]">
                     <option value="">Pilih Kelas</option>
                     @foreach($kelasList as $k)
                         <option value="{{ $k }}" {{ $kelas == $k ? 'selected' : '' }}>Kelas {{ $k }}</option>
