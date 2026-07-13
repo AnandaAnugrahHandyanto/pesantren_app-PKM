@@ -54,9 +54,9 @@ Route::middleware('auth')->group(function () {
     });
 
     // Shared Routes (Absensi, etc.)
-    Route::resource('siswa', SiswaController::class);
+    Route::middleware(['role:admin'])->resource('siswa', SiswaController::class);
     Route::resource('guru', GuruController::class);
-    Route::resource('absensi', AbsensiController::class);
+    Route::middleware(['auth'])->resource('absensi', AbsensiController::class);
     Route::post('absensi/mass-store', [AbsensiController::class, 'massStore'])->name('absensi.mass-store');
     
     Route::get('rekap-absensi', [LaporanController::class, 'absensi'])->name('laporan.absensi');

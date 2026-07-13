@@ -11,11 +11,10 @@ class RoleMiddleware
     public function handle(Request $request, Closure $next, string $role): Response
     {
         if ($request->user()?->role !== $role) {
-            $dashboard = $request->user()?->role === 'admin'
-                ? route('admin.dashboard')
-                : route('guru.dashboard');
-
-            return redirect($dashboard);
+            if ($request->expectsJson()) {
+                return response()->json(['message' => 'Forbidden'], 403);
+            }
+            abort(403);
         }
 
         return $next($request);

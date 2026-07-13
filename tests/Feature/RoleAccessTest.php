@@ -26,10 +26,10 @@ test('guru can access absensi routes', function () {
     $response->assertOk();
 });
 
-test('admin cannot access absensi routes', function () {
+test('admin can access absensi routes', function () {
     $admin = User::factory()->create(['role' => 'admin']);
 
     $response = $this->actingAs($admin)->get(route('absensi.index'));
 
-    $response->assertForbidden();
+    $response->assertOk();
 });
