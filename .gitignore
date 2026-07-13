@@ -31,3 +31,4 @@ storage/framework/cache/*
 ngrok
 cloudflared
 tunnel.log
+.env.testing
