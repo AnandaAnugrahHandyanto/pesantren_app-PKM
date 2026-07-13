@@ -20,6 +20,7 @@ class AbsensiController extends Controller
     {
         $tanggal = $request->query('tanggal', today()->toDateString());
         $mataPelajaranId = $request->query('mata_pelajaran_id');
+        $kelas = $request->query('kelas');
 
         // Default ke mata pelajaran pertama yang ada
         $mataPelajaranOptions = MataPelajaran::orderBy('kelas')->orderBy('nama')->get();
@@ -30,32 +31,46 @@ class AbsensiController extends Controller
             $mataPelajaranId = (int) $mataPelajaranId;
         }
 
-        $siswas = Siswa::query()
-            ->select(['id', 'nama_lengkap', 'kelas', 'jenis_kelamin'])
-            ->orderBy('kelas')
-            ->orderBy('nama_lengkap')
-            ->get();
+        $siswas = collect();
+        $existingAbsensi = collect();
+        $statusBySiswa = collect();
+        $hasExistingAbsensi = false;
+        $allAbsensiComplete = false;
+        $lastUpdatedAt = null;
+        $kelasOptions = Siswa::select('kelas')->distinct()->pluck('kelas')->filter()->sort();
+        $statusCounts = ['hadir' => 0, 'izin' => 0, 'sakit' => 0, 'alfa' => 0];
+        $totalSiswa = 0;
+        $existingCount = 0;
 
-        $existingAbsensi = Absensi::query()
-            ->select(['siswa_id', 'status', 'updated_at'])
-            ->whereDate('tanggal', $tanggal)
-            ->when($mataPelajaranId, fn ($q) => $q->where('mata_pelajaran_id', $mataPelajaranId))
-            ->whereIn('siswa_id', $siswas->pluck('id'))
-            ->get();
+        if ($request->has('mata_pelajaran_id')) {
+            $siswas = Siswa::query()
+                ->select(['id', 'nama_lengkap', 'kelas', 'jenis_kelamin'])
+                ->when($kelas, fn ($q) => $q->where('kelas', $kelas))
+                ->orderBy('kelas')
+                ->orderBy('nama_lengkap')
+                ->get();
 
-        $statusBySiswa = $existingAbsensi->pluck('status', 'siswa_id');
-        $existingCount = $statusBySiswa->count();
-        $totalSiswa = $siswas->count();
-        $hasExistingAbsensi = $existingCount > 0;
-        $allAbsensiComplete = $totalSiswa > 0 && $existingCount === $totalSiswa;
-        $lastUpdatedAt = $existingAbsensi->max('updated_at');
-        $kelasOptions = $siswas->pluck('kelas')->filter()->unique()->sort()->values();
-        $statusCounts = [
-            'hadir' => $existingAbsensi->where('status', 'hadir')->count(),
-            'izin' => $existingAbsensi->where('status', 'izin')->count(),
-            'sakit' => $existingAbsensi->where('status', 'sakit')->count(),
-            'alfa' => $existingAbsensi->where('status', 'alfa')->count(),
-        ];
+            $existingAbsensi = Absensi::query()
+                ->select(['siswa_id', 'status', 'updated_at'])
+                ->whereDate('tanggal', $tanggal)
+                ->when($mataPelajaranId, fn ($q) => $q->where('mata_pelajaran_id', $mataPelajaranId))
+                ->whereIn('siswa_id', $siswas->pluck('id'))
+                ->get();
+
+            $statusBySiswa = $existingAbsensi->pluck('status', 'siswa_id');
+            $existingCount = $statusBySiswa->count();
+            $totalSiswa = $siswas->count();
+            $hasExistingAbsensi = $existingCount > 0;
+            $allAbsensiComplete = $totalSiswa > 0 && $existingCount === $totalSiswa;
+            $lastUpdatedAt = $existingAbsensi->max('updated_at');
+            $statusCounts = [
+                'hadir' => $existingAbsensi->where('status', 'hadir')->count(),
+                'izin' => $existingAbsensi->where('status', 'izin')->count(),
+                'sakit' => $existingAbsensi->where('status', 'sakit')->count(),
+                'alfa' => $existingAbsensi->where('status', 'alfa')->count(),
+            ];
+        }
+
         $selectedMataPelajaran = $mataPelajaranId ? $mataPelajaranOptions->firstWhere('id', $mataPelajaranId) : null;
 
         return view('absensi.index', [

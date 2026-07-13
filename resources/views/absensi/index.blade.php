@@ -44,23 +44,24 @@
                         class="w-full rounded-lg border border-white/25 bg-white/10 px-3 py-2 text-sm text-white focus:border-cyan-300/70 focus:outline-none focus:ring-2 focus:ring-cyan-300/30">
                 </div>
                 <div>
-                    <label for="mata_pelajaran_filter" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-white/75">Mata Pelajaran</label>
-                    <select id="mata_pelajaran_filter" name="mata_pelajaran_id"
+                    <label for="mata_pelajaran_filter" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-white/75">Mata Pelajaran <span class="text-red-400">*</span></label>
+                    <select id="mata_pelajaran_filter" name="mata_pelajaran_id" required
                         class="w-full rounded-lg border border-white/25 bg-white/10 px-3 py-2 text-sm text-white focus:border-cyan-300/70 focus:outline-none focus:ring-2 focus:ring-cyan-300/30">
+                        <option value="" class="bg-indigo-950 text-white" disabled {{ !$mataPelajaranId ? 'selected' : '' }}>Pilih Mata Pelajaran</option>
                         @foreach ($mataPelajaranOptions as $mp)
-                            <option value="{{ $mp->id }}" @selected($mataPelajaranId === $mp->id) class="bg-indigo-950 text-white">
+                            <option value="{{ $mp->id }}" @selected($mataPelajaranId == $mp->id) class="bg-indigo-950 text-white">
                                 {{ $mp->nama }} (Kelas {{ $mp->kelas }})
                             </option>
                         @endforeach
                     </select>
                 </div>
                 <div>
-                    <label for="kelas_filter" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-white/75">Filter Kelas</label>
-                    <select id="kelas_filter"
+                    <label for="kelas_filter" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-white/75">Pilih Kelas</label>
+                    <select id="kelas_filter" name="kelas"
                         class="w-full rounded-lg border border-white/25 bg-white/10 px-3 py-2 text-sm text-white focus:border-cyan-300/70 focus:outline-none focus:ring-2 focus:ring-cyan-300/30">
                         <option value="" class="bg-indigo-950 text-white">Semua Kelas</option>
                         @foreach ($kelasOptions as $kelas)
-                            <option value="{{ $kelas }}" class="bg-indigo-950 text-white">{{ $kelas }}</option>
+                            <option value="{{ $kelas }}" {{ request('kelas') == $kelas ? 'selected' : '' }} class="bg-indigo-950 text-white">{{ $kelas }}</option>
                         @endforeach
                     </select>
                 </div>
