@@ -26,25 +26,6 @@
                 </select>
             </div>
 
-            <div class="flex items-center gap-2">
-                <span class="text-xs font-semibold text-white/50">PILIH ROMBEL:</span>
-                <select name="rombel" onchange="this.form.submit()" class="form-select w-auto min-w-[120px]">
-                    <option value="">Pilih Rombel</option>
-                    @foreach($rombelList as $r)
-                        <option value="{{ $r }}" {{ $rombel == $r ? 'selected' : '' }}>Rombel {{ $r }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="flex items-center gap-2">
-                <span class="text-xs font-semibold text-white/50">PILIH KELAS:</span>
-                <select name="kelas" onchange="this.form.submit()" class="form-select w-auto min-w-[120px]">
-                    <option value="">Pilih Kelas</option>
-                    @foreach($kelasList as $k)
-                        <option value="{{ $k }}" {{ $kelas == $k ? 'selected' : '' }}>Kelas {{ $k }}</option>
-                    @endforeach
-                </select>
-            </div>
             <noscript>
                 <button type="submit" class="btn-secondary text-xs">Tampilkan</button>
             </noscript>
@@ -52,7 +33,7 @@
     </div>
 
         {{-- Schedule Grid --}}
-        @if($kelas)
+        @if($guruId)
             <div class="space-y-8">
                 @foreach($hariList as $hari)
                     <div>
@@ -92,7 +73,7 @@
             </div>
         @else
             <div class="p-10 text-center rounded-2xl border border-dashed border-white/10 bg-white/5">
-                <p class="text-white/50 text-sm">Silakan pilih kelas untuk menampilkan jadwal mengajar Anda.</p>
+                <p class="text-white/50 text-sm">Silakan pilih guru untuk menampilkan jadwal mengajar.</p>
             </div>
         @endif
     </div>

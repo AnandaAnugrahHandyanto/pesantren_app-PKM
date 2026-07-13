@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Absensi;
+use App\Http\Controllers\Controller;
 use App\Models\Siswa;
 use App\Models\User;
 use Illuminate\Support\Collection;
