@@ -51,7 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('absensi', AbsensiController::class);
     Route::post('absensi/mass-store', [AbsensiController::class, 'massStore'])->name('absensi.mass-store');
     
-    Route::get('rekap-absensi', [LaporanController::class, 'absensi'])->name('rekap.absensi');
+    Route::get('rekap-absensi', [LaporanController::class, 'absensi'])->name('laporan.absensi');
     Route::get('rekap-absensi-semester', [LaporanController::class, 'rekapSemester'])->name('rekap.absensi.semester');
     Route::get('rekap-absensi-cetak', [LaporanController::class, 'rekapSemesterPrint'])->name('rekap.absensi.cetak');
     
