@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
     // Admin Routes
     Route::middleware(['role:admin'])->prefix('admin')->group(function () {
         Route::get('/dashboard', [AdminDashboard::class, 'index'])->name('admin.dashboard');
+        Route::get('/beranda', [AdminDashboard::class, 'index'])->name('dashboard');
     });
 
     // Guru Routes
