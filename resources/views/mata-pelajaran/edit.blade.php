@@ -37,7 +37,7 @@
                     <label for="kelas" class="mb-1 block text-sm font-medium text-white/80">Kelas <span class="text-red-400">*</span></label>
                     <select name="kelas" id="kelas" required
                             class="w-full appearance-none rounded-xl border border-white/20 bg-white/[0.06] px-4 py-2.5 pr-10 text-sm text-white backdrop-blur-sm transition focus:border-indigo-400/50 focus:outline-none focus:ring-2 focus:ring-indigo-400/20">
-                        @foreach (range(1, 12) as $k)
+                        @foreach ([7, 8, 9] as $k)
                             <option value="{{ $k }}" {{ (old('kelas', $mataPelajaran->kelas) == $k) ? 'selected' : '' }} class="bg-indigo-950 text-white">
                                 Kelas {{ $k }}
                             </option>

@@ -169,6 +169,17 @@
                     </select>
                 </div>
                 <div>
+                    <label class="form-label block mb-1">Bulan</label>
+                    <select name="bulan" class="form-select">
+                        <option value="">Semua Bulan</option>
+                        @foreach(range(1, 12) as $m)
+                            <option value="{{ $m }}" {{ request('bulan') == $m ? 'selected' : '' }}>
+                                {{ \Carbon\Carbon::create()->month($m)->translatedFormat('F') }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
                     <label class="form-label block mb-1">Tahun</label>
                     <input type="number" name="tahun" value="{{ request('tahun', now()->year) }}"
                            class="form-input w-24" placeholder="Tahun">

@@ -39,7 +39,7 @@
                     <select name="kelas" id="kelas" required
                             class="w-full appearance-none rounded-xl border border-white/20 bg-white/[0.06] px-4 py-2.5 pr-10 text-sm text-white backdrop-blur-sm transition focus:border-indigo-400/50 focus:outline-none focus:ring-2 focus:ring-indigo-400/20">
                         <option value="" disabled class="bg-slate-900 text-white" {{ !old('kelas') ? 'selected' : '' }}>Pilih kelas</option>
-                        @foreach (range(1, 12) as $k)
+                        @foreach ([7, 8, 9] as $k)
                             <option value="{{ $k }}" {{ old('kelas') == $k ? 'selected' : '' }} class="bg-slate-900 text-white">
                                 Kelas {{ $k }}
                             </option>

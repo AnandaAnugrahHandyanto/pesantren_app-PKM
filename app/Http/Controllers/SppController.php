@@ -26,6 +26,9 @@ class SppController extends Controller
         if ($request->filled('tahun')) {
             $query->where('tahun', $request->tahun);
         }
+        if ($request->filled('bulan')) {
+            $query->where('bulan', str_pad($request->bulan, 2, '0', STR_PAD_LEFT));
+        }
 
         $tagihan = $query->paginate(50);
         $kelasList = Siswa::select('kelas')->distinct()->pluck('kelas')->sort();
