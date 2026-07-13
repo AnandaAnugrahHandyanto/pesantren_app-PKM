@@ -86,7 +86,7 @@
             </svg>
             Cetak
         </button>
-        <a href="{{ route('rekap.absensi', ['semester' => $semester, 'tahun_ajaran' => $tahunAjaran, 'mata_pelajaran_id' => $mataPelajaranId]) }}">
+        <a href="{{ route('laporan.absensi', ['semester' => $semester, 'tahun_ajaran' => $tahunAjaran, 'mata_pelajaran_id' => $mataPelajaranId]) }}">
             ← Kembali
         </a>
     </div>

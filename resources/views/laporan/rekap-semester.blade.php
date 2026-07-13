@@ -7,7 +7,7 @@
 
         {{-- Filter Form --}}
         <div class="rounded-2xl border border-white/20 bg-white/10 p-4 shadow-lg backdrop-blur-md">
-            <form method="GET" action="{{ route('rekap.absensi') }}"
+            <form method="GET" action="{{ route('laporan.absensi.semester') }}"
                   class="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end">
 
                 <div class="flex flex-col gap-1">
@@ -67,7 +67,7 @@
                         Tampilkan
                     </button>
 
-                    <a href="{{ route('rekap.absensi.cetak', ['semester' => $semester, 'tahun_ajaran' => $tahunAjaran, 'mata_pelajaran_id' => $mataPelajaranId, 'kelas' => request('kelas')]) }}"
+                    <a href="{{ route('laporan.absensi.cetak', ['semester' => $semester, 'tahun_ajaran' => $tahunAjaran, 'mata_pelajaran_id' => $mataPelajaranId, 'kelas' => request('kelas')]) }}"
                        target="_blank"
                        class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/10 px-5 py-2 text-sm font-medium text-white/80 backdrop-blur-sm transition hover:bg-white/20 sm:flex-none">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
