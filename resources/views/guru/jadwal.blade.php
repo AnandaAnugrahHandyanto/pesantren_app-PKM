@@ -17,12 +17,15 @@
         {{-- Filter Form --}}
         <div class="content-card">
             <form method="GET" action="{{ route('guru.jadwal') }}" class="flex flex-wrap items-center gap-3">
-                <select name="kelas" onchange="this.form.submit()" class="form-select w-auto min-w-[150px]">
-                    <option value="">Pilih Kelas</option>
-                    @foreach($kelasList as $k)
-                        <option value="{{ $k }}" {{ $kelas == $k ? 'selected' : '' }}>Kelas {{ $k }}</option>
-                    @endforeach
-                </select>
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-semibold text-white/50">PILIH KELAS:</span>
+                    <select name="kelas" onchange="this.form.submit()" class="form-select w-auto min-w-[150px]">
+                        <option value="">Pilih Kelas</option>
+                        @foreach($kelasList as $k)
+                            <option value="{{ $k }}" {{ $kelas == $k ? 'selected' : '' }}>Kelas {{ $k }}</option>
+                        @endforeach
+                    </select>
+                </div>
                 <noscript>
                     <button type="submit" class="btn-secondary text-xs">Tampilkan</button>
                 </noscript>
@@ -33,22 +36,39 @@
         @if($kelas)
             <div class="space-y-8">
                 @foreach($hariList as $hari)
-                    @if(count($grid[$hari]) > 0)
-                        <div>
-                            <h3 class="text-white/80 font-bold uppercase tracking-wider text-sm mb-4 border-l-4 border-cyan-500 pl-3">{{ ucfirst($hari) }}</h3>
-                            <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                                @foreach($grid[$hari] as $entry)
-                                    <div class="p-4 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition">
-                                        <p class="text-white font-semibold">{{ $entry->mataPelajaran->nama ?? '-' }}</p>
-                                        <p class="text-xs text-white/50 mb-3">Kelas: {{ $entry->kelas }}</p>
-                                        <div class="flex items-center justify-between text-xs text-white/70">
-                                            <span>{{ $entry->jam_mulai->format('H:i') }} - {{ $entry->jam_selesai->format('H:i') }}</span>
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="h-6 w-1 rounded-full bg-cyan-500"></div>
+                            <h3 class="text-white/80 font-bold uppercase tracking-wider text-sm">{{ ucfirst($hari) }}</h3>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            @forelse($grid[$hari] as $entry)
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition gap-4">
+                                    <div class="flex items-center gap-4">
+                                        <div class="flex flex-col items-center justify-center w-14 h-14 rounded-xl bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 flex-shrink-0">
+                                            <span class="text-[10px] font-bold">JAM</span>
+                                            <span class="text-xs font-bold">{{ $entry->jam_mulai->format('H:i') }}</span>
+                                        </div>
+                                        <div>
+                                            <p class="text-white font-semibold">{{ $entry->mataPelajaran->nama ?? '-' }}</p>
+                                            <p class="text-xs text-white/50">{{ $guru->nama_lengkap ?? '-' }}</p>
+                                            <span class="inline-block mt-1 text-[10px] bg-white/10 px-2 py-0.5 rounded text-white/60">Kelas {{ $entry->kelas }}{{ $entry->rombel }}</span>
                                         </div>
                                     </div>
-                                @endforeach
-                            </div>
+                                    <div class="flex items-center justify-between sm:justify-end gap-6 w-full sm:w-auto text-right">
+                                        <span class="text-sm font-medium text-white/90">
+                                            {{ $entry->jam_mulai->format('H:i') }} - {{ $entry->jam_selesai->format('H:i') }}
+                                        </span>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="p-4 bg-white/5 rounded-2xl border border-white/10 text-center">
+                                    <p class="text-white/30 text-xs italic">Tidak ada jadwal</p>
+                                </div>
+                            @endforelse
                         </div>
-                    @endif
+                    </div>
                 @endforeach
             </div>
         @else
