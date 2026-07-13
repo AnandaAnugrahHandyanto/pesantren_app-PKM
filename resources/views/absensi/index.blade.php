@@ -56,12 +56,23 @@
                     </select>
                 </div>
                 <div>
-                    <label for="kelas_filter" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-white/75">Pilih Kelas</label>
-                    <select id="kelas_filter" name="kelas"
+                    <label for="kelas_filter" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-white/70">Pilih Kelas</label>
+                    <select id="kelas_filter" name="kelas" required
                         class="w-full rounded-lg border border-white/25 bg-white/10 px-3 py-2 text-sm text-white focus:border-cyan-300/70 focus:outline-none focus:ring-2 focus:ring-cyan-300/30">
-                        <option value="" class="bg-indigo-950 text-white">Semua Kelas</option>
-                        @foreach ($kelasOptions as $kelas)
-                            <option value="{{ $kelas }}" {{ request('kelas') == $kelas ? 'selected' : '' }} class="bg-indigo-950 text-white">{{ $kelas }}</option>
+                        <option value="" class="bg-indigo-950 text-white" disabled {{ !$kelas ? 'selected' : '' }}>Pilih Kelas</option>
+                        @foreach ($kelasOptions as $k)
+                            <option value="{{ $k }}" {{ $kelas == $k ? 'selected' : '' }} class="bg-indigo-950 text-white">Kelas {{ $k }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div>
+                    <label for="rombel_filter" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-white/70">Pilih Rombel</label>
+                    <select id="rombel_filter" name="rombel" required
+                        class="w-full rounded-lg border border-white/25 bg-white/10 px-3 py-2 text-sm text-white focus:border-cyan-300/70 focus:outline-none focus:ring-2 focus:ring-cyan-300/30">
+                        <option value="" class="bg-indigo-950 text-white" disabled {{ !$rombel ? 'selected' : '' }}>Pilih Rombel</option>
+                        @foreach ($rombelOptions as $r)
+                            <option value="{{ $r }}" {{ $rombel == $r ? 'selected' : '' }} class="bg-indigo-950 text-white">Rombel {{ $r }}</option>
                         @endforeach
                     </select>
                 </div>

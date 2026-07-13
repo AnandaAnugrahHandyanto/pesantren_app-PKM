@@ -21,15 +21,12 @@ class AbsensiController extends Controller
         $tanggal = $request->query('tanggal', today()->toDateString());
         $mataPelajaranId = $request->query('mata_pelajaran_id');
         $kelas = $request->query('kelas');
+        $rombel = $request->query('rombel');
 
-        // Default ke mata pelajaran pertama yang ada
+        // Fetch options
         $mataPelajaranOptions = MataPelajaran::orderBy('kelas')->orderBy('nama')->get();
-        if (! $mataPelajaranId || ! $mataPelajaranOptions->contains('id', (int) $mataPelajaranId)) {
-            $first = $mataPelajaranOptions->first();
-            $mataPelajaranId = $first ? $first->id : null;
-        } else {
-            $mataPelajaranId = (int) $mataPelajaranId;
-        }
+        $kelasOptions = Siswa::select('kelas')->distinct()->pluck('kelas')->filter()->sort();
+        $rombelOptions = Siswa::select('rombel')->distinct()->pluck('rombel')->filter()->sort();
 
         $siswas = collect();
         $existingAbsensi = collect();
@@ -37,23 +34,23 @@ class AbsensiController extends Controller
         $hasExistingAbsensi = false;
         $allAbsensiComplete = false;
         $lastUpdatedAt = null;
-        $kelasOptions = Siswa::select('kelas')->distinct()->pluck('kelas')->filter()->sort();
         $statusCounts = ['hadir' => 0, 'izin' => 0, 'sakit' => 0, 'alfa' => 0];
         $totalSiswa = 0;
         $existingCount = 0;
 
-        if ($request->has('mata_pelajaran_id') && $request->has('kelas')) {
+        // Hanya load data jika sudah memilih Mata Pelajaran, Kelas, DAN Rombel
+        if ($request->filled('mata_pelajaran_id') && $request->filled('kelas') && $request->filled('rombel')) {
             $siswas = Siswa::query()
-                ->select(['id', 'nama_lengkap', 'kelas', 'jenis_kelamin'])
-                ->when($kelas, fn ($q) => $q->where('kelas', $kelas))
-                ->orderBy('kelas')
+                ->select(['id', 'nama_lengkap', 'kelas', 'rombel', 'jenis_kelamin'])
+                ->where('kelas', $kelas)
+                ->where('rombel', $rombel)
                 ->orderBy('nama_lengkap')
                 ->get();
 
             $existingAbsensi = Absensi::query()
                 ->select(['siswa_id', 'status', 'updated_at'])
                 ->whereDate('tanggal', $tanggal)
-                ->when($mataPelajaranId, fn ($q) => $q->where('mata_pelajaran_id', $mataPelajaranId))
+                ->where('mata_pelajaran_id', $mataPelajaranId)
                 ->whereIn('siswa_id', $siswas->pluck('id'))
                 ->get();
 
@@ -78,9 +75,12 @@ class AbsensiController extends Controller
             'tanggal' => $tanggal,
             'mataPelajaranOptions' => $mataPelajaranOptions,
             'mataPelajaranId' => $mataPelajaranId,
+            'kelas' => $kelas,
+            'rombel' => $rombel,
             'selectedMataPelajaran' => $selectedMataPelajaran,
             'statusOptions' => self::STATUS_OPTIONS,
             'kelasOptions' => $kelasOptions,
+            'rombelOptions' => $rombelOptions,
             'statusBySiswa' => $statusBySiswa,
             'existingCount' => $existingCount,
             'totalSiswa' => $totalSiswa,
