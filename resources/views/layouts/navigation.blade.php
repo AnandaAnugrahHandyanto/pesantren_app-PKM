@@ -138,6 +138,14 @@
                 </svg>
                 Rekap Absensi
             </a>
+
+            <a href="{{ route('jadwal.index') }}"
+                class="flex items-center gap-3 rounded-xl px-3 py-2.5 transition {{ request()->routeIs('jadwal.*') ? 'bg-white/20 text-white shadow-sm' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
+                <svg class="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+                Jadwal Guru
+            </a>
         @elseif (Auth::user()->role === 'siswa')
             <a href="{{ route('siswa.dashboard') }}"
                 class="flex items-center gap-3 rounded-xl px-3 py-2.5 transition {{ request()->routeIs('siswa.dashboard') ? 'bg-white/20 text-white shadow-sm' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
