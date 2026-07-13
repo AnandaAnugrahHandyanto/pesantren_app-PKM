@@ -83,8 +83,8 @@
             </form>
         </div>
 
-        {{-- Ringkasan --}}
-        @if ($request->hasAny(['tanggal', 'mata_pelajaran_id', 'kelas']))
+        {{-- Info & Table --}}
+        @if (request()->hasAny(['tanggal', 'mata_pelajaran_id', 'kelas']))
         <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
             @foreach (['hadir', 'izin', 'sakit', 'alfa'] as $status)
                 <div class="{{ $statusMeta[$status]['ringkasanClass'] }}">
