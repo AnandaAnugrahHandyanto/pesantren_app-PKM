@@ -61,7 +61,7 @@
                         class="w-full rounded-lg border border-white/25 bg-white/10 px-3 py-2 text-sm text-white focus:border-cyan-300/70 focus:outline-none focus:ring-2 focus:ring-cyan-300/30">
                         <option value="" class="bg-indigo-950 text-white" disabled {{ !$kelas ? 'selected' : '' }}>Pilih Kelas</option>
                         @foreach ($kelasOptions as $k)
-                            <option value="{{ $k }}" {{ $kelas == $k ? 'selected' : '' }} class="bg-indigo-950 text-white">Kelas {{ $k }}</option>
+                            <option value="{{ $k }}" {{ $kelas == $k ? 'selected' : '' }} class="bg-indigo-950 text-white">{{ $k }}</option>
                         @endforeach
                     </select>
                 </div>
