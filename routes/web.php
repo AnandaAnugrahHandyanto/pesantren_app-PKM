@@ -17,7 +17,7 @@ use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    return view('welcome');
 });
 
 Route::middleware('auth')->group(function () {
@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['role:admin'])->prefix('admin')->group(function () {
         Route::get('/dashboard', [AdminDashboard::class, 'index'])->name('admin.dashboard');
         Route::get('/beranda', [AdminDashboard::class, 'index'])->name('dashboard');
+        Route::get('/siswa/import', [SiswaController::class, 'importForm'])->name('siswa.import.form');
     });
 
     // Guru Routes
@@ -68,6 +69,14 @@ Route::middleware('auth')->group(function () {
     Route::post('spp/{sppBill}/checkout', [PaymentController::class, 'checkout'])->name('spp.checkout');
     
     Route::resource('jadwal', JadwalController::class);
+
+// ─── SPP (Admin) ──────────────────────────────────────────
+    Route::middleware(['auth', 'verified', 'role:admin'])->prefix('spp')->name('spp.')->group(function () {
+        Route::get('/', [SppController::class, 'index'])->name('index');
+        Route::get('/generate', [SppController::class, 'create'])->name('generate-form');
+        Route::post('/generate', [SppController::class, 'generate'])->name('generate');
+        Route::post('/{sppBill}/paid', [SppController::class, 'markPaid'])->name('mark-paid');
+    });
 });
 
 // Webhooks

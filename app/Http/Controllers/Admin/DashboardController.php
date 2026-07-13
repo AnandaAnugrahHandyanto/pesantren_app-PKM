@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Siswa;
 use App\Models\User;
+use App\Models\Absensi;
 use Illuminate\Support\Collection;
 
 class DashboardController extends Controller

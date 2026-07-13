@@ -75,8 +75,8 @@
                 Absensi
             </a>
 
-            <a href="{{ route('rekap.absensi') }}"
-                class="flex items-center gap-3 rounded-xl px-3 py-2.5 transition {{ request()->routeIs('rekap.absensi*') ? 'bg-white/20 text-white shadow-sm' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
+            <a href="{{ route('laporan.absensi') }}"
+                class="flex items-center gap-3 rounded-xl px-3 py-2.5 transition {{ request()->routeIs('laporan.absensi*') ? 'bg-white/20 text-white shadow-sm' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
                 <svg class="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 6h18M3 14h18M3 18h18"/>
                 </svg>
