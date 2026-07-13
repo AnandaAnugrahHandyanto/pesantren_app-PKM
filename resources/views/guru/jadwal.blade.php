@@ -13,24 +13,33 @@
         </div>
     </x-slot>
 
-    <div class="space-y-6">
-        {{-- Filter Form --}}
-        <div class="content-card">
-            <form method="GET" action="{{ route('guru.jadwal') }}" class="flex flex-wrap items-center gap-3">
-                <div class="flex items-center gap-2">
-                    <span class="text-xs font-semibold text-white/50">PILIH KELAS:</span>
-                    <select name="kelas" onchange="this.form.submit()" class="form-select w-auto min-w-[150px]">
-                        <option value="">Pilih Kelas</option>
-                        @foreach($kelasList as $k)
-                            <option value="{{ $k }}" {{ $kelas == $k ? 'selected' : '' }}>Kelas {{ $k }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <noscript>
-                    <button type="submit" class="btn-secondary text-xs">Tampilkan</button>
-                </noscript>
-            </form>
-        </div>
+    {{-- Filter Form --}}
+    <div class="content-card">
+        <form method="GET" action="{{ route('guru.jadwal') }}" class="flex flex-wrap items-center gap-3">
+                
+            <div class="flex items-center gap-2">
+                <span class="text-xs font-semibold text-white/50">NAMA GURU:</span>
+                <select name="guru_id" onchange="this.form.submit()" class="form-select w-auto min-w-[200px]">
+                    @foreach($guruList as $g)
+                        <option value="{{ $g->id }}" {{ $guruId == $g->id ? 'selected' : '' }}>{{ $g->nama_lengkap }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <span class="text-xs font-semibold text-white/50">PILIH KELAS:</span>
+                <select name="kelas" onchange="this.form.submit()" class="form-select w-auto min-w-[150px]">
+                    <option value="">Pilih Kelas</option>
+                    @foreach($kelasList as $k)
+                        <option value="{{ $k }}" {{ $kelas == $k ? 'selected' : '' }}>Kelas {{ $k }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <noscript>
+                <button type="submit" class="btn-secondary text-xs">Tampilkan</button>
+            </noscript>
+        </form>
+    </div>
 
         {{-- Schedule Grid --}}
         @if($kelas)
