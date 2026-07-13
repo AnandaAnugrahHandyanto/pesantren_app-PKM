@@ -60,6 +60,17 @@
                     </select>
                 </div>
 
+                <div class="flex flex-col gap-1">
+                    <label class="text-xs font-medium text-white/70">Pilih Kelas:</label>
+                    <select name="kelas"
+                            class="w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
+                        <option value="" class="bg-indigo-950 text-white">Semua Kelas</option>
+                        @foreach ($kelasOptions as $k)
+                            <option value="{{ $k }}" {{ $kelas == $k ? 'selected' : '' }} class="bg-indigo-950 text-white">Kelas {{ $k }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
                 <button type="submit"
                         class="w-full rounded-xl bg-indigo-500/80 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition hover:bg-indigo-400/80 sm:w-auto">
                     Tampilkan
@@ -73,6 +84,7 @@
         </div>
 
         {{-- Ringkasan --}}
+        @if ($request->hasAny(['tanggal', 'mata_pelajaran_id', 'kelas']))
         <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
             @foreach (['hadir', 'izin', 'sakit', 'alfa'] as $status)
                 <div class="{{ $statusMeta[$status]['ringkasanClass'] }}">
@@ -128,13 +140,14 @@
                     @empty
                         <tr>
                             <td colspan="5" class="px-4 py-8 text-center text-sm text-white/40">
-                                Tidak ada data absensi untuk tanggal ini.
+                                Tidak ada data absensi untuk kriteria yang dipilih.
                             </td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
+        @endif
 
         {{-- Link kembali --}}
         {{-- <div>

@@ -50,13 +50,24 @@
                     </select>
                 </div>
 
+                <div class="flex flex-col gap-1">
+                    <label class="text-xs font-medium text-white/70">Pilih Kelas</label>
+                    <select name="kelas"
+                            class="w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
+                        <option value="" class="bg-indigo-950 text-white">Semua Kelas</option>
+                        @foreach ($kelasOptions as $k)
+                            <option value="{{ $k }}" {{ $kelas == $k ? 'selected' : '' }} class="bg-indigo-950 text-white">Kelas {{ $k }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
                 <div class="flex gap-2 sm:items-end">
                     <button type="submit"
                             class="flex-1 rounded-xl bg-indigo-500/80 px-5 py-2 text-sm font-medium text-white backdrop-blur-sm transition hover:bg-indigo-400/80 sm:flex-none">
                         Tampilkan
                     </button>
 
-                    <a href="{{ route('rekap.absensi.cetak', ['semester' => $semester, 'tahun_ajaran' => $tahunAjaran, 'mata_pelajaran_id' => $mataPelajaranId]) }}"
+                    <a href="{{ route('rekap.absensi.cetak', ['semester' => $semester, 'tahun_ajaran' => $tahunAjaran, 'mata_pelajaran_id' => $mataPelajaranId, 'kelas' => $kelas]) }}"
                        target="_blank"
                        class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/10 px-5 py-2 text-sm font-medium text-white/80 backdrop-blur-sm transition hover:bg-white/20 sm:flex-none">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -68,7 +79,8 @@
             </form>
         </div>
 
-        {{-- Info Periode --}}
+        {{-- Info & Table --}}
+        @if ($request->hasAny(['tahun_ajaran', 'semester', 'mata_pelajaran_id', 'kelas']))
         <p class="text-sm text-white/60">
             Menampilkan rekap semester <span class="font-semibold text-white">{{ $semesterLabel }}</span>
             tahun ajaran <span class="font-semibold text-white">{{ $tahunAjaran }}/{{ $tahunAjaran + 1 }}</span>
@@ -148,13 +160,14 @@
                     @empty
                         <tr>
                             <td colspan="7" class="px-4 py-8 text-center text-sm text-white/40">
-                                Tidak ada data siswa.
+                                Tidak ada data siswa untuk kriteria yang dipilih.
                             </td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
+        @endif
 
         {{-- <div>
             <a href="{{ route('dashboard') }}" class="text-sm text-indigo-300 hover:text-indigo-200">
