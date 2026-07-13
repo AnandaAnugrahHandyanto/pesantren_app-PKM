@@ -42,7 +42,7 @@ class AbsensiController extends Controller
         $totalSiswa = 0;
         $existingCount = 0;
 
-        if ($request->has('mata_pelajaran_id')) {
+        if ($request->has('mata_pelajaran_id') && $request->has('kelas')) {
             $siswas = Siswa::query()
                 ->select(['id', 'nama_lengkap', 'kelas', 'jenis_kelamin'])
                 ->when($kelas, fn ($q) => $q->where('kelas', $kelas))
