@@ -1,204 +1,412 @@
-# Sistem Informasi Manajemen Pondok Pesantren - Pesantren App
+# Sekolah App
 
-[![Laravel](https://img.shields.io/badge/Laravel-^12.0-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com/)
-[![PHP](https://img.shields.io/badge/PHP-^8.3-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://www.php.net/)
-[![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-E7E5E4?style=for-the-badge&logo=tailwindcss&logoColor=06B6D4)](https://tailwindcss.com/)
-[![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
+[![Laravel](https://img.shields.io/badge/Laravel-12.x-FF2D20?style=flat-square&logo=laravel)](https://laravel.com/)
+[![PHP](https://img.shields.io/badge/PHP-8.3+-777BB4?style=flat-square&logo=php)](https://www.php.net/)
+[![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql)](https://www.mysql.com/)
+[![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-06B6D4?style=flat-square&logo=tailwindcss)](https://tailwindcss.com/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite)](https://vitejs.dev/)
+[![Pest](https://img.shields.io/badge/Pest-000000?style=flat-square)](https://pestphp.com/)
+[![Midtrans](https://img.shields.io/badge/Midtrans-0080FF?style=flat-square)](https://midtrans.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-success.svg)](LICENSE)
 
-Aplikasi ini adalah sistem informasi berbasis web yang dirancang untuk mempermudah pengelolaan administrasi di lingkungan pondok pesantren. `Pesantren App` menyediakan solusi terintegrasi untuk manajemen data santri, pencatatan absensi harian, serta pelaporan rekapitulasi absensi dengan sistem otorisasi berbasis peran untuk Administrator dan Guru.
+> Sistem Informasi Manajemen Sekolah berbasis Laravel 12 yang mendukung pengelolaan akademik, absensi, keuangan, serta pembayaran SPP secara terintegrasi menggunakan Midtrans.
 
-## Daftar Isi
+Sekolah App merupakan hasil pengembangan dari proyek **Pesantren App** yang telah direbranding dan dikembangkan lebih lanjut untuk memenuhi kebutuhan administrasi sekolah modern.
 
-- [Fitur Utama](#fitur-utama)
-- [Screenshot](#screenshot)
-- [Tumpukan Teknologi](#tumpukan-teknologi)
+---
+
+# Highlights
+
+- Multi Role (Admin, Guru, Siswa)
+- Dashboard Statistik
+- Manajemen Data Sekolah
+- Import Data Excel
+- Rekapitulasi Absensi
+- Pembayaran SPP Online
+- Integrasi Midtrans Snap
+- Laravel 12 + Vite + Tailwind CSS
+
+---
+
+# Status Project
+
+| Komponen | Status |
+|----------|--------|
+| Development | 🟢 Active |
+| Testing | 🟢 Ongoing |
+| Documentation | 🟢 Complete |
+| Midtrans | 🟢 Integrated |
+
+---
+
+# Screenshot
+
+| Dashboard | Data Siswa | SPP |
+|-----------|------------|-----|
+| TODO | TODO | TODO |
+
+---
+
+# Daftar Isi
+
+- [Fitur](#fitur)
+- [Tech Stack](#tech-stack)
+- [Built With](#built-with)
+- [Arsitektur](#arsitektur)
+- [Struktur Folder](#struktur-folder)
+- [Role & Permission](#role--permission)
 - [Persyaratan Sistem](#persyaratan-sistem)
 - [Instalasi](#instalasi)
-- [Konfigurasi Lingkungan](#konfigurasi-lingkungan)
-- [Migrasi Basis Data](#migrasi-basis-data)
-- [Menjalankan Aplikasi](#menjalankan-aplikasi)
-- [Struktur Direktori Penting](#struktur-direktori-penting)
-- [Peran Pengguna](#peran-pengguna)
-- [Keamanan](#keamanan)
-- [Lisensi](#license)
+- [Konfigurasi Environment](#konfigurasi-environment)
+- [Database](#database)
+- [Menjalankan Development](#menjalankan-development)
+- [Menjalankan Production](#menjalankan-production)
+- [Testing](#testing)
+- [Payment Flow](#payment-flow)
+- [Development Workflow](#development-workflow)
+- [Roadmap](#roadmap)
+- [Kontributor](#kontributor)
+- [License](#license)
 
-## Fitur Utama
+---
 
-- **Manajemen Data Santri**:
-    - Fungsionalitas lengkap untuk membuat, membaca, memperbarui, dan menghapus (CRUD) data santri.
-    - Dukungan untuk impor data santri secara massal melalui file Excel atau CSV, dilengkapi dengan validasi.
-    - Penyediaan template impor data santri untuk kemudahan penggunaan.
-- **Manajemen Absensi**:
-    - Sistem pencatatan absensi harian yang fleksibel berdasarkan tanggal dan berbagai kategori kegiatan (seperti sekolah, halaqoh, berkebun, dirosah).
-    - Pilihan status absensi meliputi Hadir, Izin, Sakit, dan Alfa.
-    - Fitur input absensi massal untuk efisiensi pencatatan.
-    - Kemampuan untuk memperbarui dan menghapus catatan absensi yang ada.
-- **Pelaporan Komprehensif**:
-    - Penyajian laporan absensi harian dengan ringkasan status kehadiran.
-    - Rekapitulasi absensi per semester yang dapat dikustomisasi berdasarkan tahun ajaran dan kategori, dengan opsi untuk dicetak.
-- **Manajemen Pengguna & Kontrol Akses**:
-    - Implementasi sistem otentikasi (login, registrasi, reset password, verifikasi email) yang aman dan teruji.
-    - Otorisasi berbasis peran yang ketat, membedakan hak akses antara `Administrator` dan `Guru`.
-    - Fungsionalitas manajemen profil pengguna, termasuk pembaruan informasi pribadi, perubahan kata sandi, dan penghapusan akun.
-- **Dasbor Interaktif dan Adaptif**:
-    - Dasbor umum yang menyajikan ringkasan data esensial bagi seluruh pengguna terautentikasi.
-    - Dasbor khusus Administrator dengan tampilan statistik total santri, jumlah guru, dan rangkuman absensi.
-    - Dasbor khusus Guru yang fokus pada data absensi relevan untuk tugas mengajar.
+# Fitur
 
-## Screenshot
+## Admin
 
-Untuk memberikan gambaran visual, berikut adalah beberapa tangkapan layar (screenshot) utama dari `Pesantren App`.
+- Dashboard
+- CRUD Data Siswa
+- CRUD Data Guru
+- CRUD Mata Pelajaran
+- CRUD Jadwal Pelajaran
+- CRUD Absensi
+- Rekapitulasi Absensi
+- Import Data Siswa (Excel)
+- Generate Tagihan SPP
+- Pembayaran SPP
+- Manajemen Keuangan
 
-| Halaman Login                                    | Halaman Dashboard (Admin)                                   |
-| :----------------------------------------------- | :---------------------------------------------------------- |
-| ![Tampilan Halaman Login](docs/images/login.png) | ![Tampilan Dasbor Administrator](docs/images/dashboard.png) |
+## Guru
 
-| Manajemen Santri                                        | Pencatatan Absensi                                      |
-| :------------------------------------------------------ | :------------------------------------------------------ |
-| ![Daftar Manajemen Santri](docs/images/data_santri.png) | ![Formulir Pencatatan Absensi](docs/images/absensi.png) |
+- Dashboard Guru
+- Melihat Jadwal Mengajar
+- Melihat Data Akademik
 
-| Laporan Absensi                                                           |
-| :------------------------------------------------------------------------ |
-| ![Tampilan Laporan Rekapitulasi Absensi](docs/images/laporan_absensi.png) |
+## Siswa
 
-## Tumpukan Teknologi
+- Dashboard Siswa
+- Melihat Jadwal
+- Melihat Histori Absensi
+- Melihat Tagihan SPP
+- Pembayaran SPP
 
-Aplikasi `Pesantren App` dibangun menggunakan tumpukan teknologi modern sebagai berikut:
+---
 
-- **Backend Framework**: Laravel v12.x (PHP)
-- **Bahasa Pemrograman**: PHP ^8.3
-- **Basis Data**: MySQL/MariaDB (default, direkomendasikan untuk produksi), SQLite (opsional, cocok untuk pengembangan lokal)
-- **Frontend**: Blade Templating Engine (untuk rendering antarmuka), Tailwind CSS (untuk styling utility-first), Alpine.js (untuk interaktivitas JavaScript ringan)
-- **Fungsionalitas Import/Export**: Menggunakan library [Maatwebsite Excel](https://docs.laravel-excel.com/)
-- **Sistem Otentikasi**: Mengintegrasikan [Laravel Fortify](https://laravel.com/docs/10.x/fortify)
-- **Manajemen Paket PHP**: Composer
-- **Manajemen Paket Frontend**: npm / Yarn
+# Tech Stack
 
-## Persyaratan Sistem
+| Bagian | Teknologi |
+|---------|-----------|
+| Backend | Laravel 12 |
+| Bahasa | PHP 8.3+ |
+| Database | MySQL |
+| Frontend | Blade |
+| CSS | Tailwind CSS |
+| Javascript | Alpine.js |
+| Build Tools | Vite |
+| Payment Gateway | Midtrans Snap |
+| Testing | Pest PHP |
 
-Untuk berhasil menginstal dan menjalankan `Pesantren App`, sistem Anda harus memenuhi persyaratan teknis berikut:
+---
 
-- **PHP**: Versi ^8.3
-- **Composer**: Versi stabil terbaru
-- **Node.js & npm**: Versi stabil terbaru (diperlukan untuk kompilasi aset frontend)
-- **Web Server**: Nginx atau Apache
-- **Basis Data**: MySQL 8.0+ / MariaDB 10.3+ atau SQLite
-- **Ekstensi PHP**: Pastikan ekstensi seperti `pdo`, `mbstring`, `tokenizer`, `xml`, `ctype`, `json`, `gd` (untuk operasi gambar jika ada), dan `fileinfo` sudah terinstal dan aktif.
+# Built With
 
-## Instalasi
+- Laravel Framework
+- Laravel Breeze
+- Laravel Eloquent ORM
+- Tailwind CSS
+- Alpine.js
+- Vite
+- Pest PHP
+- Maatwebsite Laravel Excel
+- Midtrans PHP SDK
 
-Ikuti langkah-langkah di bawah ini untuk menyiapkan dan menjalankan `Pesantren App` di lingkungan pengembangan lokal Anda:
+---
 
-1.  **Clone Repositori:**
+# Arsitektur
 
-    ```bash
-    git clone https://github.com/AnandaAnugrahHandyanto/pesantren-app.git
-    cd pesantren-app
-    ```
+```text
+Browser
+    │
+    ▼
+Laravel Routes
+    │
+    ▼
+Controllers
+    │
+    ▼
+Services
+    │
+    ▼
+Models
+    │
+    ▼
+MySQL Database
+```
 
-2.  **Instal Dependensi PHP:**
+Aplikasi menerapkan pola **MVC (Model-View-Controller)** dengan **Service Layer** sehingga logika bisnis tetap terpisah dari Controller.
 
-    ```bash
-    composer install
-    ```
+---
 
-3.  **Instal Dependensi Frontend:**
-    ```bash
-    npm install
-    # Kompilasi aset frontend (untuk pengembangan)
-    npm run dev
-    # Atau untuk produksi
-    # npm run build
-    ```
+# Struktur Folder
 
-## Konfigurasi Lingkungan
+```
+app/
+ ├── Http/
+ │    ├── Controllers
+ │    └── Middleware
+ │
+ ├── Models
+ │
+ ├── Services
+ │
+ └── Providers
 
-1.  **Duplikasi File `.env`:**
-    Buat salinan file `.env.example` dan ubah namanya menjadi `.env`.
+database/
+ ├── migrations
+ ├── factories
+ └── seeders
 
-    ```bash
-    cp .env.example .env
-    ```
+resources/
+ ├── views
+ ├── css
+ └── js
 
-2.  **Generate Application Key:**
-    Hasilkan kunci enkripsi unik untuk aplikasi Anda.
+routes/
+ └── web.php
 
-    ```bash
-    php artisan key:generate
-    ```
+tests/
+ ├── Feature
+ └── Unit
 
-3.  **Konfigurasi Basis Data:**
-    Buka file `.env` dan sesuaikan parameter koneksi basis data Anda sesuai dengan pengaturan server atau lokal Anda.
-    ```ini
-    DB_CONNECTION=mysql
-    DB_HOST=127.0.0.1
-    DB_PORT=3306
-    DB_DATABASE=pesantren_app_db
-    DB_USERNAME=root
-    DB_PASSWORD=***
-    ```
-    Jika Anda memilih menggunakan SQLite, atur `DB_CONNECTION=sqlite` dan pastikan ada file `database/database.sqlite` di root proyek.
+public/
+config/
+```
 
-## Migrasi Basis Data
+---
 
-Jalankan perintah migrasi untuk membuat tabel-tabel basis data yang diperlukan:
+# Role & Permission
+
+| Modul | Admin | Guru | Siswa |
+|--------|:----:|:----:|:----:|
+| Dashboard | ✅ | ✅ | ✅ |
+| Data Siswa | ✅ | ❌ | ❌ |
+| Data Guru | ✅ | ❌ | ❌ |
+| Mata Pelajaran | ✅ | ❌ | ❌ |
+| Jadwal | ✅ | ✅ | ✅ |
+| Absensi | ✅ | ✅ | ✅ |
+| Rekap Absensi | ✅ | ❌ | ❌ |
+| Keuangan | ✅ | ❌ | ❌ |
+| Pembayaran SPP | ✅ | ❌ | ✅ |
+
+---
+
+# Persyaratan Sistem
+
+- PHP >= 8.3
+- Composer >= 2
+- Node.js >= 22
+- npm >= 10
+- MySQL >= 8.0
+
+---
+
+# Instalasi
 
 ```bash
+git clone https://github.com/AnandaAnugrahHandyanto/sekolah-app.git
+
+cd sekolah-app
+
+composer install
+
+npm install
+
+cp .env.example .env
+
+php artisan key:generate
+
 php artisan migrate
+
+npm run build
 ```
 
-Untuk menambahkan data awal ke basis data (misalnya, akun admin), Anda dapat menjalankan _seeder_:
+Jika menggunakan seeder:
 
 ```bash
-php artisan db:seed --class=AdminUserSeeder
+php artisan db:seed
 ```
 
-(Secara default, ini akan membuat akun admin dengan email `admin@example.com` dan kata sandi `password`).
+---
 
-## Menjalankan Aplikasi
+# Konfigurasi Environment
 
-Setelah semua langkah instalasi dan konfigurasi selesai, Anda dapat menjalankan aplikasi menggunakan server pengembangan Laravel:
+Pastikan konfigurasi berikut telah disesuaikan.
+
+```env
+APP_NAME=Sekolah App
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=sekolah_app
+DB_USERNAME=root
+DB_PASSWORD=
+
+MIDTRANS_SERVER_KEY=
+MIDTRANS_CLIENT_KEY=
+MIDTRANS_IS_PRODUCTION=false
+```
+
+---
+
+# Database
+
+Database menggunakan **MySQL**.
+
+Tabel utama meliputi:
+
+- users
+- siswas
+- gurus
+- mata_pelajarans
+- jadwals
+- absensis
+- spp_bills
+- payment_transactions
+- keuangans
+
+---
+
+# Menjalankan Development
 
 ```bash
 php artisan serve
+
+npm run dev
 ```
 
-Aplikasi kemudian akan dapat diakses melalui peramban web Anda di alamat `http://127.0.0.1:8000`.
+---
 
-## Struktur Direktori Penting
+# Menjalankan Production
 
-Berikut adalah gambaran singkat mengenai direktori-direktori kunci dalam proyek Laravel ini:
+```bash
+composer install --no-dev
 
-- `app/Http/Controllers`: Berisi semua _controller_ yang mengelola logika bisnis dan alur kerja aplikasi.
-- `app/Models`: Mendefinisikan model-model Eloquent yang merepresentasikan tabel-tabel basis data dan relasinya.
-- `app/Http/Middleware`: Tempat implementasi _middleware_ kustom, seperti `RoleMiddleware` untuk otorisasi berbasis peran.
-- `database/migrations`: Berisi file-file yang mendefinisikan struktur skema basis data.
-- `routes`: Mendefinisikan semua rute web dan API aplikasi.
-- `resources/views`: Menyimpan semua _template_ Blade yang membentuk antarmuka pengguna.
-- `public`: Direktori ini berisi aset-aset yang dapat diakses publik (CSS, JavaScript, gambar terkompilasi).
-- `config`: Direktori untuk file-file konfigurasi utama aplikasi.
-- `docs/images`: Direktori khusus untuk menyimpan gambar-gambar pendukung, termasuk _screenshot_ untuk dokumentasi.
+php artisan config:cache
 
-## Peran Pengguna
+php artisan route:cache
 
-`Pesantren App` dirancang dengan sistem kontrol akses berbasis peran (Role-Based Access Control - RBAC) yang mendukung dua peran pengguna utama:
+php artisan view:cache
 
-- **Administrator**: Memiliki hak akses penuh ke seluruh fungsionalitas aplikasi, termasuk manajemen lengkap data santri (CRUD, impor), manajemen absensi, pelaporan komprehensif, dan pengelolaan pengguna sistem.
-- **Guru**: Memiliki hak akses terbatas untuk mencatat absensi santri, melihat berbagai laporan absensi, dan mengakses dasbor yang disesuaikan untuk kebutuhan pengajaran. Guru tidak memiliki hak untuk memodifikasi data master santri atau mengelola akun pengguna lain.
+npm run build
+```
 
-## Keamanan
+---
 
-Aspek keamanan merupakan prioritas dalam pengembangan `Pesantren App`:
+# Testing
 
-- **Otentikasi Aman**: Aplikasi ini memanfaatkan [Laravel Fortify](https://laravel.com/docs/10.x/fortify) untuk mengelola semua proses otentikasi. Ini mencakup login yang aman, registrasi pengguna baru, mekanisme reset kata sandi, dan verifikasi email, memastikan standar keamanan industri yang tinggi.
-- **Otorisasi Berbasis Peran**: Implementasi otorisasi dilakukan melalui _middleware_ kustom (`RoleMiddleware`). _Middleware_ ini secara ketat membatasi akses ke berbagai bagian aplikasi hanya untuk pengguna yang memiliki peran yang sesuai (misalnya, hanya `admin` yang dapat mengakses modul manajemen santri), mencegah akses tidak sah.
+Project menggunakan **Pest PHP**.
 
-## License
+Menjalankan seluruh test:
 
-Copyright © 2026 Ananda Anugrah Handyanto. All Rights Reserved.
+```bash
+php artisan test
+```
 
-This project is protected under Indonesian Copyright Law and has been officially registered with the Directorate General of Intellectual Property (DJKI), Republic of Indonesia.
+Format coding:
 
-**Registration Number:** EC002026097835
+```bash
+vendor/bin/pint
+```
 
-See the [LICENSE.md](LICENSE.md) file for complete licensing terms.
+Melihat daftar route:
+
+```bash
+php artisan route:list
+```
+
+---
+
+# Payment Flow
+
+```text
+Admin
+   │
+Generate Tagihan
+   │
+   ▼
+Siswa Login
+   │
+Pilih Tagihan
+   │
+Checkout Midtrans
+   │
+Pembayaran
+   │
+Webhook Midtrans
+   │
+Status Pembayaran Terupdate
+```
+
+---
+
+# Development Workflow
+
+```text
+Feature Branch
+      │
+      ▼
+Development
+      │
+      ▼
+Testing
+      │
+      ▼
+Code Review
+      │
+      ▼
+Merge ke Main
+```
+
+---
+
+# Roadmap
+
+- [ ] Dashboard Analytics
+- [ ] Export PDF
+- [ ] Export Excel
+- [ ] REST API
+- [ ] QR Code Absensi
+- [ ] Multi Tahun Ajaran
+- [ ] Notifikasi WhatsApp
+- [ ] Mobile Friendly Improvement
+
+---
+
+# Kontributor
+
+### Lead Developer
+
+- **Ananda Anugrah Handyanto**
+
+---
+
+# License
+
+Project ini menggunakan lisensi **MIT License**.
+
+---
+
+<p align="center">
+Dikembangkan menggunakan ❤️ dengan Laravel 12
+</p>

@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('absensis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('santri_id')->constrained('santris')->cascadeOnDelete();
+            $table->foreignId('siswa_id')->constrained('siswas')->cascadeOnDelete();
             $table->date('tanggal');
-            $table->enum('status', ['hadir', 'izin', 'alfa']);
+            $table->enum('status', ['hadir', 'izin', 'sakit', 'alfa']);
+            $table->string('kategori')->default('pelajaran'); // pelajaran, ekstrakurikuler, upacara, kegiatan_khusus
             $table->timestamps();
 
-            $table->unique(['santri_id', 'tanggal']);
+            $table->unique(['siswa_id', 'tanggal', 'kategori']);
         });
     }
 

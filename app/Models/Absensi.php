@@ -8,18 +8,23 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Absensi extends Model
 {
     protected $fillable = [
-        'santri_id',
+        'siswa_id',
         'tanggal',
         'status',
-        'kategori',
+        'mata_pelajaran_id',
     ];
 
     protected $casts = [
         'tanggal' => 'date',
     ];
 
-    public function santri(): BelongsTo
+    public function siswa(): BelongsTo
     {
-        return $this->belongsTo(Santri::class);
+        return $this->belongsTo(Siswa::class);
+    }
+
+    public function mataPelajaran(): BelongsTo
+    {
+        return $this->belongsTo(MataPelajaran::class);
     }
 }

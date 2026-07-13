@@ -5,16 +5,16 @@
 
     <div class="space-y-6">
 
-        {{-- ===== Statistik Pesantren ===== --}}
+        {{-- ===== Statistik Sekolah ===== --}}
         <div>
-            <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-white/40">Statistik Pesantren</p>
+            <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-white/40">Statistik Sekolah</p>
             <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-                {{-- Total Santri --}}
+                {{-- Total Siswa --}}
                 <div class="rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium text-white/60">Total Santri</p>
-                            <p class="mt-2 text-4xl font-bold text-white">{{ $totalSantri }}</p>
+                            <p class="text-sm font-medium text-white/60">Total Siswa</p>
+                            <p class="mt-2 text-4xl font-bold text-white">{{ $totalSiswa }}</p>
                         </div>
                         <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-500/30 text-blue-300">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -25,12 +25,12 @@
                     </div>
                 </div>
 
-                {{-- Santri Laki-laki --}}
+                {{-- Siswa Laki-laki --}}
                 <div class="rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium text-white/60">Santri Laki-laki</p>
-                            <p class="mt-2 text-4xl font-bold text-cyan-300">{{ $santriLaki }}</p>
+                            <p class="text-sm font-medium text-white/60">Siswa Laki-laki</p>
+                            <p class="mt-2 text-4xl font-bold text-cyan-300">{{ $siswaLaki }}</p>
                         </div>
                         <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-500/30 text-cyan-300">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -41,12 +41,12 @@
                     </div>
                 </div>
 
-                {{-- Santri Perempuan --}}
+                {{-- Siswa Perempuan --}}
                 <div class="rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium text-white/60">Santri Perempuan</p>
-                            <p class="mt-2 text-4xl font-bold text-pink-300">{{ $santriPerempuan }}</p>
+                            <p class="text-sm font-medium text-white/60">Siswa Perempuan</p>
+                            <p class="mt-2 text-4xl font-bold text-pink-300">{{ $siswaPerempuan }}</p>
                         </div>
                         <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-pink-500/30 text-pink-300">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -75,76 +75,12 @@
             </div>
         </div>
 
-        {{-- ===== Rekap Absensi Hari Ini ===== --}}
-        <div>
-            <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-white/40">Rekap Absensi Hari Ini</p>
-            <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
-                {{-- Hadir --}}
-                <div class="stat-card stat-card-hadir">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm font-medium uppercase tracking-[0.18em] text-white/55">Hadir</p>
-                            <p class="mt-2 text-4xl font-bold text-emerald-300">{{ $hadir }}</p>
-                        </div>
-                        <div title="Hadir - Sukses/Valid" class="flex h-16 w-16 items-center justify-center rounded-3xl border border-emerald-300/20 bg-emerald-500/10 text-emerald-300/80 shadow-[0_0_24px_rgba(16,185,129,0.18)]">
-                            <x-status-icon status="hadir" class="h-8 w-8" />
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Izin --}}
-                <div class="stat-card stat-card-izin">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm font-medium uppercase tracking-[0.18em] text-white/55">Izin</p>
-                            <p class="mt-2 text-4xl font-bold text-amber-300">{{ $izin }}</p>
-                        </div>
-                        <div title="Izin - Menunggu/Persetujuan" class="flex h-16 w-16 items-center justify-center rounded-3xl border border-amber-300/20 bg-amber-500/10 text-amber-300/80 shadow-[0_0_24px_rgba(245,158,11,0.18)]">
-                            <x-status-icon status="izin" class="h-8 w-8" />
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Sakit --}}
-                <div class="stat-card stat-card-sakit">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm font-medium uppercase tracking-[0.18em] text-white/55">Sakit</p>
-                            <p class="mt-2 text-4xl font-bold text-rose-300">{{ $sakit }}</p>
-                        </div>
-                        <div title="Sakit - Kondisi Kesehatan" class="flex h-16 w-16 items-center justify-center rounded-3xl border border-rose-300/20 bg-rose-500/10 text-rose-300/80 shadow-[0_0_24px_rgba(244,63,94,0.18)]">
-                            <x-status-icon status="sakit" class="h-8 w-8" />
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Alfa --}}
-                <div class="stat-card stat-card-alfa">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm font-medium uppercase tracking-[0.18em] text-white/55">Alfa</p>
-                            <p class="mt-2 text-4xl font-bold text-red-200">{{ $alfa }}</p>
-                        </div>
-                        <div title="Alfa - Tidak Hadir Tanpa Keterangan" class="flex h-16 w-16 items-center justify-center rounded-3xl border border-red-400/20 bg-red-600/10 text-red-200/80 shadow-[0_0_24px_rgba(185,28,28,0.18)]">
-                            <x-status-icon status="alfa" class="h-8 w-8" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         {{-- ===== Menu Navigasi ===== --}}
         <div>
             <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-white/40">Menu</p>
-            <div class="mb-4">
-                <a href="{{ route('absensi.index', ['tanggal' => now()->toDateString()]) }}"
-                   class="inline-flex items-center gap-2 rounded-lg border border-amber-300/40 bg-amber-500/20 px-4 py-2 text-sm font-semibold text-amber-100 transition hover:bg-amber-500/30">
-                    Edit Absensi Hari Ini
-                </a>
-            </div>
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-                {{-- Data Santri --}}
-                <a href="{{ route('santri.index') }}"
+                {{-- Data Siswa --}}
+                <a href="{{ route('siswa.index') }}"
                    class="flex items-center gap-4 rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md transition hover:bg-white/20">
                     <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-blue-500/30 text-blue-200">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -153,13 +89,13 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="text-base font-semibold text-white">Data Santri</p>
-                        <p class="text-sm text-white/60">Kelola data santri</p>
+                        <p class="text-base font-semibold text-white">Data Siswa</p>
+                        <p class="text-sm text-white/60">Kelola data siswa</p>
                     </div>
                 </a>
 
-                {{-- Tambah Santri --}}
-                <a href="{{ route('santri.create') }}"
+                {{-- Tambah Siswa --}}
+                <a href="{{ route('siswa.create') }}"
                    class="flex items-center gap-4 rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md transition hover:bg-white/20">
                     <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-cyan-500/30 text-cyan-200">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -168,8 +104,8 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="text-base font-semibold text-white">Tambah Santri</p>
-                        <p class="text-sm text-white/60">Daftarkan santri baru</p>
+                        <p class="text-base font-semibold text-white">Tambah Siswa</p>
+                        <p class="text-sm text-white/60">Daftarkan siswa baru</p>
                     </div>
                 </a>
 
@@ -205,11 +141,11 @@
             </div>
         </div>
 
-        {{-- ===== Data Santri Terbaru ===== --}}
+        {{-- ===== Data Siswa Terbaru ===== --}}
         <div class="rounded-2xl border border-white/20 bg-white/10 shadow-lg backdrop-blur-md">
             <div class="flex items-center justify-between border-b border-white/20 px-5 py-4">
-                <h2 class="text-base font-semibold text-white">Data Santri Terbaru</h2>
-                <a href="{{ route('santri.index') }}" class="text-sm font-medium text-indigo-300 hover:text-indigo-200">
+                <h2 class="text-base font-semibold text-white">Data Siswa Terbaru</h2>
+                <a href="{{ route('siswa.index') }}" class="text-sm font-medium text-indigo-300 hover:text-indigo-200">
                     Lihat semua
                 </a>
             </div>
@@ -223,17 +159,33 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-white/10">
-                        @forelse ($latestSantri as $santri)
+                        @forelse ($latestSiswa as $siswa)
                             <tr class="transition hover:bg-white/10">
-                                <td class="px-5 py-3 text-sm font-medium text-white">{{ $santri->nama_lengkap }}</td>
-                                <td class="px-5 py-3 text-sm text-white/70">{{ $santri->kelas }}</td>
+                                <td class="px-5 py-3 text-sm font-medium text-white">{{ $siswa->nama_lengkap }}</td>
+                                <td class="px-5 py-3 text-sm text-white/70">{{ $siswa->kelas }}</td>
                                 <td class="px-5 py-3 text-sm text-white/70">
-                                    {{ $santri->jenis_kelamin === 'L' ? 'Laki-laki' : ($santri->jenis_kelamin === 'P' ? 'Perempuan' : '-') }}
+                                @if(($siswa->jenis_kelamin ?? '') === 'L')
+                                    <span class="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/30 bg-cyan-500/20 px-3 py-1 text-xs font-semibold text-cyan-200 shadow-sm">
+                                        <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="5" r="3.5"/><path d="M12 8.5v10M8 14h8"/>
+                                        </svg>
+                                        Laki-laki
+                                    </span>
+                                @elseif(($siswa->jenis_kelamin ?? '') === 'P')
+                                    <span class="inline-flex items-center gap-1.5 rounded-full border border-pink-400/30 bg-pink-500/20 px-3 py-1 text-xs font-semibold text-pink-200 shadow-sm">
+                                        <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="5" r="3.5"/><path d="M12 8.5v6M8 11h8"/>
+                                        </svg>
+                                        Perempuan
+                                    </span>
+                                @else
+                                    <span class="text-white/50">-</span>
+                                @endif
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="3" class="px-5 py-8 text-center text-sm text-white/40">Belum ada data santri.</td>
+                                <td colspan="3" class="px-5 py-8 text-center text-sm text-white/40">Belum ada data siswa.</td>
                             </tr>
                         @endforelse
                     </tbody>

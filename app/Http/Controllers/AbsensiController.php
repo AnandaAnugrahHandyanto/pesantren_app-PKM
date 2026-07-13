@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Absensi;
-use App\Models\Santri;
+use App\Models\MataPelajaran;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class AbsensiController extends Controller
 {
-    private const KATEGORI_OPTIONS = ['sekolah', 'halaqoh', 'berkebun', 'dirosah'];
-
     private const STATUS_OPTIONS = ['hadir', 'izin', 'sakit', 'alfa'];
 
     /**
@@ -20,47 +19,76 @@ class AbsensiController extends Controller
     public function index(Request $request)
     {
         $tanggal = $request->query('tanggal', today()->toDateString());
-        $kategori = $request->query('kategori', self::KATEGORI_OPTIONS[0]);
+        $mataPelajaranId = $request->query('mata_pelajaran_id');
+        $kelas = $request->query('kelas');
+        $rombel = $request->query('rombel');
 
-        if (! in_array($kategori, self::KATEGORI_OPTIONS, true)) {
-            $kategori = self::KATEGORI_OPTIONS[0];
+        // Fetch options
+        $mataPelajaranOptions = MataPelajaran::orderBy('kelas')->orderBy('nama')->get();
+        $kelasOptions = Siswa::select('kelas')->distinct()->pluck('kelas')->filter()->sort();
+        $rombelOptions = Siswa::select('rombel')->distinct()->pluck('rombel')->filter()->sort();
+
+        $siswas = collect();
+        $existingAbsensi = collect();
+        $statusBySiswa = collect();
+        $hasExistingAbsensi = false;
+        $allAbsensiComplete = false;
+        $lastUpdatedAt = null;
+        $statusCounts = ['hadir' => 0, 'izin' => 0, 'sakit' => 0, 'alfa' => 0];
+        $totalSiswa = 0;
+        $existingCount = 0;
+
+        // Hanya load data jika sudah memilih Mata Pelajaran, Kelas, DAN Rombel
+        if ($request->filled('mata_pelajaran_id') && $request->filled('kelas') && $request->filled('rombel')) {
+            $siswas = Siswa::query()
+                ->select(['id', 'nama_lengkap', 'kelas', 'rombel', 'jenis_kelamin'])
+                ->where('kelas', $kelas)
+                ->where('rombel', $rombel)
+                ->orderBy('nama_lengkap')
+                ->get();
+
+            $existingAbsensi = Absensi::query()
+                ->select(['siswa_id', 'status', 'updated_at'])
+                ->whereDate('tanggal', $tanggal)
+                ->where('mata_pelajaran_id', $mataPelajaranId)
+                ->whereIn('siswa_id', $siswas->pluck('id'))
+                ->get();
+
+            $statusBySiswa = $existingAbsensi->pluck('status', 'siswa_id');
+            $existingCount = $statusBySiswa->count();
+            $totalSiswa = $siswas->count();
+            $hasExistingAbsensi = $existingCount > 0;
+            $allAbsensiComplete = $totalSiswa > 0 && $existingCount === $totalSiswa;
+            $lastUpdatedAt = $existingAbsensi->max('updated_at');
+            $statusCounts = [
+                'hadir' => $existingAbsensi->where('status', 'hadir')->count(),
+                'izin' => $existingAbsensi->where('status', 'izin')->count(),
+                'sakit' => $existingAbsensi->where('status', 'sakit')->count(),
+                'alfa' => $existingAbsensi->where('status', 'alfa')->count(),
+            ];
         }
 
-        $santris = Santri::query()
-            ->select(['id', 'nama_lengkap', 'kelas', 'jenis_kelamin'])
-            ->orderBy('kelas')
-            ->orderBy('nama_lengkap')
-            ->get();
-
-        $existingAbsensi = Absensi::query()
-            ->select(['santri_id', 'status', 'updated_at'])
-            ->whereDate('tanggal', $tanggal)
-            ->where('kategori', $kategori)
-            ->whereIn('santri_id', $santris->pluck('id'))
-            ->get();
-
-        $statusBySantri = $existingAbsensi->pluck('status', 'santri_id');
-        $existingCount = $statusBySantri->count();
-        $totalSantri = $santris->count();
-        $hasExistingAbsensi = $existingCount > 0;
-        $allAbsensiComplete = $totalSantri > 0 && $existingCount === $totalSantri;
-        $lastUpdatedAt = $existingAbsensi->max('updated_at');
-        $kelasOptions = $santris->pluck('kelas')->filter()->unique()->sort()->values();
+        $selectedMataPelajaran = $mataPelajaranId ? $mataPelajaranOptions->firstWhere('id', $mataPelajaranId) : null;
 
         return view('absensi.index', [
-            'santris' => $santris,
+            'siswas' => $siswas,
             'tanggal' => $tanggal,
-            'kategori' => $kategori,
-            'kategoriOptions' => self::KATEGORI_OPTIONS,
+            'mataPelajaranOptions' => $mataPelajaranOptions,
+            'mataPelajaranId' => $mataPelajaranId,
+            'kelas' => $kelas,
+            'rombel' => $rombel,
+            'selectedMataPelajaran' => $selectedMataPelajaran,
             'statusOptions' => self::STATUS_OPTIONS,
             'kelasOptions' => $kelasOptions,
-            'statusBySantri' => $statusBySantri,
+            'rombelOptions' => $rombelOptions,
+            'statusBySiswa' => $statusBySiswa,
             'existingCount' => $existingCount,
-            'totalSantri' => $totalSantri,
+            'totalSiswa' => $totalSiswa,
             'hasExistingAbsensi' => $hasExistingAbsensi,
             'allAbsensiComplete' => $allAbsensiComplete,
             'lastUpdatedAt' => $lastUpdatedAt,
             'absensiMode' => $hasExistingAbsensi ? 'edit' : 'create',
+            'statusCounts' => $statusCounts,
         ]);
     }
 
@@ -69,10 +97,10 @@ class AbsensiController extends Controller
      */
     public function create(Request $request)
     {
-        $santris = Santri::orderBy('nama_lengkap')->get();
-        $kategori = $request->query('kategori', '');
+        $siswas = Siswa::orderBy('nama_lengkap')->get();
+        $mataPelajaranId = $request->query('mata_pelajaran_id', '');
 
-        return view('absensi.create', compact('santris', 'kategori'));
+        return view('absensi.create', compact('siswas', 'mataPelajaranId'));
     }
 
     /**
@@ -81,27 +109,27 @@ class AbsensiController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'santri_id' => ['required', 'exists:santris,id'],
+            'siswa_id' => ['required', 'exists:siswas,id'],
             'tanggal' => [
                 'required',
                 'date',
                 Rule::unique('absensis', 'tanggal')
-                    ->where(fn ($q) => $q->where('santri_id', $request->santri_id)->where('kategori', $request->kategori)),
+                    ->where(fn ($q) => $q->where('siswa_id', $request->siswa_id)->where('mata_pelajaran_id', $request->mata_pelajaran_id)),
             ],
             'status' => ['required', Rule::in(self::STATUS_OPTIONS)],
-            'kategori' => ['required', Rule::in(self::KATEGORI_OPTIONS)],
+            'mata_pelajaran_id' => ['required', 'exists:mata_pelajarans,id'],
         ]);
 
         Absensi::updateOrCreate(
             [
-                'santri_id' => $validated['santri_id'],
+                'siswa_id' => $validated['siswa_id'],
                 'tanggal' => $validated['tanggal'],
-                'kategori' => $validated['kategori'],
+                'mata_pelajaran_id' => $validated['mata_pelajaran_id'],
             ],
             ['status' => $validated['status']]
         );
 
-        return redirect()->route('absensi.index', ['tanggal' => $validated['tanggal'], 'kategori' => $validated['kategori']])
+        return redirect()->route('absensi.index', ['tanggal' => $validated['tanggal'], 'mata_pelajaran_id' => $validated['mata_pelajaran_id']])
             ->with('success', 'Data absensi berhasil disimpan');
     }
 
@@ -112,33 +140,33 @@ class AbsensiController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => ['required', 'date'],
-            'kategori' => ['required', Rule::in(self::KATEGORI_OPTIONS)],
+            'mata_pelajaran_id' => ['required', 'exists:mata_pelajarans,id'],
             'form_mode' => ['nullable', Rule::in(['create', 'edit'])],
             'absensi' => ['required', 'array', 'min:1'],
             'absensi.*' => ['required', Rule::in(self::STATUS_OPTIONS)],
         ], [
             'absensi.required' => 'Data absensi tidak boleh kosong.',
-            'absensi.*.required' => 'Semua santri harus memiliki status absensi.',
+            'absensi.*.required' => 'Semua siswa harus memiliki status absensi.',
             'absensi.*.in' => 'Status absensi tidak valid.',
         ]);
 
-        $santriKeys = array_keys($validated['absensi']);
-        $invalidSantriKey = collect($santriKeys)
+        $siswaKeys = array_keys($validated['absensi']);
+        $invalidSiswaKey = collect($siswaKeys)
             ->contains(fn ($id) => ! is_numeric($id) || (int) $id <= 0);
 
-        if ($invalidSantriKey) {
+        if ($invalidSiswaKey) {
             return back()
-                ->withErrors(['absensi' => 'Format data santri tidak valid.'])
+                ->withErrors(['absensi' => 'Format data siswa tidak valid.'])
                 ->withInput();
         }
 
-        $santriIds = collect($santriKeys)
+        $siswaIds = collect($siswaKeys)
             ->map(fn ($id) => (int) $id)
             ->values();
 
         $existingCountForScope = Absensi::query()
             ->whereDate('tanggal', $validated['tanggal'])
-            ->where('kategori', $validated['kategori'])
+            ->where('mata_pelajaran_id', $validated['mata_pelajaran_id'])
             ->count();
         $hasExistingForScope = $existingCountForScope > 0;
         $isEditMode = ($validated['form_mode'] ?? 'create') === 'edit';
@@ -146,36 +174,36 @@ class AbsensiController extends Controller
         if ($hasExistingForScope && ! $isEditMode) {
             return redirect()->route('absensi.index', [
                 'tanggal' => $validated['tanggal'],
-                'kategori' => $validated['kategori'],
+                'mata_pelajaran_id' => $validated['mata_pelajaran_id'],
             ])->with('absensi_exists_warning', [
-                'kategori' => $validated['kategori'],
+                'mata_pelajaran_id' => $validated['mata_pelajaran_id'],
                 'tanggal' => $validated['tanggal'],
             ]);
         }
 
-        $validSantriCount = Santri::query()->whereIn('id', $santriIds)->count();
-        if ($validSantriCount !== $santriIds->count()) {
+        $validSiswaCount = Siswa::query()->whereIn('id', $siswaIds)->count();
+        if ($validSiswaCount !== $siswaIds->count()) {
             return back()
-                ->withErrors(['absensi' => 'Terdapat data santri yang tidak valid.'])
+                ->withErrors(['absensi' => 'Terdapat data siswa yang tidak valid.'])
                 ->withInput();
         }
 
-        DB::transaction(function () use ($validated, $santriIds): void {
-            foreach ($santriIds as $santriId) {
+        DB::transaction(function () use ($validated, $siswaIds): void {
+            foreach ($siswaIds as $siswaId) {
                 Absensi::updateOrCreate(
                     [
-                        'santri_id' => $santriId,
+                        'siswa_id' => $siswaId,
                         'tanggal' => $validated['tanggal'],
-                        'kategori' => $validated['kategori'],
+                        'mata_pelajaran_id' => $validated['mata_pelajaran_id'],
                     ],
-                    ['status' => $validated['absensi'][$santriId]]
+                    ['status' => $validated['absensi'][$siswaId]]
                 );
             }
         });
 
         return redirect()->route('absensi.index', [
             'tanggal' => $validated['tanggal'],
-            'kategori' => $validated['kategori'],
+            'mata_pelajaran_id' => $validated['mata_pelajaran_id'],
         ])->with('success', $hasExistingForScope ? 'Absensi massal berhasil diperbarui.' : 'Absensi massal berhasil disimpan.');
     }
 
@@ -184,9 +212,9 @@ class AbsensiController extends Controller
      */
     public function edit(Absensi $absensi)
     {
-        $santris = Santri::orderBy('nama_lengkap')->get();
+        $siswas = Siswa::orderBy('nama_lengkap')->get();
 
-        return view('absensi.edit', compact('absensi', 'santris'));
+        return view('absensi.edit', compact('absensi', 'siswas'));
     }
 
     /**
@@ -195,21 +223,21 @@ class AbsensiController extends Controller
     public function update(Request $request, Absensi $absensi)
     {
         $validated = $request->validate([
-            'santri_id' => ['required', 'exists:santris,id'],
+            'siswa_id' => ['required', 'exists:siswas,id'],
             'tanggal' => [
                 'required',
                 'date',
                 Rule::unique('absensis', 'tanggal')
-                    ->where(fn ($q) => $q->where('santri_id', $request->santri_id)->where('kategori', $request->kategori))
+                    ->where(fn ($q) => $q->where('siswa_id', $request->siswa_id)->where('mata_pelajaran_id', $request->mata_pelajaran_id))
                     ->ignore($absensi->id),
             ],
             'status' => ['required', Rule::in(self::STATUS_OPTIONS)],
-            'kategori' => ['required', Rule::in(self::KATEGORI_OPTIONS)],
+            'mata_pelajaran_id' => ['required', 'exists:mata_pelajarans,id'],
         ]);
 
         $absensi->update($validated);
 
-        return redirect()->route('absensi.index', ['tanggal' => $validated['tanggal'], 'kategori' => $validated['kategori']])
+        return redirect()->route('absensi.index', ['tanggal' => $validated['tanggal'], 'mata_pelajaran_id' => $validated['mata_pelajaran_id']])
             ->with('success', 'Data absensi berhasil diperbarui');
     }
 
@@ -219,10 +247,10 @@ class AbsensiController extends Controller
     public function destroy(Absensi $absensi)
     {
         $tanggal = $absensi->tanggal->toDateString();
-        $kategori = $absensi->kategori;
+        $mataPelajaranId = $absensi->mata_pelajaran_id;
         $absensi->delete();
 
-        return redirect()->route('absensi.index', ['tanggal' => $tanggal, 'kategori' => $kategori])
+        return redirect()->route('absensi.index', ['tanggal' => $tanggal, 'mata_pelajaran_id' => $mataPelajaranId])
             ->with('success', 'Data absensi berhasil dihapus');
     }
 }

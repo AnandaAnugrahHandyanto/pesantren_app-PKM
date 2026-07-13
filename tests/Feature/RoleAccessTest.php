@@ -2,18 +2,18 @@
 
 use App\Models\User;
 
-test('admin can access santri routes', function () {
+test('admin can access siswa routes', function () {
     $admin = User::factory()->create(['role' => 'admin']);
 
-    $response = $this->actingAs($admin)->get(route('santri.index'));
+    $response = $this->actingAs($admin)->get(route('siswa.index'));
 
     $response->assertOk();
 });
 
-test('guru cannot access santri routes', function () {
+test('guru cannot access siswa routes', function () {
     $guru = User::factory()->create(['role' => 'guru']);
 
-    $response = $this->actingAs($guru)->get(route('santri.index'));
+    $response = $this->actingAs($guru)->get(route('siswa.index'));
 
     $response->assertForbidden();
 });
@@ -26,10 +26,10 @@ test('guru can access absensi routes', function () {
     $response->assertOk();
 });
 
-test('admin cannot access absensi routes', function () {
+test('admin can access absensi routes', function () {
     $admin = User::factory()->create(['role' => 'admin']);
 
     $response = $this->actingAs($admin)->get(route('absensi.index'));
 
-    $response->assertForbidden();
+    $response->assertOk();
 });

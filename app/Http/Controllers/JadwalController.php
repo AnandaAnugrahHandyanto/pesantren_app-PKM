@@ -1,0 +1,208 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Guru;
+use App\Models\Jadwal;
+use App\Models\MataPelajaran;
+use App\Models\Siswa;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class JadwalController extends Controller
+{
+    /**
+     * Admin/Guru: daftar jadwal per kelas.
+     */
+    public function index(Request $request, \App\Services\JadwalService $jadwalService)
+    {
+        $rombelList = \App\Models\Siswa::select('rombel')->distinct()->pluck('rombel')->filter()->sort();
+        
+        // Persist rombel in session
+        if ($request->has('rombel')) {
+            session(['last_rombel' => $request->rombel]);
+        }
+        $rombel = $request->rombel ?? session('last_rombel');
+
+        // Reset kelas and rombel if not explicitly requested
+        if (!$request->has('kelas') && !$request->has('rombel') && !$request->has('page')) {
+             session()->forget(['last_kelas', 'last_rombel']);
+             $kelas = null;
+             $rombel = null;
+        } else {
+             $kelas = $request->kelas ?? session('last_kelas');
+             if ($request->has('kelas')) {
+                session(['last_kelas' => $request->kelas]);
+            }
+        }
+        
+        $kelasList = \App\Models\MataPelajaran::select('kelas')->distinct()->pluck('kelas')->sort();
+        
+        $jadwals = $jadwalService->getJadwalByKelasRombel($kelas, $rombel);
+
+        // Group by day for grid view
+        $grid = [];
+        $hariList = Jadwal::hariOptions();
+        foreach ($hariList as $hari) {
+            $grid[$hari] = $jadwals->where('hari', $hari)->values();
+        }
+
+        // Statistics
+        $totalJadwal = $jadwals->count();
+        $totalMapel = $jadwals->pluck('mata_pelajaran_id')->unique()->count();
+        $totalGuru = $jadwals->pluck('guru_id')->filter()->unique()->count();
+
+        return view('jadwal.index', compact('grid', 'kelas', 'kelasList', 'hariList', 'rombel', 'rombelList',
+            'totalJadwal', 'totalMapel', 'totalGuru'));
+    }
+
+    /**
+     * Admin: form tambah jadwal.
+     */
+    public function create()
+    {
+        $mapels = MataPelajaran::with('guru')->orderBy('nama')->get();
+        $gurus = Guru::orderBy('nama_lengkap')->get();
+        $kelasList = MataPelajaran::select('kelas')->distinct()->pluck('kelas')->sort();
+
+        return view('jadwal.create', compact('mapels', 'gurus', 'kelasList'));
+    }
+
+    /**
+     * Admin: simpan jadwal baru.
+     */
+    public function store(Request $request)
+    {
+        $request->merge(['hari' => strtolower($request->hari)]);
+        $request->validate([
+            'hari' => 'required|in:' . implode(',', Jadwal::hariOptions()),
+            'jam_mulai' => 'required|date_format:H:i',
+            'jam_selesai' => 'required|date_format:H:i|after:jam_mulai',
+            'mata_pelajaran_id' => 'required|exists:mata_pelajarans,id',
+            'guru_id' => 'nullable|exists:gurus,id',
+            'kelas' => 'required|string|max:10',
+            'rombel' => 'required|string|max:5',
+        ]);
+
+        // Cek bentrok guru
+        if ($request->filled('guru_id')) {
+            $bentrok = Jadwal::where('hari', $request->hari)
+                ->where('guru_id', $request->guru_id)
+                ->where('kelas', $request->kelas)
+                ->where('rombel', $request->rombel)
+                ->where(function ($q) use ($request) {
+                    $q->whereBetween('jam_mulai', [$request->jam_mulai, $request->jam_selesai])
+                        ->orWhereBetween('jam_selesai', [$request->jam_mulai, $request->jam_selesai])
+                        ->orWhere(function ($q2) use ($request) {
+                            $q2->where('jam_mulai', '<=', $request->jam_mulai)
+                                ->where('jam_selesai', '>=', $request->jam_selesai);
+                        });
+                })->exists();
+
+            if ($bentrok) {
+                return back()->withErrors(['guru_id' => 'Guru sudah punya jadwal di jam ini.'])->withInput();
+            }
+        }
+
+        Jadwal::create($request->all());
+
+        return redirect()->route('jadwal.index', ['kelas' => $request->kelas]);
+    }
+
+    /**
+     * Admin: form edit jadwal.
+     */
+    public function edit(Jadwal $jadwal)
+    {
+        $mapels = MataPelajaran::with('guru')->orderBy('nama')->get();
+        $gurus = Guru::orderBy('nama_lengkap')->get();
+        $kelasList = MataPelajaran::select('kelas')->distinct()->pluck('kelas')->sort();
+
+        return view('jadwal.edit', compact('jadwal', 'mapels', 'gurus', 'kelasList'));
+    }
+
+    /**
+     * Admin: update jadwal.
+     */
+    public function update(Request $request, Jadwal $jadwal)
+    {
+        $request->merge(['hari' => strtolower($request->hari)]);
+        $request->validate([
+            'hari' => 'required|in:' . implode(',', Jadwal::hariOptions()),
+            'jam_mulai' => 'required|date_format:H:i',
+            'jam_selesai' => 'required|date_format:H:i|after:jam_mulai',
+            'mata_pelajaran_id' => 'required|exists:mata_pelajarans,id',
+            'guru_id' => 'nullable|exists:gurus,id',
+            'kelas' => 'required|string|max:10',
+            'rombel' => 'required|string|max:5',
+        ]);
+
+        // Cek bentrok guru (kecuali dirinya sendiri)
+        if ($request->filled('guru_id')) {
+            $bentrok = Jadwal::where('hari', $request->hari)
+                ->where('guru_id', $request->guru_id)
+                ->where('kelas', $request->kelas)
+                ->where('rombel', $request->rombel)
+                ->where('id', '!=', $jadwal->id)
+                ->where(function ($q) use ($request) {
+                    $q->whereBetween('jam_mulai', [$request->jam_mulai, $request->jam_selesai])
+                        ->orWhereBetween('jam_selesai', [$request->jam_mulai, $request->jam_selesai])
+                        ->orWhere(function ($q2) use ($request) {
+                            $q2->where('jam_mulai', '<=', $request->jam_mulai)
+                                ->where('jam_selesai', '>=', $request->jam_selesai);
+                        });
+                })->exists();
+
+            if ($bentrok) {
+                return back()->withErrors(['guru_id' => 'Guru sudah punya jadwal di jam ini.'])->withInput();
+            }
+        }
+
+        $jadwal->update($request->all());
+
+        return redirect()->route('jadwal.index', ['kelas' => $request->kelas]);
+    }
+
+    /**
+     * Admin: hapus jadwal.
+     */
+    public function destroy(Jadwal $jadwal)
+    {
+        $kelas = $jadwal->kelas;
+        $jadwal->delete();
+
+        return redirect()->route('jadwal.index', ['kelas' => $kelas])
+            ->with('success', 'Jadwal berhasil dihapus.');
+    }
+
+    /**
+     * Siswa: lihat jadwal sendiri berdasarkan kelas.
+     */
+    public function siswa()
+    {
+        $user = Auth::user();
+        $siswa = $user->siswa;
+
+        if (!$siswa) {
+            return view('siswa.jadwal', ['grid' => [], 'kelasSiswa' => '?', 'hariList' => Jadwal::hariOptions()]);
+        }
+
+        // Gunakan tingkat (e.g. 7) sebagai acuan kelas untuk jadwal
+        // Karena di DB kolom 'kelas' pada 'jadwals' berisi '7', '6'
+        $targetKelas = (string)$siswa->tingkat;
+
+        $jadwals = Jadwal::with(['mataPelajaran', 'guru'])
+            ->where('kelas', $targetKelas)
+            ->orderBy('hari')
+            ->orderBy('jam_mulai')
+            ->get();
+
+        $grid = [];
+        $hariList = Jadwal::hariOptions();
+        foreach ($hariList as $hari) {
+            $grid[$hari] = $jadwals->where('hari', $hari)->values();
+        }
+
+        return view('siswa.jadwal', compact('grid', 'hariList'), ['kelasSiswa' => $siswa->kelasFormatted]);
+    }
+}
