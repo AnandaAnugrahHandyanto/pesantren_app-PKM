@@ -3,7 +3,6 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Guru\DashboardController as GuruDashboard;
-use App\Http\Controllers\Siswa\DashboardController as SiswaDashboard;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\AbsensiController;
@@ -40,9 +39,16 @@ Route::middleware('auth')->group(function () {
 
     // Siswa Routes
     Route::middleware(['role:siswa'])->prefix('siswa')->group(function () {
-        Route::get('/dashboard', [SiswaDashboard::class, 'index'])->name('siswa.dashboard');
-        Route::get('/absensi', [SiswaDashboard::class, 'absensi'])->name('siswa.absensi');
-        Route::get('/spp', [SiswaDashboard::class, 'sppIndex'])->name('siswa.spp.index');
+        Route::get('/dashboard', [SiswaController::class, 'dashboard'])->name('siswa.dashboard');
+        Route::get('/absensi', function () {
+            $user = Auth::user();
+            $absensis = \App\Models\Absensi::where('siswa_id', $user->siswa_id)
+                ->with('mataPelajaran')
+                ->orderBy('tanggal', 'desc')
+                ->paginate(30);
+            return view('siswa.absensi', compact('absensis'));
+        })->name('siswa.absensi');
+        Route::get('/spp', [SppController::class, 'siswaIndex'])->name('siswa.spp.index');
         Route::get('/jadwal', [JadwalController::class, 'siswa'])->name('siswa.jadwal');
     });
 
