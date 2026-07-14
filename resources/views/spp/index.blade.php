@@ -253,11 +253,13 @@
                             <td class="text-right">
                                 <div class="flex items-center justify-end gap-2">
                                     @if($t->status !== 'lunas')
-                                        <button type="button" 
-                                            onclick="initPayment('{{ route('spp.checkout', $t->id) }}')"
-                                            class="btn-primary text-xs py-1.5 px-3">
-                                            Bayar Sekarang
-                                        </button>
+                                        @if(Auth::user()->role === 'siswa')
+                                            <button type="button"
+                                                onclick="initPayment('{{ route('spp.checkout', $t->id) }}')"
+                                                class="btn-primary text-xs py-1.5 px-3">
+                                                Bayar Sekarang
+                                            </button>
+                                        @endif
                                         <form action="{{ route('spp.mark-paid', $t) }}" method="POST" class="inline">
                                             @csrf
                                             <button type="submit" class="btn-success text-xs py-1.5 px-3"

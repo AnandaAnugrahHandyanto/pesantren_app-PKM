@@ -1,19 +1,21 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Guru\DashboardController as GuruDashboard;
-use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\GuruController;
-use App\Http\Controllers\AbsensiController;
+use App\Http\Controllers\GuruJadwalController;
+use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\KeuanganController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\MataPelajaranController;
-use App\Http\Controllers\KeuanganController;
-use App\Http\Controllers\SppController;
-use App\Http\Controllers\JadwalController;
-use App\Http\Controllers\GuruJadwalController;
-use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\SppController;
+use App\Http\Controllers\WebhookController;
+use App\Models\Absensi;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -30,6 +32,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', [AdminDashboard::class, 'index'])->name('admin.dashboard');
         Route::get('/beranda', [AdminDashboard::class, 'index'])->name('dashboard');
         Route::get('/siswa/import', [SiswaController::class, 'importForm'])->name('siswa.import.form');
+        Route::post('/siswa/import', [SiswaController::class, 'importExcel'])->name('siswa.import.excel');
+        Route::post('/siswa/{siswa}/password', [SiswaController::class, 'updatePassword'])->name('siswa.password.update');
     });
 
     // Guru Routes
@@ -43,10 +47,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', [SiswaController::class, 'dashboard'])->name('siswa.dashboard');
         Route::get('/absensi', function () {
             $user = Auth::user();
-            $absensis = \App\Models\Absensi::where('siswa_id', $user->siswa_id)
+            $absensis = Absensi::where('siswa_id', $user->siswa_id)
                 ->with('mataPelajaran')
                 ->orderBy('tanggal', 'desc')
                 ->paginate(30);
+
             return view('siswa.absensi', compact('absensis'));
         })->name('siswa.absensi');
         Route::get('/spp', [SppController::class, 'siswaIndex'])->name('siswa.spp.index');
@@ -58,19 +63,19 @@ Route::middleware('auth')->group(function () {
     Route::resource('guru', GuruController::class);
     Route::middleware(['auth'])->resource('absensi', AbsensiController::class);
     Route::post('absensi/mass-store', [AbsensiController::class, 'massStore'])->name('absensi.mass-store');
-    
+
     Route::get('rekap-absensi', [LaporanController::class, 'absensi'])->name('laporan.absensi');
     Route::get('rekap-absensi-semester', [LaporanController::class, 'rekapSemester'])->name('rekap.absensi.semester');
     Route::get('rekap-absensi-cetak', [LaporanController::class, 'rekapSemesterPrint'])->name('rekap.absensi.cetak');
-    
+
     Route::resource('mata-pelajaran', MataPelajaranController::class);
     Route::resource('keuangan', KeuanganController::class);
     Route::resource('spp', SppController::class);
     Route::post('spp/{sppBill}/checkout', [PaymentController::class, 'checkout'])->name('spp.checkout');
-    
+
     Route::resource('jadwal', JadwalController::class);
 
-// ─── SPP (Admin) ──────────────────────────────────────────
+    // ─── SPP (Admin) ──────────────────────────────────────────
     Route::middleware(['auth', 'verified', 'role:admin'])->prefix('spp')->name('spp.')->group(function () {
         Route::get('/', [SppController::class, 'index'])->name('index');
         Route::get('/generate', [SppController::class, 'create'])->name('generate-form');

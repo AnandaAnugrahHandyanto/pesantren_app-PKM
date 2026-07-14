@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\PaymentTransaction;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class SppBill extends Model
 {
-    protected $table = 'spp_bills';
+    use HasFactory;
 
     protected $fillable = [
         'siswa_id',
@@ -38,7 +40,7 @@ class SppBill extends Model
         return $this->belongsTo(Keuangan::class, 'keuangan_id');
     }
 
-    public function transactions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function transactions(): HasMany
     {
         return $this->hasMany(PaymentTransaction::class, 'spp_bill_id');
     }

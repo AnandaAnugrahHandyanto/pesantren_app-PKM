@@ -113,5 +113,26 @@
                 </div>
             </form>
         </div>
+
+        <div class="mt-8 rounded-2xl border border-red-400/20 bg-red-900/10 p-6 shadow-lg backdrop-blur-md">
+            <h2 class="text-base font-semibold text-white mb-4">Reset Password Siswa</h2>
+            <form action="{{ route('siswa.password.update', $siswa) }}" method="POST" class="space-y-4">
+                @csrf
+                <div>
+                    <label for="password" class="mb-1 block text-sm font-medium text-white/80">Password Baru</label>
+                    <input type="password" id="password" name="password" required
+                        class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white placeholder-white/40 backdrop-blur-sm focus:border-red-400/50 focus:outline-none focus:ring-2 focus:ring-red-400/40">
+                </div>
+                <div>
+                    <label for="password_confirmation" class="mb-1 block text-sm font-medium text-white/80">Konfirmasi Password Baru</label>
+                    <input type="password" id="password_confirmation" name="password_confirmation" required
+                        class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white placeholder-white/40 backdrop-blur-sm focus:border-red-400/50 focus:outline-none focus:ring-2 focus:ring-red-400/40">
+                </div>
+                <button type="submit"
+                    class="rounded-lg bg-red-600 px-5 py-2 text-sm font-medium text-white shadow-md transition hover:bg-red-500">
+                    Reset Password
+                </button>
+            </form>
+        </div>
     </div>
 </x-app-layout>
