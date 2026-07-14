@@ -3,6 +3,7 @@
 use App\Models\Siswa;
 use App\Models\SppBill;
 use App\Models\User;
+use App\Services\PaymentService;
 use Illuminate\Support\Facades\Hash;
 
 test('admin can access siswa routes', function () {
@@ -99,7 +100,18 @@ test('siswa can access checkout for own spp bill', function () {
     $user = User::factory()->create(['role' => 'siswa', 'siswa_id' => $siswa->id]);
     $sppBill = SppBill::factory()->create(['siswa_id' => $siswa->id]);
 
+    // Mock PaymentService
+    $mock = Mockery::mock(PaymentService::class);
+    $mock->shouldReceive('getSnapToken')
+        ->once()
+        ->andReturn('fake-snap-token');
+
+    $this->instance(PaymentService::class, $mock);
+
     $response = $this->actingAs($user)->post(route('spp.checkout', $sppBill));
 
     $response->assertOk();
+    $response->assertJson([
+        'snap_token' => 'fake-snap-token',
+    ]);
 });
