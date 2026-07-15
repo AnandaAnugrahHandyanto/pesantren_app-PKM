@@ -82,11 +82,11 @@
                             <td class="text-slate-900 dark:text-slate-600 dark:text-white/70">{{ $guru->no_hp ?? '-' }}</td>
                             <td>
                                 @if($guru->user)
-                                    <span class="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-500/20 px-3 py-1 text-xs font-semibold text-emerald-200">
+                                    <span class="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-200">
                                         Aktif
                                     </span>
                                 @else
-                                    <span class="inline-flex items-center gap-1.5 rounded-full border border-red-400/30 bg-red-500/20 px-3 py-1 text-xs font-semibold text-red-200">
+                                    <span class="inline-flex items-center gap-1.5 rounded-full border border-red-400/30 bg-red-500/10 px-3 py-1 text-xs font-semibold text-red-700 dark:text-red-200">
                                         Tidak Aktif
                                     </span>
                                 @endif
@@ -101,7 +101,7 @@
                                           onsubmit="return confirm('Hapus data {{ $guru->nama_lengkap }} dan akun loginnya?')">
                                         @csrf @method('DELETE')
                                         <button type="submit"
-                                                class="rounded-lg border border-red-400/30 bg-red-500/20 px-3 py-1.5 text-xs font-medium text-red-200 backdrop-blur-sm transition hover:bg-red-500/30">
+                                                class="rounded-lg border border-red-400/30 bg-red-500/10 px-3 py-1.5 text-xs font-medium text-red-700 dark:text-red-200 backdrop-blur-sm transition hover:bg-red-500/20">
                                             Hapus
                                         </button>
                                     </form>

@@ -84,7 +84,7 @@
                     </div>
 
                     <div class="mt-6 flex gap-3">
-                        <button type="submit" class="rounded-xl bg-cyan-500/20 px-6 py-2.5 font-medium text-cyan-200 ring-1 ring-cyan-400/30 hover:bg-cyan-500/30">Simpan</button>
+                        <button type="submit" class="rounded-xl bg-cyan-500/20 px-6 py-2.5 font-medium text-cyan-900 dark:text-cyan-200 ring-1 ring-cyan-400/30 hover:bg-cyan-500/30">Simpan</button>
                         <a href="{{ route('jadwal.index', ['kelas' => request('kelas')]) }}" class="rounded-xl bg-slate-50 dark:bg-white/10 px-6 py-2.5 text-slate-900 dark:text-white hover:bg-white/20">Batal</a>
                     </div>
                 </form>

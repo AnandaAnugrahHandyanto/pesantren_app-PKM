@@ -174,14 +174,14 @@
                             <td class="text-right">
                                 <div class="flex items-center justify-end gap-2">
                                     <a href="{{ route('siswa.edit', $siswa) }}"
-                                       class="rounded-lg border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/10 px-3 py-1.5 text-xs font-medium text-slate-900 dark:text-slate-700 dark:text-white/80 backdrop-blur-sm transition hover:bg-white/20">
+                                       class="rounded-lg border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/10 px-3 py-1.5 text-xs font-medium text-slate-900 dark:text-slate-700 dark:text-white/80 backdrop-blur-sm transition hover:bg-slate-200 dark:hover:bg-white/20">
                                         Edit
                                     </a>
                                     <form action="{{ route('siswa.destroy', $siswa) }}" method="POST"
                                           onsubmit="return confirm('Yakin ingin menghapus siswa {{ $siswa->nama_lengkap }}?')">
                                         @csrf @method('DELETE')
                                         <button type="submit"
-                                                class="rounded-lg border border-red-400/30 bg-red-500/20 px-3 py-1.5 text-xs font-medium text-red-200 backdrop-blur-sm transition hover:bg-red-500/30">
+                                                class="rounded-lg border border-red-400/30 bg-red-500/10 px-3 py-1.5 text-xs font-medium text-red-700 dark:text-red-200 backdrop-blur-sm transition hover:bg-red-500/20">
                                             Hapus
                                         </button>
                                     </form>
