@@ -7,7 +7,7 @@
                 </svg>
                 Dashboard Siswa
             </h2>
-            <span class="rounded-full bg-cyan-500/20 px-3 py-1 text-xs font-medium text-cyan-200 ring-1 ring-cyan-400/30">
+            <span class="rounded-full bg-cyan-500/20 px-3 py-1 text-xs font-medium text-cyan-800 dark:text-cyan-200 ring-1 ring-cyan-400/30">
                 {{ Auth::user()->siswa->kelasFormatted ?? Auth::user()->siswa->kelas ?? '-' }}
             </span>
         </div>
@@ -59,7 +59,7 @@
                     <div class="flex items-end">
                         @if($statSpp['total'] > 0 && $statSpp['lunas'] < $statSpp['total'])
                             <a href="{{ route('siswa.spp.index') }}"
-                               class="rounded-xl bg-cyan-500/20 px-4 py-2 text-xs font-medium text-cyan-200 ring-1 ring-cyan-400/30 transition hover:bg-cyan-500/30">
+                               class="rounded-xl bg-cyan-500/20 px-4 py-2 text-xs font-medium text-cyan-800 dark:text-cyan-200 ring-1 ring-cyan-400/30 transition hover:bg-cyan-500/30">
                                 Bayar SPP →
                             </a>
                         @elseif($statSpp['total'] > 0)
