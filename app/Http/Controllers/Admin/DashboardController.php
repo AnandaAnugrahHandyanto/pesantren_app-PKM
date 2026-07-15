@@ -12,24 +12,64 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $totalSiswa  = Siswa::count();
-        $absensi      = $this->todayAbsensiCounts();
-        $latestSiswa = Siswa::latest()->take(5)->get();
+        $totalSiswa     = Siswa::count();
+        $totalGuru      = User::where('role', 'guru')->count();
+        $totalMapel     = \App\Models\MataPelajaran::count();
 
-        return view('dashboard', array_merge(compact('totalSiswa', 'latestSiswa'), $absensi));
+        // Mapping hari berdasarkan ISO day of week (1 = senin, 7 = minggu)
+        $hariMap = [
+            1 => 'senin',
+            2 => 'selasa',
+            3 => 'rabu',
+            4 => 'kamis',
+            5 => 'jumat',
+            6 => 'sabtu',
+            7 => 'minggu',
+        ];
+        $hariIni = $hariMap[now()->dayOfWeekIso] ?? 'senin';
+        $totalJadwal = \App\Models\Jadwal::where('hari', $hariIni)->count();
+
+        $absensi         = $this->todayAbsensiCounts();
+        $latestSiswa    = Siswa::latest()->take(5)->get();
+
+        // Ringkasan SPP: Tagihan tertunggak (status='tunggakan')
+        $sppTunggakan   = \App\Models\SppBill::where('status', 'tunggakan')->count();
+        $totalSppBills  = \App\Models\SppBill::count();
+
+        return view('admin.dashboard', array_merge(
+            compact('totalSiswa', 'totalGuru', 'totalMapel', 'totalJadwal', 'absensi', 'latestSiswa', 'sppTunggakan', 'totalSppBills'),
+            $absensi
+        ));
     }
 
     public function adminDashboard()
     {
         $totalSiswa     = Siswa::count();
-        $siswaLaki      = Siswa::where('jenis_kelamin', 'L')->count();
-        $siswaPerempuan = Siswa::where('jenis_kelamin', 'P')->count();
-        $totalGuru       = User::where('role', 'guru')->count();
+        $totalGuru      = User::where('role', 'guru')->count();
+        $totalMapel     = \App\Models\MataPelajaran::count();
+
+        // Mapping hari berdasarkan ISO day of week (1 = senin, 7 = minggu)
+        $hariMap = [
+            1 => 'senin',
+            2 => 'selasa',
+            3 => 'rabu',
+            4 => 'kamis',
+            5 => 'jumat',
+            6 => 'sabtu',
+            7 => 'minggu',
+        ];
+        $hariIni = $hariMap[now()->dayOfWeekIso] ?? 'senin';
+        $totalJadwal = \App\Models\Jadwal::where('hari', $hariIni)->count();
+
         $absensi         = $this->todayAbsensiCounts();
         $latestSiswa    = Siswa::latest()->take(5)->get();
 
+        // Ringkasan SPP: Tagihan tertunggak (status='tunggakan')
+        $sppTunggakan   = \App\Models\SppBill::where('status', 'tunggakan')->count();
+        $totalSppBills  = \App\Models\SppBill::count();
+
         return view('admin.dashboard', array_merge(
-            compact('totalSiswa', 'siswaLaki', 'siswaPerempuan', 'totalGuru', 'latestSiswa'),
+            compact('totalSiswa', 'totalGuru', 'totalMapel', 'totalJadwal', 'absensi', 'latestSiswa', 'sppTunggakan', 'totalSppBills'),
             $absensi
         ));
     }

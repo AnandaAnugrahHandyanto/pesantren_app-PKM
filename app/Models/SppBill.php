@@ -56,6 +56,8 @@ class SppBill extends Model
             '10' => 'Oktober', '11' => 'November',  '12' => 'Desember',
         ];
 
-        return $bulan[$this->bulan] ?? $this->bulan;
+        $normalized = str_pad((string) $this->bulan, 2, '0', STR_PAD_LEFT);
+
+        return $bulan[$normalized] ?? 'Bulan Tidak Valid';
     }
 }

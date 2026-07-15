@@ -14,104 +14,19 @@
     </x-slot>
 
     <div class="space-y-6">
-        {{-- Alert Success --}}
         @if (session('success'))
             <div class="alert-success flex items-center gap-2">
-                <svg class="h-4 w-4 flex-shrink-0 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
                 <span>{{ session('success') }}</span>
             </div>
         @endif
 
-        @if (session('error'))
-            <div class="alert-error flex items-center gap-2">
-                <svg class="h-4 w-4 flex-shrink-0 text-red-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
-                </svg>
-                <span>{{ session('error') }}</span>
-            </div>
-        @endif
-
-        {{-- ═══ Statistik ═══ --}}
-        <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-            <div class="stat-card">
-                <div class="stat-icon bg-slate-50 dark:bg-white/10">
-                    <svg class="h-5 w-5 text-slate-900 dark:text-slate-600 dark:text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
-                    </svg>
-                </div>
-                <p class="stat-label">Total Tagihan</p>
-                <p class="stat-value text-slate-900 dark:text-white">{{ number_format($totalTagihan) }}</p>
-                <p class="stat-sub">Rp {{ number_format($totalJumlah, 0, ',', '.') }}</p>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-icon bg-emerald-500/20">
-                    <svg class="h-5 w-5 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                </div>
-                <p class="stat-label">Lunas</p>
-                <p class="stat-value text-emerald-300">{{ number_format($totalLunas) }}</p>
-                <p class="stat-sub">Rp {{ number_format($jumlahLunas, 0, ',', '.') }}</p>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-icon bg-amber-500/20">
-                    <svg class="h-5 w-5 text-amber-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                </div>
-                <p class="stat-label">Belum Dibayar</p>
-                <p class="stat-value text-amber-300">{{ number_format($totalBelum) }}</p>
-                <p class="stat-sub">{{ $totalTagihan > 0 ? round(($totalBelum / $totalTagihan) * 100) : 0 }}% dari total</p>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-icon bg-red-500/20">
-                    <svg class="h-5 w-5 text-red-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-                    </svg>
-                </div>
-                <p class="stat-label">Tunggakan</p>
-                <p class="stat-value text-red-300">{{ number_format($totalTunggakan) }}</p>
-                <p class="stat-sub">{{ $totalTagihan > 0 ? round(($totalTunggakan / $totalTagihan) * 100) : 0 }}% dari total</p>
-            </div>
-
-            <div class="stat-card col-span-2 sm:col-span-1 lg:col-span-2">
-                <div class="flex items-center gap-4">
-                    <div class="stat-icon bg-cyan-500/20">
-                        <svg class="h-5 w-5 text-cyan-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
-                        </svg>
-                    </div>
-                    <div class="flex-1">
-                        <p class="stat-label">Progress Pembayaran</p>
-                        <p class="mt-1 text-xs text-slate-900 dark:text-slate-500 dark:text-white/50">{{ $totalLunas + $totalTunggakan + $totalBelum > 0 ? round(($totalLunas / ($totalLunas + $totalTunggakan + $totalBelum)) * 100) : 0 }}% terkumpul</p>
-                        @php
-                            $progress = ($totalLunas + $totalTunggakan + $totalBelum) > 0
-                                ? round(($totalLunas / ($totalLunas + $totalTunggakan + $totalBelum)) * 100)
-                                : 0;
-                        @endphp
-                        <div class="mt-2 h-2 overflow-hidden rounded-full bg-slate-50 dark:bg-white/10">
-                            <div class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-emerald-400 transition-all duration-500" style="width: {{ $progress }}%"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {{-- ═══ Action Panel — Generate Tagihan ═══ --}}
+        {{-- ═══ Action Panel ═══ --}}
         <div class="action-panel">
             <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <div>
-                    <h3 class="panel-title">
-                        Generate Tagihan SPP
-                    </h3>
-                    <p class="panel-desc">Buat tagihan SPP massal untuk semua siswa berdasarkan tahun dan kelas.</p>
+                    <h3 class="panel-title">Generate Tagihan SPP</h3>
+                    <p class="panel-desc">Buat tagihan SPP massal untuk semua siswa.</p>
                 </div>
-
                 <form method="POST" action="{{ route('spp.generate') }}" class="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-end">
                     @csrf
                     <div>
@@ -125,215 +40,165 @@
                     </div>
                     <div>
                         <label class="form-label block mb-1">Tahun</label>
-                        <input type="number" name="tahun" value="{{ old('tahun', now()->year) }}"
-                               min="2020" max="2099" class="form-input w-28">
+                        <input type="number" name="tahun" value="{{ old('tahun', now()->year) }}" class="form-input w-28">
                     </div>
                     <div>
                         <label class="form-label block mb-1">Jumlah (Rp)</label>
-                        <input type="number" name="jumlah" value="{{ old('jumlah', 50000) }}"
-                               min="0" class="form-input w-36">
+                        <input type="number" name="jumlah" value="{{ old('jumlah', 50000) }}" class="form-input w-36">
                     </div>
-                    <button type="submit" class="btn-primary whitespace-nowrap"
-                            onclick="return confirm('Generate tagihan SPP untuk semua siswa?')">
-                        Generate
-                    </button>
+                    <button type="submit" class="btn-primary" onclick="return confirm('Generate tagihan massal?')">Generate</button>
                 </form>
             </div>
         </div>
 
         {{-- ═══ Filter ═══ --}}
         <div class="content-card">
-            <div class="section-title mb-3">
-                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
-                </svg>
-                Filter Tagihan
-            </div>
-            <form method="GET" action="{{ route('spp.index') }}" class="flex flex-wrap items-end gap-3">
-                <div>
-                    <label class="form-label block mb-1">Kelas</label>
-                    <select name="kelas" class="form-select">
-                        <option value="">Semua Kelas</option>
-                        @foreach($kelasList as $k)
-                            <option value="{{ $k }}" {{ request('kelas') == $k ? 'selected' : '' }}>{{ $k }}</option>
-                        @endforeach
-                    </select>
+            <form method="GET" action="{{ route('spp.index') }}" class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-5">
+                <div class="lg:col-span-2">
+                    <input type="text" name="search" value="{{ request('search') }}" class="form-input w-full" placeholder="Cari nama atau NIS siswa...">
                 </div>
-                <div>
-                    <label class="form-label block mb-1">Status</label>
-                    <select name="status" class="form-select">
-                        <option value="">Semua Status</option>
-                        <option value="belum" {{ request('status') == 'belum' ? 'selected' : '' }}>Belum Dibayar</option>
-                        <option value="lunas" {{ request('status') == 'lunas' ? 'selected' : '' }}>Lunas</option>
-                        <option value="tunggakan" {{ request('status') == 'tunggakan' ? 'selected' : '' }}>Tunggakan</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="form-label block mb-1">Bulan</label>
-                    <select name="bulan" class="form-select">
-                        <option value="">Semua Bulan</option>
-                        @foreach(range(1, 12) as $m)
-                            <option value="{{ $m }}" {{ request('bulan') == $m ? 'selected' : '' }}>
-                                {{ \Carbon\Carbon::create()->month($m)->translatedFormat('F') }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div>
-                    <label class="form-label block mb-1">Tahun</label>
-                    <input type="number" name="tahun" value="{{ request('tahun', now()->year) }}"
-                           class="form-input w-24" placeholder="Tahun">
-                </div>
-                <button type="submit" class="btn-secondary text-xs">
-                    <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
-                    </svg>
-                    Filter
-                </button>
-                @if (request()->anyFilled(['kelas', 'status', 'tahun']))
-                    <a href="{{ route('spp.index') }}" class="btn-secondary text-xs">
-                        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                        Reset
-                    </a>
-                @endif
+                <select name="kelas" class="form-select w-full">
+                    <option value="">Semua Kelas</option>
+                    @foreach($kelasList as $k)
+                        <option value="{{ $k }}" {{ request('kelas') == $k ? 'selected' : '' }}>{{ $k }}</option>
+                    @endforeach
+                </select>
+                <select name="status" class="form-select w-full">
+                    <option value="">Semua Status</option>
+                    <option value="belum" {{ request('status') == 'belum' ? 'selected' : '' }}>Belum</option>
+                    <option value="lunas" {{ request('status') == 'lunas' ? 'selected' : '' }}>Lunas</option>
+                    <option value="tunggakan" {{ request('status') == 'tunggakan' ? 'selected' : '' }}>Tunggakan</option>
+                </select>
+                <button type="submit" class="btn-secondary w-full">Filter</button>
             </form>
         </div>
 
-        {{-- ═══ Tabel ═══ --}}
-        <div class="table-wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Siswa</th>
-                        <th>Kelas</th>
-                        <th>Bulan</th>
-                        <th>Tahun</th>
-                        <th class="text-right">Jumlah</th>
-                        <th>Status</th>
-                        <th class="text-right">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($tagihan as $t)
-                        @php
-                            $statusClass = $t->status === 'lunas' ? 'lunas' : ($t->status === 'tunggakan' ? 'tunggakan' : 'belum');
-                        @endphp
-                        <tr class="status-row-{{ $statusClass }}">
-                            <td class="font-medium text-slate-900 dark:text-white">{{ $t->siswa->nama_lengkap ?? '-' }}</td>
-                            <td class="text-slate-900 dark:text-slate-500 dark:text-white/60">{{ $t->siswa->kelas ?? '-' }}</td>
-                            <td class="text-slate-900 dark:text-slate-700 dark:text-white/80">{{ $t->nama_bulan }}</td>
-                            <td class="text-slate-900 dark:text-slate-700 dark:text-white/80">{{ $t->tahun }}</td>
-                            <td class="text-right font-medium text-slate-900 dark:text-slate-800 dark:text-white/90">Rp {{ number_format($t->jumlah, 0, ',', '.') }}</td>
-                            <td>
-                                @if ($t->status === 'lunas')
-                                    <span class="status-capsule status-capsule-lunas">
-                                        <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        Lunas
-                                    </span>
-                                @elseif ($t->status === 'tunggakan')
-                                    <span class="status-capsule status-capsule-tunggakan">
-                                        <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-                                        </svg>
-                                        Tunggakan
-                                    </span>
-                                @else
-                                    <span class="status-capsule status-capsule-belum">
-                                        <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        Belum
-                                    </span>
-                                @endif
-                            </td>
-                            <td class="text-right">
-                                <div class="flex items-center justify-end gap-2">
-                                    @if($t->status !== 'lunas')
-                                        @if(Auth::user()->role === 'siswa')
-                                            <button type="button"
-                                                onclick="initPayment('{{ route('spp.checkout', $t->id) }}')"
-                                                class="btn-primary text-xs py-1.5 px-3">
-                                                Bayar Sekarang
-                                            </button>
-                                        @endif
-                                        <form action="{{ route('spp.mark-paid', $t) }}" method="POST" class="inline">
-                                            @csrf
-                                            <button type="submit" class="btn-success text-xs py-1.5 px-3"
-                                                    onclick="return confirm('Tandai {{ $t->nama_bulan }} {{ $t->tahun }} sebagai lunas?')">
-                                                Tandai Lunas
-                                            </button>
-                                        </form>
-                                    @else
-                                        <span class="inline-flex items-center gap-1 text-xs text-emerald-400/70">
-                                            <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            </svg>
-                                            Selesai
-                                        </span>
-                                    @endif
-                                </div>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="7">
-                                <div class="flex flex-col items-center justify-center py-12">
-                                    <svg class="mb-3 h-12 w-12 text-slate-900 dark:text-slate-400 dark:text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
-                                    </svg>
-                                    <p class="text-sm font-medium text-slate-900 dark:text-slate-400 dark:text-white/40">Belum ada tagihan SPP</p>
-                                    <p class="mt-1 text-xs text-slate-900 dark:text-white/30">Gunakan panel "Generate Tagihan" di atas untuk membuat tagihan baru.</p>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+        {{-- ═══ Daftar Siswa ═══ --}}
+        <div class="space-y-3">
+            @forelse($siswaList as $siswa)
+                <div class="rounded-xl border border-slate-300 dark:border-white/10 bg-white dark:bg-white/5" x-data="{
+                    open: false,
+                    summary: {
+                        total: {{ $siswa->sppBills->count() }},
+                        lunas: {{ $siswa->sppBills->where('status', 'lunas')->count() }},
+                        belum: {{ $siswa->sppBills->where('status', 'belum')->count() }},
+                        tunggakan: {{ $siswa->sppBills->where('status', 'tunggakan')->count() }},
+                        sisa_tagihan: {{ $siswa->sppBills->whereIn('status', ['belum', 'tunggakan'])->sum('jumlah') }},
+                        formatted_sisa_tagihan: 'Rp {{ number_format($siswa->sppBills->whereIn('status', ['belum', 'tunggakan'])->sum('jumlah'), 0, ',', '.') }}'
+                    }
+                }">
+                    <div class="flex items-center gap-4 p-4 cursor-pointer" @click="open = !open">
+                        <div class="flex-1">
+                            <p class="font-semibold text-slate-900 dark:text-white">{{ $siswa->nama_lengkap }}</p>
+                            <p class="text-xs text-slate-600 dark:text-slate-400">{{ $siswa->nis }} &bull; {{ $siswa->kelas }}</p>
+                            <div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
+                                <span class="text-slate-500">Total: <strong class="text-slate-900 dark:text-white" x-text="summary.total"></strong></span>
+                                <span class="text-emerald-500">Lunas: <strong class="text-emerald-600" x-text="summary.lunas"></strong></span>
+                                <span class="text-amber-500">Belum: <strong class="text-amber-600" x-text="summary.belum"></strong></span>
+                                <span class="text-red-500">Tunggakan: <strong class="text-red-600" x-text="summary.tunggakan"></strong></span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                             <p class="text-sm font-semibold text-slate-900 dark:text-white" x-text="summary.formatted_sisa_tagihan"></p>
+                        </div>
+                        <button class="flex-shrink-0 text-slate-400"><svg class="h-5 w-5" :class="{'rotate-180': open}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M19 9l-7 7-7-7" /></svg></button>
+                    </div>
+
+                    <div class="border-t border-slate-200 dark:border-white/10" x-show="open" x-cloak>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full">
+                                <thead class="bg-slate-50 dark:bg-white/5 text-xs text-slate-500 dark:text-slate-400">
+                                    <tr>
+                                        <th class="px-4 py-2 text-left">Bulan</th>
+                                        <th class="px-4 py-2 text-left">Tahun</th>
+                                        <th class="px-4 py-2 text-right">Jumlah</th>
+                                        <th class="px-4 py-2 text-left">Status</th>
+                                        <th class="px-4 py-2 text-right">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-200 dark:divide-white/10">
+                                    @foreach($siswa->sppBills as $bill)
+                                    <tr x-data="{ editing: false, jumlah: {{ $bill->jumlah }}, formatted_jumlah: 'Rp {{ number_format($bill->jumlah, 0, ',', '.') }}', billId: {{ $bill->id }}, status: '{{ $bill->status }}' }">
+                                        <td class="px-4 py-3 text-sm text-slate-800 dark:text-slate-300">{{ $bill->nama_bulan }}</td>
+                                        <td class="px-4 py-3 text-sm text-slate-600 dark:text-slate-400">{{ $bill->tahun }}</td>
+                                        <td class="px-4 py-3 text-sm font-medium text-right text-slate-900 dark:text-white">
+                                            <span x-show="!editing" class="whitespace-nowrap font-medium" x-text="formatted_jumlah"></span>
+                                            <input x-show="editing" type="number" x-model="jumlah" class="w-24 form-input py-1 text-xs">
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <span class="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold"
+                                                  :class="{
+                                                      'bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300': status === 'lunas',
+                                                      'bg-red-100 text-red-800 dark:bg-red-500/20 dark:text-red-300': status === 'tunggakan',
+                                                      'bg-amber-100 text-amber-800 dark:bg-amber-500/20 dark:text-amber-300': status === 'belum'
+                                                  }" x-text="status.charAt(0).toUpperCase() + status.slice(1)"></span>
+                                        </td>
+                                        <td class="px-4 py-3 text-right">
+                                            <div x-show="!editing">
+                                                <div x-show="status !== 'lunas'" class="flex justify-end gap-2">
+                                                    <button type="button" @click="editing = true" class="btn-primary text-xs py-1 px-2">Edit</button>
+                                                    <button type="button" @click="if(confirm('Hapus tagihan?')) {
+                                                        fetch('/spp/'+billId, {method: 'DELETE', headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}', 'Accept': 'application/json'}})
+                                                        .then(res => res.ok ? res.json() : Promise.reject('Gagal menghapus'))
+                                                        .then(data => { if(data.success) { $el.closest('tr').remove(); summary = data.summary; } else { alert(data.message); } })
+                                                        .catch(err => alert(err));
+                                                    }" class="btn-danger text-xs py-1 px-2">Hapus</button>
+                                                    <button type="button" @click="if(confirm('Tandai lunas?')) {
+                                                        fetch('/spp/'+billId+'/paid', {method: 'POST', headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}', 'Accept': 'application/json'}})
+                                                        .then(res => res.ok ? res.json() : Promise.reject('Gagal memproses'))
+                                                        .then(data => { if(data.success) { status = 'lunas'; summary = data.summary; } else { alert(data.message); } })
+                                                        .catch(err => alert(err));
+                                                    }" class="btn-success text-xs py-1 px-2">Tandai Lunas</button>
+                                                </div>
+                                                <div x-show="status === 'lunas'">
+                                                    <span class="text-xs text-emerald-400/70">Selesai</span>
+                                                </div>
+                                            </div>
+                                            <div x-show="editing" class="flex justify-end gap-1" x-data="{ error: '' }">
+                                                <form x-show="editing" @click.stop @submit.prevent="
+                                                    const jumlahVal = jumlah;
+                                                    fetch('/spp/'+billId, {
+                                                        method: 'PUT',
+                                                        headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}', 'Accept': 'application/json', 'Content-Type': 'application/json' },
+                                                        body: JSON.stringify({ jumlah: jumlahVal })
+                                                    }).then(res => {
+                                                        if (res.ok) return res.json();
+                                                        return res.json().then(data => {
+                                                            let msg = data.errors?.jumlah?.[0] || data.message || 'Error';
+                                                            throw new Error(msg);
+                                                        });
+                                                    }).then(data => {
+                                                        editing = false;
+                                                        error = '';
+                                                        jumlah = data.bill.jumlah;
+                                                        formatted_jumlah = data.bill.formatted_jumlah;
+                                                        summary = data.summary;
+                                                    }).catch(err => { error = err.message; });
+                                                " class="flex flex-col items-end gap-1">
+                                                    <input type="number" x-model="jumlah" min="1" class="w-24 form-input py-1 text-xs" required>
+                                                    <div x-show="error" class="text-[10px] text-red-500" x-text="error"></div>
+                                                    <div class="flex gap-1 mt-1">
+                                                        <button type="submit" class="btn-primary text-xs py-1 px-2">Simpan</button>
+                                                        <button type="button" @click="editing = false; error = ''; jumlah = {{ $bill->jumlah }}" class="btn-secondary text-xs py-1 px-2">Batal</button>
+                                                    </div>
+                                                </form>
+
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <p>Tidak ada data.</p>
+            @endforelse
         </div>
 
         {{-- ═══ Pagination ═══ --}}
         <div class="pagination-wrap">
-            <p class="pagination-info">
-                Menampilkan {{ $tagihan->firstItem() ?? 0 }} - {{ $tagihan->lastItem() ?? 0 }} dari {{ $tagihan->total() }} tagihan
-            </p>
-            <div class="text-slate-900 dark:text-slate-500 dark:text-white/60">
-                {{ $tagihan->links() }}
-            </div>
+            {{ $siswaList->links() }}
         </div>
     </div>
-
-    {{-- Midtrans Snap Script --}}
-    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('services.midtrans.client_key') }}"></script>
-    <script>
-        function initPayment(checkoutUrl) {
-            fetch(checkoutUrl, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Accept': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.snap_token) {
-                    snap.pay(data.snap_token, {
-                        onSuccess: function(result){ alert("Pembayaran Berhasil!"); },
-                        onPending: function(result){ alert("Menunggu Pembayaran!"); },
-                        onError: function(result){ alert("Pembayaran Gagal!"); },
-                        onClose: function(){ alert('Anda menutup popup tanpa menyelesaikan pembayaran.'); }
-                    });
-                } else {
-                    alert(data.message || "Gagal memproses pembayaran");
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert("Terjadi kesalahan sistem");
-            });
-        }
-    </script>
 </x-app-layout>

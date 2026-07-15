@@ -26,6 +26,11 @@ class Siswa extends Model
         'tingkat' => 'integer',
     ];
 
+    public function sppBills()
+    {
+        return $this->hasMany(SppBill::class);
+    }
+
     public function absensis(): HasMany
     {
         return $this->hasMany(Absensi::class, 'siswa_id');
