@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center gap-4">
-            <h2 class="text-xl font-semibold leading-tight text-white">
+            <h2 class="text-xl font-semibold leading-tight text-slate-900 dark:text-white">
                 <svg class="mr-2 inline-block h-5 w-5 text-cyan-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
                 </svg>
@@ -41,19 +41,19 @@
             </div>
 
             {{-- SPP Status --}}
-            <div class="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
-                <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-white/60">Status SPP Tahun {{ now()->year }}</h3>
+            <div class="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 p-5 backdrop-blur-xl">
+                <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-900 dark:text-slate-500 dark:text-white/60">Status SPP Tahun {{ now()->year }}</h3>
                 <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
                     <div>
-                        <p class="text-xs text-white/50">Tagihan</p>
-                        <p class="text-lg font-bold text-white">{{ $statSpp['total'] }} bulan</p>
+                        <p class="text-xs text-slate-900 dark:text-slate-500 dark:text-white/50">Tagihan</p>
+                        <p class="text-lg font-bold text-slate-900 dark:text-white">{{ $statSpp['total'] }} bulan</p>
                     </div>
                     <div>
-                        <p class="text-xs text-white/50">Lunas</p>
+                        <p class="text-xs text-slate-900 dark:text-slate-500 dark:text-white/50">Lunas</p>
                         <p class="text-lg font-bold text-emerald-300">{{ $statSpp['lunas'] }} bulan</p>
                     </div>
                     <div>
-                        <p class="text-xs text-white/50">Belum</p>
+                        <p class="text-xs text-slate-900 dark:text-slate-500 dark:text-white/50">Belum</p>
                         <p class="text-lg font-bold text-amber-300">{{ $statSpp['total'] - $statSpp['lunas'] }} bulan</p>
                     </div>
                     <div class="flex items-end">
@@ -70,23 +70,23 @@
                                 Lunas semua
                             </span>
                         @else
-                            <span class="text-xs text-white/40">Belum ada tagihan</span>
+                            <span class="text-xs text-slate-900 dark:text-slate-400 dark:text-white/40">Belum ada tagihan</span>
                         @endif
                     </div>
                 </div>
             </div>
 
             {{-- Riwayat Absensi --}}
-            <div class="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
-                <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-white/60">Riwayat Absensi (30 terakhir)</h3>
+            <div class="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 p-5 backdrop-blur-xl">
+                <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-900 dark:text-slate-500 dark:text-white/60">Riwayat Absensi (30 terakhir)</h3>
 
                 @if($absensis->isEmpty())
-                    <p class="py-8 text-center text-sm text-white/40">Belum ada data absensi.</p>
+                    <p class="py-8 text-center text-sm text-slate-900 dark:text-slate-400 dark:text-white/40">Belum ada data absensi.</p>
                 @else
                     <div class="overflow-x-auto">
                         <table class="w-full text-left text-sm">
                             <thead>
-                                <tr class="border-b border-white/10 text-xs uppercase tracking-wider text-white/50">
+                                <tr class="border-b border-slate-200 dark:border-white/10 text-xs uppercase tracking-wider text-slate-900 dark:text-slate-500 dark:text-white/50">
                                     <th class="px-3 py-2 font-medium">Tanggal</th>
                                     <th class="px-3 py-2 font-medium">Mata Pelajaran</th>
                                     <th class="px-3 py-2 font-medium">Status</th>
@@ -94,9 +94,9 @@
                             </thead>
                             <tbody>
                                 @foreach($absensis as $a)
-                                <tr class="border-b border-white/5 transition hover:bg-white/5">
-                                    <td class="px-3 py-2.5 text-white/80">{{ \Carbon\Carbon::parse($a->tanggal)->translatedFormat('d M Y') }}</td>
-                                    <td class="px-3 py-2.5 text-white/80">{{ $a->mataPelajaran->nama ?? '-' }}</td>
+                                <tr class="border-b border-white/5 transition hover:bg-white dark:bg-white/5">
+                                    <td class="px-3 py-2.5 text-slate-900 dark:text-slate-700 dark:text-white/80">{{ \Carbon\Carbon::parse($a->tanggal)->translatedFormat('d M Y') }}</td>
+                                    <td class="px-3 py-2.5 text-slate-900 dark:text-slate-700 dark:text-white/80">{{ $a->mataPelajaran->nama ?? '-' }}</td>
                                     <td class="px-3 py-2.5">
                                         <span class="status-capsule status-{{ $a->status }}">
                                             {{ ucfirst($a->status) }}

@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\SiswaTemplateExport;
+use App\Imports\SiswaImport;
+use App\Models\Absensi;
 use App\Models\Siswa;
+use App\Models\SppBill;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\ValidationException;
 
 class SiswaController extends Controller
 {
@@ -53,12 +58,12 @@ class SiswaController extends Controller
             $validated['nis'] = Siswa::generateNIS();
         }
 
-        $validated['kelas'] = $validated['tingkat'] . $validated['rombel'];
+        $validated['kelas'] = $validated['tingkat'].$validated['rombel'];
 
         $siswa = Siswa::create($validated);
 
         // Bikin User account langsung
-        if (!empty($validated['password'])) {
+        if (! empty($validated['password'])) {
             $this->createUserForSiswa($siswa, $validated['password']);
         }
 
@@ -66,6 +71,27 @@ class SiswaController extends Controller
             ->with('success', 'Data siswa berhasil ditambahkan.')
             ->with('new_siswa_nis', $siswa->nis)
             ->with('new_siswa_password', $validated['password'] ?? null);
+    }
+
+    /**
+     * Admin: Update password akun siswa.
+     */
+    public function updatePassword(Request $request, Siswa $siswa)
+    {
+        $request->validate([
+            'password' => 'required|string|min:4|max:255',
+        ]);
+
+        $user = $siswa->user;
+        if (! $user) {
+            return back()->with('error', 'Siswa ini belum memiliki akun login.');
+        }
+
+        $user->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        return back()->with('success', 'Password siswa berhasil direset.');
     }
 
     public function edit(Siswa $siswa)
@@ -83,10 +109,10 @@ class SiswaController extends Controller
             'tingkat' => 'required|integer|in:7,8,9',
             'rombel' => 'required|string|max:10',
             'jenis_kelamin' => 'required|in:L,P',
-            'nis' => 'nullable|string|max:50|unique:siswas,nis,' . $siswa->id,
+            'nis' => 'nullable|string|max:50|unique:siswas,nis,'.$siswa->id,
         ]);
 
-        $validated['kelas'] = $validated['tingkat'] . $validated['rombel'];
+        $validated['kelas'] = $validated['tingkat'].$validated['rombel'];
         $siswa->update($validated);
 
         return redirect()->route('siswa.index')
@@ -117,8 +143,8 @@ class SiswaController extends Controller
         ]);
 
         try {
-            $import = new \App\Imports\SiswaImport;
-            \Maatwebsite\Excel\Facades\Excel::import($import, $request->file('file'));
+            $import = new SiswaImport;
+            Excel::import($import, $request->file('file'));
 
             $results = $import->getResults();
 
@@ -129,7 +155,7 @@ class SiswaController extends Controller
 
             // Bikin User account untuk siswa baru yang belum punya akun
             $password = $request->input('default_password');
-            if (!empty($password)) {
+            if (! empty($password)) {
                 $siswaWithoutUser = Siswa::whereDoesntHave('user')
                     ->latest()
                     ->take($results['success'])
@@ -143,7 +169,7 @@ class SiswaController extends Controller
             }
 
             $msg = "Berhasil mengimport {$results['success']} data siswa.";
-            if (!empty($password) && isset($usersCreated) && $usersCreated > 0) {
+            if (! empty($password) && isset($usersCreated) && $usersCreated > 0) {
                 $msg .= " Akun login ({$usersCreated}) berhasil dibuat.";
             } elseif (empty($password)) {
                 $msg .= ' Akun login belum dibuat — jalankan `php artisan siswa:generate-users` untuk membuatnya.';
@@ -154,21 +180,22 @@ class SiswaController extends Controller
 
             return redirect()->route('siswa.index')
                 ->with('success', $msg);
-        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+        } catch (ValidationException $e) {
             $failures = $e->failures();
-            $msg = 'Gagal import: ' . ($failures->first()->errors()[0] ?? 'Format file tidak sesuai.');
+            $msg = 'Gagal import: '.($failures->first()->errors()[0] ?? 'Format file tidak sesuai.');
+
             return redirect()->route('siswa.import.form')
                 ->with('error', $msg);
         } catch (\Exception $e) {
             return redirect()->route('siswa.import.form')
-                ->with('error', 'Terjadi kesalahan saat import: ' . $e->getMessage());
+                ->with('error', 'Terjadi kesalahan saat import: '.$e->getMessage());
         }
     }
 
     public function downloadTemplate()
     {
-        return \Maatwebsite\Excel\Facades\Excel::download(
-            new \App\Exports\SiswaTemplateExport,
+        return Excel::download(
+            new SiswaTemplateExport,
             'template-import-siswa.xlsx'
         );
     }
@@ -178,7 +205,7 @@ class SiswaController extends Controller
      */
     private function createUserForSiswa(Siswa $siswa, string $password): User
     {
-        $nis = $siswa->nis ?? 'NIS-' . str_pad((string) $siswa->id, 6, '0', STR_PAD_LEFT);
+        $nis = $siswa->nis ?? 'NIS-'.str_pad((string) $siswa->id, 6, '0', STR_PAD_LEFT);
 
         return User::create([
             'name' => $siswa->nama_lengkap,
@@ -199,7 +226,7 @@ class SiswaController extends Controller
         $user = Auth::user();
 
         // Ambil data absensi untuk siswa ini
-        $absensis = \App\Models\Absensi::where('siswa_id', $user->siswa_id)
+        $absensis = Absensi::where('siswa_id', $user->siswa_id)
             ->with('mataPelajaran')
             ->orderBy('tanggal', 'desc')
             ->limit(30)
@@ -208,13 +235,13 @@ class SiswaController extends Controller
         $stats = [
             'total' => $absensis->count(),
             'hadir' => $absensis->where('status', 'hadir')->count(),
-            'izin'  => $absensis->where('status', 'izin')->count(),
+            'izin' => $absensis->where('status', 'izin')->count(),
             'sakit' => $absensis->where('status', 'sakit')->count(),
-            'alfa'  => $absensis->where('status', 'alfa')->count(),
+            'alfa' => $absensis->where('status', 'alfa')->count(),
         ];
 
         // Ambil data SPP tagihan
-        $tagihan = \App\Models\SppBill::where('siswa_id', $user->siswa_id)
+        $tagihan = SppBill::where('siswa_id', $user->siswa_id)
             ->where('tahun', now()->year)
             ->orderBy('bulan')
             ->get();

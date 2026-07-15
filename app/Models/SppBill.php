@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\PaymentTransaction;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class SppBill extends Model
 {
-    protected $table = 'spp_bills';
+    use HasFactory;
 
     protected $fillable = [
         'siswa_id',
@@ -38,7 +39,7 @@ class SppBill extends Model
         return $this->belongsTo(Keuangan::class, 'keuangan_id');
     }
 
-    public function transactions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function transactions(): HasMany
     {
         return $this->hasMany(PaymentTransaction::class, 'spp_bill_id');
     }
@@ -55,6 +56,8 @@ class SppBill extends Model
             '10' => 'Oktober', '11' => 'November',  '12' => 'Desember',
         ];
 
-        return $bulan[$this->bulan] ?? $this->bulan;
+        $normalized = str_pad((string) $this->bulan, 2, '0', STR_PAD_LEFT);
+
+        return $bulan[$normalized] ?? 'Bulan Tidak Valid';
     }
 }

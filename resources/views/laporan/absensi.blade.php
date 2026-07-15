@@ -38,22 +38,22 @@
 
     <div class="space-y-6">
         {{-- Filter Tanggal --}}
-        <div class="rounded-2xl border border-white/20 bg-white/10 p-4 shadow-lg backdrop-blur-md">
+        <div class="rounded-2xl border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/10 p-4 shadow-lg backdrop-blur-md">
             <form method="GET" action="{{ route('laporan.absensi') }}"
                   class="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end">
                 <div class="flex flex-col gap-1 sm:min-w-0">
-                    <label class="text-xs font-medium text-white/70">Pilih Tanggal:</label>
+                    <label class="text-xs font-medium text-slate-900 dark:text-slate-600 dark:text-white/70">Pilih Tanggal:</label>
                     <input type="date" name="tanggal" value="{{ $tanggal }}"
-                           class="w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
+                           class="w-full rounded-xl border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
                 </div>
 
                 <div class="flex flex-col gap-1">
-                    <label class="text-xs font-medium text-white/70">Mata Pelajaran</label>
+                    <label class="text-xs font-medium text-slate-900 dark:text-slate-600 dark:text-white/70">Mata Pelajaran</label>
                     <select name="mata_pelajaran_id"
-                            class="w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
-                        <option value="" {{ $mataPelajaranId === '' || $mataPelajaranId === null ? 'selected' : '' }} class="bg-indigo-950 text-white">Semua Mata Pelajaran</option>
+                            class="w-full rounded-xl border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
+                        <option value="" {{ $mataPelajaranId === '' || $mataPelajaranId === null ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">Semua Mata Pelajaran</option>
                         @foreach ($mataPelajaranOptions as $mp)
-                            <option value="{{ $mp->id }}" {{ (int) $mataPelajaranId === $mp->id ? 'selected' : '' }} class="bg-indigo-950 text-white">
+                            <option value="{{ $mp->id }}" {{ (int) $mataPelajaranId === $mp->id ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">
                                 {{ $mp->nama }} (Kelas {{ $mp->kelas }})
                             </option>
                         @endforeach
@@ -61,22 +61,22 @@
                 </div>
 
                 <div class="flex flex-col gap-1">
-                    <label class="text-xs font-medium text-white/70">Pilih Kelas:</label>
+                    <label class="text-xs font-medium text-slate-900 dark:text-slate-600 dark:text-white/70">Pilih Kelas:</label>
                     <select name="kelas"
-                            class="w-full rounded-xl border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
-                        <option value="" class="bg-indigo-950 text-white">Semua Kelas</option>
+                            class="w-full rounded-xl border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white backdrop-blur-sm focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
+                        <option value="" class="bg-indigo-950 text-slate-900 dark:text-white">Semua Kelas</option>
                         @foreach ($kelasOptions as $k)
-                            <option value="{{ $k }}" {{ $kelas == $k ? 'selected' : '' }} class="bg-indigo-950 text-white">Kelas {{ $k }}</option>
+                            <option value="{{ $k }}" {{ $kelas == $k ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">Kelas {{ $k }}</option>
                         @endforeach
                     </select>
                 </div>
 
                 <button type="submit"
-                        class="w-full rounded-xl bg-indigo-500/80 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition hover:bg-indigo-400/80 sm:w-auto">
+                        class="w-full rounded-xl bg-indigo-500/80 px-4 py-2 text-sm font-medium text-slate-900 dark:text-white backdrop-blur-sm transition hover:bg-indigo-400/80 sm:w-auto">
                     Tampilkan
                 </button>
-                <span class="text-sm text-white/60 sm:ml-auto sm:self-center">
-                    Tanggal: <span class="font-semibold text-white">
+                <span class="text-sm text-slate-900 dark:text-slate-500 dark:text-white/60 sm:ml-auto sm:self-center">
+                    Tanggal: <span class="font-semibold text-slate-900 dark:text-white">
                         {{ \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y') }}
                     </span>
                 </span>
@@ -90,7 +90,7 @@
                 <div class="{{ $statusMeta[$status]['ringkasanClass'] }}">
                     <div class="flex items-center justify-between gap-3" title="{{ $statusMeta[$status]['tooltip'] }}">
                         <div>
-                            <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/55">{{ $statusMeta[$status]['label'] }}</p>
+                            <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-900 dark:text-white/55">{{ $statusMeta[$status]['label'] }}</p>
                             <p class="mt-2 text-3xl font-bold {{ $statusMeta[$status]['textClass'] }}">{{ $ringkasan[$status] }}</p>
                         </div>
                         <div @class([
@@ -108,15 +108,15 @@
         </div>
 
         {{-- Tabel Laporan --}}
-        <div class="overflow-x-auto rounded-2xl border border-white/20 bg-white/10 shadow-lg backdrop-blur-md">
+        <div class="overflow-x-auto rounded-2xl border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/10 shadow-lg backdrop-blur-md">
             <table class="min-w-full">
                 <thead>
-                    <tr class="border-b border-white/10 bg-white/5">
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">No</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Nama Siswa</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Tanggal</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Mata Pelajaran</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Status</th>
+                    <tr class="border-b border-slate-200 dark:border-white/10 bg-white dark:bg-white/5">
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-900 dark:text-slate-500 dark:text-white/50">No</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-900 dark:text-slate-500 dark:text-white/50">Nama Siswa</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-900 dark:text-slate-500 dark:text-white/50">Tanggal</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-900 dark:text-slate-500 dark:text-white/50">Mata Pelajaran</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-900 dark:text-slate-500 dark:text-white/50">Status</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-white/10">
@@ -124,14 +124,14 @@
                         @php
                             $meta = $statusMeta[$absensi->status] ?? null;
                         @endphp
-                        <tr class="transition hover:bg-white/10">
-                            <td class="px-4 py-3 text-sm text-white/70">{{ $i + 1 }}</td>
-                            <td class="px-4 py-3 text-sm font-medium text-white">{{ $absensi->siswa->nama_lengkap }}</td>
-                            <td class="px-4 py-3 text-sm text-white/70">{{ $absensi->tanggal->format('d/m/Y') }}</td>
-                            <td class="px-4 py-3 text-sm text-white/70">{{ $absensi->mataPelajaran->nama ?? '-' }}</td>
+                        <tr class="transition hover:bg-slate-50 dark:bg-white/10">
+                            <td class="px-4 py-3 text-sm text-slate-900 dark:text-slate-600 dark:text-white/70">{{ $i + 1 }}</td>
+                            <td class="px-4 py-3 text-sm font-medium text-slate-900 dark:text-white">{{ $absensi->siswa->nama_lengkap }}</td>
+                            <td class="px-4 py-3 text-sm text-slate-900 dark:text-slate-600 dark:text-white/70">{{ $absensi->tanggal->format('d/m/Y') }}</td>
+                            <td class="px-4 py-3 text-sm text-slate-900 dark:text-slate-600 dark:text-white/70">{{ $absensi->mataPelajaran->nama ?? '-' }}</td>
                             <td class="px-4 py-3 text-sm">
                                 <span title="{{ $meta['tooltip'] ?? ucfirst($absensi->status) }}"
-                                    class="{{ $meta['badgeClass'] ?? 'status-capsule border-white/20 bg-white/10 text-white/70' }}">
+                                    class="{{ $meta['badgeClass'] ?? 'status-capsule border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/10 text-slate-900 dark:text-slate-600 dark:text-white/70' }}">
                                     <x-status-icon :status="$absensi->status" class="h-3.5 w-3.5" />
                                     {{ $meta['label'] ?? ucfirst($absensi->status) }}
                                 </span>
@@ -139,7 +139,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-4 py-8 text-center text-sm text-white/40">
+                            <td colspan="5" class="px-4 py-8 text-center text-sm text-slate-900 dark:text-slate-400 dark:text-white/40">
                                 Tidak ada data absensi untuk kriteria yang dipilih.
                             </td>
                         </tr>
