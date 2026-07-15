@@ -31,7 +31,7 @@
         @endif
 
         @if ($allAbsensiComplete)
-            <div class="rounded-xl border border-emerald-400/30 bg-emerald-500/20 px-4 py-3 text-sm font-semibold text-emerald-100 backdrop-blur-sm">
+            <div class="rounded-xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm font-semibold text-emerald-800 dark:text-emerald-100 backdrop-blur-sm">
                 Semua absensi untuk mata pelajaran ini sudah lengkap.
             </div>
         @endif
@@ -79,31 +79,31 @@
                 <div>
                     <label for="search_siswa" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-900 dark:text-white/75">Cari Siswa</label>
                     <input id="search_siswa" type="text" placeholder="Ketik nama siswa..."
-                        class="w-full rounded-lg border border-white/25 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white placeholder:text-slate-900 dark:text-white/45 focus:border-cyan-300/70 focus:outline-none focus:ring-2 focus:ring-cyan-300/30">
+                        class="w-full rounded-lg border border-white/25 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-400 focus:border-cyan-300/70 focus:outline-none focus:ring-2 focus:ring-cyan-300/30">
                 </div>
             </div>
 
             {{-- Action Bar --}}
             <div class="mt-4 flex flex-wrap items-center gap-2 sm:gap-3">
                 <button type="submit"
-                    class="rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-4 py-2 text-sm font-semibold text-slate-900 dark:text-white transition hover:bg-white/20">
+                    class="rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-4 py-2 text-sm font-semibold text-slate-800 dark:text-white transition hover:bg-white/20">
                     Tampilkan Data
                 </button>
                 @if ($hasExistingAbsensi)
-                    <span class="rounded-full border border-orange-300/40 bg-orange-500/20 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-orange-100">
+                    <span class="rounded-full border border-orange-400/40 bg-orange-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-orange-800 dark:text-orange-100">
                         Absensi Sudah Ada ({{ $existingCount }} data)
                     </span>
                 @endif
                 <button type="button" id="btn-hadir-semua"
-                    class="rounded-lg border border-emerald-300/50 bg-emerald-500/20 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-500/30">
+                    class="rounded-lg border border-emerald-400/50 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-800 dark:text-emerald-200 transition hover:bg-emerald-500/20">
                     Hadir Semua
                 </button>
                 <button type="button" id="btn-isi-alfa"
-                    class="rounded-lg border border-rose-300/40 bg-rose-500/20 px-4 py-2 text-sm font-semibold text-rose-100 transition hover:bg-rose-500/30">
+                    class="rounded-lg border border-rose-400/40 bg-rose-500/10 px-4 py-2 text-sm font-semibold text-rose-800 dark:text-rose-100 transition hover:bg-rose-500/20">
                     Isi Belum Absen Menjadi Alfa
                 </button>
                 <button type="button" id="btn-reset-absensi"
-                    class="rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-4 py-2 text-sm font-semibold text-slate-900 dark:text-slate-800 dark:text-white/90 transition hover:bg-white/20">
+                    class="rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-4 py-2 text-sm font-semibold text-slate-800 dark:text-slate-800 dark:text-white/90 transition hover:bg-slate-200 dark:hover:bg-white/20">
                     Reset Absensi
                 </button>
                 <span id="visible-counter" class="ms-auto text-xs font-medium text-slate-900 dark:text-slate-600 dark:text-white/70">
@@ -123,7 +123,7 @@
                     <span>{{ $absensiMode === 'edit' ? 'Edit status lalu klik' : 'Isi status lalu klik' }} <span
                             class="font-semibold text-slate-900 dark:text-white">{{ $absensiMode === 'edit' ? 'Update Absensi' : 'Simpan Absensi' }}</span></span>
                     <span id="draft-state-badge"
-                        class="rounded-full border px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide">
+                        class="rounded-full border px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-slate-800 dark:text-slate-200">
                     </span>
                     <span id="filled-counter" class="text-xs font-semibold text-slate-900 dark:text-slate-600 dark:text-white/70"></span>
                 </div>
@@ -359,14 +359,14 @@
             };
 
             const setDraftBadgeState = (state) => {
-                draftStateBadge.className = 'rounded-full border px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide';
+                draftStateBadge.className = 'rounded-full border px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-slate-800 dark:text-slate-200';
                 if (state === 'saved') {
-                    draftStateBadge.classList.add('border-emerald-300/40', 'bg-emerald-500/20', 'text-emerald-100');
+                    draftStateBadge.classList.add('border-emerald-400/40', 'bg-emerald-500/10', 'text-emerald-800', 'dark:text-emerald-100');
                     draftStateBadge.textContent = 'Data tersimpan di database';
                     return;
                 }
 
-                draftStateBadge.classList.add('border-orange-300/40', 'bg-orange-500/20', 'text-orange-100');
+                draftStateBadge.classList.add('border-orange-400/40', 'bg-orange-500/10', 'text-orange-800', 'dark:text-orange-100');
                 draftStateBadge.textContent = 'Draft belum disimpan';
             };
 
@@ -383,8 +383,8 @@
                 const allHadir = isAllHadir() && getFilledCount() === totalRows && totalRows > 0;
                 hadirSemuaBtn.textContent = allHadir ? 'Batalkan Hadir Semua' : 'Hadir Semua';
                 hadirSemuaBtn.className = allHadir
-                    ? 'rounded-lg border border-slate-300/50 bg-slate-500/20 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:bg-slate-500/30'
-                    : 'rounded-lg border border-emerald-300/50 bg-emerald-500/20 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-500/30';
+                    ? 'rounded-lg border border-slate-400/50 bg-slate-500/10 px-4 py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-slate-500/20'
+                    : 'rounded-lg border border-emerald-400/50 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-800 dark:text-emerald-200 transition hover:bg-emerald-500/20';
             };
 
             const saveDraft = () => {
