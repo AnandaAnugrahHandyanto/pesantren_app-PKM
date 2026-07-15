@@ -7,43 +7,43 @@
 
         {{-- Stat Cards --}}
         <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            <div class="rounded-2xl border border-white/20 bg-white/10 p-4 shadow-lg backdrop-blur-md">
-                <p class="text-xs font-semibold uppercase tracking-wider text-white/50">Total Siswa</p>
-                <p class="mt-1 text-3xl font-bold text-white">{{ $totalSiswa }}</p>
+            <div class="rounded-2xl border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/10 p-4 shadow-lg backdrop-blur-md">
+                <p class="text-xs font-semibold uppercase tracking-wider text-slate-900 dark:text-white/40">Total Siswa</p>
+                <p class="mt-1 text-3xl font-bold text-slate-900 dark:text-white">{{ $totalSiswa }}</p>
             </div>
-            <div class="rounded-2xl border border-white/20 bg-white/10 p-4 shadow-lg backdrop-blur-md">
-                <p class="text-xs font-semibold uppercase tracking-wider text-white/50">Hadir Hari Ini</p>
+            <div class="rounded-2xl border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/10 p-4 shadow-lg backdrop-blur-md">
+                <p class="text-xs font-semibold uppercase tracking-wider text-slate-900 dark:text-slate-500 dark:text-white/50">Hadir Hari Ini</p>
                 <p class="mt-1 text-3xl font-bold text-emerald-300">{{ $hadir }}</p>
             </div>
-            <div class="rounded-2xl border border-white/20 bg-white/10 p-4 shadow-lg backdrop-blur-md">
-                <p class="text-xs font-semibold uppercase tracking-wider text-white/50">Sakit</p>
+            <div class="rounded-2xl border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/10 p-4 shadow-lg backdrop-blur-md">
+                <p class="text-xs font-semibold uppercase tracking-wider text-slate-900 dark:text-slate-500 dark:text-white/50">Sakit</p>
                 <p class="mt-1 text-3xl font-bold text-rose-300">{{ $sakit }}</p>
             </div>
-            <div class="rounded-2xl border border-white/20 bg-white/10 p-4 shadow-lg backdrop-blur-md">
-                <p class="text-xs font-semibold uppercase tracking-wider text-white/50">Izin / Alfa</p>
+            <div class="rounded-2xl border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/10 p-4 shadow-lg backdrop-blur-md">
+                <p class="text-xs font-semibold uppercase tracking-wider text-slate-900 dark:text-slate-500 dark:text-white/50">Izin / Alfa</p>
                 <p class="mt-1 text-3xl font-bold text-amber-300">{{ $izin + $alfa }}</p>
             </div>
         </div>
 
         {{-- Recent Students --}}
         <div>
-            <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-white/40">Siswa Terdaftar</p>
-            <div class="overflow-x-auto rounded-2xl border border-white/20 bg-white/10 shadow-lg backdrop-blur-md">
+            <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-900 dark:text-slate-400 dark:text-white/40">Siswa Terdaftar</p>
+            <div class="overflow-x-auto rounded-2xl border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/10 shadow-lg backdrop-blur-md">
                 <table class="min-w-full text-sm">
                     <thead>
-                        <tr class="border-b border-white/10 bg-white/5">
-                            <th class="whitespace-nowrap px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">NIS</th>
-                            <th class="whitespace-nowrap px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Nama</th>
-                            <th class="whitespace-nowrap px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Kelas</th>
-                            <th class="whitespace-nowrap px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/50">Jenis Kelamin</th>
+                        <tr class="border-b border-slate-200 dark:border-white/10 bg-white dark:bg-white/5">
+                            <th class="whitespace-nowrap px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-900 dark:text-slate-500 dark:text-white/50">NIS</th>
+                            <th class="whitespace-nowrap px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-900 dark:text-slate-500 dark:text-white/50">Nama</th>
+                            <th class="whitespace-nowrap px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-900 dark:text-slate-500 dark:text-white/50">Kelas</th>
+                            <th class="whitespace-nowrap px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-900 dark:text-slate-500 dark:text-white/50">Jenis Kelamin</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-white/10">
                         @forelse ($latestSiswa as $siswa)
                             <tr class="transition hover:bg-white/[0.04]">
-                                <td class="whitespace-nowrap px-5 py-3 font-mono text-xs text-white/60">{{ $siswa->nis ?? '-' }}</td>
-                                <td class="whitespace-nowrap px-5 py-3 font-medium text-white">{{ $siswa->nama_lengkap }}</td>
-                                <td class="whitespace-nowrap px-5 py-3 text-white/70">{{ $siswa->kelas }}</td>
+                                <td class="whitespace-nowrap px-5 py-3 font-mono text-xs text-slate-900 dark:text-slate-500 dark:text-white/60">{{ $siswa->nis ?? '-' }}</td>
+                                <td class="whitespace-nowrap px-5 py-3 font-medium text-slate-900 dark:text-white">{{ $siswa->nama_lengkap }}</td>
+                                <td class="whitespace-nowrap px-5 py-3 text-slate-900 dark:text-slate-600 dark:text-white/70">{{ $siswa->kelas }}</td>
                                 <td class="whitespace-nowrap px-5 py-3">
                                     @if (($siswa->jenis_kelamin ?? '') === 'L')
                                         <span class="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/30 bg-cyan-500/20 px-3 py-1 text-xs font-semibold text-cyan-200 shadow-sm">
@@ -60,19 +60,19 @@
                                             Perempuan
                                         </span>
                                     @else
-                                        <span class="text-white/50">-</span>
+                                        <span class="text-slate-900 dark:text-slate-500 dark:text-white/50">-</span>
                                     @endif
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="px-5 py-8 text-center text-sm text-white/40">Belum ada siswa.</td>
+                                <td colspan="4" class="px-5 py-8 text-center text-sm text-slate-900 dark:text-slate-400 dark:text-white/40">Belum ada siswa.</td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
             </div>
-            <div class="mt-2 text-right text-xs text-white/40">
+            <div class="mt-2 text-right text-xs text-slate-900 dark:text-slate-400 dark:text-white/40">
                 Menampilkan {{ $latestSiswa->count() }} siswa
             </div>
         </div>

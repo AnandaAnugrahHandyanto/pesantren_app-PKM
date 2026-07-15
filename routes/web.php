@@ -32,8 +32,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', [AdminDashboard::class, 'index'])->name('admin.dashboard');
         Route::get('/beranda', [AdminDashboard::class, 'index'])->name('dashboard');
         Route::get('/siswa/import', [SiswaController::class, 'importForm'])->name('siswa.import.form');
-        Route::post('/siswa/import', [SiswaController::class, 'importExcel'])->name('siswa.import.excel');
+        Route::post('/siswa/import', [SiswaController::class, 'importExcel'])->name('siswa.import');
         Route::post('/siswa/{siswa}/password', [SiswaController::class, 'updatePassword'])->name('siswa.password.update');
+        Route::get('/siswa/template', [SiswaController::class, 'downloadTemplate'])->name('siswa.template');
     });
 
     // Guru Routes

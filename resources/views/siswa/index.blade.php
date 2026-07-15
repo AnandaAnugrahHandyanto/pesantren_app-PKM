@@ -7,8 +7,8 @@
                 </svg>
             </div>
             <div>
-                <h1 class="text-lg font-semibold text-white">Data Siswa</h1>
-                <p class="text-xs text-white/50">Kelola data siswa dan akun login mereka</p>
+                <h1 class="text-lg font-semibold text-slate-900 dark:text-white">Data Siswa</h1>
+                <p class="text-xs text-slate-900 dark:text-slate-500 dark:text-white/50">Kelola data siswa dan akun login mereka</p>
             </div>
         </div>
     </x-slot>
@@ -44,7 +44,7 @@
                     <div class="ml-3 flex gap-3 text-xs">
                         <span><span class="font-semibold">NIS:</span> {{ session('new_siswa_nis') }}</span>
                         @if (session('new_siswa_password'))
-                            <span><span class="font-semibold">Password:</span> <code class="rounded bg-white/10 px-1 py-0.5 font-mono">{{ session('new_siswa_password') }}</code></span>
+                            <span><span class="font-semibold">Password:</span> <code class="rounded bg-slate-50 dark:bg-white/10 px-1 py-0.5 font-mono">{{ session('new_siswa_password') }}</code></span>
                         @endif
                     </div>
                 </div>
@@ -61,7 +61,7 @@
         @endif
 
         {{-- Filter Section --}}
-        <div class="rounded-2xl border border-white/20 bg-white/[0.06] p-5 shadow-lg backdrop-blur-md">
+        <div class="rounded-2xl border border-slate-300 dark:border-white/20 bg-white/[0.06] p-5 shadow-lg backdrop-blur-md">
             <div class="section-title mb-4">
                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" />
@@ -70,23 +70,23 @@
             </div>
             <form method="GET" action="{{ route('siswa.index') }}" class="flex flex-wrap items-end gap-4">
                 <div class="flex flex-col gap-1.5">
-                    <label class="text-xs font-medium text-white/70">Tingkat</label>
+                    <label class="text-xs font-medium text-slate-900 dark:text-slate-600 dark:text-white/70">Tingkat</label>
                     <select name="tingkat"
                             class="form-select min-w-[130px]">
-                        <option value="" {{ !request('tingkat') ? 'selected' : '' }} class="bg-indigo-950 text-white">Semua Tingkat</option>
+                        <option value="" {{ !request('tingkat') ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">Semua Tingkat</option>
                         @foreach ($tingkatOptions as $t)
-                            <option value="{{ $t }}" {{ request('tingkat') == $t ? 'selected' : '' }} class="bg-indigo-950 text-white">Kelas {{ $t }}</option>
+                            <option value="{{ $t }}" {{ request('tingkat') == $t ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">Kelas {{ $t }}</option>
                         @endforeach
                     </select>
                 </div>
 
                 <div class="flex flex-col gap-1.5">
-                    <label class="text-xs font-medium text-white/70">Rombel</label>
+                    <label class="text-xs font-medium text-slate-900 dark:text-slate-600 dark:text-white/70">Rombel</label>
                     <select name="rombel"
                             class="form-select min-w-[130px]">
-                        <option value="" {{ !request('rombel') ? 'selected' : '' }} class="bg-indigo-950 text-white">Semua Rombel</option>
+                        <option value="" {{ !request('rombel') ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">Semua Rombel</option>
                         @foreach ($rombelOptions as $r)
-                            <option value="{{ $r }}" {{ request('rombel') === $r ? 'selected' : '' }} class="bg-indigo-950 text-white">{{ $r }}</option>
+                            <option value="{{ $r }}" {{ request('rombel') === $r ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">{{ $r }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -111,7 +111,7 @@
         </div>
 
         {{-- Toolbar --}}
-        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between rounded-2xl border border-white/20 bg-white/[0.06] p-5 shadow-lg backdrop-blur-md">
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between rounded-2xl border border-slate-300 dark:border-white/20 bg-white/[0.06] p-5 shadow-lg backdrop-blur-md">
             <div class="section-title">
                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
@@ -151,9 +151,9 @@
                 <tbody class="divide-y divide-white/10">
                     @forelse ($siswas as $siswa)
                         <tr class="transition hover:bg-white/[0.04]">
-                            <td class="font-mono text-xs text-white/60">{{ $siswa->nis ?? '-' }}</td>
-                            <td class="font-medium text-white/90">{{ $siswa->nama_lengkap }}</td>
-                            <td class="text-white/70">{{ $siswa->kelas }}</td>
+                            <td class="font-mono text-xs text-slate-900 dark:text-white/60">{{ $siswa->nis ?? '-' }}</td>
+                            <td class="font-medium text-slate-900 dark:text-slate-800 dark:text-white/90">{{ $siswa->nama_lengkap }}</td>
+                            <td class="text-slate-900 dark:text-slate-600 dark:text-white/70">{{ $siswa->kelas }}</td>
                             <td>
                                 @if ($siswa->jenis_kelamin === 'L')
                                     <span class="gender-badge-male">
@@ -174,7 +174,7 @@
                             <td class="text-right">
                                 <div class="flex items-center justify-end gap-2">
                                     <a href="{{ route('siswa.edit', $siswa) }}"
-                                       class="rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-medium text-white/80 backdrop-blur-sm transition hover:bg-white/20">
+                                       class="rounded-lg border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/10 px-3 py-1.5 text-xs font-medium text-slate-900 dark:text-slate-700 dark:text-white/80 backdrop-blur-sm transition hover:bg-white/20">
                                         Edit
                                     </a>
                                     <form action="{{ route('siswa.destroy', $siswa) }}" method="POST"
@@ -192,10 +192,10 @@
                         <tr>
                             <td colspan="5">
                                 <div class="flex flex-col items-center justify-center py-16">
-                                    <svg class="mb-3 h-12 w-12 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                                    <svg class="mb-3 h-12 w-12 text-slate-900 dark:text-slate-400 dark:text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
                                     </svg>
-                                    <p class="text-sm font-medium text-white/40">Belum ada data siswa</p>
+                                    <p class="text-sm font-medium text-slate-900 dark:text-slate-400 dark:text-white/40">Belum ada data siswa</p>
                                     <a href="{{ route('siswa.create') }}" class="mt-2 text-xs text-cyan-300 underline underline-offset-2 hover:text-cyan-200">
                                         Tambah siswa sekarang
                                     </a>
@@ -212,7 +212,7 @@
             <p class="pagination-info">
                 Total: {{ $siswas->total() }} siswa
             </p>
-            <div class="text-white/60">
+            <div class="text-slate-900 dark:text-slate-500 dark:text-white/60">
                 {{ $siswas->links() }}
             </div>
         </div>

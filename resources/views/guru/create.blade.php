@@ -7,8 +7,8 @@
                 </svg>
             </div>
             <div>
-                <h1 class="text-lg font-semibold text-white">Tambah Guru</h1>
-                <p class="text-xs text-white/50">Buat data guru beserta akun login</p>
+                <h1 class="text-lg font-semibold text-slate-900 dark:text-white">Tambah Guru</h1>
+                <p class="text-xs text-slate-900 dark:text-slate-500 dark:text-white/50">Buat data guru beserta akun login</p>
             </div>
         </div>
     </x-slot>
@@ -24,120 +24,120 @@
             </div>
         @endif
 
-        <div class="rounded-2xl border border-white/20 bg-white/10 p-6 shadow-lg backdrop-blur-md">
+        <div class="rounded-2xl border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/10 p-6 shadow-lg backdrop-blur-md">
             <form action="{{ route('guru.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                 @csrf
 
                 {{-- Account Info Section --}}
                 <div class="mb-4">
                     <h3 class="text-sm font-semibold text-cyan-300">Informasi Akun Login</h3>
-                    <p class="text-xs text-white/50">Data yang digunakan guru untuk login ke sistem</p>
+                    <p class="text-xs text-slate-900 dark:text-slate-500 dark:text-white/50">Data yang digunakan guru untuk login ke sistem</p>
                 </div>
 
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
-                        <label for="username" class="mb-1 block text-sm font-medium text-white/80">Username <span class="text-red-400">*</span></label>
+                        <label for="username" class="mb-1 block text-sm font-medium text-slate-900 dark:text-slate-700 dark:text-white/80">Username <span class="text-red-400">*</span></label>
                         <input type="text" id="username" name="username" value="{{ old('username') }}" required
-                            class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
+                            class="w-full rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
                         @error('username') <p class="mt-1 text-xs text-red-300">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
-                        <label for="email" class="mb-1 block text-sm font-medium text-white/80">Email <span class="text-red-400">*</span></label>
+                        <label for="email" class="mb-1 block text-sm font-medium text-slate-900 dark:text-slate-700 dark:text-white/80">Email <span class="text-red-400">*</span></label>
                         <input type="email" id="email" name="email" value="{{ old('email') }}" required
-                            class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
+                            class="w-full rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
                         @error('email') <p class="mt-1 text-xs text-red-300">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
-                        <label for="password" class="mb-1 block text-sm font-medium text-white/80">Password Default <span class="text-red-400">*</span></label>
+                        <label for="password" class="mb-1 block text-sm font-medium text-slate-900 dark:text-slate-700 dark:text-white/80">Password Default <span class="text-red-400">*</span></label>
                         <input type="password" id="password" name="password" required
-                            class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
+                            class="w-full rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
                         @error('password') <p class="mt-1 text-xs text-red-300">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
-                        <label for="password_confirmation" class="mb-1 block text-sm font-medium text-white/80">Konfirmasi Password <span class="text-red-400">*</span></label>
+                        <label for="password_confirmation" class="mb-1 block text-sm font-medium text-slate-900 dark:text-slate-700 dark:text-white/80">Konfirmasi Password <span class="text-red-400">*</span></label>
                         <input type="password" id="password_confirmation" name="password_confirmation" required
-                            class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
+                            class="w-full rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
                     </div>
                 </div>
 
                 {{-- Profile Info Section --}}
                 <div class="mb-4 mt-6">
                     <h3 class="text-sm font-semibold text-cyan-300">Data Profil Guru</h3>
-                    <p class="text-xs text-white/50">Informasi lengkap data diri guru</p>
+                    <p class="text-xs text-slate-900 dark:text-slate-500 dark:text-white/50">Informasi lengkap data diri guru</p>
                 </div>
 
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
-                        <label for="nama_lengkap" class="mb-1 block text-sm font-medium text-white/80">Nama Lengkap <span class="text-red-400">*</span></label>
+                        <label for="nama_lengkap" class="mb-1 block text-sm font-medium text-slate-900 dark:text-slate-700 dark:text-white/80">Nama Lengkap <span class="text-red-400">*</span></label>
                         <input type="text" id="nama_lengkap" name="nama_lengkap" value="{{ old('nama_lengkap') }}" required
-                            class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
+                            class="w-full rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
                         @error('nama_lengkap') <p class="mt-1 text-xs text-red-300">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
-                        <label for="nip" class="mb-1 block text-sm font-medium text-white/80">NIP</label>
+                        <label for="nip" class="mb-1 block text-sm font-medium text-slate-900 dark:text-slate-700 dark:text-white/80">NIP</label>
                         <input type="text" id="nip" name="nip" value="{{ old('nip') }}"
-                            class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
+                            class="w-full rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
                         @error('nip') <p class="mt-1 text-xs text-red-300">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
-                        <label for="no_hp" class="mb-1 block text-sm font-medium text-white/80">No. HP</label>
+                        <label for="no_hp" class="mb-1 block text-sm font-medium text-slate-900 dark:text-slate-700 dark:text-white/80">No. HP</label>
                         <input type="text" id="no_hp" name="no_hp" value="{{ old('no_hp') }}"
-                            class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
+                            class="w-full rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
                         @error('no_hp') <p class="mt-1 text-xs text-red-300">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
-                        <label for="jenis_kelamin" class="mb-1 block text-sm font-medium text-white/80">Jenis Kelamin <span class="text-red-400">*</span></label>
+                        <label for="jenis_kelamin" class="mb-1 block text-sm font-medium text-slate-900 dark:text-slate-700 dark:text-white/80">Jenis Kelamin <span class="text-red-400">*</span></label>
                         <select id="jenis_kelamin" name="jenis_kelamin" required
-                            class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
-                            <option value="" disabled {{ old('jenis_kelamin') ? '' : 'selected' }} class="bg-indigo-950 text-white">Pilih jenis kelamin</option>
-                            <option value="L" {{ old('jenis_kelamin') === 'L' ? 'selected' : '' }} class="bg-indigo-950 text-white">Laki-laki</option>
-                            <option value="P" {{ old('jenis_kelamin') === 'P' ? 'selected' : '' }} class="bg-indigo-950 text-white">Perempuan</option>
+                            class="w-full rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
+                            <option value="" disabled {{ old('jenis_kelamin') ? '' : 'selected' }} class="bg-indigo-950 text-slate-900 dark:text-white">Pilih jenis kelamin</option>
+                            <option value="L" {{ old('jenis_kelamin') === 'L' ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">Laki-laki</option>
+                            <option value="P" {{ old('jenis_kelamin') === 'P' ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">Perempuan</option>
                         </select>
                         @error('jenis_kelamin') <p class="mt-1 text-xs text-red-300">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
-                        <label for="tanggal_lahir" class="mb-1 block text-sm font-medium text-white/80">Tanggal Lahir</label>
+                        <label for="tanggal_lahir" class="mb-1 block text-sm font-medium text-slate-900 dark:text-slate-700 dark:text-white/80">Tanggal Lahir</label>
                         <input type="date" id="tanggal_lahir" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}"
-                            class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
+                            class="w-full rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
                         @error('tanggal_lahir') <p class="mt-1 text-xs text-red-300">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
-                        <label for="tanggal_masuk" class="mb-1 block text-sm font-medium text-white/80">Tanggal Masuk</label>
+                        <label for="tanggal_masuk" class="mb-1 block text-sm font-medium text-slate-900 dark:text-slate-700 dark:text-white/80">Tanggal Masuk</label>
                         <input type="date" id="tanggal_masuk" name="tanggal_masuk" value="{{ old('tanggal_masuk') }}"
-                            class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
+                            class="w-full rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
                         @error('tanggal_masuk') <p class="mt-1 text-xs text-red-300">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
-                        <label for="foto" class="mb-1 block text-sm font-medium text-white/80">Foto</label>
+                        <label for="foto" class="mb-1 block text-sm font-medium text-slate-900 dark:text-slate-700 dark:text-white/80">Foto</label>
                         <input type="file" id="foto" name="foto" accept="image/*"
-                            class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm file:mr-2 file:rounded file:border-0 file:bg-indigo-500/30 file:px-2 file:py-1 file:text-xs file:text-white focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
+                            class="w-full rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white backdrop-blur-sm file:mr-2 file:rounded file:border-0 file:bg-indigo-500/30 file:px-2 file:py-1 file:text-xs file:text-slate-900 dark:text-white focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
                         @error('foto') <p class="mt-1 text-xs text-red-300">{{ $message }}</p> @enderror
                     </div>
                 </div>
 
                 <div>
-                    <label for="alamat" class="mb-1 block text-sm font-medium text-white/80">Alamat</label>
+                    <label for="alamat" class="mb-1 block text-sm font-medium text-slate-900 dark:text-slate-700 dark:text-white/80">Alamat</label>
                     <textarea id="alamat" name="alamat" rows="3"
-                        class="w-full rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-sm text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">{{ old('alamat') }}</textarea>
+                        class="w-full rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">{{ old('alamat') }}</textarea>
                     @error('alamat') <p class="mt-1 text-xs text-red-300">{{ $message }}</p> @enderror
                 </div>
 
                 <div class="flex gap-2 pt-2">
                     <button type="submit"
-                        class="rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 px-5 py-2 text-sm font-medium text-white shadow-md transition hover:from-blue-400 hover:to-indigo-500 hover:shadow-lg">
+                        class="rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 px-5 py-2 text-sm font-medium text-slate-900 dark:text-white shadow-md transition hover:from-blue-400 hover:to-indigo-500 hover:shadow-lg">
                         Simpan
                     </button>
                     <a href="{{ route('guru.index') }}"
-                        class="rounded-lg border border-white/20 bg-white/10 px-5 py-2 text-sm font-medium text-white/80 backdrop-blur-sm transition hover:bg-white/20">
+                        class="rounded-lg border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/10 px-5 py-2 text-sm font-medium text-slate-900 dark:text-slate-700 dark:text-white/80 backdrop-blur-sm transition hover:bg-white/20">
                         Batal
                     </a>
                 </div>

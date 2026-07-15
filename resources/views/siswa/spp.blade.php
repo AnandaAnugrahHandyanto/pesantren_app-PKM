@@ -7,8 +7,8 @@
                 </svg>
             </div>
             <div>
-                <h1 class="text-lg font-semibold text-white">Tagihan SPP Saya</h1>
-                <p class="text-xs text-white/50">Tahun {{ now()->year }}</p>
+                <h1 class="text-lg font-semibold text-slate-900 dark:text-white">Tagihan SPP Saya</h1>
+                <p class="text-xs text-slate-900 dark:text-slate-500 dark:text-white/50">Tahun {{ now()->year }}</p>
             </div>
         </div>
     </x-slot>
@@ -17,13 +17,13 @@
         {{-- ═══ Statistik ═══ --}}
         <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <div class="stat-card">
-                <div class="stat-icon bg-white/10">
-                    <svg class="h-5 w-5 text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <div class="stat-icon bg-slate-50 dark:bg-white/10">
+                    <svg class="h-5 w-5 text-slate-900 dark:text-slate-600 dark:text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
                     </svg>
                 </div>
                 <p class="stat-label">Tagihan</p>
-                <p class="stat-value text-white">{{ $totalTagihan }}</p>
+                <p class="stat-value text-slate-900 dark:text-white">{{ $totalTagihan }}</p>
                 <p class="stat-sub">Bulan di tahun {{ now()->year }}</p>
             </div>
 
@@ -66,13 +66,13 @@
             @php $progress = round(($totalLunas / $totalTagihan) * 100); @endphp
             <div class="content-card">
                 <div class="flex items-center justify-between mb-2">
-                    <p class="text-xs font-semibold uppercase tracking-wider text-white/50">Progress Pembayaran</p>
-                    <p class="text-xs font-medium text-white/70">{{ $progress }}%</p>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-slate-900 dark:text-slate-500 dark:text-white/50">Progress Pembayaran</p>
+                    <p class="text-xs font-medium text-slate-900 dark:text-slate-600 dark:text-white/70">{{ $progress }}%</p>
                 </div>
-                <div class="h-2.5 overflow-hidden rounded-full bg-white/10">
+                <div class="h-2.5 overflow-hidden rounded-full bg-slate-50 dark:bg-white/10">
                     <div class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-emerald-400 transition-all duration-500" style="width: {{ $progress }}%"></div>
                 </div>
-                <p class="mt-2 text-xs text-white/40">{{ $totalLunas }} dari {{ $totalTagihan }} bulan sudah lunas</p>
+                <p class="mt-2 text-xs text-slate-900 dark:text-slate-400 dark:text-white/40">{{ $totalLunas }} dari {{ $totalTagihan }} bulan sudah lunas</p>
             </div>
         @endif
 
@@ -94,8 +94,8 @@
                             $statusClass = $t->status === 'lunas' ? 'lunas' : ($t->status === 'tunggakan' ? 'tunggakan' : 'belum');
                         @endphp
                         <tr class="status-row-{{ $statusClass }}">
-                            <td class="font-medium text-white">{{ $t->nama_bulan }}</td>
-                            <td class="text-right font-medium text-white/90">Rp {{ number_format($t->jumlah, 0, ',', '.') }}</td>
+                            <td class="font-medium text-slate-900 dark:text-white">{{ $t->nama_bulan }}</td>
+                            <td class="text-right font-medium text-slate-900 dark:text-slate-800 dark:text-white/90">Rp {{ number_format($t->jumlah, 0, ',', '.') }}</td>
                             <td>
                                 @if($t->status === 'lunas')
                                     <span class="status-capsule status-capsule-lunas">
@@ -120,7 +120,7 @@
                                     </span>
                                 @endif
                             </td>
-                            <td class="text-white/60">
+                            <td class="text-slate-900 dark:text-slate-500 dark:text-white/60">
                                 {{ $t->paid_at ? \Carbon\Carbon::parse($t->paid_at)->translatedFormat('d M Y') : '-' }}
                             </td>
                             <td class="text-right">
@@ -137,7 +137,7 @@
                         <tr>
                             <td colspan="5">
                                 <div class="flex flex-col items-center justify-center py-12">
-                                    <p class="text-sm font-medium text-white/40">Belum ada tagihan SPP untuk tahun ini</p>
+                                    <p class="text-sm font-medium text-slate-900 dark:text-slate-400 dark:text-white/40">Belum ada tagihan SPP untuk tahun ini</p>
                                 </div>
                             </td>
                         </tr>
@@ -151,17 +151,17 @@
             <div class="flex items-center justify-center gap-6 text-sm">
                 <div class="text-center">
                     <p class="text-2xl font-bold text-emerald-300">{{ $totalLunas }}</p>
-                    <p class="text-xs text-white/50">Lunas</p>
+                    <p class="text-xs text-slate-900 dark:text-slate-500 dark:text-white/50">Lunas</p>
                 </div>
-                <div class="h-8 w-px bg-white/10"></div>
+                <div class="h-8 w-px bg-slate-50 dark:bg-white/10"></div>
                 <div class="text-center">
                     <p class="text-2xl font-bold text-amber-300">{{ $totalBelum + $totalTunggakan }}</p>
-                    <p class="text-xs text-white/50">Belum Dibayar</p>
+                    <p class="text-xs text-slate-900 dark:text-slate-500 dark:text-white/50">Belum Dibayar</p>
                 </div>
-                <div class="h-8 w-px bg-white/10"></div>
+                <div class="h-8 w-px bg-slate-50 dark:bg-white/10"></div>
                 <div class="text-center">
-                    <p class="text-2xl font-bold text-white">{{ $totalTagihan }}</p>
-                    <p class="text-xs text-white/50">Total Tagihan</p>
+                    <p class="text-2xl font-bold text-slate-900 dark:text-white">{{ $totalTagihan }}</p>
+                    <p class="text-xs text-slate-900 dark:text-slate-500 dark:text-white/50">Total Tagihan</p>
                 </div>
             </div>
         </div>

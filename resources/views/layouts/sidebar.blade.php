@@ -1,14 +1,14 @@
 <aside
     x-cloak
-    class="fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r border-white/20 bg-gradient-to-br from-blue-950 via-indigo-950 to-cyan-950 backdrop-blur-xl transition-transform duration-200 ease-in-out lg:translate-x-0"
+    class="fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r border-slate-300 dark:border-white/20 bg-gradient-to-br from-blue-950 via-indigo-950 to-cyan-950 backdrop-blur-xl transition-transform duration-200 ease-in-out lg:translate-x-0"
     :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
 >
-    <div class="flex h-16 items-center border-b border-white/20 px-5 gap-3">
-        <svg class="h-8 w-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <div class="flex h-16 items-center border-b border-slate-300 dark:border-white/20 px-5 gap-3">
+        <svg class="h-8 w-8 text-slate-900 dark:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
             <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
         </svg>
-        <span class="text-sm font-semibold tracking-wide text-white">Sekolah App</span>
+        <span class="text-sm font-semibold tracking-wide text-slate-900 dark:text-white">Sekolah App</span>
     </div>
     <nav class="flex-1 space-y-1 overflow-y-auto px-3 py-4 text-sm">
         @php
@@ -27,7 +27,7 @@
 
         @foreach($links as $link)
             <a href="{{ route($link['route']) }}" 
-               class="flex items-center gap-3 rounded-xl px-3 py-2.5 transition {{ request()->routeIs($link['route'].'*') ? 'bg-white/20 text-white shadow-sm' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
+               class="flex items-center gap-3 rounded-xl px-3 py-2.5 transition {{ request()->routeIs($link['route'].'*') ? 'bg-white/20 text-slate-900 dark:text-white shadow-sm' : 'text-slate-900 dark:text-slate-600 dark:text-white/70 hover:bg-slate-50 dark:bg-white/10 hover:text-slate-900 dark:text-white' }}">
                 <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
                     {!! $link['icon'] !!}
                 </svg>

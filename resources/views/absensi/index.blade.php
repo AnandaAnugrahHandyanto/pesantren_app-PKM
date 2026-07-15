@@ -39,54 +39,54 @@
         <form method="GET" action="{{ route('absensi.index') }}" class="glass-panel rounded-2xl p-4 sm:p-5">
             <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 <div>
-                    <label for="tanggal_filter" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-white/75">Tanggal</label>
+                    <label for="tanggal_filter" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-900 dark:text-white/75">Tanggal</label>
                     <input id="tanggal_filter" type="date" name="tanggal" value="{{ $tanggal }}"
-                        class="w-full rounded-lg border border-white/25 bg-white/10 px-3 py-2 text-sm text-white focus:border-cyan-300/70 focus:outline-none focus:ring-2 focus:ring-cyan-300/30">
+                        class="w-full rounded-lg border border-white/25 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white focus:border-cyan-300/70 focus:outline-none focus:ring-2 focus:ring-cyan-300/30">
                 </div>
                 <div>
-                    <label for="mata_pelajaran_filter" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-white/75">Mata Pelajaran <span class="text-red-400">*</span></label>
+                    <label for="mata_pelajaran_filter" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-900 dark:text-white/75">Mata Pelajaran <span class="text-red-400">*</span></label>
                     <select id="mata_pelajaran_filter" name="mata_pelajaran_id" required
-                        class="w-full rounded-lg border border-white/25 bg-white/10 px-3 py-2 text-sm text-white focus:border-cyan-300/70 focus:outline-none focus:ring-2 focus:ring-cyan-300/30">
-                        <option value="" class="bg-indigo-950 text-white" disabled {{ !$mataPelajaranId ? 'selected' : '' }}>Pilih Mata Pelajaran</option>
+                        class="w-full rounded-lg border border-white/25 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white focus:border-cyan-300/70 focus:outline-none focus:ring-2 focus:ring-cyan-300/30">
+                        <option value="" class="bg-indigo-950 text-slate-900 dark:text-white" disabled {{ !$mataPelajaranId ? 'selected' : '' }}>Pilih Mata Pelajaran</option>
                         @foreach ($mataPelajaranOptions as $mp)
-                            <option value="{{ $mp->id }}" @selected($mataPelajaranId == $mp->id) class="bg-indigo-950 text-white">
+                            <option value="{{ $mp->id }}" @selected($mataPelajaranId == $mp->id) class="bg-indigo-950 text-slate-900 dark:text-white">
                                 {{ $mp->nama }} (Kelas {{ $mp->kelas }})
                             </option>
                         @endforeach
                     </select>
                 </div>
                 <div>
-                    <label for="kelas_filter" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-white/70">Pilih Kelas</label>
+                    <label for="kelas_filter" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-900 dark:text-slate-600 dark:text-white/70">Pilih Kelas</label>
                     <select id="kelas_filter" name="kelas" required
-                        class="w-full rounded-lg border border-white/25 bg-white/10 px-3 py-2 text-sm text-white focus:border-cyan-300/70 focus:outline-none focus:ring-2 focus:ring-cyan-300/30">
-                        <option value="" class="bg-indigo-950 text-white" disabled {{ !$kelas ? 'selected' : '' }}>Pilih Kelas</option>
+                        class="w-full rounded-lg border border-white/25 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white focus:border-cyan-300/70 focus:outline-none focus:ring-2 focus:ring-cyan-300/30">
+                        <option value="" class="bg-indigo-950 text-slate-900 dark:text-white" disabled {{ !$kelas ? 'selected' : '' }}>Pilih Kelas</option>
                         @foreach ($kelasOptions as $k)
-                            <option value="{{ $k }}" {{ $kelas == $k ? 'selected' : '' }} class="bg-indigo-950 text-white">{{ $k }}</option>
+                            <option value="{{ $k }}" {{ $kelas == $k ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">{{ $k }}</option>
                         @endforeach
                     </select>
                 </div>
 
                 <div>
-                    <label for="rombel_filter" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-white/70">Pilih Rombel</label>
+                    <label for="rombel_filter" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-900 dark:text-slate-600 dark:text-white/70">Pilih Rombel</label>
                     <select id="rombel_filter" name="rombel" required
-                        class="w-full rounded-lg border border-white/25 bg-white/10 px-3 py-2 text-sm text-white focus:border-cyan-300/70 focus:outline-none focus:ring-2 focus:ring-cyan-300/30">
-                        <option value="" class="bg-indigo-950 text-white" disabled {{ !$rombel ? 'selected' : '' }}>Pilih Rombel</option>
+                        class="w-full rounded-lg border border-white/25 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white focus:border-cyan-300/70 focus:outline-none focus:ring-2 focus:ring-cyan-300/30">
+                        <option value="" class="bg-indigo-950 text-slate-900 dark:text-white" disabled {{ !$rombel ? 'selected' : '' }}>Pilih Rombel</option>
                         @foreach ($rombelOptions as $r)
-                            <option value="{{ $r }}" {{ $rombel == $r ? 'selected' : '' }} class="bg-indigo-950 text-white">Rombel {{ $r }}</option>
+                            <option value="{{ $r }}" {{ $rombel == $r ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">Rombel {{ $r }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div>
-                    <label for="search_siswa" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-white/75">Cari Siswa</label>
+                    <label for="search_siswa" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-900 dark:text-white/75">Cari Siswa</label>
                     <input id="search_siswa" type="text" placeholder="Ketik nama siswa..."
-                        class="w-full rounded-lg border border-white/25 bg-white/10 px-3 py-2 text-sm text-white placeholder:text-white/45 focus:border-cyan-300/70 focus:outline-none focus:ring-2 focus:ring-cyan-300/30">
+                        class="w-full rounded-lg border border-white/25 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white placeholder:text-slate-900 dark:text-white/45 focus:border-cyan-300/70 focus:outline-none focus:ring-2 focus:ring-cyan-300/30">
                 </div>
             </div>
 
             {{-- Action Bar --}}
             <div class="mt-4 flex flex-wrap items-center gap-2 sm:gap-3">
                 <button type="submit"
-                    class="rounded-lg border border-white/30 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/20">
+                    class="rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-4 py-2 text-sm font-semibold text-slate-900 dark:text-white transition hover:bg-white/20">
                     Tampilkan Data
                 </button>
                 @if ($hasExistingAbsensi)
@@ -103,10 +103,10 @@
                     Isi Belum Absen Menjadi Alfa
                 </button>
                 <button type="button" id="btn-reset-absensi"
-                    class="rounded-lg border border-white/30 bg-white/10 px-4 py-2 text-sm font-semibold text-white/90 transition hover:bg-white/20">
+                    class="rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-4 py-2 text-sm font-semibold text-slate-900 dark:text-slate-800 dark:text-white/90 transition hover:bg-white/20">
                     Reset Absensi
                 </button>
-                <span id="visible-counter" class="ms-auto text-xs font-medium text-white/70">
+                <span id="visible-counter" class="ms-auto text-xs font-medium text-slate-900 dark:text-slate-600 dark:text-white/70">
                     0 / {{ $siswas->count() }} siswa tampil
                 </span>
             </div>
@@ -118,38 +118,38 @@
             <input type="hidden" name="mata_pelajaran_id" value="{{ $mataPelajaranId }}">
             <input type="hidden" name="form_mode" value="{{ $absensiMode }}">
 
-            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/15 px-4 py-3 sm:px-5">
-                <div class="flex flex-wrap items-center gap-2 text-sm text-white/75">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 dark:border-white/15 px-4 py-3 sm:px-5">
+                <div class="flex flex-wrap items-center gap-2 text-sm text-slate-900 dark:text-white/75">
                     <span>{{ $absensiMode === 'edit' ? 'Edit status lalu klik' : 'Isi status lalu klik' }} <span
-                            class="font-semibold text-white">{{ $absensiMode === 'edit' ? 'Update Absensi' : 'Simpan Absensi' }}</span></span>
+                            class="font-semibold text-slate-900 dark:text-white">{{ $absensiMode === 'edit' ? 'Update Absensi' : 'Simpan Absensi' }}</span></span>
                     <span id="draft-state-badge"
                         class="rounded-full border px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide">
                     </span>
-                    <span id="filled-counter" class="text-xs font-semibold text-white/70"></span>
+                    <span id="filled-counter" class="text-xs font-semibold text-slate-900 dark:text-slate-600 dark:text-white/70"></span>
                 </div>
                 <button type="submit"
                     id="btn-simpan-absensi"
-                    class="w-full whitespace-nowrap rounded-lg bg-gradient-to-r from-cyan-500/90 to-blue-600/90 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition hover:from-cyan-400 hover:to-blue-500 sm:w-auto">
+                    class="w-full whitespace-nowrap rounded-lg bg-gradient-to-r from-cyan-500/90 to-blue-600/90 px-4 py-2 text-sm font-semibold text-slate-900 dark:text-white shadow-lg shadow-cyan-500/20 transition hover:from-cyan-400 hover:to-blue-500 sm:w-auto">
                     {{ $absensiMode === 'edit' ? 'Update Absensi' : 'Simpan Absensi' }}
                 </button>
             </div>
 
-            <div class="grid gap-2 border-b border-white/10 px-4 py-3 text-xs text-white/75 sm:grid-cols-2 lg:grid-cols-5 sm:px-5">
-                <div><span class="text-white/55">Mata Pelajaran:</span> <span class="font-semibold text-white">{{ $selectedMataPelajaran?->nama ?? '-' }} (Kelas {{ $selectedMataPelajaran?->kelas ?? '-' }})</span></div>
-                <div><span class="text-white/55">Tanggal aktif:</span> <span class="font-semibold text-white">{{ $tanggal }}</span></div>
-                <div><span class="text-white/55">Jumlah siswa:</span> <span class="font-semibold text-white">{{ $totalSiswa }}</span></div>
-                <div><span class="text-white/55">Sudah diabsen:</span> <span class="font-semibold text-white" id="existing-count">{{ $existingCount }}</span></div>
-                <div><span class="text-white/55">Terakhir diupdate:</span> <span class="font-semibold text-white">{{ $lastUpdatedAt ? \Illuminate\Support\Carbon::parse($lastUpdatedAt)->format('d-m-Y H:i') : '-' }}</span></div>
+            <div class="grid gap-2 border-b border-slate-200 dark:border-white/10 px-4 py-3 text-xs text-slate-900 dark:text-white/75 sm:grid-cols-2 lg:grid-cols-5 sm:px-5">
+                <div><span class="text-slate-900 dark:text-white/55">Mata Pelajaran:</span> <span class="font-semibold text-slate-900 dark:text-white">{{ $selectedMataPelajaran?->nama ?? '-' }} (Kelas {{ $selectedMataPelajaran?->kelas ?? '-' }})</span></div>
+                <div><span class="text-slate-900 dark:text-white/55">Tanggal aktif:</span> <span class="font-semibold text-slate-900 dark:text-white">{{ $tanggal }}</span></div>
+                <div><span class="text-slate-900 dark:text-white/55">Jumlah siswa:</span> <span class="font-semibold text-slate-900 dark:text-white">{{ $totalSiswa }}</span></div>
+                <div><span class="text-slate-900 dark:text-white/55">Sudah diabsen:</span> <span class="font-semibold text-slate-900 dark:text-white" id="existing-count">{{ $existingCount }}</span></div>
+                <div><span class="text-slate-900 dark:text-white/55">Terakhir diupdate:</span> <span class="font-semibold text-slate-900 dark:text-white">{{ $lastUpdatedAt ? \Illuminate\Support\Carbon::parse($lastUpdatedAt)->format('d-m-Y H:i') : '-' }}</span></div>
             </div>
 
             {{-- Status Breakdown --}}
-            <div class="grid grid-cols-2 gap-2 border-b border-white/10 px-4 py-3 sm:grid-cols-4 sm:px-5">
+            <div class="grid grid-cols-2 gap-2 border-b border-slate-200 dark:border-white/10 px-4 py-3 sm:grid-cols-4 sm:px-5">
                 <div class="flex items-center gap-2 rounded-lg border border-emerald-500/20 bg-emerald-500/10 px-3 py-2 text-xs">
                     <svg class="h-3 w-3 flex-shrink-0 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                     </svg>
                     <div>
-                        <span class="text-white/55">Hadir</span>
+                        <span class="text-slate-900 dark:text-white/55">Hadir</span>
                         <span class="ml-1 font-bold text-emerald-300" id="count-hadir">{{ $statusCounts['hadir'] ?? 0 }}</span>
                     </div>
                 </div>
@@ -158,7 +158,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                     </svg>
                     <div>
-                        <span class="text-white/55">Izin</span>
+                        <span class="text-slate-900 dark:text-white/55">Izin</span>
                         <span class="ml-1 font-bold text-amber-300" id="count-izin">{{ $statusCounts['izin'] ?? 0 }}</span>
                     </div>
                 </div>
@@ -167,7 +167,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
                     </svg>
                     <div>
-                        <span class="text-white/55">Sakit</span>
+                        <span class="text-slate-900 dark:text-white/55">Sakit</span>
                         <span class="ml-1 font-bold text-rose-300" id="count-sakit">{{ $statusCounts['sakit'] ?? 0 }}</span>
                     </div>
                 </div>
@@ -176,7 +176,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                     <div>
-                        <span class="text-white/55">Alfa</span>
+                        <span class="text-slate-900 dark:text-white/55">Alfa</span>
                         <span class="ml-1 font-bold text-red-300" id="count-alfa">{{ $statusCounts['alfa'] ?? 0 }}</span>
                     </div>
                 </div>
@@ -184,13 +184,13 @@
 
             <div class="table-scroll-wrapper">
                 <table class="min-w-full table-fixed">
-                    <thead class="table-header-sticky bg-white/10 backdrop-blur-sm">
-                        <tr class="border-b border-white/10">
-                            <th class="w-10 px-2 py-2.5 text-left text-[10px] font-semibold uppercase tracking-wider text-white/75 sm:w-16 sm:px-3 sm:py-3 sm:text-xs">No</th>
-                            <th class="px-2 py-2.5 text-left text-[10px] font-semibold uppercase tracking-wider text-white/75 sm:px-3 sm:py-3 sm:text-xs">Nama Lengkap</th>
-                            <th class="w-20 px-2 py-2.5 text-left text-[10px] font-semibold uppercase tracking-wider text-white/75 sm:w-32 sm:px-3 sm:py-3 sm:text-xs">Kelas</th>
-                            <th class="hidden px-2 py-2.5 text-left text-[10px] font-semibold uppercase tracking-wider text-white/75 sm:table-cell sm:w-36 sm:px-3 sm:py-3 sm:text-xs">Jenis Kelamin</th>
-                            <th class="w-auto px-2 py-2.5 text-left text-[10px] font-semibold uppercase tracking-wider text-white/75 sm:w-[22rem] sm:px-3 sm:py-3 sm:text-xs">Status Absensi</th>
+                    <thead class="table-header-sticky bg-slate-50 dark:bg-white/10 backdrop-blur-sm">
+                        <tr class="border-b border-slate-200 dark:border-white/10">
+                            <th class="w-10 px-2 py-2.5 text-left text-[10px] font-semibold uppercase tracking-wider text-slate-900 dark:text-white/75 sm:w-16 sm:px-3 sm:py-3 sm:text-xs">No</th>
+                            <th class="px-2 py-2.5 text-left text-[10px] font-semibold uppercase tracking-wider text-slate-900 dark:text-white/75 sm:px-3 sm:py-3 sm:text-xs">Nama Lengkap</th>
+                            <th class="w-20 px-2 py-2.5 text-left text-[10px] font-semibold uppercase tracking-wider text-slate-900 dark:text-white/75 sm:w-32 sm:px-3 sm:py-3 sm:text-xs">Kelas</th>
+                            <th class="hidden px-2 py-2.5 text-left text-[10px] font-semibold uppercase tracking-wider text-slate-900 dark:text-white/75 sm:table-cell sm:w-36 sm:px-3 sm:py-3 sm:text-xs">Jenis Kelamin</th>
+                            <th class="w-auto px-2 py-2.5 text-left text-[10px] font-semibold uppercase tracking-wider text-slate-900 dark:text-white/75 sm:w-[22rem] sm:px-3 sm:py-3 sm:text-xs">Status Absensi</th>
                         </tr>
                     </thead>
                     <tbody id="absensi-tbody" class="divide-y divide-white/10">
@@ -206,12 +206,12 @@
                                 data-row-id="{{ $siswa->id }}"
                                 data-existing-status="{{ $existingStatus }}"
                                 data-initial-status="{{ $initialStatus }}">
-                                <td class="px-2 py-2 text-sm text-white/70 sm:px-3 sm:py-2.5">{{ $index + 1 }}</td>
-                                <td class="px-2 py-2 text-sm font-medium text-white sm:px-3 sm:py-2.5">
+                                <td class="px-2 py-2 text-sm text-slate-900 dark:text-white/70 sm:px-3 sm:py-2.5">{{ $index + 1 }}</td>
+                                <td class="px-2 py-2 text-sm font-medium text-slate-900 dark:text-white sm:px-3 sm:py-2.5">
                                     <span>{{ $siswa->nama_lengkap }}</span>
                                 </td>
-                                <td class="px-2 py-2 text-sm text-white/80 sm:px-3 sm:py-2.5">{{ $siswa->kelas ?? '-' }}</td>
-                                <td class="hidden px-2 py-2 text-sm text-white/80 sm:table-cell sm:px-3 sm:py-2.5">
+                                <td class="px-2 py-2 text-sm text-slate-900 dark:text-slate-700 dark:text-white/80 sm:px-3 sm:py-2.5">{{ $siswa->kelas ?? '-' }}</td>
+                                <td class="hidden px-2 py-2 text-sm text-slate-900 dark:text-slate-700 dark:text-white/80 sm:table-cell sm:px-3 sm:py-2.5">
                                     @if (($siswa->jenis_kelamin ?? '') === 'L')
                                         <span class="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/30 bg-cyan-500/20 px-2.5 py-0.5 text-[11px] font-semibold text-cyan-200 shadow-sm">
                                             <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -227,7 +227,7 @@
                                             Perempuan
                                         </span>
                                     @else
-                                        <span class="text-white/50">-</span>
+                                        <span class="text-slate-900 dark:text-slate-500 dark:text-white/50">-</span>
                                     @endif
                                 </td>
                                 <td class="px-2 py-2 sm:px-3 sm:py-2.5">
@@ -247,7 +247,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="px-4 py-10 text-center text-sm text-white/55">
+                                <td colspan="5" class="px-4 py-10 text-center text-sm text-slate-900 dark:text-white/55">
                                     Data siswa belum tersedia.
                                 </td>
                             </tr>

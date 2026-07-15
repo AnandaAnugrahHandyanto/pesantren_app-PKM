@@ -7,13 +7,13 @@
 
         {{-- ===== Rekap Absensi Hari Ini ===== --}}
         <div>
-            <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-white/40">Rekap Absensi Hari Ini</p>
+            <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-900 dark:text-slate-400 dark:text-white/40">Rekap Absensi Hari Ini</p>
             <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
                 {{-- Hadir --}}
                 <div class="stat-card stat-card-hadir">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium uppercase tracking-[0.18em] text-white/55">Hadir</p>
+                            <p class="text-sm font-medium uppercase tracking-[0.18em] text-slate-900 dark:text-white/55">Hadir</p>
                             <p class="mt-2 text-4xl font-bold text-emerald-300">{{ $hadir }}</p>
                         </div>
                         <div title="Hadir - Sukses/Valid" class="flex h-16 w-16 items-center justify-center rounded-3xl border border-emerald-300/20 bg-emerald-500/10 text-emerald-300/80 shadow-[0_0_24px_rgba(16,185,129,0.18)]">
@@ -26,7 +26,7 @@
                 <div class="stat-card stat-card-izin">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium uppercase tracking-[0.18em] text-white/55">Izin</p>
+                            <p class="text-sm font-medium uppercase tracking-[0.18em] text-slate-900 dark:text-white/55">Izin</p>
                             <p class="mt-2 text-4xl font-bold text-amber-300">{{ $izin }}</p>
                         </div>
                         <div title="Izin - Menunggu/Persetujuan" class="flex h-16 w-16 items-center justify-center rounded-3xl border border-amber-300/20 bg-amber-500/10 text-amber-300/80 shadow-[0_0_24px_rgba(245,158,11,0.18)]">
@@ -39,7 +39,7 @@
                 <div class="stat-card stat-card-sakit">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium uppercase tracking-[0.18em] text-white/55">Sakit</p>
+                            <p class="text-sm font-medium uppercase tracking-[0.18em] text-slate-900 dark:text-white/55">Sakit</p>
                             <p class="mt-2 text-4xl font-bold text-rose-300">{{ $sakit }}</p>
                         </div>
                         <div title="Sakit - Kondisi Kesehatan" class="flex h-16 w-16 items-center justify-center rounded-3xl border border-rose-300/20 bg-rose-500/10 text-rose-300/80 shadow-[0_0_24px_rgba(244,63,94,0.18)]">
@@ -52,7 +52,7 @@
                 <div class="stat-card stat-card-alfa">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium uppercase tracking-[0.18em] text-white/55">Alfa</p>
+                            <p class="text-sm font-medium uppercase tracking-[0.18em] text-slate-900 dark:text-white/55">Alfa</p>
                             <p class="mt-2 text-4xl font-bold text-red-200">{{ $alfa }}</p>
                         </div>
                         <div title="Alfa - Tidak Hadir Tanpa Keterangan" class="flex h-16 w-16 items-center justify-center rounded-3xl border border-red-400/20 bg-red-600/10 text-red-200/80 shadow-[0_0_24px_rgba(185,28,28,0.18)]">
@@ -65,7 +65,7 @@
 
         {{-- ===== Menu Absensi ===== --}}
         <div>
-            <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-white/40">Menu Absensi</p>
+            <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-900 dark:text-slate-400 dark:text-white/40">Menu Absensi</p>
             <div class="mb-4">
                 <a href="{{ route('absensi.index', ['tanggal' => now()->toDateString()]) }}"
                    class="inline-flex items-center gap-2 rounded-lg border border-amber-300/40 bg-amber-500/20 px-4 py-2 text-sm font-semibold text-amber-100 transition hover:bg-amber-500/30">
@@ -75,7 +75,7 @@
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {{-- Absensi Pelajaran --}}
                 <a href="{{ route('absensi.index', ['tanggal' => now()->toDateString()]) }}"
-                   class="flex items-center gap-4 rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md transition hover:bg-white/20">
+                   class="flex items-center gap-4 rounded-2xl border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/10 p-5 shadow-lg backdrop-blur-md transition hover:bg-white/20">
                     <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-green-500/30 text-green-200">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -83,8 +83,8 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="text-base font-semibold text-white">Absensi</p>
-                        <p class="text-sm text-white/60">Kelola absensi siswa per mata pelajaran</p>
+                        <p class="text-base font-semibold text-slate-900 dark:text-white">Absensi</p>
+                        <p class="text-sm text-slate-900 dark:text-slate-500 dark:text-white/60">Kelola absensi siswa per mata pelajaran</p>
                     </div>
                 </a>
             </div>
@@ -92,11 +92,11 @@
 
         {{-- ===== Menu Laporan ===== --}}
         <div>
-            <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-white/40">Laporan</p>
+            <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-900 dark:text-slate-400 dark:text-white/40">Laporan</p>
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {{-- Laporan Absensi --}}
                 <a href="{{ route('laporan.absensi') }}"
-                   class="flex items-center gap-4 rounded-2xl border border-white/20 bg-white/10 p-5 shadow-lg backdrop-blur-md transition hover:bg-white/20">
+                   class="flex items-center gap-4 rounded-2xl border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/10 p-5 shadow-lg backdrop-blur-md transition hover:bg-white/20">
                     <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-indigo-500/30 text-indigo-200">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -104,8 +104,8 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="text-base font-semibold text-white">Laporan Absensi</p>
-                        <p class="text-sm text-white/60">Lihat laporan absensi siswa</p>
+                        <p class="text-base font-semibold text-slate-900 dark:text-white">Laporan Absensi</p>
+                        <p class="text-sm text-slate-900 dark:text-slate-500 dark:text-white/60">Lihat laporan absensi siswa</p>
                     </div>
                 </a>
             </div>

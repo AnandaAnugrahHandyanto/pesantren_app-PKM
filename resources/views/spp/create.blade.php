@@ -7,8 +7,8 @@
                 </svg>
             </div>
             <div>
-                <h1 class="text-lg font-semibold text-white">Generate Tagihan SPP</h1>
-                <p class="text-xs text-white/50">Buat tagihan SPP massal untuk seluruh siswa</p>
+                <h1 class="text-lg font-semibold text-slate-900 dark:text-white">Generate Tagihan SPP</h1>
+                <p class="text-xs text-slate-900 dark:text-slate-500 dark:text-white/50">Buat tagihan SPP massal untuk seluruh siswa</p>
             </div>
         </div>
     </x-slot>
@@ -44,7 +44,7 @@
                                     <option value="{{ $k }}">{{ $k }}</option>
                                 @endforeach
                             </select>
-                            <p class="mt-1 text-xs text-white/40">Jika tidak dipilih, semua siswa akan dibuatkan tagihan.</p>
+                            <p class="mt-1 text-xs text-slate-900 dark:text-slate-400 dark:text-white/40">Jika tidak dipilih, semua siswa akan dibuatkan tagihan.</p>
                         </div>
                     </div>
 

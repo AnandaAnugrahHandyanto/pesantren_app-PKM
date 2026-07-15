@@ -7,8 +7,8 @@
                 </svg>
             </div>
             <div>
-                <h1 class="text-lg font-semibold text-white">Manajemen SPP</h1>
-                <p class="text-xs text-white/50">Kelola tagihan SPP siswa</p>
+                <h1 class="text-lg font-semibold text-slate-900 dark:text-white">Manajemen SPP</h1>
+                <p class="text-xs text-slate-900 dark:text-slate-500 dark:text-white/50">Kelola tagihan SPP siswa</p>
             </div>
         </div>
     </x-slot>
@@ -36,13 +36,13 @@
         {{-- ═══ Statistik ═══ --}}
         <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
             <div class="stat-card">
-                <div class="stat-icon bg-white/10">
-                    <svg class="h-5 w-5 text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <div class="stat-icon bg-slate-50 dark:bg-white/10">
+                    <svg class="h-5 w-5 text-slate-900 dark:text-slate-600 dark:text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
                     </svg>
                 </div>
                 <p class="stat-label">Total Tagihan</p>
-                <p class="stat-value text-white">{{ number_format($totalTagihan) }}</p>
+                <p class="stat-value text-slate-900 dark:text-white">{{ number_format($totalTagihan) }}</p>
                 <p class="stat-sub">Rp {{ number_format($totalJumlah, 0, ',', '.') }}</p>
             </div>
 
@@ -88,13 +88,13 @@
                     </div>
                     <div class="flex-1">
                         <p class="stat-label">Progress Pembayaran</p>
-                        <p class="mt-1 text-xs text-white/50">{{ $totalLunas + $totalTunggakan + $totalBelum > 0 ? round(($totalLunas / ($totalLunas + $totalTunggakan + $totalBelum)) * 100) : 0 }}% terkumpul</p>
+                        <p class="mt-1 text-xs text-slate-900 dark:text-slate-500 dark:text-white/50">{{ $totalLunas + $totalTunggakan + $totalBelum > 0 ? round(($totalLunas / ($totalLunas + $totalTunggakan + $totalBelum)) * 100) : 0 }}% terkumpul</p>
                         @php
                             $progress = ($totalLunas + $totalTunggakan + $totalBelum) > 0
                                 ? round(($totalLunas / ($totalLunas + $totalTunggakan + $totalBelum)) * 100)
                                 : 0;
                         @endphp
-                        <div class="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
+                        <div class="mt-2 h-2 overflow-hidden rounded-full bg-slate-50 dark:bg-white/10">
                             <div class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-emerald-400 transition-all duration-500" style="width: {{ $progress }}%"></div>
                         </div>
                     </div>
@@ -221,11 +221,11 @@
                             $statusClass = $t->status === 'lunas' ? 'lunas' : ($t->status === 'tunggakan' ? 'tunggakan' : 'belum');
                         @endphp
                         <tr class="status-row-{{ $statusClass }}">
-                            <td class="font-medium text-white">{{ $t->siswa->nama_lengkap ?? '-' }}</td>
-                            <td class="text-white/60">{{ $t->siswa->kelas ?? '-' }}</td>
-                            <td class="text-white/80">{{ $t->nama_bulan }}</td>
-                            <td class="text-white/80">{{ $t->tahun }}</td>
-                            <td class="text-right font-medium text-white/90">Rp {{ number_format($t->jumlah, 0, ',', '.') }}</td>
+                            <td class="font-medium text-slate-900 dark:text-white">{{ $t->siswa->nama_lengkap ?? '-' }}</td>
+                            <td class="text-slate-900 dark:text-slate-500 dark:text-white/60">{{ $t->siswa->kelas ?? '-' }}</td>
+                            <td class="text-slate-900 dark:text-slate-700 dark:text-white/80">{{ $t->nama_bulan }}</td>
+                            <td class="text-slate-900 dark:text-slate-700 dark:text-white/80">{{ $t->tahun }}</td>
+                            <td class="text-right font-medium text-slate-900 dark:text-slate-800 dark:text-white/90">Rp {{ number_format($t->jumlah, 0, ',', '.') }}</td>
                             <td>
                                 @if ($t->status === 'lunas')
                                     <span class="status-capsule status-capsule-lunas">
@@ -282,11 +282,11 @@
                         <tr>
                             <td colspan="7">
                                 <div class="flex flex-col items-center justify-center py-12">
-                                    <svg class="mb-3 h-12 w-12 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                                    <svg class="mb-3 h-12 w-12 text-slate-900 dark:text-slate-400 dark:text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
                                     </svg>
-                                    <p class="text-sm font-medium text-white/40">Belum ada tagihan SPP</p>
-                                    <p class="mt-1 text-xs text-white/30">Gunakan panel "Generate Tagihan" di atas untuk membuat tagihan baru.</p>
+                                    <p class="text-sm font-medium text-slate-900 dark:text-slate-400 dark:text-white/40">Belum ada tagihan SPP</p>
+                                    <p class="mt-1 text-xs text-slate-900 dark:text-white/30">Gunakan panel "Generate Tagihan" di atas untuk membuat tagihan baru.</p>
                                 </div>
                             </td>
                         </tr>
@@ -300,7 +300,7 @@
             <p class="pagination-info">
                 Menampilkan {{ $tagihan->firstItem() ?? 0 }} - {{ $tagihan->lastItem() ?? 0 }} dari {{ $tagihan->total() }} tagihan
             </p>
-            <div class="text-white/60">
+            <div class="text-slate-900 dark:text-slate-500 dark:text-white/60">
                 {{ $tagihan->links() }}
             </div>
         </div>

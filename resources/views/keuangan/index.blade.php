@@ -7,8 +7,8 @@
                 </svg>
             </div>
             <div>
-                <h1 class="text-lg font-semibold text-white">Keuangan</h1>
-                <p class="text-xs text-white/50">Kelola pemasukan dan pengeluaran</p>
+                <h1 class="text-lg font-semibold text-slate-900 dark:text-white">Keuangan</h1>
+                <p class="text-xs text-slate-900 dark:text-slate-500 dark:text-white/50">Kelola pemasukan dan pengeluaran</p>
             </div>
         </div>
     </x-slot>
@@ -69,19 +69,19 @@
             </div>
 
             <div class="stat-card">
-                <div class="stat-icon bg-white/10">
-                    <svg class="h-5 w-5 text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <div class="stat-icon bg-slate-50 dark:bg-white/10">
+                    <svg class="h-5 w-5 text-slate-900 dark:text-slate-600 dark:text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605" />
                     </svg>
                 </div>
                 <p class="stat-label">Total Transaksi</p>
-                <p class="stat-value text-white">{{ number_format($totalTransaksi) }}</p>
+                <p class="stat-value text-slate-900 dark:text-white">{{ number_format($totalTransaksi) }}</p>
                 <p class="stat-sub">{{ $totalTransaksi > 0 ? 'Terakhir: ' . $keuangans->first()?->tanggal?->format('d M') : '-' }}</p>
             </div>
         </div>
 
         {{-- ═══ Action ═══ --}}
-        <div class="flex items-center justify-between rounded-2xl border border-white/20 bg-white/[0.06] p-5 shadow-lg backdrop-blur-md">
+        <div class="flex items-center justify-between rounded-2xl border border-slate-300 dark:border-white/20 bg-white/[0.06] p-5 shadow-lg backdrop-blur-md">
             <div class="section-title">
                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -166,7 +166,7 @@
                 <tbody>
                     @forelse ($keuangans as $k)
                         <tr>
-                            <td class="text-white/80">{{ $k->tanggal->format('d M Y') }}</td>
+                            <td class="text-slate-900 dark:text-slate-700 dark:text-white/80">{{ $k->tanggal->format('d M Y') }}</td>
                             <td>
                                 @if ($k->jenis === 'pemasukan')
                                     <span class="status-capsule status-capsule-lunas">
@@ -184,9 +184,9 @@
                                     </span>
                                 @endif
                             </td>
-                            <td class="text-white/70">{{ $k->kategori ?? '-' }}</td>
-                            <td class="max-w-xs truncate text-white/70">{{ $k->keterangan ?? '-' }}</td>
-                            <td class="text-white/70">{{ $k->siswa?->nama_lengkap ?? '-' }}</td>
+                            <td class="text-slate-900 dark:text-slate-600 dark:text-white/70">{{ $k->kategori ?? '-' }}</td>
+                            <td class="max-w-xs truncate text-slate-900 dark:text-slate-600 dark:text-white/70">{{ $k->keterangan ?? '-' }}</td>
+                            <td class="text-slate-900 dark:text-slate-600 dark:text-white/70">{{ $k->siswa?->nama_lengkap ?? '-' }}</td>
                             <td class="text-right font-medium {{ $k->jenis === 'pemasukan' ? 'text-emerald-200' : 'text-rose-200' }}">
                                 <span class="{{ $k->jenis === 'pemasukan' ? '' : '' }}">
                                     {{ $k->jenis === 'pemasukan' ? '+' : '-' }} Rp {{ number_format($k->jumlah, 0, ',', '.') }}
@@ -195,7 +195,7 @@
                             <td class="text-right">
                                 <div class="flex items-center justify-end gap-2">
                                     <a href="{{ route('keuangan.edit', $k) }}"
-                                       class="rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-medium text-white/80 backdrop-blur-sm transition hover:bg-white/20">
+                                       class="rounded-lg border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/10 px-3 py-1.5 text-xs font-medium text-slate-900 dark:text-slate-700 dark:text-white/80 backdrop-blur-sm transition hover:bg-white/20">
                                         Edit
                                     </a>
                                     <form action="{{ route('keuangan.destroy', $k) }}" method="POST" class="inline"
@@ -213,10 +213,10 @@
                         <tr>
                             <td colspan="7">
                                 <div class="flex flex-col items-center justify-center py-12">
-                                    <svg class="mb-3 h-12 w-12 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                                    <svg class="mb-3 h-12 w-12 text-slate-900 dark:text-slate-400 dark:text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 2c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8 3.59-8 8-8zm-1 13h2v-2h-2v2zm0-4h2V7h-2v6z" />
                                     </svg>
-                                    <p class="text-sm font-medium text-white/40">Belum ada data transaksi</p>
+                                    <p class="text-sm font-medium text-slate-900 dark:text-slate-400 dark:text-white/40">Belum ada data transaksi</p>
                                     <a href="{{ route('keuangan.create') }}" class="mt-2 text-xs text-cyan-300 underline underline-offset-2 hover:text-cyan-200">
                                         Tambah transaksi sekarang
                                     </a>
@@ -233,7 +233,7 @@
             <p class="pagination-info">
                 Menampilkan {{ $keuangans->firstItem() ?? 0 }} - {{ $keuangans->lastItem() ?? 0 }} dari {{ $keuangans->total() }} transaksi
             </p>
-            <div class="text-white/60">
+            <div class="text-slate-900 dark:text-slate-500 dark:text-white/60">
                 {{ $keuangans->links() }}
             </div>
         </div>

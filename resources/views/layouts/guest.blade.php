@@ -13,23 +13,24 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @include('layouts.theme-script')
 </head>
 <body class="font-sans antialiased">
-    <div class="relative min-h-screen overflow-hidden bg-gradient-to-br from-blue-950 via-indigo-950 to-cyan-950">
+    <div class="relative min-h-screen overflow-hidden bg-slate-100 dark:bg-slate-950">
 
         {{-- Background blobs --}}
         <div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-            <div class="absolute -left-48 -top-48 h-[700px] w-[700px] rounded-full bg-blue-500/20 blur-3xl"></div>
-            <div class="absolute -bottom-48 -right-48 h-[700px] w-[700px] rounded-full bg-purple-500/20 blur-3xl"></div>
-            <div class="absolute left-1/2 top-1/3 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-cyan-400/15 blur-3xl"></div>
-            <div class="absolute right-1/4 top-1/4 h-[400px] w-[400px] rounded-full bg-indigo-400/10 blur-3xl"></div>
+            <div class="absolute -left-48 -top-48 h-[700px] w-[700px] rounded-full bg-slate-500/10 blur-3xl"></div>
+            <div class="absolute -bottom-48 -right-48 h-[700px] w-[700px] rounded-full bg-slate-600/10 blur-3xl"></div>
+            <div class="absolute left-1/2 top-1/3 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-slate-400/10 blur-3xl"></div>
+            <div class="absolute right-1/4 top-1/4 h-[400px] w-[400px] rounded-full bg-slate-500/5 blur-3xl"></div>
         </div>
 
         <div class="relative z-10 flex min-h-screen flex-col items-center justify-center px-4 py-12">
             <div class="w-full max-w-md">
 
                 {{-- Back link --}}
-                <a href="{{ url('/') }}" class="group mb-8 inline-flex items-center gap-1.5 text-sm text-white/40 transition hover:text-white/70">
+                <a href="{{ url('/') }}" class="group mb-8 inline-flex items-center gap-1.5 text-sm text-slate-600 dark:text-slate-400 transition hover:text-slate-900 dark:hover:text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition group-hover:-translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
@@ -37,12 +38,12 @@
                 </a>
 
                 {{-- Glass card --}}
-                <div class="rounded-2xl border border-white/20 bg-white/10 px-8 py-8 shadow-xl backdrop-blur-md sm:px-10">
+                <div class="rounded-2xl border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/10 px-8 py-8 shadow-xl backdrop-blur-md sm:px-10">
                     {{ $slot }}
                 </div>
 
                 {{-- Footer --}}
-                <p class="mt-6 text-center text-xs text-white/30">
+                <p class="mt-6 text-center text-xs text-slate-900 dark:text-white/30">
                     &copy; {{ date('Y') }} Sekolah App. All rights reserved.
                 </p>
             </div>
