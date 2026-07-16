@@ -190,7 +190,6 @@ class JadwalController extends Controller
         // Gunakan tingkat (e.g. 7) sebagai acuan kelas untuk jadwal
         // Karena di DB kolom 'kelas' pada 'jadwals' berisi '7', '6'
         $targetKelas = (string)$siswa->tingkat;
-
         $jadwals = Jadwal::with(['mataPelajaran', 'guru'])
             ->where('kelas', $targetKelas)
             ->orderBy('hari')

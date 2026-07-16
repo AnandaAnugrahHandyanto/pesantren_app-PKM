@@ -50,6 +50,7 @@ class SiswaImport implements ToModel, WithHeadingRow
             'kelas_v2'      => $tingkat,
             'rombel'        => $rombel,
             'kelas'         => $tingkat . $rombel,
+            'tingkat'       => $tingkat,
             'jenis_kelamin' => $jenisKelamin,
         ]);
 
