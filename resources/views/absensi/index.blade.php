@@ -135,7 +135,7 @@
             </div>
 
             <div class="grid gap-2 border-b border-slate-200 dark:border-white/10 px-4 py-3 text-xs text-slate-900 dark:text-white/75 sm:grid-cols-2 lg:grid-cols-5 sm:px-5">
-                <div><span class="text-slate-900 dark:text-white/55">Mata Pelajaran:</span> <span class="font-semibold text-slate-900 dark:text-white">{{ $selectedMataPelajaran?->nama ?? '-' }} (Kelas {{ $selectedMataPelajaran?->kelas ?? '-' }})</span></div>
+                <div><span class="text-slate-900 dark:text-white/55">Mata Pelajaran:</span> <span class="font-semibold text-slate-900 dark:text-white">{{ $selectedMataPelajaran?->nama ?? '-' }} (Kelas {{ $selectedMataPelajaran?->kelas_v2 ?? '-' }})</span></div>
                 <div><span class="text-slate-900 dark:text-white/55">Tanggal aktif:</span> <span class="font-semibold text-slate-900 dark:text-white">{{ $tanggal }}</span></div>
                 <div><span class="text-slate-900 dark:text-white/55">Jumlah siswa:</span> <span class="font-semibold text-slate-900 dark:text-white">{{ $totalSiswa }}</span></div>
                 <div><span class="text-slate-900 dark:text-white/55">Sudah diabsen:</span> <span class="font-semibold text-slate-900 dark:text-white" id="existing-count">{{ $existingCount }}</span></div>
@@ -210,7 +210,11 @@
                                 <td class="px-2 py-2 text-sm font-medium text-slate-900 dark:text-white sm:px-3 sm:py-2.5">
                                     <span>{{ $siswa->nama_lengkap }}</span>
                                 </td>
-                                <td class="px-2 py-2 text-sm text-slate-900 dark:text-slate-700 dark:text-white/80 sm:px-3 sm:py-2.5">{{ $siswa->kelas ?? '-' }}</td>
+                                <td class="px-2 py-2 text-sm text-slate-900 dark:text-slate-700 dark:text-white/80 sm:px-3 sm:py-2.5">@if($siswa->kelas_v2 && $siswa->rombel)
+                                    {{ $siswa->kelas_v2 }}{{ $siswa->rombel }}
+                                @else
+                                    -
+                                @endif</td>
                                 <td class="hidden px-2 py-2 text-sm text-slate-900 dark:text-slate-700 dark:text-white/80 sm:table-cell sm:px-3 sm:py-2.5">
                                     @if (($siswa->jenis_kelamin ?? '') === 'L')
                                         <span class="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/30 bg-cyan-500/20 px-2.5 py-0.5 text-[11px] font-semibold text-cyan-200 shadow-sm">

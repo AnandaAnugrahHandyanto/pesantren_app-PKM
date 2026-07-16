@@ -17,6 +17,9 @@ class AbsensiController extends Controller
     {
         $tanggal = $request->query('tanggal', today()->toDateString());
         $mataPelajaranId = $request->query('mata_pelajaran_id');
+        $selectedMataPelajaran = $mataPelajaranId
+            ? MataPelajaran::find($mataPelajaranId)
+            : null;
         $kelas = $request->query('kelas_v2');
         $rombel = $request->query('rombel');
 
@@ -68,6 +71,7 @@ class AbsensiController extends Controller
             'tanggal' => $tanggal,
             'mataPelajaranOptions' => $mataPelajaranOptions,
             'mataPelajaranId' => $mataPelajaranId,
+            'selectedMataPelajaran' => $selectedMataPelajaran,
             'kelas_v2' => $kelas,
             'rombel' => $rombel,
             'statusOptions' => self::STATUS_OPTIONS,
