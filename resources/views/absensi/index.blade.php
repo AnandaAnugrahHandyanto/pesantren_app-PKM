@@ -162,13 +162,13 @@
                         <span class="ml-1 font-bold text-amber-300" id="count-izin">{{ $statusCounts['izin'] ?? 0 }}</span>
                     </div>
                 </div>
-                <div class="flex items-center gap-2 rounded-lg border border-rose-500/20 bg-rose-500/10 px-3 py-2 text-xs">
-                    <svg class="h-3 w-3 flex-shrink-0 text-rose-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <div class="flex items-center gap-2 rounded-lg border border-violet-500/20 bg-violet-500/10 px-3 py-2 text-xs">
+                    <svg class="h-3 w-3 flex-shrink-0 text-violet-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
                     </svg>
                     <div>
                         <span class="text-slate-900 dark:text-white/55">Sakit</span>
-                        <span class="ml-1 font-bold text-rose-300" id="count-sakit">{{ $statusCounts['sakit'] ?? 0 }}</span>
+                        <span class="ml-1 font-bold text-violet-300" id="count-sakit">{{ $statusCounts['sakit'] ?? 0 }}</span>
                     </div>
                 </div>
                 <div class="flex items-center gap-2 rounded-lg border border-red-500/20 bg-red-500/10 px-3 py-2 text-xs">
@@ -323,7 +323,7 @@
             const hasSaveSuccess = @js((bool) session('success'));
             const hasValidationErrors = @js($errors->any());
             const defaultButtonClass = 'status-btn';
-            const changedFlashClass = ['ring-1', 'ring-orange-300/70', 'bg-orange-500/10'];
+            const changedFlashClass = ['bg-orange-500/10'];
 
             const rowStatusClasses = {
                 hadir: ['status-row-hadir'],
@@ -421,9 +421,10 @@
                 buttons.forEach((button) => {
                     button.className = defaultButtonClass;
                     if (button.dataset.statusBtn === status) {
-                        button.className = `${button.className} ${badgeClasses[status]}`;
+                        button.className = `${defaultButtonClass} ${badgeClasses[status]}`;
                     }
                 });
+                row.querySelectorAll('[data-status-btn]').forEach(btn => btn.blur());
             };
 
             const setStatus = (row, status, options = {
