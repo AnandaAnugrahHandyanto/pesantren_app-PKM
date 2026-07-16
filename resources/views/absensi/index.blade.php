@@ -50,18 +50,18 @@
                         <option value="" class="bg-indigo-950 text-slate-900 dark:text-white" disabled {{ !$mataPelajaranId ? 'selected' : '' }}>Pilih Mata Pelajaran</option>
                         @foreach ($mataPelajaranOptions as $mp)
                             <option value="{{ $mp->id }}" @selected($mataPelajaranId == $mp->id) class="bg-indigo-950 text-slate-900 dark:text-white">
-                                {{ $mp->nama }} (Kelas {{ $mp->kelas }})
+                                {{ $mp->nama }} (Kelas {{ $mp->kelas_v2 }})
                             </option>
                         @endforeach
                     </select>
                 </div>
                 <div>
                     <label for="kelas_filter" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-900 dark:text-slate-600 dark:text-white/70">Pilih Kelas</label>
-                    <select id="kelas_filter" name="kelas" required
+                    <select id="kelas_filter" name="kelas_v2" required
                         class="w-full rounded-lg border border-white/25 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white focus:border-cyan-300/70 focus:outline-none focus:ring-2 focus:ring-cyan-300/30">
-                        <option value="" class="bg-indigo-950 text-slate-900 dark:text-white" disabled {{ !$kelas ? 'selected' : '' }}>Pilih Kelas</option>
+                        <option value="" class="bg-indigo-950 text-slate-900 dark:text-white" disabled {{ !$kelas_v2 ? 'selected' : '' }}>Pilih Kelas</option>
                         @foreach ($kelasOptions as $k)
-                            <option value="{{ $k }}" {{ $kelas == $k ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">{{ $k }}</option>
+                            <option value="{{ $k }}" {{ $kelas_v2 == $k ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">{{ $k }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -202,7 +202,7 @@
                             <tr class="attendance-row border-l-[3px] border-transparent transition duration-200 hover:bg-white/[0.03]"
                                 data-siswa-row
                                 data-name="{{ strtolower($siswa->nama_lengkap) }}"
-                                data-kelas="{{ strtolower($siswa->kelas ?? '-') }}"
+                                data-kelas="{{ strtolower($siswa->kelas_v2 ?? '-') }}"
                                 data-row-id="{{ $siswa->id }}"
                                 data-existing-status="{{ $existingStatus }}"
                                 data-initial-status="{{ $initialStatus }}">

@@ -10,7 +10,7 @@ class MataPelajaranController extends Controller
 {
     public function index()
     {
-        $mataPelajarans = MataPelajaran::with('guru')->orderBy('kelas')->orderBy('nama')->get();
+        $mataPelajarans = MataPelajaran::with('guru')->orderBy('kelas_v2')->orderBy('rombel')->orderBy('nama')->get();
 
         return view('mata-pelajaran.index', compact('mataPelajarans'));
     }
@@ -24,21 +24,24 @@ class MataPelajaranController extends Controller
     {
         $validated = $request->validate([
             'nama' => ['required', 'string', 'max:255'],
-            'kelas' => ['required', 'string', 'max:50'],
+            'kelas_v2' => ['required', 'integer', 'in:7,8,9'],
+            'rombel' => ['required', 'string', 'max:5'],
             'guru_id' => ['required', 'exists:gurus,id'],
         ]);
 
-        // Cek unique (nama + kelas)
+        // Cek unique (nama + kelas_v2 + rombel)
         $exists = MataPelajaran::where('nama', $validated['nama'])
-            ->where('kelas', $validated['kelas'])
+            ->where('kelas_v2', $validated['kelas_v2'])
+            ->where('rombel', $validated['rombel'])
             ->exists();
 
         if ($exists) {
             return back()
-                ->withErrors(['nama' => "Mata pelajaran '{$validated['nama']}' untuk kelas '{$validated['kelas']}' sudah ada."])
+                ->withErrors(['nama' => "Mata pelajaran '{$validated['nama']}' untuk kelas_v2 '{$validated['kelas_v2']}-{$validated['rombel']}' sudah ada."])
                 ->withInput();
         }
 
+        $validated['kelas'] = $validated['kelas_v2'];
         MataPelajaran::create($validated);
 
         return redirect()->route('mata-pelajaran.index')
@@ -54,19 +57,20 @@ class MataPelajaranController extends Controller
     {
         $validated = $request->validate([
             'nama' => ['required', 'string', 'max:255'],
-            'kelas' => ['required', 'string', 'max:50'],
+            'kelas_v2' => ['required', 'integer', 'in:7,8,9'],
+            'rombel' => ['required', 'string', 'max:5'],
             'guru_id' => ['required', 'exists:gurus,id'],
         ]);
 
-        // Cek unique (nama + kelas) kecuali dirinya sendiri
+        // Cek unique (nama + kelas_v2) kecuali dirinya sendiri
         $exists = MataPelajaran::where('nama', $validated['nama'])
-            ->where('kelas', $validated['kelas'])
+            ->where('kelas_v2', $validated['kelas_v2'])
             ->where('id', '!=', $mataPelajaran->id)
             ->exists();
 
         if ($exists) {
             return back()
-                ->withErrors(['nama' => "Mata pelajaran '{$validated['nama']}' untuk kelas '{$validated['kelas']}' sudah ada."])
+                ->withErrors(['nama' => "Mata pelajaran '{$validated['nama']}' untuk kelas_v2 '{$validated['kelas_v2']}' sudah ada."])
                 ->withInput();
         }
 
@@ -81,7 +85,7 @@ class MataPelajaranController extends Controller
         $absensiCount = $mataPelajaran->absensis()->count();
         if ($absensiCount > 0) {
             return back()->withErrors([
-                'delete' => "Tidak bisa menghapus '{$mataPelajaran->nama}' kelas {$mataPelajaran->kelas}: masih ada {$absensiCount} data absensi yang menggunakannya."
+                'delete' => "Tidak bisa menghapus '{$mataPelajaran->nama}' kelas_v2 {$mataPelajaran->kelas_v2}: masih ada {$absensiCount} data absensi yang menggunakannya."
             ]);
         }
 

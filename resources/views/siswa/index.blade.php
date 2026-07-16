@@ -71,11 +71,11 @@
             <form method="GET" action="{{ route('siswa.index') }}" class="flex flex-wrap items-end gap-4">
                 <div class="flex flex-col gap-1.5">
                     <label class="text-xs font-medium text-slate-900 dark:text-slate-600 dark:text-white/70">Tingkat</label>
-                    <select name="tingkat"
+                    <select name="kelas_v2"
                             class="form-select min-w-[130px]">
-                        <option value="" {{ !request('tingkat') ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">Semua Tingkat</option>
-                        @foreach ($tingkatOptions as $t)
-                            <option value="{{ $t }}" {{ request('tingkat') == $t ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">Kelas {{ $t }}</option>
+                        <option value="" {{ !request('kelas_v2') ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">Semua Tingkat</option>
+                        @foreach ($kelasOptions as $t)
+                            <option value="{{ $t }}" {{ request('kelas_v2') == $t ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">Kelas {{ $t }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -98,7 +98,7 @@
                         </svg>
                         Filter
                     </button>
-                    @if (request()->anyFilled(['tingkat', 'rombel']))
+                    @if (request()->anyFilled(['kelas_v2', 'rombel']))
                         <a href="{{ route('siswa.index') }}" class="btn-secondary text-sm">
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />

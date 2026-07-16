@@ -89,7 +89,7 @@ class JadwalController extends Controller
             $bentrok = Jadwal::where('hari', $request->hari)
                 ->where('guru_id', $request->guru_id)
                 ->where('kelas', $request->kelas)
-                ->where('rombel', $request->rombel)
+                ->when($request->filled('rombel'), fn($q) => $q->where('rombel', $request->rombel))
                 ->where(function ($q) use ($request) {
                     $q->whereBetween('jam_mulai', [$request->jam_mulai, $request->jam_selesai])
                         ->orWhereBetween('jam_selesai', [$request->jam_mulai, $request->jam_selesai])
@@ -142,7 +142,7 @@ class JadwalController extends Controller
             $bentrok = Jadwal::where('hari', $request->hari)
                 ->where('guru_id', $request->guru_id)
                 ->where('kelas', $request->kelas)
-                ->where('rombel', $request->rombel)
+                ->when($request->filled('rombel'), fn($q) => $q->where('rombel', $request->rombel))
                 ->where('id', '!=', $jadwal->id)
                 ->where(function ($q) use ($request) {
                     $q->whereBetween('jam_mulai', [$request->jam_mulai, $request->jam_selesai])

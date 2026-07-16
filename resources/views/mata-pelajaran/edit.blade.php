@@ -11,7 +11,6 @@
                 <div>
                     <label for="nama" class="mb-1 block text-sm font-medium text-slate-900 dark:text-slate-700 dark:text-white/80">Nama Mata Pelajaran <span class="text-red-400">*</span></label>
                     <input type="text" name="nama" id="nama" value="{{ old('nama', $mataPelajaran->nama) }}" required
-                           placeholder="Contoh: Matematika, Bahasa Indonesia, IPA"
                            class="w-full rounded-xl border border-slate-300 dark:border-white/20 bg-white/[0.06] px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-white/30 backdrop-blur-sm transition focus:border-indigo-400/50 focus:outline-none focus:ring-2 focus:ring-indigo-400/20">
                     @error('nama')
                         <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
@@ -34,16 +33,31 @@
                 </div>
 
                 <div>
-                    <label for="kelas" class="mb-1 block text-sm font-medium text-slate-900 dark:text-slate-700 dark:text-white/80">Kelas <span class="text-red-400">*</span></label>
-                    <select name="kelas" id="kelas" required
+                    <label for="kelas_v2" class="mb-1 block text-sm font-medium text-slate-900 dark:text-slate-700 dark:text-white/80">Kelas <span class="text-red-400">*</span></label>
+                    <select name="kelas_v2" id="kelas_v2" required
                             class="w-full appearance-none rounded-xl border border-slate-300 dark:border-white/20 bg-white/[0.06] px-4 py-2.5 pr-10 text-sm text-slate-900 dark:text-white backdrop-blur-sm transition focus:border-indigo-400/50 focus:outline-none focus:ring-2 focus:ring-indigo-400/20">
                         @foreach ([7, 8, 9] as $k)
-                            <option value="{{ $k }}" {{ (old('kelas', $mataPelajaran->kelas) == $k) ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">
+                            <option value="{{ $k }}" {{ (old('kelas_v2', $mataPelajaran->kelas_v2) == $k) ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">
                                 Kelas {{ $k }}
                             </option>
                         @endforeach
                     </select>
-                    @error('kelas')
+                    @error('kelas_v2')
+                        <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="rombel" class="mb-1 block text-sm font-medium text-slate-900 dark:text-slate-700 dark:text-white/80">Rombel <span class="text-red-400">*</span></label>
+                    <select name="rombel" id="rombel" required
+                            class="w-full appearance-none rounded-xl border border-slate-300 dark:border-white/20 bg-white/[0.06] px-4 py-2.5 pr-10 text-sm text-slate-900 dark:text-white backdrop-blur-sm transition focus:border-indigo-400/50 focus:outline-none focus:ring-2 focus:ring-indigo-400/20">
+                        @foreach (['A', 'B', 'C', 'D', 'E'] as $r)
+                            <option value="{{ $r }}" {{ (old('rombel', $mataPelajaran->rombel) == $r) ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">
+                                {{ $r }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('rombel')
                         <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
