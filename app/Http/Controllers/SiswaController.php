@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\SiswaImport;
 use App\Models\Absensi;
 use App\Models\Siswa;
 use App\Models\SppBill;
 use App\Models\User;
+use App\Exports\SiswaTemplateExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SiswaController extends Controller
 {
@@ -152,18 +155,37 @@ class SiswaController extends Controller
             ->with('success', 'Data siswa berhasil dihapus.');
     }
 
+    public function importForm()
+    {
+        return view('siswa.import');
+    }
+
+    public function importExcel(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,xls,csv',
+            'default_password' => 'nullable|string',
+        ]);
+
+        try {
+            $defaultPassword = trim((string) $request->input('default_password'));
+            Excel::import(new SiswaImport($defaultPassword), $request->file('file'));
+            return redirect()->route('siswa.index')->with('success', 'Data siswa berhasil diimpor.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Terjadi kesalahan saat mengimpor: ' . $e->getMessage());
+        }
+    }
+
+    public function downloadTemplate()
+    {
+        return Excel::download(
+            new SiswaTemplateExport(),
+            'template_import_siswa.xlsx'
+        );
+    }
+
     private function createUserForSiswa(Siswa $siswa, string $password): User
     {
-        $nis = $siswa->nis ?? 'NIS-'.str_pad((string) $siswa->id, 6, '0', STR_PAD_LEFT);
-
-        return User::create([
-            'name' => $siswa->nama_lengkap,
-            'nis' => $nis,
-            'email' => null,
-            'email_verified_at' => now(),
-            'password' => Hash::make($password),
-            'role' => 'siswa',
-            'siswa_id' => $siswa->id,
-        ]);
+        return \App\Services\SiswaService::createUserForSiswa($siswa, $password);
     }
 }
