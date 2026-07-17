@@ -139,7 +139,7 @@
         @apply w-full rounded-xl border border-slate-300 dark:border-white/20 bg-white dark:bg-white/10 px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-white/40 backdrop-blur-sm transition-all duration-200 focus:border-cyan-400/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/20;
     }
     .form-select {
-        @apply w-full rounded-xl border border-slate-300 dark:border-white/20 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm text-slate-900 dark:text-white backdrop-blur-sm transition-all duration-200 focus:border-cyan-400/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/20;
+        @apply w-full rounded-xl border border-slate-300 dark:border-white/20 bg-white dark:bg-slate-800 pl-4 pr-10 py-2.5 text-sm text-slate-900 dark:text-white backdrop-blur-sm transition-all duration-200 focus:border-cyan-400/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/20;
     }
     .form-select option {
         @apply bg-white dark:bg-slate-900 text-slate-900 dark:text-white;
