@@ -1,7 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h1 class="text-lg font-semibold">Import Data Siswa</h1>
-    </x-slot>
 
     <div class="space-y-6">
         {{-- Pesan sukses/error --}}

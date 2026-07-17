@@ -5,12 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ isset($header) ? strip_tags($header) . ' | ' : '' }}Sekolah App</title>
+        <title>{{ isset($title) ? $title . ' | ' : '' }}Sekolah App</title>
 
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         @include('layouts.theme-script')
-
 
         {{-- Favicon --}}
         <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22currentColor%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><path d=%22M3 9l9-7 9 7v11a2 2 0 0-1-2 2H5a2 2 0 0-1-2-2z%22/><path d=%22M9 22V12h6v10%22/></svg>">
@@ -29,6 +28,12 @@
     <body class="font-sans antialiased bg-gray-100 dark:bg-slate-900">
         <div x-data="{
             sidebarOpen: false,
+            isDark: document.documentElement.classList.contains('dark'),
+            toggleTheme() {
+                this.isDark = !this.isDark;
+                document.documentElement.classList.toggle('dark', this.isDark);
+                localStorage.setItem('theme', this.isDark ? 'dark' : 'light');
+            },
             touchStartX: 0,
             touchStartY: 0,
             handleSwipe(e) {
@@ -62,8 +67,8 @@
 
             <div class="lg:pl-64">
                 {{-- Navbar --}}
-                <header class="sticky top-0 z-20 border-b bg-white/80 backdrop-blur-md dark:border-white/20 dark:bg-white/10 border-slate-200/80">
-                    <div class="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
+                <header class="sticky top-0 z-20 border-b bg-white/80 backdrop-blur-md dark:border-white/10 dark:bg-slate-900/80 border-slate-200/80">
+                    <div class="flex h-16 items-center justify-between px-4 sm:px-6">
                         <div class="flex items-center gap-3">
                             <button
                                 type="button"
@@ -74,53 +79,28 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 6.75h16.5m-16.5 5.25h16.5m-16.5 5.25h16.5" />
                                 </svg>
                             </button>
-
-                            <div class="text-slate-900 dark:text-white">
-                                @isset($header)
-                                    {{ $header }}
-                                @else
-                                    <h1 class="text-lg font-semibold">Dashboard</h1>
+                            <div class="flex flex-col gap-0.5">
+                                <h1 class="text-base font-semibold text-slate-900 dark:text-white">@isset($title) {{ $title }} @else Sekolah App @endisset</h1>
+                                @isset($breadcrumb)
+                                    <span class="text-[11px] text-slate-500 dark:text-slate-400 font-medium tracking-tight">{{ $breadcrumb }}</span>
                                 @endisset
                             </div>
                         </div>
 
                         @auth
-                            <div class="flex items-center gap-3">
-                                <div class="hidden sm:flex items-center gap-2">
-                                    <div class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-200/50 dark:bg-white/20">
-                                        <svg class="h-4 w-4 text-slate-600 dark:text-white" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
-                                        </svg>
-                                    </div>
-                                    <span class="text-sm font-medium text-slate-700 dark:text-white/90">{{ Auth::user()->name }}</span>
-                                </div>
-
-                                <x-dropdown align="right" width="48">
-                                    <x-slot name="trigger">
-                                        <button class="inline-flex items-center rounded-lg border px-3 py-2 text-sm font-medium focus:outline-none transition border-slate-200/80 bg-white/50 text-slate-700 hover:bg-slate-100/80 dark:border-white/20 dark:bg-white/10 dark:text-white dark:hover:bg-white/20">
-                                            Akun
-                                            <svg class="ms-1 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                            </svg>
-                                        </button>
-                                    </x-slot>
-
-                                    <x-slot name="content">
-                                        <x-dropdown-link :href="route('profile.edit')">
-                                            {{ __('Profile') }}
-                                        </x-dropdown-link>
-
-                                        <form method="POST" action="{{ route('logout') }}">
-                                            @csrf
-
-                                            <x-dropdown-link :href="route('logout')"
-                                                onclick="event.preventDefault(); this.closest('form').submit();">
-                                                {{ __('Log Out') }}
-                                            </x-dropdown-link>
-                                        </form>
-                                    </x-slot>
-                                </x-dropdown>
-                            </div>
+                            <button
+                                type="button"
+                                class="rounded-lg p-2 text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
+                                @click="toggleTheme()"
+                                :aria-label="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+                            >
+                                <svg x-show="!isDark" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                                </svg>
+                                <svg x-show="isDark" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                                </svg>
+                            </button>
                         @endauth
                     </div>
                 </header>
@@ -130,41 +110,47 @@
                 </main>
             </div>
         </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Global delete confirmation with SweetAlert2
-        document.querySelectorAll('.btn-delete').forEach(function (btn) {
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();
-                var form = btn.closest('form');
-                Swal.fire({
-                    title: 'Yakin ingin menghapus?',
-                    text: 'Data yang dihapus tidak dapat dikembalikan.',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#ef4444',
-                    cancelButtonColor: '#6b7280',
-                    confirmButtonText: 'Ya, hapus!',
-                    cancelButtonText: 'Batal',
-                }).then(function (result) {
-                    if (result.isConfirmed) {
-                        form.submit();
-                    }
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Global delete confirmation with SweetAlert2
+                document.querySelectorAll('.btn-delete').forEach(function (btn) {
+                    btn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        var form = btn.closest('form');
+                        Swal.fire({
+                            title: 'Yakin ingin menghapus?',
+                            text: 'Data yang dihapus tidak dapat dikembalikan.',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#ef4444',
+                            cancelButtonColor: '#6b7280',
+                            confirmButtonText: 'Ya, hapus!',
+                            cancelButtonText: 'Batal',
+                        }).then(function (result) {
+                            if (result.isConfirmed) {
+                                form.submit();
+                            }
+                        });
+                    });
                 });
-            });
-        });
 
-        // Show SweetAlert2 success after a delete redirect
-        @if (session('deleted'))
-        Swal.fire({
-            title: 'Berhasil!',
-            text: '{{ session('deleted') }}',
-            icon: 'success',
-            timer: 2500,
-            showConfirmButton: false,
-        });
-        @endif
+                // Show SweetAlert2 success after a delete redirect
+                @if (session('deleted'))
+                Swal.fire({
+                    title: 'Berhasil!',
+                    text: '{{ session('deleted') }}',
+                    icon: 'success',
+                    timer: 2500,
+                    showConfirmButton: false,
+                });
+                @endif
+            });
+        </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        lucide.createIcons();
     });
-    </script>
-    </body>
+</script>
+</body>
 </html>

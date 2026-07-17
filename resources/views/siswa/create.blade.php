@@ -1,7 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h1 class="text-lg font-semibold">Tambah Siswa</h1>
-    </x-slot>
 
     <div class="mx-auto max-w-xl">
         @if ($errors->any())

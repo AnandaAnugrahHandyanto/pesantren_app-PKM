@@ -1,7 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h1 class="text-lg font-semibold">Rekap Absensi Semester</h1>
-    </x-slot>
 
     <div class="space-y-6">
 

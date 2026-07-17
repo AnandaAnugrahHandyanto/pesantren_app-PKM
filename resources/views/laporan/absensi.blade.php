@@ -1,7 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h1 class="text-lg font-semibold">Laporan Absensi</h1>
-    </x-slot>
 
     @php
         $statusMeta = [
