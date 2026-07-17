@@ -192,7 +192,7 @@
                     </div>
                 </div>
             @empty
-                <p>Tidak ada data.</p>
+                <p class="text-slate-900 dark:text-white">Tidak ada data.</p>
             @endforelse
         </div>
 
