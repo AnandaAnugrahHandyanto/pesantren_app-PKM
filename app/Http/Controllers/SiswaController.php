@@ -93,6 +93,7 @@ class SiswaController extends Controller
         }
 
         $validated['kelas'] = $validated['kelas_v2'].$validated['rombel'];
+        $validated['tingkat'] = $validated['kelas_v2'];
         
         $siswa = Siswa::create($validated);
 
@@ -121,6 +122,7 @@ class SiswaController extends Controller
         ]);
 
         $validated['kelas'] = $validated['kelas_v2'].$validated['rombel'];
+        $validated['tingkat'] = $validated['kelas_v2'];
         $siswa->update($validated);
 
         return redirect()->route('siswa.index')
