@@ -66,6 +66,7 @@ Route::middleware('auth')->group(function () {
     Route::post('absensi/mass-store', [AbsensiController::class, 'massStore'])->name('absensi.mass-store');
 
     Route::get('rekap-absensi', [LaporanController::class, 'absensi'])->name('laporan.absensi');
+    Route::get('rekap-absensi/export-pdf', [LaporanController::class, 'absensiExportPdf'])->name('laporan.absensi.export-pdf');
     Route::get('rekap-absensi-semester', [LaporanController::class, 'rekapSemester'])->name('rekap.absensi.semester');
     Route::get('rekap-absensi-cetak', [LaporanController::class, 'rekapSemesterPrint'])->name('rekap.absensi.cetak');
 
