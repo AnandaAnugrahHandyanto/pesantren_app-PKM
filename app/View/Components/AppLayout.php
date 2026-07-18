@@ -25,25 +25,27 @@ class AppLayout extends Component
         if ($routeName !== 'dashboard' && !in_array($routeName, ['admin.dashboard', 'guru.dashboard', 'siswa.dashboard'])) {
             $parts = explode('.', $routeName);
             
-            // If first part is a role, skip it
-            if (in_array($parts[0], ['admin', 'guru', 'siswa'])) {
+            // Remove role prefix if it exists to isolate the resource and action
+            if (isset($parts[0]) && $parts[0] === $role) {
                 array_shift($parts);
             }
             
-            $resourceKey = $parts[0] ?? 'dashboard';
-            $actionPart = $parts[1] ?? 'index';
+            if (count($parts) > 0 && $parts[0] !== 'dashboard') {
+                $resourceKey = $parts[0];
+                $actionPart = $parts[1] ?? 'index';
 
-            if (in_array($actionPart, ['create', 'store'])) {
-                $actionKey = 'create';
-            } elseif (in_array($actionPart, ['edit', 'update'])) {
-                $actionKey = 'edit';
-            } elseif (in_array($actionPart, ['show'])) {
-                $actionKey = 'show';
-            } else {
-                $actionKey = 'index';
-                // Handle special case for 'laporan.absensi'
-                if ($resourceKey === 'laporan' && isset($parts[1])) {
-                    $actionKey = $parts[1]; // e.g., 'absensi'
+                if (in_array($actionPart, ['create', 'store'])) {
+                    $actionKey = 'create';
+                } elseif (in_array($actionPart, ['edit', 'update'])) {
+                    $actionKey = 'edit';
+                } elseif (in_array($actionPart, ['show'])) {
+                    $actionKey = 'show';
+                } else {
+                    $actionKey = 'index';
+                    // Handle special case for 'laporan.absensi'
+                    if ($resourceKey === 'laporan' && isset($parts[1])) {
+                        $actionKey = $parts[1]; // e.g., 'absensi'
+                    }
                 }
             }
         }
