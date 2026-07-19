@@ -85,7 +85,7 @@
                                     <td class="px-3 py-2.5 text-slate-900 dark:text-slate-700 dark:text-white/80">{{ \Carbon\Carbon::parse($a->tanggal)->translatedFormat('d M Y') }}</td>
                                     <td class="px-3 py-2.5 text-slate-900 dark:text-slate-700 dark:text-white/80">{{ $a->mataPelajaran->nama ?? '-' }}</td>
                                     <td class="px-3 py-2.5">
-                                        <span class="status-capsule status-{{ $a->status }}">
+                                        <span class="status-capsule status-capsule-{{ $a->status }}">
                                             {{ ucfirst($a->status) }}
                                         </span>
                                     </td>
