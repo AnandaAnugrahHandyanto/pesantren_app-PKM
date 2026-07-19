@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    :root {
+        color-scheme: light dark;
+    }
+}
+
 @layer components {
     /* ─── Base Glass Panel ─── */
     .glass-panel {
