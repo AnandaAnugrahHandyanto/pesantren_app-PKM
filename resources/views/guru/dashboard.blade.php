@@ -65,7 +65,7 @@
             <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-900 dark:text-slate-400 dark:text-white/40">Menu Absensi</p>
             <div class="mb-4">
                 <a href="{{ route('absensi.index', ['tanggal' => now()->toDateString()]) }}"
-                   class="inline-flex items-center gap-2 rounded-lg border border-amber-300/40 bg-amber-500/20 px-4 py-2 text-sm font-semibold text-amber-100 transition hover:bg-amber-500/30">
+                   class="inline-flex items-center gap-2 rounded-lg border border-amber-300/40 bg-amber-500/20 px-4 py-2 text-sm font-semibold text-amber-900 dark:text-amber-100 transition hover:bg-amber-500/30">
                     Edit Absensi Hari Ini
                 </a>
             </div>
@@ -73,7 +73,7 @@
                 {{-- Absensi Pelajaran --}}
                 <a href="{{ route('absensi.index', ['tanggal' => now()->toDateString()]) }}"
                    class="flex items-center gap-4 rounded-2xl border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/10 p-5 shadow-lg backdrop-blur-md transition hover:bg-white/20">
-                    <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-green-500/30 text-green-200">
+                    <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-green-500/30 text-green-700 dark:text-green-200">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                   d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
@@ -94,7 +94,7 @@
                 {{-- Laporan Absensi --}}
                 <a href="{{ route('laporan.absensi') }}"
                    class="flex items-center gap-4 rounded-2xl border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/10 p-5 shadow-lg backdrop-blur-md transition hover:bg-white/20">
-                    <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-indigo-500/30 text-indigo-200">
+                    <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-indigo-500/30 text-indigo-700 dark:text-indigo-200">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                   d="M9 17v-6a2 2 0 012-2h2a2 2 0 012 2v6m-6 0h6M3 17h18"/>
