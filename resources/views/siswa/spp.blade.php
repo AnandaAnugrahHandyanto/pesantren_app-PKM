@@ -64,6 +64,18 @@
         @endif
 
         {{-- ═══ Tabel ═══ --}}
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-900 dark:text-slate-500 dark:text-white/60">Riwayat Tagihan</h3>
+            <button type="button" 
+                class="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-white/5 rounded-lg hover:bg-slate-200 dark:hover:bg-white/10 transition"
+                onclick="document.getElementById('modal-panduan-pembayaran').classList.remove('hidden')">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+                Panduan Pembayaran
+            </button>
+        </div>
         <div class="table-wrap">
             <table>
                 <thead>
@@ -111,13 +123,20 @@
                                 {{ $t->paid_at ? \Carbon\Carbon::parse($t->paid_at)->translatedFormat('d M Y') : '-' }}
                             </td>
                             <td class="text-right">
-                                @if($t->status !== 'lunas')
-                                    <button type="button" 
-                                        onclick="initPayment('{{ route('spp.checkout', $t->id) }}')"
-                                        class="btn-primary text-xs py-1.5 px-3">
-                                        Bayar Sekarang
-                                    </button>
-                                @endif
+                                <div class="flex items-center justify-end gap-2 min-h-[40px]">
+                                    @if($t->status !== 'lunas')
+                                        <button type="button" 
+                                            class="text-cyan-600 dark:text-cyan-400 hover:text-cyan-800 dark:hover:text-cyan-300"
+                                            onclick="document.getElementById('modal-panduan-pembayaran').classList.remove('hidden')">
+                                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                        </button>
+                                        <button type="button" 
+                                            onclick="initPayment('{{ route('spp.checkout', $t->id) }}')"
+                                            class="btn-primary text-xs py-1.5 px-3">
+                                            Bayar Sekarang
+                                        </button>
+                                    @endif
+                                </div>
                             </td>
                         </tr>
                     @empty
@@ -156,6 +175,66 @@
 
     {{-- Midtrans Snap Script --}}
     <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('services.midtrans.client_key') }}"></script>
+    
+    {{-- Modal Panduan Pembayaran --}}
+    <div id="modal-panduan-pembayaran" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl w-full max-w-lg p-6 relative">
+            <button onclick="document.getElementById('modal-panduan-pembayaran').classList.add('hidden')" class="absolute top-4 right-4 text-slate-500 hover:text-slate-800 dark:hover:text-white">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <h2 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Cara Pembayaran SPP Online</h2>
+            
+            <div class="space-y-4 text-sm text-slate-700 dark:text-slate-300 max-h-[60vh] overflow-y-auto pr-2">
+                <div>
+                    <h3 class="font-semibold text-slate-900 dark:text-white">1. Pembayaran menggunakan QRIS</h3>
+                    <ol class="list-decimal ml-5 space-y-1">
+                        <li>Klik tombol "Bayar Sekarang".</li>
+                        <li>Jendela pembayaran Midtrans akan terbuka.</li>
+                        <li>Pilih metode pembayaran QRIS.</li>
+                        <li>Scan QR menggunakan aplikasi Mobile Banking atau E-Wallet.</li>
+                        <li>Pastikan nominal pembayaran sudah benar.</li>
+                        <li>Selesaikan pembayaran.</li>
+                        <li>Tunggu hingga status pembayaran diperbarui otomatis.</li>
+                    </ol>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-slate-900 dark:text-white">2. Pembayaran menggunakan Virtual Account</h3>
+                    <ol class="list-decimal ml-5 space-y-1">
+                        <li>Klik tombol "Bayar Sekarang".</li>
+                        <li>Jendela pembayaran Midtrans akan terbuka.</li>
+                        <li>Pilih metode Virtual Account.</li>
+                        <li>Pilih bank yang diinginkan.</li>
+                        <li>Salin nomor Virtual Account.</li>
+                        <li>Buka Mobile Banking / Internet Banking / ATM.</li>
+                        <li>Pilih menu Virtual Account.</li>
+                        <li>Masukkan nomor Virtual Account.</li>
+                        <li>Konfirmasi pembayaran.</li>
+                        <li>Tunggu hingga status pembayaran berubah otomatis menjadi Lunas.</li>
+                    </ol>
+                </div>
+                <div class="pt-2 border-t border-slate-200 dark:border-slate-700">
+                    <h3 class="font-semibold text-slate-900 dark:text-white">3. Catatan Penting</h3>
+                    <ul class="list-disc ml-5 space-y-1">
+                        <li>Jangan menutup halaman pembayaran sebelum proses selesai.</li>
+                        <li>Status pembayaran biasanya diperbarui otomatis dalam beberapa detik hingga beberapa menit setelah transaksi berhasil.</li>
+                        <li>Jika pembayaran berhasil tetapi status belum berubah, tunggu beberapa menit lalu refresh halaman.</li>
+                        <li>Jika masih mengalami kendala, hubungi Admin Sekolah.</li>
+                    </ul>
+                </div>
+                <div class="pt-3 border-t border-slate-200 dark:border-slate-700 text-center">
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Pembayaran diproses secara aman melalui Midtrans Payment Gateway. Status pembayaran akan diperbarui secara otomatis setelah transaksi berhasil</p>
+                </div>
+            </div>
+            
+            <div class="mt-6 flex justify-end">
+                <button onclick="document.getElementById('modal-panduan-pembayaran').classList.add('hidden')" 
+                        class="px-4 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-900 dark:text-white rounded-lg text-sm font-semibold transition">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         function initPayment(checkoutUrl) {
             fetch(checkoutUrl, {
