@@ -30,7 +30,7 @@
                         <div class="relative">
                             <select id="kelas_v2" name="kelas_v2" required aria-label="Pilih Kelas"
                                 class="w-full appearance-none rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-3 py-2 pr-10 text-sm text-slate-900 dark:text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
-                                <option value="" disabled {{ old('kelas_v2') ? '' : 'selected' }} class="bg-indigo-950 text-slate-900 dark:text-white">Pilih Kelas</option>
+                                <option value="" disabled {{ old('kelas_v2') ? '' : 'selected' }} class="text-slate-500 dark:text-slate-400">Pilih Kelas</option>
                                 @foreach ($kelasOptions as $t)
                                     <option value="{{ $t }}" {{ old('kelas_v2') == $t ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">Kelas {{ $t }}</option>
                                 @endforeach
@@ -51,7 +51,7 @@
                                                 <div class="relative">
                                                     <select id="rombel" name="rombel" required aria-label="Pilih rombel"
                                                             class="w-full appearance-none rounded-xl border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/10 px-4 py-2.5 pr-10 text-sm text-slate-900 dark:text-white backdrop-blur-sm transition focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
-                                                        <option value="" disabled {{ old('rombel') ? '' : 'selected' }} class="bg-indigo-950 text-slate-900 dark:text-white">Pilih rombel</option>
+                                                        <option value="" disabled {{ old('rombel') ? '' : 'selected' }} class="text-slate-500 dark:text-slate-400">Pilih rombel</option>
                                                         @foreach ($rombelOptions as $j)
                                                             <option value="{{ $j }}" {{ old('rombel') === $j ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">{{ $j }}</option>
                                                         @endforeach
@@ -73,7 +73,7 @@
                     <div class="relative">
                         <select id="jenis_kelamin" name="jenis_kelamin" required aria-required="true" aria-label="Pilih jenis kelamin"
                             class="w-full appearance-none rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-3 py-2 pr-10 text-sm text-slate-900 dark:text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
-                            <option value="" disabled {{ old('jenis_kelamin') ? '' : 'selected' }} aria-hidden="true" class="bg-indigo-950 text-slate-900 dark:text-white">Pilih jenis kelamin</option>
+                            <option value="" disabled {{ old('jenis_kelamin') ? '' : 'selected' }} aria-hidden="true" class="text-slate-500 dark:text-slate-400">Pilih jenis kelamin</option>
                             <option value="L" {{ old('jenis_kelamin') === 'L' ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">Laki-laki</option>
                             <option value="P" {{ old('jenis_kelamin') === 'P' ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">Perempuan</option>
                         </select>
