@@ -1,17 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex items-center gap-3">
-            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/20 ring-1 ring-emerald-400/30">
-                <svg class="h-5 w-5 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 2c4.41 0 8 3.59 8 8s-3.59 8-8 8-8-3.59-8-8 3.59-8 8-8zm-1 13h2v-2h-2v2zm0-4h2V7h-2v6z" />
-                </svg>
-            </div>
-            <div>
-                <h1 class="text-lg font-semibold text-slate-900 dark:text-white">Keuangan</h1>
-                <p class="text-xs text-slate-900 dark:text-slate-500 dark:text-white/50">Kelola pemasukan dan pengeluaran</p>
-            </div>
-        </div>
-    </x-slot>
 
     <div class="space-y-6">
         {{-- Alert --}}

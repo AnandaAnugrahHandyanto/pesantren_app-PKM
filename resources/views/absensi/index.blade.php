@@ -1,7 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h1 class="text-lg font-semibold">Absensi Massal Siswa</h1>
-    </x-slot>
 
     @php
         $statusLabels = [
@@ -31,7 +28,7 @@
         @endif
 
         @if ($allAbsensiComplete)
-            <div class="rounded-xl border border-emerald-400/30 bg-emerald-500/20 px-4 py-3 text-sm font-semibold text-emerald-100 backdrop-blur-sm">
+            <div class="rounded-xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm font-semibold text-emerald-800 dark:text-emerald-100 backdrop-blur-sm">
                 Semua absensi untuk mata pelajaran ini sudah lengkap.
             </div>
         @endif
@@ -50,18 +47,18 @@
                         <option value="" class="bg-indigo-950 text-slate-900 dark:text-white" disabled {{ !$mataPelajaranId ? 'selected' : '' }}>Pilih Mata Pelajaran</option>
                         @foreach ($mataPelajaranOptions as $mp)
                             <option value="{{ $mp->id }}" @selected($mataPelajaranId == $mp->id) class="bg-indigo-950 text-slate-900 dark:text-white">
-                                {{ $mp->nama }} (Kelas {{ $mp->kelas }})
+                                {{ $mp->nama }} (Kelas {{ $mp->kelas_v2 }})
                             </option>
                         @endforeach
                     </select>
                 </div>
                 <div>
                     <label for="kelas_filter" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-900 dark:text-slate-600 dark:text-white/70">Pilih Kelas</label>
-                    <select id="kelas_filter" name="kelas" required
+                    <select id="kelas_filter" name="kelas_v2" required
                         class="w-full rounded-lg border border-white/25 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white focus:border-cyan-300/70 focus:outline-none focus:ring-2 focus:ring-cyan-300/30">
-                        <option value="" class="bg-indigo-950 text-slate-900 dark:text-white" disabled {{ !$kelas ? 'selected' : '' }}>Pilih Kelas</option>
+                        <option value="" class="bg-indigo-950 text-slate-900 dark:text-white" disabled {{ !$kelas_v2 ? 'selected' : '' }}>Pilih Kelas</option>
                         @foreach ($kelasOptions as $k)
-                            <option value="{{ $k }}" {{ $kelas == $k ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">{{ $k }}</option>
+                            <option value="{{ $k }}" {{ $kelas_v2 == $k ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">{{ $k }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -79,31 +76,31 @@
                 <div>
                     <label for="search_siswa" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-900 dark:text-white/75">Cari Siswa</label>
                     <input id="search_siswa" type="text" placeholder="Ketik nama siswa..."
-                        class="w-full rounded-lg border border-white/25 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white placeholder:text-slate-900 dark:text-white/45 focus:border-cyan-300/70 focus:outline-none focus:ring-2 focus:ring-cyan-300/30">
+                        class="w-full rounded-lg border border-white/25 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-400 focus:border-cyan-300/70 focus:outline-none focus:ring-2 focus:ring-cyan-300/30">
                 </div>
             </div>
 
             {{-- Action Bar --}}
             <div class="mt-4 flex flex-wrap items-center gap-2 sm:gap-3">
                 <button type="submit"
-                    class="rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-4 py-2 text-sm font-semibold text-slate-900 dark:text-white transition hover:bg-white/20">
+                    class="rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-4 py-2 text-sm font-semibold text-slate-800 dark:text-white transition hover:bg-white/20">
                     Tampilkan Data
                 </button>
                 @if ($hasExistingAbsensi)
-                    <span class="rounded-full border border-orange-300/40 bg-orange-500/20 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-orange-100">
+                    <span class="rounded-full border border-orange-400/40 bg-orange-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-orange-800 dark:text-orange-100">
                         Absensi Sudah Ada ({{ $existingCount }} data)
                     </span>
                 @endif
                 <button type="button" id="btn-hadir-semua"
-                    class="rounded-lg border border-emerald-300/50 bg-emerald-500/20 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-500/30">
+                    class="rounded-lg border border-emerald-400/50 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-800 dark:text-emerald-200 transition hover:bg-emerald-500/20">
                     Hadir Semua
                 </button>
                 <button type="button" id="btn-isi-alfa"
-                    class="rounded-lg border border-rose-300/40 bg-rose-500/20 px-4 py-2 text-sm font-semibold text-rose-100 transition hover:bg-rose-500/30">
+                    class="rounded-lg border border-rose-400/40 bg-rose-500/10 px-4 py-2 text-sm font-semibold text-rose-800 dark:text-rose-100 transition hover:bg-rose-500/20">
                     Isi Belum Absen Menjadi Alfa
                 </button>
                 <button type="button" id="btn-reset-absensi"
-                    class="rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-4 py-2 text-sm font-semibold text-slate-900 dark:text-slate-800 dark:text-white/90 transition hover:bg-white/20">
+                    class="rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-4 py-2 text-sm font-semibold text-slate-800 dark:text-slate-800 dark:text-white/90 transition hover:bg-slate-200 dark:hover:bg-white/20">
                     Reset Absensi
                 </button>
                 <span id="visible-counter" class="ms-auto text-xs font-medium text-slate-900 dark:text-slate-600 dark:text-white/70">
@@ -123,7 +120,7 @@
                     <span>{{ $absensiMode === 'edit' ? 'Edit status lalu klik' : 'Isi status lalu klik' }} <span
                             class="font-semibold text-slate-900 dark:text-white">{{ $absensiMode === 'edit' ? 'Update Absensi' : 'Simpan Absensi' }}</span></span>
                     <span id="draft-state-badge"
-                        class="rounded-full border px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide">
+                        class="rounded-full border px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-slate-800 dark:text-slate-200">
                     </span>
                     <span id="filled-counter" class="text-xs font-semibold text-slate-900 dark:text-slate-600 dark:text-white/70"></span>
                 </div>
@@ -135,7 +132,7 @@
             </div>
 
             <div class="grid gap-2 border-b border-slate-200 dark:border-white/10 px-4 py-3 text-xs text-slate-900 dark:text-white/75 sm:grid-cols-2 lg:grid-cols-5 sm:px-5">
-                <div><span class="text-slate-900 dark:text-white/55">Mata Pelajaran:</span> <span class="font-semibold text-slate-900 dark:text-white">{{ $selectedMataPelajaran?->nama ?? '-' }} (Kelas {{ $selectedMataPelajaran?->kelas ?? '-' }})</span></div>
+                <div><span class="text-slate-900 dark:text-white/55">Mata Pelajaran:</span> <span class="font-semibold text-slate-900 dark:text-white">{{ $selectedMataPelajaran?->nama ?? '-' }} (Kelas {{ $selectedMataPelajaran?->kelas_v2 ?? '-' }})</span></div>
                 <div><span class="text-slate-900 dark:text-white/55">Tanggal aktif:</span> <span class="font-semibold text-slate-900 dark:text-white">{{ $tanggal }}</span></div>
                 <div><span class="text-slate-900 dark:text-white/55">Jumlah siswa:</span> <span class="font-semibold text-slate-900 dark:text-white">{{ $totalSiswa }}</span></div>
                 <div><span class="text-slate-900 dark:text-white/55">Sudah diabsen:</span> <span class="font-semibold text-slate-900 dark:text-white" id="existing-count">{{ $existingCount }}</span></div>
@@ -162,13 +159,13 @@
                         <span class="ml-1 font-bold text-amber-300" id="count-izin">{{ $statusCounts['izin'] ?? 0 }}</span>
                     </div>
                 </div>
-                <div class="flex items-center gap-2 rounded-lg border border-rose-500/20 bg-rose-500/10 px-3 py-2 text-xs">
-                    <svg class="h-3 w-3 flex-shrink-0 text-rose-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <div class="flex items-center gap-2 rounded-lg border border-violet-500/20 bg-violet-500/10 px-3 py-2 text-xs">
+                    <svg class="h-3 w-3 flex-shrink-0 text-violet-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
                     </svg>
                     <div>
                         <span class="text-slate-900 dark:text-white/55">Sakit</span>
-                        <span class="ml-1 font-bold text-rose-300" id="count-sakit">{{ $statusCounts['sakit'] ?? 0 }}</span>
+                        <span class="ml-1 font-bold text-violet-300" id="count-sakit">{{ $statusCounts['sakit'] ?? 0 }}</span>
                     </div>
                 </div>
                 <div class="flex items-center gap-2 rounded-lg border border-red-500/20 bg-red-500/10 px-3 py-2 text-xs">
@@ -202,7 +199,7 @@
                             <tr class="attendance-row border-l-[3px] border-transparent transition duration-200 hover:bg-white/[0.03]"
                                 data-siswa-row
                                 data-name="{{ strtolower($siswa->nama_lengkap) }}"
-                                data-kelas="{{ strtolower($siswa->kelas ?? '-') }}"
+                                data-kelas="{{ strtolower($siswa->kelas_v2 ?? '-') }}"
                                 data-row-id="{{ $siswa->id }}"
                                 data-existing-status="{{ $existingStatus }}"
                                 data-initial-status="{{ $initialStatus }}">
@@ -210,17 +207,21 @@
                                 <td class="px-2 py-2 text-sm font-medium text-slate-900 dark:text-white sm:px-3 sm:py-2.5">
                                     <span>{{ $siswa->nama_lengkap }}</span>
                                 </td>
-                                <td class="px-2 py-2 text-sm text-slate-900 dark:text-slate-700 dark:text-white/80 sm:px-3 sm:py-2.5">{{ $siswa->kelas ?? '-' }}</td>
+                                <td class="px-2 py-2 text-sm text-slate-900 dark:text-slate-700 dark:text-white/80 sm:px-3 sm:py-2.5">@if($siswa->kelas_v2 && $siswa->rombel)
+                                    {{ $siswa->kelas_v2 }}{{ $siswa->rombel }}
+                                @else
+                                    -
+                                @endif</td>
                                 <td class="hidden px-2 py-2 text-sm text-slate-900 dark:text-slate-700 dark:text-white/80 sm:table-cell sm:px-3 sm:py-2.5">
                                     @if (($siswa->jenis_kelamin ?? '') === 'L')
-                                        <span class="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/30 bg-cyan-500/20 px-2.5 py-0.5 text-[11px] font-semibold text-cyan-200 shadow-sm">
+                                        <span class="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/30 bg-cyan-500/20 px-2.5 py-0.5 text-[11px] font-semibold text-cyan-800 dark:text-cyan-300 shadow-sm">
                                             <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                                 <circle cx="12" cy="5" r="3.5"/><path d="M12 8.5v10M8 14h8"/>
                                             </svg>
                                             Laki-laki
                                         </span>
                                     @elseif (($siswa->jenis_kelamin ?? '') === 'P')
-                                        <span class="inline-flex items-center gap-1.5 rounded-full border border-pink-400/30 bg-pink-500/20 px-2.5 py-0.5 text-[11px] font-semibold text-pink-200 shadow-sm">
+                                        <span class="inline-flex items-center gap-1.5 rounded-full border border-pink-400/30 bg-pink-500/20 px-2.5 py-0.5 text-[11px] font-semibold text-pink-800 dark:text-pink-300 shadow-sm">
                                             <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                                 <circle cx="12" cy="5" r="3.5"/><path d="M12 8.5v6M8 11h8"/>
                                             </svg>
@@ -323,7 +324,7 @@
             const hasSaveSuccess = @js((bool) session('success'));
             const hasValidationErrors = @js($errors->any());
             const defaultButtonClass = 'status-btn';
-            const changedFlashClass = ['ring-1', 'ring-orange-300/70', 'bg-orange-500/10'];
+            const changedFlashClass = ['bg-orange-500/10'];
 
             const rowStatusClasses = {
                 hadir: ['status-row-hadir'],
@@ -359,14 +360,14 @@
             };
 
             const setDraftBadgeState = (state) => {
-                draftStateBadge.className = 'rounded-full border px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide';
+                draftStateBadge.className = 'rounded-full border px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-slate-800 dark:text-slate-200';
                 if (state === 'saved') {
-                    draftStateBadge.classList.add('border-emerald-300/40', 'bg-emerald-500/20', 'text-emerald-100');
+                    draftStateBadge.classList.add('border-emerald-400/40', 'bg-emerald-500/10', 'text-emerald-800', 'dark:text-emerald-100');
                     draftStateBadge.textContent = 'Data tersimpan di database';
                     return;
                 }
 
-                draftStateBadge.classList.add('border-orange-300/40', 'bg-orange-500/20', 'text-orange-100');
+                draftStateBadge.classList.add('border-orange-400/40', 'bg-orange-500/10', 'text-orange-800', 'dark:text-orange-100');
                 draftStateBadge.textContent = 'Draft belum disimpan';
             };
 
@@ -383,8 +384,8 @@
                 const allHadir = isAllHadir() && getFilledCount() === totalRows && totalRows > 0;
                 hadirSemuaBtn.textContent = allHadir ? 'Batalkan Hadir Semua' : 'Hadir Semua';
                 hadirSemuaBtn.className = allHadir
-                    ? 'rounded-lg border border-slate-300/50 bg-slate-500/20 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:bg-slate-500/30'
-                    : 'rounded-lg border border-emerald-300/50 bg-emerald-500/20 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-500/30';
+                    ? 'rounded-lg border border-slate-400/50 bg-slate-500/10 px-4 py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-slate-500/20'
+                    : 'rounded-lg border border-emerald-400/50 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-800 dark:text-emerald-200 transition hover:bg-emerald-500/20';
             };
 
             const saveDraft = () => {
@@ -421,9 +422,10 @@
                 buttons.forEach((button) => {
                     button.className = defaultButtonClass;
                     if (button.dataset.statusBtn === status) {
-                        button.className = `${button.className} ${badgeClasses[status]}`;
+                        button.className = `${defaultButtonClass} ${badgeClasses[status]}`;
                     }
                 });
+                row.querySelectorAll('[data-status-btn]').forEach(btn => btn.blur());
             };
 
             const setStatus = (row, status, options = {

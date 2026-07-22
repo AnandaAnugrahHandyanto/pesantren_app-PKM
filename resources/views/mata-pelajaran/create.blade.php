@@ -1,7 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h1 class="text-lg font-semibold">Tambah Mata Pelajaran</h1>
-    </x-slot>
 
     <div class="mx-auto max-w-lg">
         <div class="rounded-2xl border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/10 p-6 shadow-lg backdrop-blur-md">
@@ -36,7 +33,7 @@
 
                 <div>
                     <label for="kelas" class="mb-1 block text-sm font-medium text-slate-900 dark:text-white/80">Kelas <span class="text-red-400">*</span></label>
-                    <select name="kelas" id="kelas" required
+                    <select name="kelas_v2" id="kelas" required
                             class="w-full appearance-none rounded-xl border border-slate-300 dark:border-white/20 bg-white/[0.06] px-4 py-2.5 pr-10 text-sm text-slate-900 dark:text-white backdrop-blur-sm transition focus:border-indigo-400/50 focus:outline-none focus:ring-2 focus:ring-indigo-400/20">
                         <option value="" disabled class="bg-slate-900 text-slate-900 dark:text-white" {{ !old('kelas') ? 'selected' : '' }}>Pilih kelas</option>
                         @foreach ([7, 8, 9] as $k)
@@ -46,6 +43,22 @@
                         @endforeach
                     </select>
                     @error('kelas')
+                        <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="rombel" class="mb-1 block text-sm font-medium text-slate-900 dark:text-white/80">Rombel <span class="text-red-400">*</span></label>
+                    <select name="rombel" id="rombel" required
+                            class="w-full appearance-none rounded-xl border border-slate-300 dark:border-white/20 bg-white/[0.06] px-4 py-2.5 pr-10 text-sm text-slate-900 dark:text-white backdrop-blur-sm transition focus:border-indigo-400/50 focus:outline-none focus:ring-2 focus:ring-indigo-400/20">
+                        <option value="" disabled class="bg-slate-900 text-slate-900 dark:text-white" {{ !old('rombel') ? 'selected' : '' }}>Pilih rombel</option>
+                        @foreach (['A', 'B', 'C', 'D', 'E'] as $r)
+                            <option value="{{ $r }}" {{ old('rombel') == $r ? 'selected' : '' }} class="bg-slate-900 text-slate-900 dark:text-white">
+                                {{ $r }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('rombel')
                         <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
                     @enderror
                 </div>

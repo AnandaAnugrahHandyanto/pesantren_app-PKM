@@ -131,4 +131,33 @@ class LaporanController extends Controller
             'rekap', 'semester', 'semesterLabel', 'tahunAjaran', 'from', 'to', 'mataPelajaranOptions', 'mataPelajaranId'
         ));
     }
+    public function absensiExportPdf(Request $request)
+    {
+        $tanggal  = $request->query('tanggal', today()->toDateString());
+        $mataPelajaranId = $request->query('mata_pelajaran_id');
+        $kelas = $request->query('kelas');
+
+        $absensis = collect();
+        if ($request->hasAny(['tanggal', 'mata_pelajaran_id', 'kelas'])) {
+            $absensis = Absensi::with('siswa', 'mataPelajaran')
+                ->whereDate('tanggal', $tanggal)
+                ->when($mataPelajaranId, fn ($q) => $q->where('mata_pelajaran_id', $mataPelajaranId))
+                ->when($kelas, function ($q) use ($kelas) {
+                    $q->whereHas('siswa', fn ($sq) => $sq->where('kelas', $kelas));
+                })
+                ->orderBy('id')
+                ->get();
+        }
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('laporan.absensi-pdf', [
+            'absensis' => $absensis,
+            'tanggal' => $tanggal,
+            'filter' => [
+                'tanggal' => $tanggal,
+                'kelas' => $kelas,
+            ]
+        ]);
+
+        return $pdf->download('laporan-absensi-' . now()->format('Y-m-d') . '.pdf');
+    }
 }

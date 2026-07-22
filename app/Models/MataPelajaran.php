@@ -4,8 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class MataPelajaran extends Model
 {
@@ -16,16 +14,22 @@ class MataPelajaran extends Model
     protected $fillable = [
         'nama',
         'kelas',
+        'kelas_v2',
+        'rombel',
         'guru_id',
     ];
+    
+    protected $casts = [
+        'kelas_v2' => 'integer',
+    ];
 
-    public function absensis(): HasMany
+    public function guru()
     {
-        return $this->hasMany(Absensi::class, 'mata_pelajaran_id');
+        return $this->belongsTo(Guru::class);
     }
 
-    public function guru(): BelongsTo
+    public function absensis()
     {
-        return $this->belongsTo(Guru::class, 'guru_id');
+        return $this->hasMany(Absensi::class, 'mata_pelajaran_id');
     }
 }

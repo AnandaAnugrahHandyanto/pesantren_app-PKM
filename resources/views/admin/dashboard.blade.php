@@ -1,7 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h1 class="text-lg font-semibold text-slate-900 dark:text-white">Dashboard Admin</h1>
-    </x-slot>
 
     <div class="space-y-6 py-6">
         {{-- Section 1 — Primary Statistics --}}

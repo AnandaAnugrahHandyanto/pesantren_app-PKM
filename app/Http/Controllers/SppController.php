@@ -6,6 +6,7 @@ use App\Models\Keuangan;
 use App\Models\Siswa;
 use App\Models\SppBill;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class SppController extends Controller
@@ -117,7 +118,6 @@ class SppController extends Controller
         if ($spp->status === 'lunas' || $spp->keuangan_id !== null) return response()->json(['message' => 'Tagihan tidak dapat dihapus.'], 422);
 
         $siswaId = $spp->siswa_id;
-        $billId = $spp->id;
 
         $deleted = $spp->delete();
 
@@ -129,5 +129,29 @@ class SppController extends Controller
         }
 
         return response()->json(['success' => true, 'summary' => $this->getSummaryData($siswaId)]);
+    }
+
+    /**
+     * Siswa: lihat tagihan SPP sendiri.
+     */
+    public function siswaIndex()
+    {
+        $user = Auth::user();
+        $tagihan = SppBill::where('siswa_id', $user->siswa_id)
+            ->where('tahun', now()->year)
+            ->orderBy('bulan')
+            ->get();
+
+        $totalTagihan = $tagihan->count();
+        $totalLunas = $tagihan->where('status', 'lunas')->count();
+        $totalBelum = $tagihan->where('status', 'belum')->count();
+        $totalTunggakan = $tagihan->where('status', 'tunggakan')->count();
+        $jumlahLunas = $tagihan->where('status', 'lunas')->sum('jumlah');
+        $jumlahTotal = $tagihan->sum('jumlah');
+
+        return view('siswa.spp', compact(
+            'tagihan', 'totalTagihan', 'totalLunas', 'totalBelum', 'totalTunggakan',
+            'jumlahLunas', 'jumlahTotal'
+        ));
     }
 }

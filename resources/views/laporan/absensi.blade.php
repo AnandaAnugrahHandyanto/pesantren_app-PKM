@@ -1,7 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h1 class="text-lg font-semibold">Laporan Absensi</h1>
-    </x-slot>
 
     @php
         $statusMeta = [
@@ -75,6 +72,10 @@
                         class="w-full rounded-xl bg-indigo-500/80 px-4 py-2 text-sm font-medium text-slate-900 dark:text-white backdrop-blur-sm transition hover:bg-indigo-400/80 sm:w-auto">
                     Tampilkan
                 </button>
+                <a href="{{ route('laporan.absensi.export-pdf', request()->query()) }}"
+                   class="flex w-full items-center justify-center rounded-xl bg-emerald-600/80 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition hover:bg-emerald-500/80 sm:w-auto">
+                    Export PDF
+                </a>
                 <span class="text-sm text-slate-900 dark:text-slate-500 dark:text-white/60 sm:ml-auto sm:self-center">
                     Tanggal: <span class="font-semibold text-slate-900 dark:text-white">
                         {{ \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y') }}

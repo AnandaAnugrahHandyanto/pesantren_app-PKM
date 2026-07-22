@@ -1,7 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h1 class="text-lg font-semibold">Import Data Siswa</h1>
-    </x-slot>
 
     <div class="space-y-6">
         {{-- Pesan sukses/error --}}
@@ -39,7 +36,7 @@
         <div class="grid gap-6 md:grid-cols-2">
             {{-- Download Template --}}
             <div class="rounded-2xl border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/10 p-6 shadow-lg backdrop-blur-md">
-                <div class="flex flex-col items-center gap-4 text-center">
+                <div class="flex h-full flex-col items-center justify-center gap-4 text-center">
                     <div class="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20">
                         <svg class="h-8 w-8 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
@@ -78,15 +75,35 @@
                     <div class="w-full">
                         <label for="file"
                             class="flex cursor-pointer flex-col items-center gap-2 rounded-xl border-2 border-dashed border-slate-300 dark:border-white/20 px-4 py-6 transition hover:border-indigo-400/50 hover:bg-white/[0.02]">
-                            <svg class="h-8 w-8 text-slate-900 dark:text-white/30" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
-                            </svg>
-                            <span id="file-label" class="text-sm text-slate-900 dark:text-slate-400 dark:text-white/40">Klik untuk pilih file Excel</span>
-                            <span id="file-name" class="hidden text-xs text-indigo-300"></span>
+                            {{-- Placeholder --}}
+                            <div id="file-instruction" class="flex flex-col items-center">
+                                <svg class="h-10 w-10 text-slate-400 dark:text-white/30 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                </svg>
+                                <p class="text-sm text-slate-900 dark:text-slate-400 dark:text-white/40 text-center px-4">
+                                    <span class="font-semibold text-indigo-400">Klik untuk memilih file Excel</span> atau drag & drop file di sini
+                                </p>
+                                <p class="mt-1 text-xs text-slate-500">Format: .xlsx • .xls • .csv</p>
+                            </div>
+
+                            {{-- Preview --}}
+                            <div id="file-preview" class="hidden flex items-center justify-between w-full p-3 rounded-lg bg-indigo-900/20 border border-indigo-500/30">
+                                <div class="flex items-center gap-3 overflow-hidden">
+                                    <svg class="h-8 w-8 text-indigo-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    </svg>
+                                    <div class="overflow-hidden">
+                                        <p id="file-name" class="text-sm font-bold text-white truncate"></p>
+                                        <p id="file-size" class="text-xs text-indigo-300"></p>
+                                    </div>
+                                </div>
+                                <button type="button" onclick="resetFile(event)" class="text-slate-400 hover:text-white">
+                                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                </button>
+                            </div>
                         </label>
                         <input type="file" id="file" name="file" accept=".xlsx,.xls,.csv"
-                            class="hidden"
-                            onchange="document.getElementById('file-name').textContent = this.files[0]?.name; document.getElementById('file-label').classList.add('hidden'); document.getElementById('file-name').classList.remove('hidden');">
+                            class="hidden">
                         @error('file')
                             <p class="mt-1 text-xs text-red-300">{{ $message }}</p>
                         @enderror
@@ -154,4 +171,62 @@
             </a>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const dropZone = document.querySelector('label[for="file"]');
+            const fileInput = document.getElementById('file');
+            const fileInstruction = document.getElementById('file-instruction');
+            const filePreview = document.getElementById('file-preview');
+            const fileNameSpan = document.getElementById('file-name');
+            const fileSizeSpan = document.getElementById('file-size');
+
+            const handleFile = (files) => {
+                if (files.length > 0) {
+                    fileInput.files = files;
+                    const file = files[0];
+                    fileNameSpan.textContent = file.name;
+                    
+                    // Format size
+                    const sizeInKB = file.size / 1024;
+                    fileSizeSpan.textContent = sizeInKB >= 1024 
+                        ? (sizeInKB / 1024).toFixed(2) + ' MB'
+                        : Math.round(sizeInKB) + ' KB';
+
+                    fileInstruction.classList.add('hidden');
+                    filePreview.classList.remove('hidden');
+                    dropZone.classList.remove('border-dashed', 'border-slate-300', 'dark:border-white/20');
+                    dropZone.classList.add('border-solid', 'border-indigo-500/50');
+                }
+            };
+
+            window.resetFile = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                fileInput.value = '';
+                fileInstruction.classList.remove('hidden');
+                filePreview.classList.add('hidden');
+                dropZone.classList.add('border-dashed', 'border-slate-300', 'dark:border-white/20');
+                dropZone.classList.remove('border-solid', 'border-indigo-500/50');
+            };
+
+            ['dragover', 'dragleave', 'drop'].forEach(event => {
+                dropZone.addEventListener(event, (e) => {
+                    e.preventDefault();
+                    if (event === 'dragover') {
+                        dropZone.classList.add('border-indigo-400', 'bg-indigo-500/10');
+                    } else {
+                        dropZone.classList.remove('border-indigo-400', 'bg-indigo-500/10');
+                    }
+                });
+            });
+
+            dropZone.addEventListener('drop', (e) => {
+                handleFile(e.dataTransfer.files);
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                handleFile(e.target.files);
+            });
+        });
+    </script>
 </x-app-layout>

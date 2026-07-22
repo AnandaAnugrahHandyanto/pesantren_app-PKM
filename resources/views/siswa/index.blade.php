@@ -1,17 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex items-center gap-3">
-            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-cyan-500/20 ring-1 ring-cyan-400/30">
-                <svg class="h-5 w-5 text-cyan-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
-                </svg>
-            </div>
-            <div>
-                <h1 class="text-lg font-semibold text-slate-900 dark:text-white">Data Siswa</h1>
-                <p class="text-xs text-slate-900 dark:text-slate-500 dark:text-white/50">Kelola data siswa dan akun login mereka</p>
-            </div>
-        </div>
-    </x-slot>
 
     <div class="space-y-6">
         {{-- Alerts --}}
@@ -71,11 +58,11 @@
             <form method="GET" action="{{ route('siswa.index') }}" class="flex flex-wrap items-end gap-4">
                 <div class="flex flex-col gap-1.5">
                     <label class="text-xs font-medium text-slate-900 dark:text-slate-600 dark:text-white/70">Tingkat</label>
-                    <select name="tingkat"
+                    <select name="kelas_v2"
                             class="form-select min-w-[130px]">
-                        <option value="" {{ !request('tingkat') ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">Semua Tingkat</option>
-                        @foreach ($tingkatOptions as $t)
-                            <option value="{{ $t }}" {{ request('tingkat') == $t ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">Kelas {{ $t }}</option>
+                        <option value="" {{ !request('kelas_v2') ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">Semua Tingkat</option>
+                        @foreach ($kelasOptions as $t)
+                            <option value="{{ $t }}" {{ request('kelas_v2') == $t ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">Kelas {{ $t }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -98,7 +85,7 @@
                         </svg>
                         Filter
                     </button>
-                    @if (request()->anyFilled(['tingkat', 'rombel']))
+                    @if (request()->anyFilled(['kelas_v2', 'rombel']))
                         <a href="{{ route('siswa.index') }}" class="btn-secondary text-sm">
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -174,14 +161,14 @@
                             <td class="text-right">
                                 <div class="flex items-center justify-end gap-2">
                                     <a href="{{ route('siswa.edit', $siswa) }}"
-                                       class="rounded-lg border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/10 px-3 py-1.5 text-xs font-medium text-slate-900 dark:text-slate-700 dark:text-white/80 backdrop-blur-sm transition hover:bg-white/20">
+                                       class="rounded-lg border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/10 px-3 py-1.5 text-xs font-medium text-slate-900 dark:text-slate-700 dark:text-white/80 backdrop-blur-sm transition hover:bg-slate-200 dark:hover:bg-white/20">
                                         Edit
                                     </a>
                                     <form action="{{ route('siswa.destroy', $siswa) }}" method="POST"
                                           onsubmit="return confirm('Yakin ingin menghapus siswa {{ $siswa->nama_lengkap }}?')">
                                         @csrf @method('DELETE')
                                         <button type="submit"
-                                                class="rounded-lg border border-red-400/30 bg-red-500/20 px-3 py-1.5 text-xs font-medium text-red-200 backdrop-blur-sm transition hover:bg-red-500/30">
+                                                class="rounded-lg border border-red-400/30 bg-red-500/10 px-3 py-1.5 text-xs font-medium text-red-700 dark:text-red-200 backdrop-blur-sm transition hover:bg-red-500/20">
                                             Hapus
                                         </button>
                                     </form>

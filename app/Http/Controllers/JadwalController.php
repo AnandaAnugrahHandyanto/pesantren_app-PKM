@@ -89,7 +89,7 @@ class JadwalController extends Controller
             $bentrok = Jadwal::where('hari', $request->hari)
                 ->where('guru_id', $request->guru_id)
                 ->where('kelas', $request->kelas)
-                ->where('rombel', $request->rombel)
+                ->when($request->filled('rombel'), fn($q) => $q->where('rombel', $request->rombel))
                 ->where(function ($q) use ($request) {
                     $q->whereBetween('jam_mulai', [$request->jam_mulai, $request->jam_selesai])
                         ->orWhereBetween('jam_selesai', [$request->jam_mulai, $request->jam_selesai])
@@ -142,7 +142,7 @@ class JadwalController extends Controller
             $bentrok = Jadwal::where('hari', $request->hari)
                 ->where('guru_id', $request->guru_id)
                 ->where('kelas', $request->kelas)
-                ->where('rombel', $request->rombel)
+                ->when($request->filled('rombel'), fn($q) => $q->where('rombel', $request->rombel))
                 ->where('id', '!=', $jadwal->id)
                 ->where(function ($q) use ($request) {
                     $q->whereBetween('jam_mulai', [$request->jam_mulai, $request->jam_selesai])
@@ -190,7 +190,6 @@ class JadwalController extends Controller
         // Gunakan tingkat (e.g. 7) sebagai acuan kelas untuk jadwal
         // Karena di DB kolom 'kelas' pada 'jadwals' berisi '7', '6'
         $targetKelas = (string)$siswa->tingkat;
-
         $jadwals = Jadwal::with(['mataPelajaran', 'guru'])
             ->where('kelas', $targetKelas)
             ->orderBy('hari')

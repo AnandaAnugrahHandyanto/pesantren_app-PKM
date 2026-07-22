@@ -18,6 +18,9 @@ class ProfileController extends Controller
     {
         return view('profile.edit', [
             'user' => $request->user(),
+            'sessions' => \App\Models\Session::where('user_id', $request->user()->id)
+                ->orderBy('last_activity', 'desc')
+                ->get(),
         ]);
     }
 

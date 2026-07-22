@@ -17,13 +17,15 @@ class Siswa extends Model
         'nis',
         'nama_lengkap',
         'kelas',
-        'tingkat',
+        'kelas_v2',
         'rombel',
+        'tingkat',
         'jenis_kelamin',
     ];
 
     protected $casts = [
         'tingkat' => 'integer',
+        'kelas_v2' => 'integer',
     ];
 
     public function sppBills()
@@ -47,6 +49,17 @@ class Siswa extends Model
     public function getKelasFormattedAttribute(): string
     {
         return $this->tingkat.$this->rombel;
+    }
+
+    /**
+     * Get the formatted kelas-rombel (e.g., "7-A", "8-B").
+     */
+    public function getKelasRombelAttribute(): string
+    {
+        if ($this->kelas_v2 && $this->rombel) {
+            return "{$this->kelas_v2}-{$this->rombel}";
+        }
+        return $this->kelas;
     }
 
     /**

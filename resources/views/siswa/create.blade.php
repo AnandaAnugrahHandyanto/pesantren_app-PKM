@@ -1,7 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h1 class="text-lg font-semibold">Tambah Siswa</h1>
-    </x-slot>
 
     <div class="mx-auto max-w-xl">
         @if ($errors->any())
@@ -29,13 +26,13 @@
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label for="tingkat" class="mb-1 block text-sm font-medium text-slate-900 dark:text-slate-700 dark:text-white/80">Tingkat <span aria-hidden="true">*</span></label>
+                        <label for="kelas_v2" class="mb-1 block text-sm font-medium text-slate-900 dark:text-slate-700 dark:text-white/80">Kelas <span aria-hidden="true">*</span></label>
                         <div class="relative">
-                            <select id="tingkat" name="tingkat" required aria-label="Pilih tingkat"
+                            <select id="kelas_v2" name="kelas_v2" required aria-label="Pilih Kelas"
                                 class="w-full appearance-none rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-3 py-2 pr-10 text-sm text-slate-900 dark:text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
-                                <option value="" disabled {{ old('tingkat') ? '' : 'selected' }} class="bg-indigo-950 text-slate-900 dark:text-white">Pilih tingkat</option>
-                                @foreach ($tingkatOptions as $t)
-                                    <option value="{{ $t }}" {{ old('tingkat') == $t ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">Kelas {{ $t }}</option>
+                                <option value="" disabled {{ old('kelas_v2') ? '' : 'selected' }} class="text-slate-500 dark:text-slate-400">Pilih Kelas</option>
+                                @foreach ($kelasOptions as $t)
+                                    <option value="{{ $t }}" {{ old('kelas_v2') == $t ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">Kelas {{ $t }}</option>
                                 @endforeach
                             </select>
                             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
@@ -44,7 +41,7 @@
                                 </svg>
                             </div>
                         </div>
-                        @error('tingkat')
+                        @error('kelas_v2')
                             <p class="mt-1 text-xs text-red-300">{{ $message }}</p>
                         @enderror
                     </div>
@@ -54,7 +51,7 @@
                                                 <div class="relative">
                                                     <select id="rombel" name="rombel" required aria-label="Pilih rombel"
                                                             class="w-full appearance-none rounded-xl border border-slate-300 dark:border-white/20 bg-slate-50 dark:bg-white/10 px-4 py-2.5 pr-10 text-sm text-slate-900 dark:text-white backdrop-blur-sm transition focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20">
-                                                        <option value="" disabled {{ old('rombel') ? '' : 'selected' }} class="bg-indigo-950 text-slate-900 dark:text-white">Pilih rombel</option>
+                                                        <option value="" disabled {{ old('rombel') ? '' : 'selected' }} class="text-slate-500 dark:text-slate-400">Pilih rombel</option>
                                                         @foreach ($rombelOptions as $j)
                                                             <option value="{{ $j }}" {{ old('rombel') === $j ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">{{ $j }}</option>
                                                         @endforeach
@@ -76,7 +73,7 @@
                     <div class="relative">
                         <select id="jenis_kelamin" name="jenis_kelamin" required aria-required="true" aria-label="Pilih jenis kelamin"
                             class="w-full appearance-none rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-3 py-2 pr-10 text-sm text-slate-900 dark:text-white backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
-                            <option value="" disabled {{ old('jenis_kelamin') ? '' : 'selected' }} aria-hidden="true" class="bg-indigo-950 text-slate-900 dark:text-white">Pilih jenis kelamin</option>
+                            <option value="" disabled {{ old('jenis_kelamin') ? '' : 'selected' }} aria-hidden="true" class="text-slate-500 dark:text-slate-400">Pilih jenis kelamin</option>
                             <option value="L" {{ old('jenis_kelamin') === 'L' ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">Laki-laki</option>
                             <option value="P" {{ old('jenis_kelamin') === 'P' ? 'selected' : '' }} class="bg-indigo-950 text-slate-900 dark:text-white">Perempuan</option>
                         </select>
@@ -95,7 +92,7 @@
                     <label for="nis" class="mb-1 block text-sm font-medium text-slate-900 dark:text-slate-700 dark:text-white/80">NIS</label>
                     <input type="text" id="nis" name="nis" value="{{ old('nis') }}" maxlength="50"
                         placeholder="Kosongkan untuk auto-generate"
-                        class="w-full rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white placeholder-white/40 backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
+                        class="w-full rounded-lg border border-slate-400 dark:border-white/30 bg-slate-50 dark:bg-white/10 px-3 py-2 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-300 backdrop-blur-sm focus:border-blue-400/50 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
                     @error('nis')
                         <p class="mt-1 text-xs text-red-300">{{ $message }}</p>
                     @enderror
