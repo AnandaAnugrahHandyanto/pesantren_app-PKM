@@ -68,41 +68,45 @@
             <div class="lg:pl-64">
                 {{-- Navbar --}}
                 <header class="sticky top-0 z-20 border-b bg-white/80 backdrop-blur-md dark:border-white/10 dark:bg-slate-900/80 border-slate-200/80">
-                    <div class="flex h-16 items-center justify-between px-4 sm:px-6">
-                        <div class="flex items-center gap-3">
-                            <button
-                                type="button"
-                                class="inline-flex items-center justify-center rounded-lg border p-2 transition lg:hidden border-slate-200/80 text-slate-600 hover:bg-slate-100/80 dark:border-white/20 dark:text-white/80 dark:hover:bg-white/10"
-                                @click="sidebarOpen = true">
-                                <span class="sr-only">Buka menu</span>
-                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 6.75h16.5m-16.5 5.25h16.5m-16.5 5.25h16.5" />
-                                </svg>
-                            </button>
-                            <div class="flex flex-col gap-0.5">
-                                <h1 class="text-base font-semibold text-slate-900 dark:text-white">@isset($title) {{ $title }} @else Sekolah App @endisset</h1>
-                                @isset($breadcrumb)
-                                    <span class="text-[11px] text-slate-500 dark:text-slate-400 font-medium tracking-tight">{{ $breadcrumb }}</span>
-                                @endisset
-                            </div>
-                        </div>
+                    <div class="flex h-16 items-center justify-between gap-3 px-4 sm:px-6">
+    <div class="flex min-w-0 items-center gap-3">
+        <button
+            type="button"
+            class="inline-flex shrink-0 items-center justify-center rounded-lg border p-2 transition lg:hidden border-slate-200/80 text-slate-600 hover:bg-slate-100/80 dark:border-white/20 dark:text-white/80 dark:hover:bg-white/10"
+            @click="sidebarOpen = true">
+            <span class="sr-only">Buka menu</span>
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 6.75h16.5m-16.5 5.25h16.5m-16.5 5.25h16.5" />
+            </svg>
+        </button>
+        <div class="flex min-w-0 flex-col gap-0.5">
+            <h1 class="truncate text-base font-semibold text-slate-900 dark:text-white">@isset($title) {{ $title }} @else Sekolah App @endisset</h1>
+            @isset($breadcrumb)
+                <span class="truncate text-[11px] font-medium tracking-tight text-slate-500 dark:text-slate-400">{{ $breadcrumb }}</span>
+            @endisset
+        </div>
+    </div>
 
-                        @auth
-                            <button
-                                type="button"
-                                class="rounded-lg p-2 text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
-                                @click="toggleTheme()"
-                                :aria-label="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
-                            >
-                                <svg x-show="!isDark" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                                </svg>
-                                <svg x-show="isDark" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                                </svg>
-                            </button>
-                        @endauth
-                    </div>
+    <div class="flex shrink-0 items-center gap-2">
+        <span class="hidden items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 dark:bg-indigo-400/10 dark:text-indigo-400 dark:ring-indigo-400/30 sm:inline-flex">
+            TA {{ \App\Helpers\TahunAkademik::aktif()['tahun'] }} {{ \App\Helpers\TahunAkademik::aktif()['semester'] }}
+        </span>
+        @auth
+            <button
+                type="button"
+                class="rounded-lg p-2 text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
+                @click="toggleTheme()"
+                :aria-label="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+                <svg x-show="!isDark" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+                <svg x-show="isDark" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+            </button>
+        @endauth
+    </div>
+</div>
                 </header>
 
                 <main class="px-4 py-6 sm:px-6 lg:px-8">

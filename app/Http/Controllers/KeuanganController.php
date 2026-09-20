@@ -13,12 +13,32 @@ class KeuanganController extends Controller
     {
         $query = Keuangan::query()->with('siswa');
 
-        // Filter by month/year
-        if ($request->filled('bulan')) {
-            $query->whereMonth('tanggal', $request->bulan);
-        }
-        if ($request->filled('tahun')) {
-            $query->whereYear('tanggal', $request->tahun);
+        $taAktif = \App\Helpers\TahunAkademik::aktif();
+        $taList = \App\Helpers\TahunAkademik::listTahun();
+        
+        $taSelected = $request->ta ?? '';
+        $semesterSelected = $request->semester ?? '';
+
+        if ($taSelected) {
+            $parts = explode('/', $taSelected);
+            if (count($parts) == 2) {
+                $tahunAwal = $parts[0];
+                $tahunAkhir = $parts[1];
+                
+                if ($semesterSelected == 'Ganjil') {
+                    $query->whereYear('tanggal', $tahunAwal)->whereMonth('tanggal', '>=', 7);
+                } elseif ($semesterSelected == 'Genap') {
+                    $query->whereYear('tanggal', $tahunAkhir)->whereMonth('tanggal', '<=', 6);
+                } else {
+                    $query->where(function ($q) use ($tahunAwal, $tahunAkhir) {
+                        $q->where(function ($q1) use ($tahunAwal) {
+                            $q1->whereYear('tanggal', $tahunAwal)->whereMonth('tanggal', '>=', 7);
+                        })->orWhere(function ($q2) use ($tahunAkhir) {
+                            $q2->whereYear('tanggal', $tahunAkhir)->whereMonth('tanggal', '<=', 6);
+                        });
+                    });
+                }
+            }
         }
 
         // Filter by type

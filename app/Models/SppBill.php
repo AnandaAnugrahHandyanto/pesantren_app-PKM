@@ -60,4 +60,57 @@ class SppBill extends Model
 
         return $bulan[$normalized] ?? 'Bulan Tidak Valid';
     }
+    /**
+     * Dapatkan Tahun Akademik dari tagihan ini
+     */
+    public function getTahunAkademikAttribute()
+    {
+        $bulanInt = (int) $this->bulan;
+        if ($bulanInt >= 7) {
+            $tahunAwal = $this->tahun;
+            $tahunAkhir = $tahunAwal + 1;
+        } else {
+            $tahunAkhir = $this->tahun;
+            $tahunAwal = $tahunAkhir - 1;
+        }
+        return "{$tahunAwal}/{$tahunAkhir}";
+    }
+
+    /**
+     * Dapatkan Semester dari tagihan ini
+     */
+    public function getSemesterAttribute()
+    {
+        $bulanInt = (int) $this->bulan;
+        return ($bulanInt >= 7) ? 'Ganjil' : 'Genap';
+    }
+
+    /**
+     * Scope filter Tahun Akademik dan Semester
+     */
+    public function scopeFilterTa($query, $ta = null, $semester = null)
+    {
+        if ($ta) {
+            $parts = explode('/', $ta);
+            if (count($parts) == 2) {
+                $tahunAwal = $parts[0];
+                $tahunAkhir = $parts[1];
+                
+                if ($semester == 'Ganjil') {
+                    $query->where('tahun', $tahunAwal)->whereIn('bulan', ['07','08','09','10','11','12']);
+                } elseif ($semester == 'Genap') {
+                    $query->where('tahun', $tahunAkhir)->whereIn('bulan', ['01','02','03','04','05','06']);
+                } else {
+                    $query->where(function ($q) use ($tahunAwal, $tahunAkhir) {
+                        $q->where(function ($q1) use ($tahunAwal) {
+                            $q1->where('tahun', $tahunAwal)->whereIn('bulan', ['07','08','09','10','11','12']);
+                        })->orWhere(function ($q2) use ($tahunAkhir) {
+                            $q2->where('tahun', $tahunAkhir)->whereIn('bulan', ['01','02','03','04','05','06']);
+                        });
+                    });
+                }
+            }
+        }
+        return $query;
+    }
 }

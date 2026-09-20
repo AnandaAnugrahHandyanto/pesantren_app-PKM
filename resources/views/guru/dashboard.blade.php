@@ -1,6 +1,12 @@
 <x-app-layout>
 
     <div class="space-y-6">
+    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-3">
+        <h2 class="text-xl font-bold text-slate-900 dark:text-white">Dashboard Guru</h2>
+        <span class="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10 dark:bg-indigo-400/10 dark:text-indigo-400 dark:ring-indigo-400/30">
+            TA {{ \App\Helpers\TahunAkademik::aktif()['tahun'] }} {{ \App\Helpers\TahunAkademik::aktif()['semester'] }}
+        </span>
+    </div>
 
         {{-- ===== Rekap Absensi Hari Ini ===== --}}
         <div>

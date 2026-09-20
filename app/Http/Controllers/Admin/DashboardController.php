@@ -32,9 +32,10 @@ class DashboardController extends Controller
         $absensi         = $this->todayAbsensiCounts();
         $latestSiswa    = Siswa::latest()->take(5)->get();
 
-        // Ringkasan SPP: Tagihan tertunggak (status='tunggakan')
-        $sppTunggakan   = \App\Models\SppBill::where('status', 'tunggakan')->count();
-        $totalSppBills  = \App\Models\SppBill::count();
+        // Ringkasan SPP: Filter berdasarkan TA aktif
+        $taAktif = \App\Helpers\TahunAkademik::aktif();
+        $sppTunggakan   = \App\Models\SppBill::filterTa($taAktif['tahun'])->where('status', 'tunggakan')->count();
+        $totalSppBills  = \App\Models\SppBill::filterTa($taAktif['tahun'])->count();
 
         return view('admin.dashboard', array_merge(
             compact('totalSiswa', 'totalGuru', 'totalMapel', 'totalJadwal', 'absensi', 'latestSiswa', 'sppTunggakan', 'totalSppBills'),
@@ -64,9 +65,10 @@ class DashboardController extends Controller
         $absensi         = $this->todayAbsensiCounts();
         $latestSiswa    = Siswa::latest()->take(5)->get();
 
-        // Ringkasan SPP: Tagihan tertunggak (status='tunggakan')
-        $sppTunggakan   = \App\Models\SppBill::where('status', 'tunggakan')->count();
-        $totalSppBills  = \App\Models\SppBill::count();
+        // Ringkasan SPP: Filter berdasarkan TA aktif
+        $taAktif = \App\Helpers\TahunAkademik::aktif();
+        $sppTunggakan   = \App\Models\SppBill::filterTa($taAktif['tahun'])->where('status', 'tunggakan')->count();
+        $totalSppBills  = \App\Models\SppBill::filterTa($taAktif['tahun'])->count();
 
         return view('admin.dashboard', array_merge(
             compact('totalSiswa', 'totalGuru', 'totalMapel', 'totalJadwal', 'absensi', 'latestSiswa', 'sppTunggakan', 'totalSppBills'),

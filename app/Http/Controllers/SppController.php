@@ -30,17 +30,21 @@ class SppController extends Controller
 
     public function index(Request $request)
     {
+        $taList = \App\Helpers\TahunAkademik::listTahun();
+        $taAktif = \App\Helpers\TahunAkademik::aktif();
+        $taSelected = $request->ta ?? $taAktif['tahun'];
+        $semesterSelected = $request->semester ?? '';
+
         $siswaQuery = Siswa::query();
-        $siswaQuery->with(['sppBills' => function ($query) use ($request) {
-            if ($request->filled('tahun')) $query->where('tahun', $request->tahun);
-            if ($request->filled('bulan')) $query->where('bulan', str_pad($request->bulan, 2, '0', STR_PAD_LEFT));
+        
+        $siswaQuery->with(['sppBills' => function ($query) use ($taSelected, $semesterSelected) {
+            $query->filterTa($taSelected, $semesterSelected);
         }]);
 
         if ($request->filled('status')) {
-            $siswaQuery->whereHas('sppBills', function($q) use ($request) {
+            $siswaQuery->whereHas('sppBills', function($q) use ($request, $taSelected, $semesterSelected) {
                 $q->where('status', $request->status);
-                if ($request->filled('tahun')) $q->where('tahun', $request->tahun);
-                if ($request->filled('bulan')) $q->where('bulan', str_pad($request->bulan, 2, '0', STR_PAD_LEFT));
+                $q->filterTa($taSelected, $semesterSelected);
             });
         }
 
@@ -54,21 +58,36 @@ class SppController extends Controller
 
         $siswaList = $siswaQuery->orderBy('nama_lengkap')->paginate(20);
         $kelasList = Siswa::select('kelas')->distinct()->pluck('kelas')->sort();
-        return view('spp.index', compact('siswaList', 'kelasList'));
-    }
-
+        
+        return view('spp.index', compact('taAktif', 'taSelected', 'taList', 'siswaList', 'kelasList', 'semesterSelected'));
+}
     public function generate(Request $request)
     {
-        $request->validate(['tahun' => 'required|integer|min:2020|max:2099', 'jumlah' => 'required|numeric|min:0']);
-        $tahun = $request->tahun;
+        $request->validate(['ta' => 'required|string', 'jumlah' => 'required|numeric|min:0']);
+        $ta = $request->ta;
         $jumlah = $request->jumlah;
+        
+        $parts = explode('/', $ta);
+        $tahunAwal = $parts[0];
+        $tahunAkhir = $parts[1] ?? ($tahunAwal + 1);
+        
         $siswaList = $request->filled('kelas') ? Siswa::where('kelas', $request->kelas)->get() : Siswa::all();
         $created = 0;
+        
         foreach ($siswaList as $siswa) {
-            for ($bulan = 1; $bulan <= 12; $bulan++) {
+            // Ganjil
+            for ($bulan = 7; $bulan <= 12; $bulan++) {
                 $bulanStr = str_pad((string) $bulan, 2, '0', STR_PAD_LEFT);
-                if (!SppBill::where('siswa_id', $siswa->id)->where('bulan', $bulanStr)->where('tahun', $tahun)->exists()) {
-                    SppBill::create(['siswa_id' => $siswa->id, 'bulan' => $bulanStr, 'tahun' => $tahun, 'jumlah' => $jumlah, 'status' => 'belum']);
+                if (!SppBill::where('siswa_id', $siswa->id)->where('bulan', $bulanStr)->where('tahun', $tahunAwal)->exists()) {
+                    SppBill::create(['siswa_id' => $siswa->id, 'bulan' => $bulanStr, 'tahun' => $tahunAwal, 'jumlah' => $jumlah, 'status' => 'belum']);
+                    $created++;
+                }
+            }
+            // Genap
+            for ($bulan = 1; $bulan <= 6; $bulan++) {
+                $bulanStr = str_pad((string) $bulan, 2, '0', STR_PAD_LEFT);
+                if (!SppBill::where('siswa_id', $siswa->id)->where('bulan', $bulanStr)->where('tahun', $tahunAkhir)->exists()) {
+                    SppBill::create(['siswa_id' => $siswa->id, 'bulan' => $bulanStr, 'tahun' => $tahunAkhir, 'jumlah' => $jumlah, 'status' => 'belum']);
                     $created++;
                 }
             }
@@ -137,10 +156,26 @@ class SppController extends Controller
     public function siswaIndex()
     {
         $user = Auth::user();
-        $tagihan = SppBill::where('siswa_id', $user->siswa_id)
-            ->where('tahun', now()->year)
+        $taAktif = \App\Helpers\TahunAkademik::aktif();
+        $taSelected = request('ta') ?? $taAktif['tahun'];
+        
+        $tagihanQuery = SppBill::where('siswa_id', $user->siswa_id);
+        
+        if (request('tab') === 'riwayat') {
+            if (request('ta')) {
+                $tagihanQuery->filterTa(request('ta'));
+            }
+        } else {
+            $tagihanQuery->filterTa($taSelected);
+        }
+        
+        $tagihan = $tagihanQuery->orderBy('tahun')
             ->orderBy('bulan')
             ->get();
+            
+        $taList = \App\Helpers\TahunAkademik::listTahun();
+        $tab = request('tab', 'aktif');
+
 
         $totalTagihan = $tagihan->count();
         $totalLunas = $tagihan->where('status', 'lunas')->count();
@@ -149,7 +184,7 @@ class SppController extends Controller
         $jumlahLunas = $tagihan->where('status', 'lunas')->sum('jumlah');
         $jumlahTotal = $tagihan->sum('jumlah');
 
-        return view('siswa.spp', compact(
+        return view('siswa.spp', compact('taAktif', 'taSelected', 'taList', 'tab', 
             'tagihan', 'totalTagihan', 'totalLunas', 'totalBelum', 'totalTunggakan',
             'jumlahLunas', 'jumlahTotal'
         ));

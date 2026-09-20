@@ -58,8 +58,12 @@ class SiswaController extends Controller
             'alfa' => $absensis->where('status', 'alfa')->count(),
         ];
 
+        $taAktif = \App\Helpers\TahunAkademik::aktif();
+        $taSelected = request('ta') ?? $taAktif['tahun'];
+        
         $tagihan = SppBill::where('siswa_id', $user->siswa_id)
-            ->where('tahun', now()->year)
+            ->filterTa($taSelected)
+            ->orderBy('tahun')
             ->orderBy('bulan')
             ->get();
 

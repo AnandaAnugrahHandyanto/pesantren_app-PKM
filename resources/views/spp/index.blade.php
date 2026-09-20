@@ -26,8 +26,12 @@
                         </select>
                     </div>
                     <div>
-                        <label class="form-label block mb-1">Tahun</label>
-                        <input type="number" name="tahun" value="{{ old('tahun', now()->year) }}" class="form-input w-28">
+                        <label class="form-label block mb-1">Tahun Akademik</label>
+                        <select name="ta" class="form-select w-32">
+                            @foreach($taList as $ta)
+                                <option value="{{ $ta }}" {{ $taSelected == $ta ? 'selected' : '' }}>{{ $ta }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div>
                         <label class="form-label block mb-1">Jumlah (Rp)</label>
@@ -40,10 +44,20 @@
 
         {{-- ═══ Filter ═══ --}}
         <div class="content-card">
-            <form method="GET" action="{{ route('spp.index') }}" class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-5">
+            <form method="GET" action="{{ route('spp.index') }}" class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-7">
                 <div class="lg:col-span-2">
-                    <input type="text" name="search" value="{{ request('search') }}" class="form-input w-full" placeholder="Cari nama atau NIS siswa...">
+                    <input type="text" name="search" value="{{ request('search') }}" class="form-input w-full" placeholder="Cari nama atau NIS...">
                 </div>
+                <select name="ta" class="form-select w-full">
+                    @foreach($taList as $ta)
+                        <option value="{{ $ta }}" {{ request('ta', $taSelected) == $ta ? 'selected' : '' }}>TA {{ $ta }}</option>
+                    @endforeach
+                </select>
+                <select name="semester" class="form-select w-full">
+                    <option value="">Semua Sem.</option>
+                    <option value="Ganjil" {{ request('semester') == 'Ganjil' ? 'selected' : '' }}>Ganjil</option>
+                    <option value="Genap" {{ request('semester') == 'Genap' ? 'selected' : '' }}>Genap</option>
+                </select>
                 <select name="kelas" class="form-select w-full">
                     <option value="">Semua Kelas</option>
                     @foreach($kelasList as $k)
@@ -96,8 +110,8 @@
                             <table class="min-w-full">
                                 <thead class="bg-slate-50 dark:bg-white/5 text-xs text-slate-500 dark:text-slate-400">
                                     <tr>
+                                        <th class="px-4 py-2 text-left">Tahun Akademik</th>
                                         <th class="px-4 py-2 text-left">Bulan</th>
-                                        <th class="px-4 py-2 text-left">Tahun</th>
                                         <th class="px-4 py-2 text-right">Jumlah</th>
                                         <th class="px-4 py-2 text-left">Status</th>
                                         <th class="px-4 py-2 text-right">Aksi</th>
@@ -106,8 +120,8 @@
                                 <tbody class="divide-y divide-slate-200 dark:divide-white/10">
                                     @foreach($siswa->sppBills as $bill)
                                     <tr x-data="{ editing: false, jumlah: {{ $bill->jumlah }}, formatted_jumlah: 'Rp {{ number_format($bill->jumlah, 0, ',', '.') }}', billId: {{ $bill->id }}, status: '{{ $bill->status }}' }">
-                                        <td class="px-4 py-3 text-sm text-slate-800 dark:text-slate-300">{{ $bill->nama_bulan }}</td>
-                                        <td class="px-4 py-3 text-sm text-slate-600 dark:text-slate-400">{{ $bill->tahun }}</td>
+                                        <td class="px-4 py-3 text-sm text-slate-600 dark:text-slate-400">{{ $bill->tahun_akademik }} {{ $bill->semester }}</td>
+                                        <td class="px-4 py-3 text-sm text-slate-800 dark:text-slate-300">{{ $bill->nama_bulan }} {{ $bill->tahun }}</td>
                                         <td class="px-4 py-3 text-sm font-medium text-right text-slate-900 dark:text-white">
                                             <span x-show="!editing" class="whitespace-nowrap font-medium" x-text="formatted_jumlah"></span>
                                             <input x-show="editing" type="number" x-model="jumlah" class="w-24 form-input py-1 text-xs">

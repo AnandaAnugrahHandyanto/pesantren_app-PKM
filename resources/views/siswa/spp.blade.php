@@ -1,6 +1,16 @@
 <x-app-layout>
 
     <div class="space-y-6">
+    {{-- Tabs --}}
+    <div class="flex space-x-1 rounded-xl bg-slate-200/50 p-1 dark:bg-white/5 w-max mb-6">
+        <a href="?tab=aktif" class="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition {{ $tab === 'aktif' ? 'bg-white text-slate-900 shadow-sm dark:bg-indigo-500/20 dark:text-indigo-300' : 'text-slate-600 hover:bg-white/50 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-white/5 dark:hover:text-white' }}">
+            Tagihan Aktif
+        </a>
+        <a href="?tab=riwayat" class="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition {{ $tab === 'riwayat' ? 'bg-white text-slate-900 shadow-sm dark:bg-indigo-500/20 dark:text-indigo-300' : 'text-slate-600 hover:bg-white/50 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-white/5 dark:hover:text-white' }}">
+            Riwayat Pembayaran
+        </a>
+    </div>
+
         {{-- ═══ Statistik ═══ --}}
         <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <div class="stat-card">
@@ -11,7 +21,7 @@
                 </div>
                 <p class="stat-label">Tagihan</p>
                 <p class="stat-value text-slate-900 dark:text-white">{{ $totalTagihan }}</p>
-                <p class="stat-sub">Bulan di tahun {{ now()->year }}</p>
+                <p class="stat-sub">Tahun Akademik {{ $taSelected }}</p>
             </div>
 
             <div class="stat-card">
@@ -64,8 +74,20 @@
         @endif
 
         {{-- ═══ Tabel ═══ --}}
-        <div class="flex justify-between items-center mb-4">
-            <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-900 dark:text-slate-500 dark:text-white/60">Riwayat Tagihan</h3>
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-3">
+            <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-900 dark:text-slate-500 dark:text-white/60">Data Tagihan</h3>
+            <div class="flex items-center gap-3">
+                @if($tab === 'riwayat')
+                <form action="" method="GET" class="flex items-center gap-2">
+                    <input type="hidden" name="tab" value="riwayat">
+                    <select name="ta" class="rounded-lg border-slate-300 dark:border-white/10 dark:bg-slate-800 text-sm py-1.5 focus:border-indigo-500 focus:ring-indigo-500" onchange="this.form.submit()">
+                        <option value="">Semua Tahun</option>
+                        @foreach($taList as $ta)
+                            <option value="{{ $ta }}" {{ $taSelected == $ta ? 'selected' : '' }}>TA {{ $ta }}</option>
+                        @endforeach
+                    </select>
+                </form>
+                @endif
             <button type="button" 
                 class="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-white/5 rounded-lg hover:bg-slate-200 dark:hover:bg-white/10 transition"
                 onclick="document.getElementById('modal-panduan-pembayaran').classList.remove('hidden')">
@@ -80,7 +102,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Bulan</th>
+                        <th>Tahun Akademik</th><th>Bulan</th>
                         <th class="text-right">Jumlah</th>
                         <th>Status</th>
                         <th>Tanggal Bayar</th>
@@ -93,7 +115,7 @@
                             $statusClass = $t->status === 'lunas' ? 'lunas' : ($t->status === 'tunggakan' ? 'tunggakan' : 'belum');
                         @endphp
                         <tr class="status-row-{{ $statusClass }}">
-                            <td class="font-medium text-slate-900 dark:text-white">{{ $t->nama_bulan }}</td>
+                            <td class="text-slate-600 dark:text-slate-400 text-xs font-medium">{{ $t->tahun_akademik }} {{ $t->semester }}</td><td class="font-medium text-slate-900 dark:text-white">{{ $t->nama_bulan }} {{ $t->tahun }}</td>
                             <td class="text-right font-medium text-slate-900 dark:text-slate-800 dark:text-white/90">Rp {{ number_format($t->jumlah, 0, ',', '.') }}</td>
                             <td>
                                 @if($t->status === 'lunas')
