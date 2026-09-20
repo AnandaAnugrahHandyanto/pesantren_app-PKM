@@ -97,7 +97,9 @@
                 </svg>
                 Panduan Pembayaran
             </button>
+            </div>
         </div>
+
         <div class="table-wrap">
             <table>
                 <thead>
